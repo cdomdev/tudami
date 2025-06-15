@@ -1,7 +1,8 @@
 "use client";
-import { ChevronRight } from "lucide-react";
+import { Modal } from "./ui/Modal";
 import { ComponentPropsWithoutRef, useEffect, useState } from "react";
 import Link from "next/link";
+import { SheetOffCanvas } from "@/components/SheetOffCanvas"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,103 +12,98 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { ModeToggle } from "./ToggleTheme";
+import FormLogin from "@/components/FormLogin";
+import { User } from 'lucide-react'
+import { Button } from "./ui/button";
 
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [showNav] = useState(true);
-useEffect(() => {
-  const handleScroll = () => {
-    const currentScroll = window.scrollY;
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScroll = window.scrollY;
 
-    if (currentScroll > 10 && !scrolled) {
-      setScrolled(true);
-    }
+      if (currentScroll > 10 && !scrolled) {
+        setScrolled(true);
+      }
 
-    if (currentScroll <= 10 && scrolled) {
-      setScrolled(false);
-    }
-  };
+      if (currentScroll <= 10 && scrolled) {
+        setScrolled(false);
+      }
+    };
 
-  window.addEventListener("scroll", handleScroll);
-  return () => window.removeEventListener("scroll", handleScroll);
-}, [scrolled]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [scrolled]);
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 ease-in-out
+      className={`fixed top-0 w-full left-0 px-3 right-0 z-50  transition-all duration-500 ease-in-out
     ${showNav ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3"}
-    ${
-      scrolled
-        ? "max-w-[90%] mx-auto mt-4 rounded-full shadow-md backdrop-blur-md bg-white/40"
-        : "bg-transparent"
-    }
+    ${scrolled
+          ? "md:max-w-6xl px-2 md:px-4 mx-auto mt-2 md:mt-4 rounded-full shadow-md backdrop-blur-md bg-white/50"
+          : "bg-transparent"
+        }
   `}
     >
-      <div className="flex items-center justify-between  py-3 max-w-11/12 mx-auto">
-        <Link href="/" className="text-xl font-bold text-primary">
-          Tudami
-        </Link>
+      <div className="flex items-center justify-between py-2 md:py-3 max-w-7xl mx-auto">
+        <div className="flex items-center">
 
-        <NavigationMenu className="flex-1 relative">
+          <Link href="/" className="text-xl md:text-3xl font-bold text-primary">
+            Tudami
+          </Link>
+        </div>
+
+        <NavigationMenu className="hidden md:flex flex-1 relative">
           <NavigationMenuList className="flex gap-4 justify-center w-full">
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent hover:!bg-transparent focus:!bg-transparent focus:outline-none ring-0 shadow-none">
-                Componentes
+              <NavigationMenuTrigger className="bg-transparent hover:!bg-transparent focus:!bg-transparent focus:outline-none ring-0 shadow-none text-sm md:text-base">
+                Características
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-2 p-4 md:grid-cols-2">
-                  <ListItem
-                    href="/docs/componentes/alerta"
-                    title="Alert Dialog"
-                  >
-                    Un modal que interrumpe al usuario con contenido importante.
+                <ul className="grid w-[600px] gap-2 p-4 md:grid-cols-2">
+                  <ListItem href="/explorar" title="Explora dudas">
+                    Encuentra respuestas públicas a preguntas frecuentes de otros aprendices.
                   </ListItem>
-                  <ListItem href="/docs/componentes/tooltip" title="Tooltip">
-                    Muestra información cuando pasas el mouse o haces foco.
+                  <ListItem href="/ofertas" title="Ofertas de ayuda">
+                    Solicita acompañamiento personalizado por parte de otros usuarios.
+                  </ListItem>
+                  <ListItem href="/#preguntas" title="Respuestas entre aprendices">
+                    Recibe orientación directa de personas que ya pasaron por lo mismo.
+                  </ListItem>
+                  <ListItem href="/#faq" title="Ahorra tiempo">
+                    Accede rápidamente a soluciones compartidas por la comunidad.
                   </ListItem>
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
 
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent hover:!bg-transparent focus:!bg-transparent focus:outline-none ring-0 shadow-none">
-                List
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[300px] gap-4 p-4">
-                  <ListItem href="/componentes" title="Componentes">
-                    Explora todos los componentes de la librería.
-                  </ListItem>
-                  <ListItem href="/blog" title="Blog">
-                    Lee las últimas novedades.
-                  </ListItem>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
+
             <NavigationMenuItem>
               <NavigationMenuLink
                 asChild
                 className="px-4 py-2 text-sm font-medium hover:bg-transparent"
               >
-                <Link href="/docs">Docs</Link>
+                <Link href="/docs" className="text-sm md:text-base">Herramientas</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                asChild
+                className="px-4 py-2 text-sm font-medium hover:bg-transparent"
+              >
+                <Link href="/docs" className="text-sm md:text-base">Blog</Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+
           </NavigationMenuList>
         </NavigationMenu>
 
-        <div className="flex gap-4 items-center justify-center">
+        <div className="flex md:gap-1 items-center justify-center ">
           <ModeToggle />
-          <Link
-            href="/login"
-            className="relative border overflow-hidden rounded-full bg-white border-gray-400 py-2 px-4 flex items-center justify-center font-medium text-gray-800 group transition-colors"
-          >
-            <span className="relative z-10">Iniciar sesión</span>
-            <ChevronRight className="relative z-10 text-gray-700 ml-1 size-5" />
-            <span
-              className="absolute inset-0 w-full h-full bg-gray-200 transition-transform duration-300 transform translate-y-full group-hover:translate-y-0"
-              aria-hidden="true"
-            />
-          </Link>
+          <FormLogin/>
+          <SheetOffCanvas />
         </div>
       </div>
     </nav>
@@ -136,3 +132,4 @@ function ListItem({
     </li>
   );
 }
+

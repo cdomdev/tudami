@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Sparkles } from "lucide-react";
 import { gsap } from "gsap";
-import { Button } from "@/components/ui/button";
+import { ButtonGsap } from "./ui/ButtonsGsap";
 
 const palabras = [
   "hacer preguntas",
   "solicitar ayuda",
   "ofrecer ayuda",
-  "colaborar con otros",
 ];
 
 export function Hero() {
@@ -46,36 +46,53 @@ export function Hero() {
   }, []);
 
   return (
-    <div className="text-center py-16 px-4 max-w-4xl mx-auto">
-      <h1 className="text-4xl font-extrabold text-foreground mb-4 leading-tight">
-        Entre <span className="text-primary">tú</span> y{" "}
-        <span className="text-primary">yo</span>, aprendemos mejor.
-      </h1>
 
-      <span>icon</span>
+    <div className="text-center py-16 px-4 max-w-screen-full mx-auto my-10 ">
+      <div className="flex flex-col items-center justify-center pb-6 gap-2 mb-4 md:flex-row md:gap-3">
+        <Sparkles className="w-6 h-6 text-primary animate-pulse md:w-14 md:h-14" />
+        <h1 className="text-5xl md:text-7xl font-extrabold text-foreground leading-tight">
+          Entre{" "}
+          <span className="bg-gradient-to-r from-pink-500 to-red-500 text-transparent bg-clip-text">
+            tú
+          </span>{" "}
+          y{" "}
+          <span className="bg-gradient-to-r from-indigo-500 to-sky-400 text-transparent bg-clip-text">
+            yo
+          </span>
+          , aprendemos mejor.
+        </h1>
 
-      <h2 className="text-xl sm:text-2xl font-medium text-muted-foreground mb-8">
-        <strong className="text-3xl text-foreground">Aquí puedes</strong>{" "}
+      </div>
+
+      <h2 className="text-base  md:text-3xl justify-center items-center gap-2 flex font-medium text-muted-foreground mb-12">
+        <strong className="block text-2xl sm:text-4xl text-foreground">Aquí puedes</strong>{" "}
         <span
           ref={textoRef}
-          className="text-3xl  font-semibold transition-opacity duration-500 text-blue-200"
+          className="block text-2xl sm:text-3xl font-bold transition-opacity duration-400 text-blue-800 dark:text-blue-500"
         >
           {palabras[index]}
         </span>
       </h2>
 
-      <div className="flex flex-col sm:flex-row justify-center gap-4">
-        <Button size="lg" className="px-8 py-6 text-lg font-bold">
-          Explorar dudas
-        </Button>
-        <Button
-          variant="outline"
-          size="lg"
-          className="px-8 py-6 text-lg font-bold border-primary text-primary"
-        >
-          Publicar mi duda
-        </Button>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-6">
+        <ButtonGsap
+          text="Explorar dudas"
+          href="/questions"
+          flairColor="bg-indigo-500"
+          className="text-base sm:text-lg w-full font-bold border border-white px-6 py-4 rounded-md bg-black text-white"
+        />
+
+        <ButtonGsap
+          text="Publicar mi duda"
+          href="/questions"
+          flairColor="bg-gradient-to-r from-pink-500 to-red-500"
+          className="text-base w-full  sm:text-lg font-bold border border-gray-300 px-6 py-4 rounded-md bg-white text-black hover:text-white"
+        />
+
+
       </div>
     </div>
+
+
   );
 }
