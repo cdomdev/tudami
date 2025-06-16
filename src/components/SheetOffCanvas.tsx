@@ -16,8 +16,8 @@ export function SheetOffCanvas() {
     return (
         <Sheet>
             <SheetTrigger asChild >
-                <Button variant="ghost" className="block md:hidden">
-                    <AlignLeft className="size-7"/>
+                <Button variant="ghost" className="block md:hidden p-0">
+                    <AlignLeft className="size-8 "/>
                     <span className="sr-only">Button lef</span>
                 </Button>
             </SheetTrigger>

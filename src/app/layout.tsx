@@ -56,15 +56,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={rubikFont.variable} suppressHydrationWarning>
-      <body className="antialiased bg-accent text-foreground absolute inset-0 -z-10 h-full w-full  dark:bg-[#000000] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] dark:bg-[size:20px_20px]">
+      <body className="">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+          <div
+            aria-hidden
+            className="fixed inset-0 -z-10 h-screen w-screen overflow-hidden bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] dark:bg-[size:20px_20px]"
+          />
+
           <NavBar />
-          <main >{children}</main>
+          <main className="p-0">{children}</main>
         </ThemeProvider>
       </body>
     </html>

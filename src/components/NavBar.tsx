@@ -1,8 +1,7 @@
 "use client";
-import { Modal } from "./ui/Modal";
 import { ComponentPropsWithoutRef, useEffect, useState } from "react";
 import Link from "next/link";
-import { SheetOffCanvas } from "@/components/SheetOffCanvas"
+import { SheetOffCanvas } from "@/components/SheetOffCanvas";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,8 +12,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { ModeToggle } from "./ToggleTheme";
 import FormLogin from "@/components/FormLogin";
-import { User } from 'lucide-react'
-import { Button } from "./ui/button";
+import Image from "next/image";
 
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
@@ -38,18 +36,31 @@ export function NavBar() {
 
   return (
     <nav
-      className={`fixed top-0 w-full left-0 px-3 right-0 z-50  transition-all duration-500 ease-in-out
+      className={`fixed top-0 w-screen left-0  right-0 z-50 transition-all duration-300 ease-in-out
     ${showNav ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3"}
-    ${scrolled
-          ? "md:max-w-6xl px-2 md:px-4 mx-auto mt-2 md:mt-4 rounded-full shadow-md backdrop-blur-md bg-white/50"
-          : "bg-transparent"
-        }
+    ${
+      scrolled
+        ? "bg-white/10 backdrop-blur-md shadow-md"
+        : "bg-transparent shadow-none backdrop-blur-0"
+    }
   `}
     >
-      <div className="flex items-center justify-between py-2 md:py-3 max-w-7xl mx-auto">
+      <div className="flex items-center justify-between px-3 py-2 max-w-6xl mx-auto">
         <div className="flex items-center">
-
-          <Link href="/" className="text-xl md:text-3xl font-bold text-primary">
+          <Link
+            href="/"
+            className="flex items-center gap-1 font-bold text-primary relative transition-all duration-300 text-2xl"
+          >
+            <span className="hidden dark:inline-block absolute size-12 rounded-full bg-white/20 blur-md -z-10" />
+            <span className="relative dark:bg-white/10 dark:rounded-full dark:p-1 transition-all duration-300">
+              <Image
+                src="/board.webp"
+                width={50}
+                height={50}
+                alt="logo-tuadmi"
+                className="relative transition-all duration-300"
+              />
+            </span>
             Tudami
           </Link>
         </div>
@@ -63,28 +74,36 @@ export function NavBar() {
               <NavigationMenuContent>
                 <ul className="grid w-[600px] gap-2 p-4 md:grid-cols-2">
                   <ListItem href="/explorar" title="Explora dudas">
-                    Encuentra respuestas públicas a preguntas frecuentes de otros aprendices.
+                    Encuentra respuestas públicas a preguntas frecuentes de
+                    otros aprendices.
                   </ListItem>
                   <ListItem href="/ofertas" title="Ofertas de ayuda">
-                    Solicita acompañamiento personalizado por parte de otros usuarios.
+                    Solicita acompañamiento personalizado por parte de otros
+                    usuarios.
                   </ListItem>
-                  <ListItem href="/#preguntas" title="Respuestas entre aprendices">
-                    Recibe orientación directa de personas que ya pasaron por lo mismo.
+                  <ListItem
+                    href="/#preguntas"
+                    title="Respuestas entre aprendices"
+                  >
+                    Recibe orientación directa de personas que ya pasaron por lo
+                    mismo.
                   </ListItem>
                   <ListItem href="/#faq" title="Ahorra tiempo">
-                    Accede rápidamente a soluciones compartidas por la comunidad.
+                    Accede rápidamente a soluciones compartidas por la
+                    comunidad.
                   </ListItem>
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
 
-
             <NavigationMenuItem>
               <NavigationMenuLink
                 asChild
                 className="px-4 py-2 text-sm font-medium hover:bg-transparent"
               >
-                <Link href="/docs" className="text-sm md:text-base">Herramientas</Link>
+                <Link href="/docs" className="text-sm md:text-base">
+                  Recursos
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
 
@@ -93,16 +112,17 @@ export function NavBar() {
                 asChild
                 className="px-4 py-2 text-sm font-medium hover:bg-transparent"
               >
-                <Link href="/docs" className="text-sm md:text-base">Blog</Link>
+                <Link href="/docs" className="text-sm md:text-base">
+                  Blog
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
-
           </NavigationMenuList>
         </NavigationMenu>
 
         <div className="flex md:gap-1 items-center justify-center ">
           <ModeToggle />
-          <FormLogin/>
+          <FormLogin />
           <SheetOffCanvas />
         </div>
       </div>
@@ -132,4 +152,3 @@ function ListItem({
     </li>
   );
 }
-
