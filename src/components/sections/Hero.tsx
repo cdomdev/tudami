@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Sparkles } from "lucide-react";
 import { gsap } from "gsap";
-import { ButtonGsap } from "./ui/ButtonsGsap";
+import { ButtonGsap } from "@/components/ui/ButtonsGsap";
 
 const palabras = [
   "hacer preguntas",
@@ -47,7 +47,7 @@ export function Hero() {
   }, []);
 
   return (
-    <div className="text-center py-16 px-4 max-w-3xl mx-auto my-10 overflow-hidden ">
+    <div className="text-center pt-16 px-4 max-w-3xl mx-auto mt-10 mb-5 overflow-hidden ">
       <div className="flex flex-col items-center justify-center pb-6 gap-2 mb-4 md:flex-row md:gap-3">
         <h1 className="relative text-5xl md:text-7xl font-extrabold text-foreground leading-tight">
           <span className="inline-block relative">
@@ -64,7 +64,7 @@ export function Hero() {
           , aprendemos mejor.
         </h1>
       </div>
-      <h2 className="relative flex flex-col md:flex-row justify-center items-center gap-2 text-xl md:text-4xl font-bold text-muted-foreground mb-12 text-center">
+      <h2 className="relative flex flex-col md:flex-row justify-center items-center gap-2 text-xl md:text-4xl  text-muted-foreground mb-12 text-center">
         <span className="hidden dark:inline-block absolute -inset-x-4 -top-14 size-60 mx-auto rounded-full bg-white/10 blur-2xl z-0" />
 
         <strong className="relative z-10 block text-foreground">
@@ -72,7 +72,7 @@ export function Hero() {
         </strong>
         <span
           ref={textoRef}
-          className="relative z-10 block font-bold transition-opacity duration-400 text-blue-800 dark:text-blue-500"
+          className="relative z-10 block font-semibold  text-blue-800 dark:text-blue-500"
         >
           {palabras[index]}
         </span>

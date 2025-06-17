@@ -20,30 +20,30 @@ export default function FormLogin() {
       <Button
         onClick={() => setOpen(true)}
         variant="ghost"
-        className="bg-transparent px-3 py-6 text-base md:text-lg rounded-xl cursor-pointer "
+        className="bg-transparent hover:dark:bg-gray-50/5 px-3 py-6 text-sm md:text-base rounded-base cursor-pointer "
       >
         <span className="bg-blue-500 text-white rounded-full p-1.5">
           <User className="size-5" />
         </span>
-        <span className="hidden md:flex font-bold">Iniciar sesion</span>
+        <span className="hidden md:flex font-semibold">Iniciar sesion</span>
       </Button>
       <Modal modalTitle="Iniciar sesión" isOpen={open} onOpenChange={setOpen}>
-        <div className="p-6 grid place-content-center">
-          <div className="relative flex justify-center items-center mb-4">
+        <div className="py-3 grid place-content">
+          <div className="relative flex justify-center items-center mb-10">
             <Image
               className="relative z-10"
               src="/board.webp"
-              alt="Ilustración de ayuda mutua"
-              width={160}
-              height={160}
+              alt="logo-tudami"
+              width={130}
+              height={130}
             />
           </div>
 
           <div className="text-center mb-6">
-            <h4 className="text-lg font-semibold text-slate-800 dark:text-gray-100">
+            <h4 className="text-lg font-semibold text-slate-800 ">
               Bienvenido a Tudami
             </h4>
-            <p className="text-sm text-muted-foreground max-w-xs mx-auto ">
+            <p className="text-sm/tight text-muted-foreground  mx-auto ">
               Inicia sesión para compartir tus dudas, explorar respuestas o
               ayudar a otros.
             </p>

@@ -67,9 +67,8 @@ export default function RootLayout({
             aria-hidden
             className="fixed inset-0 -z-10 h-screen w-screen overflow-hidden bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] dark:bg-[size:20px_20px]"
           />
-
           <NavBar />
-          <main className="p-0">{children}</main>
+          <main className="p-0 w-screen">{children}</main>
         </ThemeProvider>
       </body>
     </html>

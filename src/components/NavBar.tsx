@@ -45,11 +45,11 @@ export function NavBar() {
     }
   `}
     >
-      <div className="flex items-center justify-between px-3 py-4 max-w-6xl mx-auto">
+      <div className="flex items-center justify-between px-3 py-3 max-w-6xl mx-auto">
         <div className="flex items-center">
           <Link
             href="/"
-            className="flex items-center gap-1 font-bold text-primary relative transition-all duration-300 text-3xl"
+            className="flex items-center gap-1 font-bold text-primary relative transition-all duration-300 text-2xl"
           >
             <Image
               src="/board.webp"
@@ -65,11 +65,11 @@ export function NavBar() {
         <NavigationMenu className="hidden md:flex flex-1 relative">
           <NavigationMenuList className="flex gap-4 justify-center w-full">
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent cursor-pointer font-semibold text-base md:text-lg">
+              <NavigationMenuTrigger className="bg-transparent hover:dark:bg-gray-50/5 cursor-pointer font-normal text-sm md:text-base">
                 Características
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="grid w-[600px] gap-2 p-4 md:grid-cols-2 text-base">
+                <ul className="grid w-[600px] gap-2 p-4 md:grid-cols-2 ">
                   <ListItem href="/explorar" title="Explora dudas">
                     Encuentra respuestas públicas a preguntas frecuentes de
                     otros aprendices.
@@ -97,7 +97,7 @@ export function NavBar() {
               <NavigationMenuLink asChild>
                 <Link
                   href="/docs"
-                  className="bg-transparent cursor-pointer  font-semibold text-base md:text-lg px-3"
+                  className="bg-transparent hover:dark:bg-gray-50/5 cursor-pointer  font-normal text-sm md:text-base px-3"
                 >
                   Recursos
                 </Link>
@@ -108,7 +108,7 @@ export function NavBar() {
               <NavigationMenuLink asChild>
                 <Link
                   href="/docs"
-                  className="bg-transparent cursor-pointer font-semibold text-base md:text-lg px-3"
+                  className="bg-transparent hover:dark:bg-gray-50/5 cursor-pointer font-normal text-sm md:text-base px-3"
                 >
                   Blog
                 </Link>
@@ -140,10 +140,10 @@ function ListItem({
           href={href}
           className="block select-none rounded-sm p-3 leading-none no-underline outline-none transition-colors hover:bg-none  "
         >
-          <div className="text-lg/tight font-semibold text-balance">
+          <div className="text-lg/tight font-normal text-balance">
             {title}
           </div>
-          <p className="text-muted-foreground text-base leading-snug text-pretty">
+          <p className="text-muted-foreground text-sm leading-snug text-pretty">
             {children}
           </p>
         </Link>

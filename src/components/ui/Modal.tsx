@@ -23,7 +23,7 @@ export function Modal({
 }: ModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange} >
-      <DialogContent className="sm:max-w-[425px] [&>button:last-child]:hidden">
+      <DialogContent className="sm:max-w-[425px] [&>button:last-child]:hidden dark:bg-white">
         <DialogHeader>
           <DialogTitle className="sr-only">{modalTitle}</DialogTitle>
         </DialogHeader>
@@ -35,7 +35,6 @@ export function Modal({
             <X className="h-6 w-6" />
           </button>
         </DialogClose>
-
         {children}
       </DialogContent>
     </Dialog>
