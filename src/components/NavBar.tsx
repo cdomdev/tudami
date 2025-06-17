@@ -45,22 +45,19 @@ export function NavBar() {
     }
   `}
     >
-      <div className="flex items-center justify-between px-3 py-2 max-w-6xl mx-auto">
+      <div className="flex items-center justify-between px-3 py-4 max-w-6xl mx-auto">
         <div className="flex items-center">
           <Link
             href="/"
-            className="flex items-center gap-1 font-bold text-primary relative transition-all duration-300 text-2xl"
+            className="flex items-center gap-1 font-bold text-primary relative transition-all duration-300 text-3xl"
           >
-            <span className="hidden dark:inline-block absolute size-12 rounded-full bg-white/20 blur-md -z-10" />
-            <span className="relative dark:bg-white/10 dark:rounded-full dark:p-1 transition-all duration-300">
-              <Image
-                src="/board.webp"
-                width={50}
-                height={50}
-                alt="logo-tuadmi"
-                className="relative transition-all duration-300"
-              />
-            </span>
+            <Image
+              src="/board.webp"
+              width={50}
+              height={50}
+              alt="logo-tudami"
+              className="relative transition-all duration-300"
+            />
             Tudami
           </Link>
         </div>
@@ -68,11 +65,11 @@ export function NavBar() {
         <NavigationMenu className="hidden md:flex flex-1 relative">
           <NavigationMenuList className="flex gap-4 justify-center w-full">
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent hover:!bg-transparent focus:!bg-transparent focus:outline-none ring-0 shadow-none text-sm md:text-base">
+              <NavigationMenuTrigger className="bg-transparent cursor-pointer font-semibold text-base md:text-lg">
                 Características
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="grid w-[600px] gap-2 p-4 md:grid-cols-2">
+                <ul className="grid w-[600px] gap-2 p-4 md:grid-cols-2 text-base">
                   <ListItem href="/explorar" title="Explora dudas">
                     Encuentra respuestas públicas a preguntas frecuentes de
                     otros aprendices.
@@ -97,22 +94,22 @@ export function NavBar() {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuLink
-                asChild
-                className="px-4 py-2 text-sm font-medium hover:bg-transparent"
-              >
-                <Link href="/docs" className="text-sm md:text-base">
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/docs"
+                  className="bg-transparent cursor-pointer  font-semibold text-base md:text-lg px-3"
+                >
                   Recursos
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuLink
-                asChild
-                className="px-4 py-2 text-sm font-medium hover:bg-transparent"
-              >
-                <Link href="/docs" className="text-sm md:text-base">
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/docs"
+                  className="bg-transparent cursor-pointer font-semibold text-base md:text-lg px-3"
+                >
                   Blog
                 </Link>
               </NavigationMenuLink>
@@ -120,7 +117,7 @@ export function NavBar() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <div className="flex md:gap-1 items-center justify-center ">
+        <div className="flex md:gap-3 items-center justify-center ">
           <ModeToggle />
           <FormLogin />
           <SheetOffCanvas />
@@ -143,8 +140,10 @@ function ListItem({
           href={href}
           className="block select-none rounded-sm p-3 leading-none no-underline outline-none transition-colors hover:bg-none  "
         >
-          <div className="text-sm font-medium">{title}</div>
-          <p className="text-muted-foreground text-sm leading-snug">
+          <div className="text-lg/tight font-semibold text-balance">
+            {title}
+          </div>
+          <p className="text-muted-foreground text-base leading-snug text-pretty">
             {children}
           </p>
         </Link>

@@ -20,7 +20,7 @@ export default function FormLogin() {
       <Button
         onClick={() => setOpen(true)}
         variant="ghost"
-        className="bg-transparent px-3 py-6 text-sm md:text-base rounded-xl cursor-pointer "
+        className="bg-transparent px-3 py-6 text-base md:text-lg rounded-xl cursor-pointer "
       >
         <span className="bg-blue-500 text-white rounded-full p-1.5">
           <User className="size-5" />
@@ -30,8 +30,6 @@ export default function FormLogin() {
       <Modal modalTitle="Iniciar sesión" isOpen={open} onOpenChange={setOpen}>
         <div className="p-6 grid place-content-center">
           <div className="relative flex justify-center items-center mb-4">
-            <span className="hidden dark:inline-block absolute size-40 rounded-full bg-white/20 blur-2xl z-0" />
-
             <Image
               className="relative z-10"
               src="/board.webp"
@@ -54,7 +52,7 @@ export default function FormLogin() {
           <div className="flex flex-col gap-3 w-full">
             <button
               onClick={() => loginWith("google")}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md flex items-center justify-center gap-3 hover:bg-blue-500 transition-colors"
+              className="bg-blue-600 text-white px-4 py-2 rounded-md flex items-center justify-center gap-3 hover:bg-blue-500 transition-colors cursor-pointer"
             >
               <GoogleIcon className="w-5 h-5" />
               Continuar con Google
@@ -62,7 +60,7 @@ export default function FormLogin() {
 
             <button
               onClick={() => loginWith("github")}
-              className="bg-gray-900 text-white px-4 py-2 rounded-md flex items-center justify-center gap-3 hover:bg-gray-800 transition-colors"
+              className="bg-gray-900 text-white px-4 py-2 rounded-md flex items-center justify-center gap-3 hover:bg-gray-800 transition-colors cursor-pointer"
             >
               <GitHubIcon className="w-5 h-5" />
               Continuar con GitHub
