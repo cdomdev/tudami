@@ -36,7 +36,7 @@ export function NavBar() {
 
   return (
     <nav
-      className={`fixed top-0 w-screen left-0  right-0 z-50 transition-all duration-300 ease-in-out
+      className={`fixed top-0 w-screen left-0  px-3 md:px-0 right-0 z-50 transition-all duration-300 ease-in-out
     ${showNav ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3"}
     ${
       scrolled
@@ -45,7 +45,7 @@ export function NavBar() {
     }
   `}
     >
-      <div className="flex items-center justify-between px-3 py-3 max-w-6xl mx-auto">
+      <div className="flex items-center justify-between  py-3 max-w-6xl mx-auto">
         <div className="flex items-center">
           <Link
             href="/"

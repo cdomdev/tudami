@@ -15,7 +15,8 @@ export function HowIsWorks() {
         "“¿Cómo lleno el formato F01?”",
         "“¿Qué significa un ambiente virtual en Sofiaplus?”",
       ],
-      urlIcon: "/windows.svg",
+
+      urlIcon: "/share.svg",
     },
     {
       paso: 2,
@@ -27,7 +28,7 @@ export function HowIsWorks() {
 
         "No necesitas saber cómo redactarla perfecto, solo cuéntala con tus palabras.",
       ],
-      urlIcon: "/share.svg",
+      urlIcon: "/windows.svg",
     },
     {
       paso: 3,
@@ -40,11 +41,13 @@ export function HowIsWorks() {
   ];
   return (
     <>
-      <h3 className="text-center font-bold text-2xl">¿Como funciona Tudumi?</h3>
+      <h2 className="text-center font-bold text-2xl md:text-3xl">
+        ¿Como funciona Tudami?
+      </h2>
       <p className="text-base  text-center text-accent-foreground">
         Es muy facil, sigue los siguientes pasos
       </p>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 my-10 ">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 my-10 max-w-6xl mx-auto">
         {items.map((item, index) => (
           <CardHowItWorks
             key={item.paso || index}

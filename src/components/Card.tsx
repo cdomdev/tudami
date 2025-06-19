@@ -39,7 +39,7 @@ export const CardHowItWorks: FC<CardProps> = ({
         </header>
 
         <div className="relative z-10">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3 leading-tight">
+          <h3 className="text-base md:text-lg font-medium text-gray-900 dark:text-white mb-3 leading-tight">
             {title}
           </h3>
           <p className="text-sm text-accent-foreground leading-relaxed mb-4">

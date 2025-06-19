@@ -10,14 +10,14 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
-import { AlignLeft } from "lucide-react"
+import { AlignJustify } from "lucide-react"
 
 export function SheetOffCanvas() {
     return (
         <Sheet>
             <SheetTrigger asChild >
                 <Button variant="ghost" className="block md:hidden p-0">
-                    <AlignLeft className="size-8 "/>
+                    <AlignJustify className="size-8 "/>
                     <span className="sr-only">Button lef</span>
                 </Button>
             </SheetTrigger>

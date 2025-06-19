@@ -1,10 +1,12 @@
 export function SectionContainer({
   children,
+  className = "",
 }: {
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
-    <section className={`mt-16 max-w-6xl mx-auto`}>
+    <section className={`${className} mt-20 mx-auto`}>
       {children}
     </section>
   );
