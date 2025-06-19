@@ -55,11 +55,11 @@ export function CarouselHistories() {
                   </div>
                   <div className="leading-tight">
                     <p className="text-sm font-semibold">{h.nombre}</p>
-                    <p className="text-xs text-muted-foreground">{h.fecha}</p>
+                    <p className="text-xs ">{h.fecha}</p>
                   </div>
                 </div>
                 <div className="w-full h-px bg-accent-foreground my-4" />
-                <p className="text-sm text-muted-foreground italic">
+                <p className="text-sm  italic">
                   "{h.historia}"
                 </p>
               </div>

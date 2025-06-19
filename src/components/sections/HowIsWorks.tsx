@@ -49,14 +49,16 @@ export function HowIsWorks() {
       </p>
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 my-10 max-w-6xl mx-auto">
         {items.map((item, index) => (
-          <CardHowItWorks
-            key={item.paso || index}
-            description={item.descrition}
-            title={item.title}
-            paso={item.paso}
-            coment={item.comment}
-            iconUrl={item.urlIcon}
-          />
+          <li key={item.paso || index}>
+            <CardHowItWorks
+              key={item.paso || index}
+              description={item.descrition}
+              title={item.title}
+              paso={item.paso}
+              coment={item.comment}
+              iconUrl={item.urlIcon}
+            />
+          </li>
         ))}
       </ul>
       <div className=" w-full">

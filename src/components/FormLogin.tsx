@@ -24,6 +24,7 @@ export default function FormLogin() {
       >
         <span className="bg-blue-500 text-white rounded-full p-1.5">
           <User className="size-5" />
+          <span className="sr-only">Iniciar sesion</span>
         </span>
         <span className="hidden md:flex font-semibold">Iniciar sesion</span>
       </Button>
