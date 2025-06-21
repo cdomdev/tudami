@@ -4,18 +4,24 @@ type Session = {
   id: string;
   email: string;
   full_name: string;
-  avatar_url?: string
-  provider?: string
+  avatar_url?: string;
+  provider?: string;
 };
 
 type SessionState = {
   user: Session | null;
+  isLoggedIn: boolean;
+  isLoading: boolean; 
   setUser: (user: Session) => void;
   clearUser: () => void;
+  setLoading: (value: boolean) => void;
 };
 
 export const useSession = create<SessionState>((set) => ({
   user: null,
-  setUser: (user) => set({ user }),
-  clearUser: () => set({ user: null }),
+  isLoggedIn: false,
+  isLoading: true,
+  setUser: (user) => set({ user, isLoggedIn: true, isLoading: false }),
+  clearUser: () => set({ user: null, isLoggedIn: false, isLoading: false }),
+  setLoading: (value) => set({ isLoading: value }),
 }));

@@ -11,12 +11,13 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { ModeToggle } from "./ToggleTheme";
-import FormLogin from "@/components/FormLogin";
 import Image from "next/image";
+import Session from "../app/auth/validateSesion/ValidateSesion.client";
 
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [showNav] = useState(true);
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
@@ -37,7 +38,7 @@ export function NavBar() {
   return (
     <nav
       className={`fixed top-0 w-screen left-0  px-3 md:px-0 right-0 z-50 transition-all duration-300 ease-in-out
-    ${showNav ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3"}
+    ${showNav ? "opacity-100 " : "opacity-0 "}
     ${
       scrolled
         ? "bg-white/10 backdrop-blur-md shadow-md"
@@ -52,7 +53,7 @@ export function NavBar() {
             className="flex items-center gap-1 font-bold text-primary relative transition-all duration-300 text-2xl"
           >
             <Image
-              src="/board.webp"
+              src="/logo.webp"
               width={50}
               height={50}
               alt="logo-tudami"
@@ -119,7 +120,7 @@ export function NavBar() {
 
         <div className="flex md:gap-3 items-center justify-center ">
           <ModeToggle />
-          <FormLogin />
+          <Session />
           <SheetOffCanvas />
         </div>
       </div>
@@ -140,9 +141,7 @@ function ListItem({
           href={href}
           className="block select-none rounded-sm p-3 leading-none no-underline outline-none transition-colors hover:bg-none  "
         >
-          <div className="text-lg/tight font-normal text-balance">
-            {title}
-          </div>
+          <div className="text-lg/tight font-normal text-balance">{title}</div>
           <p className="text-muted-foreground text-sm leading-snug text-pretty">
             {children}
           </p>

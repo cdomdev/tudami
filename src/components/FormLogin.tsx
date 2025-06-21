@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { User } from "lucide-react";
 import { supabase } from "@/lib/supabase";
@@ -12,7 +13,12 @@ export default function FormLogin() {
   const [open, setOpen] = useState(false);
 
   const loginWith = async (provider: "google" | "github") => {
-    await supabase.auth.signInWithOAuth({ provider });
+    await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
   };
 
   return (
@@ -29,11 +35,11 @@ export default function FormLogin() {
         <span className="hidden md:flex font-semibold">Iniciar sesion</span>
       </Button>
       <Modal modalTitle="Iniciar sesión" isOpen={open} onOpenChange={setOpen}>
-        <div className="py-3 grid place-content">
+        <div className="py-3 grid place-content ">
           <div className="relative flex justify-center items-center mb-10">
             <Image
               className="relative z-10"
-              src="/board.webp"
+              src="/logo.webp"
               alt="logo-tudami"
               width={130}
               height={130}
@@ -41,7 +47,7 @@ export default function FormLogin() {
           </div>
 
           <div className="text-center mb-6">
-            <h4 className="text-lg font-semibold text-slate-800 ">
+            <h4 className="text-lg font-semibold text-slate-800 dark:text-white ">
               Bienvenido a Tudami
             </h4>
             <p className="text-sm/tight text-muted-foreground  mx-auto ">
@@ -61,7 +67,7 @@ export default function FormLogin() {
 
             <button
               onClick={() => loginWith("github")}
-              className="bg-gray-900 text-white px-4 py-2 rounded-md flex items-center justify-center gap-3 hover:bg-gray-800 transition-colors cursor-pointer"
+              className="bg-gray-900 text-white px-4 py-2 rounded-md flex items-center justify-center gap-3 hover:bg-gray-950 transition-colors cursor-pointer"
             >
               <GitHubIcon className="w-5 h-5" />
               Continuar con GitHub

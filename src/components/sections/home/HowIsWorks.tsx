@@ -1,7 +1,7 @@
 "use client";
 
 import { CardHowItWorks } from "@/components/Card";
-import { ButtonGsap } from "../ui/ButtonsGsap";
+import { ButtonGsap } from "../../ui/ButtonsGsap";
 import Image from "next/image";
 
 export function HowIsWorks() {

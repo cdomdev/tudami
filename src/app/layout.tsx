@@ -3,6 +3,8 @@ import { Rubik } from "next/font/google";
 import "@/app/globals.css";
 import { NavBar } from "@/components/NavBar";
 import { ThemeProvider } from "@/components/theme-provider";
+import { SessionHydrator } from "@/app/auth/callback/SessionHydrator";
+import { Footer } from "@/components/Footer";
 
 const rubikFont = Rubik({
   variable: "--font-rubik",
@@ -56,7 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={rubikFont.variable} suppressHydrationWarning>
-      <body className="">
+      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -65,10 +67,12 @@ export default function RootLayout({
         >
           <div
             aria-hidden
-            className="fixed inset-0 -z-10 h-screen w-screen overflow-hidden bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] dark:bg-[size:20px_20px]"
+            className="fixed inset-0 -z-10 h-screen w-screen overflow-hidden bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] dark:bg-[size:30px_20px]"
           />
+          <SessionHydrator />
           <NavBar />
-          <main className="p-0 w-screen">{children}</main>
+          <main className="w-screen min-h-dvh">{children}</main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

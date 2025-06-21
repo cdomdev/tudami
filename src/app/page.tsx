@@ -1,9 +1,9 @@
-import { Hero } from "@/components/sections/Hero";
+import { Hero } from "@/components/sections/home/Hero";
 import { SectionContainer } from "@/components/SectionContainer";
-import { HowIsWorks } from "@/components/sections/HowIsWorks";
-import { Histories } from "@/components/sections/Histories";
-import { FormSubcription } from "@/components/sections/FormSubcribtions";
-import { FrequentlyQuestions } from "@/components/sections/FrequentlyQuiestions";
+import { HowIsWorks } from "@/components/sections/home/HowIsWorks";
+import { Histories } from "@/components/sections/home/Histories";
+import { FormSubcription } from "@/components/sections/home/FormSubcribtions";
+import { FrequentlyQuestions } from "@/components/sections/home/FrequentlyQuiestions";
 
 export default function Home() {
   return (
@@ -20,7 +20,7 @@ export default function Home() {
         <Histories />
       </SectionContainer>
 
-      <SectionContainer>
+      <SectionContainer id="faq">
         <FrequentlyQuestions />
       </SectionContainer>
 
