@@ -3,12 +3,12 @@ import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor
 export default function Editor() {
   return (
     <div className="flex flex-col px-4 ">
-      <h1 className="text-center font-semibold mb-10 text-4xl text-primary">
+      <h1 className="text-center font-semibold mb-10 text-2xl md:text-4xl text-primary">
         ¿En qué necesitas ayuda?
       </h1>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-6 gap-6">
-        <div className="md:col-span-4 w-full p-6 bg-accent border rounded-lg shadow-sm">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-6">
+        <div className="md:col-span-3 w-full p-6 bg-accent border rounded-lg shadow-sm">
           <div className="mb-6">
             <label htmlFor="titulo" className="font-semibold text-lg">
               Dale un título claro a tu pregunta
@@ -17,7 +17,7 @@ export default function Editor() {
               type="text"
               id="titulo"
               placeholder="Ej: ¿Cómo vincular varias evidencias en Sofiaplus?"
-              className="w-full border py-2 px-3 mt-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary bg-white text-black"
+              className="w-full border py-2 px-3 mt-2 rounded-md focus:outline-none text-xs md:text-base focus:ring-1 focus:ring-primary bg-white text-black"
             />
           </div>
 

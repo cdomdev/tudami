@@ -6,7 +6,7 @@
 }
 
 .dark {
-  --tt-toolbar-bg-color: var(--black);
+  --tt-toolbar-bg-color: #d1d5dc;
   --tt-toolbar-border-color: var(--tt-gray-dark-a-50);
 }
 
@@ -14,6 +14,7 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
+
 
   &-group {
     display: flex;
@@ -24,8 +25,8 @@
       display: none;
     }
 
-    &:empty + .tiptap-separator,
-    .tiptap-separator + &:empty {
+    &:empty+.tiptap-separator,
+    .tiptap-separator+&:empty {
       display: none;
     }
   }
@@ -35,11 +36,12 @@
     top: 0;
     z-index: 10;
     width: 100%;
+    justify-content: center;
     min-height: var(--tt-toolbar-height);
     background: var(--tt-toolbar-bg-color);
     border-bottom: 1px solid var(--tt-toolbar-border-color);
     padding: 0 0.5rem;
-    overflow-x: auto;
+    overflow-x: auto ;
     overscroll-behavior-x: contain;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
@@ -52,6 +54,10 @@
     @media (max-width: 480px) {
       position: fixed;
       top: auto;
+      width: 100%;
+      overflow-x: auto;
+      left: 0;
+      right: 0;
       bottom: 0;
       height: calc(var(--tt-toolbar-height) + var(--tt-safe-area-bottom));
       border-top: 1px solid var(--tt-toolbar-border-color);
@@ -71,10 +77,7 @@
     --tt-toolbar-border-width: 1px;
 
     padding: 0.188rem;
-    border-radius: calc(
-      var(--tt-toolbar-padding) + var(--tt-radius-lg) +
-        var(--tt-toolbar-border-width)
-    );
+    border-radius: calc(var(--tt-toolbar-padding) + var(--tt-radius-lg) + var(--tt-toolbar-border-width));
     border: var(--tt-toolbar-border-width) solid var(--tt-toolbar-border-color);
     background-color: var(--tt-toolbar-bg-color);
     box-shadow: var(--tt-shadow-elevated-md);

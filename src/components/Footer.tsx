@@ -7,7 +7,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6 space-y-6">
         <div className="text-center space-y-2">
           <Image
-            src="/logo.webp"
+            src="/logo.svg"
             alt="Tudami Logo"
             width={80}
             height={80}
@@ -21,7 +21,7 @@ export function Footer() {
         <div className="border-t border-gray-200 dark:border-sky-100 transition-colors duration-300" />
 
         <div className="grid grid-cols-1 sm:grid-cols-1  lg:grid-cols-2 gap-6 text-center my-10">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 text-sm">
             <div className="flex flex-col items-start  text-left">
               <h5 className="text-base font-semibold mb-3 uppercase text-gray-700 dark:text-gray-300">
                 Recursos

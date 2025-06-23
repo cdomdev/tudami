@@ -64,7 +64,7 @@ export function Hero() {
           , aprendemos mejor.
         </h1>
       </div>
-      <h2 className="relative flex flex-col md:flex-row justify-center items-center gap-2 text-xl md:text-4xl  text-muted-foreground mb-12 text-center">
+      <h2 className="relative flex flex-col md:flex-row justify-center items-center gap-2 text-xl lg:text-4xl  text-muted-foreground mb-12 text-center">
         <span className="hidden dark:inline-block absolute -inset-x-4 -top-14 size-60 mx-auto rounded-full bg-white/10 blur-2xl z-0" />
 
         <strong className="relative z-10 block text-foreground">

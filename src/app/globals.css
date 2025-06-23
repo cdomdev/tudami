@@ -22,12 +22,12 @@
 }
 
 .tiptap-button[data-active-state="on"] {
-  background-color: #1b8edb !important;
+  background-color: #1da0f7 !important;
   border-radius: 5px
 }
 
 .tiptap-button:hover{
-  background-color: #1287d4 !important;
+  background-color: #38acfa !important;
   border-radius: 5px;
   cursor: pointer;
 }

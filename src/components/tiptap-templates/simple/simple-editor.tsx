@@ -54,7 +54,7 @@ export function SimpleEditor() {
 
   return (
     <EditorContext.Provider value={{ editor }}>
-      <Toolbar className="bg-gray-300! dark:bg-gray-300! text-black mx-auto! mt-2">
+      <Toolbar className="text-black">
         <ToolbarGroup>
           <UndoRedoButton action="undo" />
           <UndoRedoButton action="redo" />
@@ -97,7 +97,7 @@ export function SimpleEditor() {
       <div className=" border rounded-md bg-background ">
         <EditorContent
           editor={editor}
-          className="prose min-w-full min-h-80 max-h-80 dark:bg-white dark:text-black p-2 w-full 5"
+          className="prose min-w-full min-h-80 max-h-80 dark:bg-white dark:text-black p-2 w-full rounded-sm"
         />
       </div>
     </EditorContext.Provider>

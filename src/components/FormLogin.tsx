@@ -39,7 +39,7 @@ export default function FormLogin() {
           <div className="relative flex justify-center items-center mb-10">
             <Image
               className="relative z-10"
-              src="/logo.webp"
+              src="/logo.svg"
               alt="logo-tudami"
               width={130}
               height={130}

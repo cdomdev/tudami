@@ -12,14 +12,14 @@ export default function NotFound() {
       <span className="hidden dark:inline-block absolute -inset-x-4  size-40 mx-auto rounded-full bg-blue-200/20 blur-3xl z-0" />
       <div className="max-w-md absolute">
         <Image
-          src="/404.webp"
+          src="/404.svg"
           alt="image-404"
-          width={300}
-          height={300}
-          className="mx-auto"
+          width={220}
+          height={220}
+          className="mx-auto relative"
         />
         <p className="text-2xl font-semibold">Página no encontrada</p>
-        <p className="text-gray-600 dark:text-gray-400 mb-10 text-pretty text-sm px-1 md:text-base">
+        <p className="text-gray-600 dark:text-gray-400 mb-10 text-pretty text-sm px-10 md:text-base md:px-0">
           Lo sentimos, la página que buscas no existe o fue movida.
         </p>
         <ButtonGsap

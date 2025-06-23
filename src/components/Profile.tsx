@@ -29,11 +29,11 @@ export function Profile() {
   };
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-5">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="relative p-2 rounded-full hover:bg-muted">
-            <Bell className="w-5 h-5" />
+          <button className="relative p-1.5 cursor-pointer rounded-full hover:bg-muted ring-0 focus:ring-0 outline-none focus:bg-transparent focus:outline-none">
+            <Bell className="w-6 h-6" />
             <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full animate-accordion-up" />
           </button>
         </DropdownMenuTrigger>
@@ -46,7 +46,6 @@ export function Profile() {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Perfil */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar className="cursor-pointer w-10 h-10">

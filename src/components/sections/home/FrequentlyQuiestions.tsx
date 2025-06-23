@@ -68,7 +68,7 @@ export function FrequentlyQuestions() {
               <AccordionTrigger className="md:text-lg cursor-pointer  ">
                 {item.title}
               </AccordionTrigger>
-              <AccordionContent className="flex flex-col text-pretty md:text-base  dark:bg-[#0b1422] px-4 ">
+              <AccordionContent className="flex flex-col text-pretty md:text-base  dark:bg-[#0b1422] px-4 py-2 ">
                 {item.content.map((text, index) => (
                   <p key={index}>{text}</p>
                 ))}
