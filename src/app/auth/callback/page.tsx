@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { useSession } from "@/context/context.sesion";
+import { Spinner } from "@/components/Spiner";
 
 export default function AuthCallback() {
   const router = useRouter();
@@ -22,7 +23,6 @@ export default function AuthCallback() {
       const { session } = data;
       const accessToken = session.access_token;
 
-      //  Guardar cookie
       await fetch("/api/set-cookie", {
         method: "POST",
         headers: {
@@ -31,7 +31,7 @@ export default function AuthCallback() {
         body: JSON.stringify({ token: accessToken }),
       });
 
-      //  Guardar en Zustand
+      //  Zustand
       const { id, email, user_metadata, app_metadata } = session.user;
       const full_name = user_metadata?.full_name || user_metadata?.name || "";
       const avatar_url = user_metadata?.avatar_url || "";
@@ -43,10 +43,8 @@ export default function AuthCallback() {
         full_name,
         avatar_url,
         provider,
-        isLoggedIn: true,
       });
 
-      // guardar en Supabase
       await supabase.from("users").upsert({
         id,
         email,
@@ -56,7 +54,6 @@ export default function AuthCallback() {
         role_id: 2,
       });
 
-      // 4. Redirigir al usuario
       const redirect = params.get("redirectTo") || "/";
       router.replace(redirect);
     };
@@ -66,6 +63,7 @@ export default function AuthCallback() {
 
   return (
     <div className="min-h-screen grid place-content-center text-center">
+      <Spinner className="w-7 h-7 inline-flex mx-auto" />
       <p className="text-lg">Autenticando…</p>
     </div>
   );

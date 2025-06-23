@@ -2,36 +2,6 @@
 @import "tw-animate-css";
 
 
-.prose {
-  font-size: 1rem;
-  line-height: 1.75;
-}
-
-.tiptap {
-  outline: none;
-  min-height: 280px;
-}
-
-.tiptap-toolbar {
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-.tiptap-toolbar-group {
-  display: flex;
-}
-
-.tiptap-button[data-active-state="on"] {
-  background-color: #1da0f7 !important;
-  border-radius: 5px
-}
-
-.tiptap-button:hover{
-  background-color: #38acfa !important;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
 
 
 @custom-variant dark (&:is(.dark *));
@@ -146,15 +116,39 @@
 }
 
 
-html{
+html {
   scroll-behavior: smooth;
 }
+
 body {
   scrollbar-gutter: stable;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
+
+
+/* Efecto de línea bajo los links */
+.custom-link::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: #909ba7;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.custom-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+
+/* scroll bar */
 
 ::-webkit-scrollbar {
   width: 12px;
@@ -172,6 +166,37 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(182, 177, 177);
+}
+
+/* table questions */
+.prose {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.tiptap {
+  outline: none;
+  min-height: 280px;
+}
+
+.tiptap-toolbar {
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.tiptap-toolbar-group {
+  display: flex;
+}
+
+.tiptap-button[data-active-state="on"] {
+  background-color: #1da0f7 !important;
+  border-radius: 5px
+}
+
+.tiptap-button:hover {
+  background-color: #38acfa !important;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 @layer base {

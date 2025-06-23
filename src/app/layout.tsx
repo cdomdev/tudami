@@ -35,7 +35,6 @@ export const metadata: Metadata = {
     locale: "es_CO",
     type: "website",
   },
-  // x
   twitter: {
     card: "summary_large_image",
     title: "Tudami",
@@ -43,7 +42,6 @@ export const metadata: Metadata = {
     creator: "@tudami",
     images: ["/og-image.png"],
   },
-  // favicon
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",

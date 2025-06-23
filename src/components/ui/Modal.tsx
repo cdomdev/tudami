@@ -22,7 +22,7 @@ export function Modal({
   children,
 }: ModalProps) {
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange} >
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px] [&>button:last-child]:hidden dark:bg-slate-800">
         <DialogHeader>
           <DialogTitle className="sr-only">{modalTitle}</DialogTitle>

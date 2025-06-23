@@ -10,7 +10,6 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { ModeToggle } from "./ToggleTheme";
 import Image from "next/image";
 import { AlignJustify, X } from "lucide-react";
 import Session from "../app/auth/validateSesion/ValidateSesion.client";
@@ -101,13 +100,12 @@ export function NavBar() {
         </NavigationMenu>
 
         <div className="flex md:gap-3 items-center justify-center">
-          <ModeToggle />
           <Session />
           <button
             onClick={() => setOpenMenu(!openMenu)}
             className="md:hidden  text-black dark:text-white relative pl-6"
           >
-            {openMenu ? <X className="w-9 h-9" /> : <AlignJustify className="w-9 h-9  " />}
+            {openMenu ? <X className="w-8 h-8" /> : <AlignJustify className="w-8 h-8  " />}
           </button>
         </div>
       </div>

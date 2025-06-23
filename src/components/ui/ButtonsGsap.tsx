@@ -1,23 +1,23 @@
 "use client";
 
-import {  useEffect, useRef } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
-import Link from "next/link";
 
 interface ButtonGsapProps {
   text: string;
   className?: string;
   href?: string;
-  flairColor?: string; 
+  flairColor?: string;
+  onclick?: () => void;
 }
 
 export function ButtonGsap({
   text,
   className = "",
-  href = "#",
   flairColor = "bg-white",
+  onclick,
 }: ButtonGsapProps) {
-  const buttonRef = useRef<HTMLAnchorElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const flairRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
@@ -88,9 +88,9 @@ export function ButtonGsap({
   }, []);
 
   return (
-    <Link
-      href={href}
+    <button
       ref={buttonRef}
+      onClick={onclick}
       className={`relative inline-flex items-center justify-center rounded-full font-semibold transition-colors duration-150 overflow-hidden group ${className}`}
     >
       <span
@@ -104,6 +104,6 @@ export function ButtonGsap({
       <span className="relative z-10 text-center transition-colors duration-50 group-hover:duration-150">
         {text}
       </span>
-    </Link>
+    </button>
   );
 }

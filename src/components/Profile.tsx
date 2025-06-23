@@ -17,6 +17,7 @@ import { useSession } from "@/context/context.sesion";
 import { Bell, LogOut, User as UserIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import Link from "next/link";
 
 export function Profile() {
   const { user, clearUser } = useSession();
@@ -33,7 +34,7 @@ export function Profile() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="relative p-1.5 cursor-pointer rounded-full hover:bg-muted ring-0 focus:ring-0 outline-none focus:bg-transparent focus:outline-none">
-            <Bell className="w-6 h-6" />
+            <Bell className="w-5 h-5" />
             <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full animate-accordion-up" />
           </button>
         </DropdownMenuTrigger>
@@ -48,7 +49,7 @@ export function Profile() {
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar className="cursor-pointer w-10 h-10">
+          <Avatar className="cursor-pointer w-9 h-9">
             <AvatarImage
               src={user?.avatar_url || ""}
               alt={user?.full_name || ""}
@@ -66,10 +67,10 @@ export function Profile() {
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="gap-2">
+          <Link className="gap-2 flex px-2 items-center text-sm text-gray-300 hover:text-gray-100" href={`/profile/user/${user?.id}`}>
             <UserIcon className="w-4 h-4" />
             Mi perfil
-          </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem className="gap-2 text-red-500" onClick={handleLogout}>
             <LogOut className="w-4 h-4" />
             Cerrar sesión

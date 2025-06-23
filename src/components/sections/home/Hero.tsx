@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { Sparkles } from "lucide-react";
 import { gsap } from "gsap";
 import { ButtonGsap } from "@/components/ui/ButtonsGsap";
+import { useSession } from "@/context/context.sesion";
+import { useRouter } from "next/navigation";
 
 const palabras = [
   "hacer preguntas",
@@ -15,7 +17,24 @@ const palabras = [
 export function Hero() {
   const textoRef = useRef<HTMLSpanElement>(null);
   const [index, setIndex] = useState(0);
+  const router = useRouter();
+  const { openModal, user } = useSession();
+  
+  const handleClickBtnQuestions = () => {
+    if (user) {
+      router.push("/create-questions");
+    } else {
+      openModal();
+    }
+  };
 
+  const handleClickBtnExplore = () => {
+    if (user) {
+      router.push("/explore-questions");
+    } else {
+      openModal();
+    }
+  };
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout>;
 
@@ -72,7 +91,7 @@ export function Hero() {
         </strong>
         <span
           ref={textoRef}
-          className="relative z-10 block font-semibold  text-blue-800 dark:text-blue-500"
+          className="relative z-10 block font-semibold text-transparent bg-clip-text bg-gradient-to-r  from-red-500 to-pink-500"
         >
           {palabras[index]}
         </span>
@@ -80,17 +99,17 @@ export function Hero() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-6">
         <ButtonGsap
-          text="Explorar dudas"
-          href="/questions"
+          text="Hacer preguntas"
           flairColor="bg-indigo-500"
-          className="text-base sm:text-lg w-full font-bold border border-white px-6 py-4 rounded-md bg-black text-white"
+          className="text-base sm:text-lg cursor-pointer w-full font-bold border border-white px-6 py-4 rounded-md bg-black text-white"
+          onclick={handleClickBtnQuestions}
         />
 
         <ButtonGsap
-          text="Publicar mi duda"
-          href="/questions"
+          text="Explorar preguntas"
           flairColor="bg-gradient-to-r from-pink-500 to-red-500"
-          className="text-base w-full  sm:text-lg font-bold border border-gray-300 px-6 py-4 rounded-md bg-white text-black hover:text-white"
+          className="text-base w-full  cursor-pointer sm:text-lg font-bold border border-gray-300 px-6 py-4 rounded-md bg-white text-black hover:text-white"
+          onclick={handleClickBtnExplore}
         />
       </div>
     </div>

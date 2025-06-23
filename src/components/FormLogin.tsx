@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import { User } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { Modal } from "@/components/ui/Modal";
@@ -8,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { GoogleIcon } from "./icons/Google";
 import { GitHubIcon } from "./icons/GitgubIcon";
+import { useSession } from "@/context/context.sesion";
 
 export default function FormLogin() {
-  const [open, setOpen] = useState(false);
-
+  const { isModalOpen, openModal, closeModal } = useSession();
   const loginWith = async (provider: "google" | "github") => {
     await supabase.auth.signInWithOAuth({
       provider,
@@ -24,7 +21,7 @@ export default function FormLogin() {
   return (
     <>
       <Button
-        onClick={() => setOpen(true)}
+        onClick={() => openModal()}
         variant="ghost"
         className="bg-transparent hover:dark:bg-gray-50/5 px-3 py-6 text-sm md:text-base rounded-base cursor-pointer "
       >
@@ -34,7 +31,15 @@ export default function FormLogin() {
         </span>
         <span className="hidden md:flex font-semibold">Iniciar sesion</span>
       </Button>
-      <Modal modalTitle="Iniciar sesión" isOpen={open} onOpenChange={setOpen}>
+      <Modal
+        modalTitle="Iniciar sesión"
+        isOpen={isModalOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            closeModal();
+          }
+        }}
+      >
         <div className="py-3 grid place-content ">
           <div className="relative flex justify-center items-center mb-10">
             <Image

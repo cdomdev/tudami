@@ -1,13 +1,12 @@
-// middleware.ts
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
-  const hasToken = req.cookies.has("sb-token");
+  const hasToken = req.cookies.has("sb-access-token");
 
   if (!hasToken) {
     const url = req.nextUrl.clone();
-    url.pathname = "/login";
+    url.pathname = "/";
     url.searchParams.set("redirectTo", req.nextUrl.pathname);
     return NextResponse.redirect(url);
   }
@@ -17,7 +16,11 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/preguntar",
+    "/create-questions",
+    "/create-questions/:path*",
+    "/explore-questions",
+    "/explore-questions/:path*",
+    "/perfil",
     "/perfil/:path*",
     "/ofertas/nueva",
   ],

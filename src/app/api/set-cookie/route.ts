@@ -6,7 +6,7 @@ export async function POST(req: Request) {
 
   const cookieStore = await cookies();
 
-  cookieStore.set("sb-token", token, {
+  cookieStore.set("sb-access-token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
