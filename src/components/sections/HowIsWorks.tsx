@@ -1,10 +1,13 @@
 "use client";
 
 import { CardHowItWorks } from "@/components/Card";
-import { ButtonGsap } from "../../ui/ButtonsGsap";
+import { ButtonGsap } from "../ui/ButtonsGsap";
 import Image from "next/image";
-
+import { useSession } from "@/context/context.sesion";
+import { useRouter } from "next/navigation";
 export function HowIsWorks() {
+  const { user, openModal } = useSession();
+  const router = useRouter();
   const items = [
     {
       paso: 1,
@@ -39,6 +42,14 @@ export function HowIsWorks() {
       urlIcon: "/Module.svg",
     },
   ];
+
+  const handleClickBtnExplore = () => {
+    if (user) {
+      router.push("/explore-questions");
+    } else {
+      openModal();
+    }
+  };
   return (
     <>
       <h2 className="text-center font-bold text-2xl md:text-3xl">
@@ -77,10 +88,10 @@ export function HowIsWorks() {
         />
         <div className="flex justify-center">
           <ButtonGsap
-            text="Explorar dudas"
-            href="/questions"
+            text="Hacer preguntas"
             flairColor="bg-indigo-500"
-            className="text-base sm:text-lg w-2/4 font-bold border border-white px-6 py-4  rounded-md  bg-black text-white"
+            className="text-base sm:text-lg w-2/4 font-bold border border-white px-6 py-4  rounded-md  bg-black text-white cursor-pointer"
+            onclick={handleClickBtnExplore}
           />
         </div>
       </div>

@@ -48,7 +48,7 @@ export function CarouselHistories() {
               key={index}
               className="basis-11/12 sm:basis-1/2 lg:basis-1/3"
             >
-              <div className="rounded-xl border border-accent bg-accent p-5 h-full shadow-md transition hover:shadow-lg">
+              <div className="rounded-xl border border-accent bg-accent p-5 h-full shadow-md transition hover:shadow-lg cursor-grab">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="bg-primary/10 p-2 rounded-full">
                     <UserCircle2 className="w-6 h-6 text-primary" />
@@ -59,9 +59,7 @@ export function CarouselHistories() {
                   </div>
                 </div>
                 <div className="w-full h-px bg-accent-foreground my-4" />
-                <p className="text-sm  italic">
-                  "{h.historia}"
-                </p>
+                <p className="text-sm  italic">"{h.historia}"</p>
               </div>
             </CarouselItem>
           ))}

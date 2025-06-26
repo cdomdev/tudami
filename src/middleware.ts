@@ -20,8 +20,8 @@ export const config = {
     "/create-questions/:path*",
     "/explore-questions",
     "/explore-questions/:path*",
-    "/perfil",
-    "/perfil/:path*",
+    "/profile",
+    "/profile/:path*",
     "/ofertas/nueva",
   ],
 };

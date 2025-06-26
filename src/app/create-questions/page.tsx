@@ -1,5 +1,11 @@
 import { SectionContainer } from "@/components/SectionContainer";
-import Editor from "@/components/sections/questions/Editor";
+import Editor from "./sections/PageEditor";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Crear una Pregunta",
+  description: "Página para crear nuevas preguntas en Tudami",
+};
 
 export default function QuestionsPage() {
   return (

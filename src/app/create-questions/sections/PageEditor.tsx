@@ -3,14 +3,14 @@ import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor
 export default function Editor() {
   return (
     <div className="flex flex-col px-4 ">
-      <h1 className="text-center font-semibold mb-10 text-2xl md:text-4xl text-primary">
+      <h1 className="text-center font-semibold mb-10 text-xl md:text-3xl text-primary">
         ¿En qué necesitas ayuda?
       </h1>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-6">
         <div className="md:col-span-3 w-full p-6 bg-accent border rounded-lg shadow-sm">
           <div className="mb-6">
-            <label htmlFor="titulo" className="font-semibold text-lg">
+            <label htmlFor="titulo" className="font-medium text-base md:text-lg">
               Dale un título claro a tu pregunta
             </label>
             <input
@@ -22,7 +22,7 @@ export default function Editor() {
           </div>
 
           <div>
-            <span className="font-semibold text-lg block mb-3">
+            <span className="font-medium text-base md:text-lg block mb-3">
               Escribe tu pregunta con detalle
             </span>
             <SimpleEditor />

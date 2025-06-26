@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -54,25 +50,27 @@ export function Profile() {
               src={user?.avatar_url || ""}
               alt={user?.full_name || ""}
             />
-            <AvatarFallback>
-              {user?.full_name?.[0] || "U"}
-            </AvatarFallback>
+            <AvatarFallback>{user?.full_name?.[0] || "U"}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-64">
           <DropdownMenuLabel>
             <div className="font-semibold">{user?.full_name}</div>
-            <div className="text-xs text-muted-foreground">
-              {user?.email}
-            </div>
+            <div className="text-xs text-muted-foreground">{user?.email}</div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <Link className="gap-2 flex px-2 items-center text-sm text-gray-300 hover:text-gray-100" href={`/profile/user/${user?.id}`}>
+          <Link
+            className="gap-2 flex px-2 items-center text-sm dark:text-gray-300 dark:hover:text-gray-100"
+            href={`/profile-user?id=${user?.id}`}
+          >
             <UserIcon className="w-4 h-4" />
             Mi perfil
           </Link>
-          <DropdownMenuItem className="gap-2 text-red-500" onClick={handleLogout}>
-            <LogOut className="w-4 h-4" />
+          <DropdownMenuItem
+            className="gap-2 text-red-500 "
+            onClick={handleLogout}
+          >
+            <LogOut className="w-4 h-4 text-red-500" />
             Cerrar sesión
           </DropdownMenuItem>
         </DropdownMenuContent>
