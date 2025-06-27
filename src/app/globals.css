@@ -127,27 +127,6 @@ body {
 }
 
 
-
-/* Efecto de línea bajo los links */
-.custom-link::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  bottom: 0;
-  left: 0;
-  background-color: #909ba7;
-  transform: scaleX(0);
-  transform-origin: bottom right;
-  transition: transform 0.25s ease-out;
-}
-
-.custom-link:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
-}
-
-
 /* scroll bar */
 
 ::-webkit-scrollbar {
@@ -179,14 +158,8 @@ body {
   min-height: 280px;
 }
 
-.tiptap-toolbar {
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
 
-.tiptap-toolbar-group {
-  display: flex;
-}
+
 
 .tiptap-button[data-active-state="on"] {
   background-color: #1da0f7 !important;

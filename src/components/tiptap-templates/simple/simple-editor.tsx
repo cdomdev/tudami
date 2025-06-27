@@ -27,7 +27,7 @@ import { UndoRedoButton } from "@/components/tiptap-ui/undo-redo-button";
 import { CodeBlockButton } from "@/components/tiptap-ui/code-block-button";
 import { BlockQuoteButton } from "@/components/tiptap-ui/blockquote-button";
 
-export function SimpleEditor() {
+export function SimpleEditor({ onChange }: { onChange?: (html: string) => void }) {
   const editor = useEditor({
     editorProps: {
       attributes: {
@@ -50,6 +50,12 @@ export function SimpleEditor() {
       TaskItem.configure({ nested: true }),
     ],
     content: "",
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML();
+      if (onChange) {
+        onChange(html);
+      }
+    },
   });
 
   return (
@@ -94,10 +100,10 @@ export function SimpleEditor() {
         </ToolbarGroup>
       </Toolbar>
 
-      <div className=" border rounded-md bg-background ">
+      <div className=" border  bg-background ">
         <EditorContent
           editor={editor}
-          className="prose min-w-full min-h-80 max-h-80 dark:bg-white dark:text-black p-2 w-full rounded-sm"
+          className="prose min-w-full min-h-80 overflow-y-auto max-h-80 dark:bg-white dark:text-black p-2 w-full rounded-xs"
         />
       </div>
     </EditorContext.Provider>

@@ -22,7 +22,7 @@ export const CardHowItWorks: FC<CardProps> = ({
 }) => {
   return (
     <Link href={link || "#"}>
-      <article className="w-11/12 mx-auto md:w-full relative rounded-xl overflow-hidden shadow-md p-6 transition-all backdrop-blur border border-white/10 bg-gradient-to-br from-[#ED2E7E]/20 to-[#4696FF]/20 dark:from-[#ED2E7E]/10 dark:to-[#4696FF]/10 min-h-96 hover:shadow-lg hover:border-blue-200  hover:dark:border-sky-300 duration-300">
+      <article className="w-11/12 mx-auto md:w-full relative rounded-xl overflow-hidden shadow-md p-6 transition-all backdrop-blur border border-white/10 bg-gradient-to-br from-[#ED2E7E]/20 to-[#4696FF]/20 dark:from-[#ED2E7E]/10 dark:to-[#4696FF]/10 min-h-96 hover:shadow-lg hover:border-blue-200 hover:dark:border-sky-300 duration-300 hover:scale-[1.02]">
         <header className="flex items-center gap-3 mb-4">
           {iconUrl && (
             <Image

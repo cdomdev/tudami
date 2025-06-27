@@ -21,6 +21,7 @@ export function SessionHydrator() {
           clearUser();
         }
       } catch (error) {
+        console.error("Error fetching user session:", error);
         clearUser();
       } finally {
         setLoading(false);

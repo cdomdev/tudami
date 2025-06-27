@@ -176,7 +176,7 @@ const LinkMain: React.FC<LinkMainProps> = ({
         className="tiptap-input tiptap-input-clamp bg-accent!"
       />
 
-      <div className="tiptap-button-group bg-accent rounded-md" data-orientation="horizontal">
+      <div className="tiptap-button-group bg-accent rounded-md " data-orientation="horizontal">
         <Button
           type="button"
           onClick={setLink}
@@ -190,7 +190,7 @@ const LinkMain: React.FC<LinkMainProps> = ({
 
       <Separator />
 
-      <div className="tiptap-button-group bg-accent rounded-sm " data-orientation="horizontal">
+      <div className="tiptap-button-group bg-accent rounded-sm dark:bg-accent! " data-orientation="horizontal">
         <Button
           type="button"
           onClick={() => window.open(url, "_blank")}

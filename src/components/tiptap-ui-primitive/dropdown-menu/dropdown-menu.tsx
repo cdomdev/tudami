@@ -243,7 +243,7 @@ export const DropdownMenuContent = React.forwardRef<
       >
         <div
           ref={ref}
-          className={`tiptap-dropdown-menu ${className || ""}`}
+          className={`tiptap-dropdown-menu  ${className || ""}`}
           style={{
             position: context.strategy,
             top: context.y ?? 0,

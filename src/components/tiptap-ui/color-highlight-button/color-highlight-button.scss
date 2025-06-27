@@ -6,7 +6,6 @@
   border-radius: var(--tt-radius-xl);
   background-color: var(--highlight-color);
   transition: transform 0.2s ease;
-
   &::after {
     content: "";
     position: absolute;

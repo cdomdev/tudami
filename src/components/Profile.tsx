@@ -10,16 +10,20 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { useSession } from "@/context/context.sesion";
-import { Bell, LogOut, User as UserIcon } from "lucide-react";
+import { LogOut, User as UserIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
-
+import { Notifications } from "./Notifications";
+import { Button } from "./ui/button";
 export function Profile() {
   const { user, clearUser } = useSession();
   const router = useRouter();
 
   const handleLogout = async () => {
+    await fetch("/api/logout", {
+      method: "POST",
+    });
     await supabase.auth.signOut();
     clearUser();
     router.push("/");
@@ -27,47 +31,39 @@ export function Profile() {
 
   return (
     <div className="flex items-center gap-5">
-      <DropdownMenu>
+      <Notifications />
+      
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <button className="relative p-1.5 cursor-pointer rounded-full hover:bg-muted ring-0 focus:ring-0 outline-none focus:bg-transparent focus:outline-none">
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full animate-accordion-up" />
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-64">
-          <DropdownMenuLabel>Notificaciones</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <div className="text-sm text-muted-foreground px-2 py-2">
-            No tienes notificaciones aún.
-          </div>
-        </DropdownMenuContent>
-      </DropdownMenu>
-
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Avatar className="cursor-pointer w-9 h-9">
-            <AvatarImage
-              src={user?.avatar_url || ""}
-              alt={user?.full_name || ""}
-            />
-            <AvatarFallback>{user?.full_name?.[0] || "U"}</AvatarFallback>
-          </Avatar>
+          <Button
+            variant="ghost"
+            className="relative h-9 w-9 p-0 border-none cursor-pointer bg-transparent hover:bg-transparent focus:bg-transparent focus:ring-0 focus:ring-offset-0 active:bg-transparent disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:hover:bg-transparent dark:focus:bg-transparent dark:focus:ring-0 dark:focus:ring-offset-0"
+          >
+            <Avatar className="cursor-pointer w-9 h-9">
+              <AvatarImage
+                src={user?.avatar_url || ""}
+                alt={user?.full_name || ""}
+              />
+              <AvatarFallback>{user?.full_name?.[0] || "U"}</AvatarFallback>
+            </Avatar>
+            <span className="sr-only">Abrir menú de usuario</span>
+          </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-64">
           <DropdownMenuLabel>
-            <div className="font-semibold">{user?.full_name}</div>
+            <div className="font-medium">{user?.full_name}</div>
             <div className="text-xs text-muted-foreground">{user?.email}</div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <Link
-            className="gap-2 flex px-2 items-center text-sm dark:text-gray-300 dark:hover:text-gray-100"
+            className="gap-2 flex px-2 hover:bg-accent p-2 rounded-md items-center text-sm dark:text-gray-300 dark:hover:text-gray-100"
             href={`/profile-user?id=${user?.id}`}
           >
             <UserIcon className="w-4 h-4" />
             Mi perfil
           </Link>
           <DropdownMenuItem
-            className="gap-2 text-red-500 "
+            className="gap-2 text-red-500 px-2  p-2 rounded-md cursor-pointer text-sm hover:bg-red-50 dark:hover:text-red-200"
             onClick={handleLogout}
           >
             <LogOut className="w-4 h-4 text-red-500" />

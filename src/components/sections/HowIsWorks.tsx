@@ -58,9 +58,9 @@ export function HowIsWorks() {
       <p className="text-base  text-center text-accent-foreground">
         Es muy facil, sigue los siguientes pasos
       </p>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 my-10 max-w-6xl mx-auto">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 my-10 max-w-6xl mx-auto ">
         {items.map((item, index) => (
-          <li key={item.paso || index}>
+          <li key={item.paso || index} >
             <CardHowItWorks
               key={item.paso || index}
               description={item.descrition}

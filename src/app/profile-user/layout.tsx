@@ -14,7 +14,7 @@ export default function LayoutProfile({
 
   return (
     <section
-      className="grid grid-cols-1 md:grid-cols-6 gap-4 p-4 max-w-6xl mx-auto mt-28"
+      className="grid grid-cols-1 md:grid-cols-6 gap-4 p-4 max-w-6xl mx-auto mt-20 md:mt-36"
       role="region"
       aria-labelledby="profile-section-title"
     >

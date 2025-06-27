@@ -5,7 +5,8 @@ import { NavBar } from "@/components/NavBar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SessionHydrator } from "@/app/auth/callback/SessionHydrator";
 import { Footer } from "@/components/Footer";
-
+import { Toaster } from "@/components/ui/sonner"
+ 
 const rubikFont = Rubik({
   variable: "--font-rubik",
   subsets: ["latin"],
@@ -70,6 +71,7 @@ export default function RootLayout({
           <SessionHydrator />
           <NavBar />
           <main className="w-screen min-h-dvh">{children}</main>
+          <Toaster position="top-center" theme="system" />
           <Footer />
         </ThemeProvider>
       </body>

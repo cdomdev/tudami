@@ -1,65 +1,92 @@
+"use client";
+
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
+import { useState } from "react";
+import { preguntaSchema } from "../schema/schemaEditor";
+import { toast } from "sonner";
+import { useSession } from "@/context/context.sesion";
+import { createQuestion } from "../lib/createQuestions";
+import { useRouter } from "next/navigation";
 
 export default function Editor() {
+  const [content, setContent] = useState("");
+  const [title, setTitle] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { user } = useSession();
+
+  const router = useRouter();
+
+  async function handleSubmit() {
+    if (!user) {
+      toast.error("Debes iniciar sesión para enviar una pregunta.");
+      return;
+    }
+
+    setLoading(true);
+    const result = preguntaSchema.safeParse({ title, content });
+
+    if (!result.success) {
+      setLoading(false);
+      toast.error(
+        `Error en el formulario: ${result.error.errors
+          .map((e) => e.message)
+          .join(", ")}`
+      );
+      return;
+    }
+
+    try {
+      const res = await createQuestion(result.data.title, result.data.content);
+      if (!res || !res.success) {
+        throw new Error("Error al crear la pregunta");
+      }
+
+      toast.success("¡Pregunta publicada con éxito!");
+      router.push(`/create-questions/status?text=pregunta-creada-con-exito`);
+
+      // Limpiar el formulario
+      setTitle("");
+      setContent("");
+    } catch (error) {
+      console.error("Error al enviar la pregunta:", error);
+      toast.error(
+        "Error al enviar la pregunta. Por favor, inténtalo de nuevo más tarde."
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <div className="flex flex-col px-4 ">
-      <h1 className="text-center font-semibold mb-10 text-xl md:text-3xl text-primary">
-        ¿En qué necesitas ayuda?
-      </h1>
-
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-6">
-        <div className="md:col-span-3 w-full p-6 bg-accent border rounded-lg shadow-sm">
-          <div className="mb-6">
-            <label htmlFor="titulo" className="font-medium text-base md:text-lg">
-              Dale un título claro a tu pregunta
-            </label>
-            <input
-              type="text"
-              id="titulo"
-              placeholder="Ej: ¿Cómo vincular varias evidencias en Sofiaplus?"
-              className="w-full border py-2 px-3 mt-2 rounded-md focus:outline-none text-xs md:text-base focus:ring-1 focus:ring-primary bg-white text-black"
-            />
-          </div>
-
-          <div>
-            <span className="font-medium text-base md:text-lg block mb-3">
-              Escribe tu pregunta con detalle
-            </span>
-            <SimpleEditor />
-          </div>
+    <>
+      <div className="md:col-span-4 w-full rounded-xs shadow-sm order-2 lg:order-1">
+        <div className="mb-2 bg-accent dark:bg-[#252627] p-6">
+          <label htmlFor="titulo" className="font-medium text-sm md:text-base">
+            Dale un título claro a tu pregunta
+          </label>
+          <input
+            type="text"
+            id="titulo"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Ej: ¿Cómo vincular varias evidencias en Sofiaplus?"
+            className="w-full border py-2 px-3 mt-2 rounded-md focus:outline-none text-xs md:text-sm focus:ring-1 focus:ring-primary bg-white text-black"
+          />
         </div>
 
-        <div className="md:col-span-2 border rounded-lg p-6 bg-muted shadow-md">
-          <h3 className="font-semibold text-xl mb-4 text-primary">
-            Antes de publicar tu pregunta
-          </h3>
-          <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground leading-relaxed">
-            <li>
-              <strong>Explica lo que quieres lograr:</strong> No solo qué está
-              fallando, sino qué esperabas que pasara.
-            </li>
-            <li>
-              <strong>Cuenta el contexto:</strong> ¿Es una evidencia del SENA?
-              ¿Un reto? ¿Un proyecto personal?
-            </li>
-            <li>
-              <strong>Muestra lo que intentaste:</strong> Aunque no haya
-              funcionado, eso ayuda a entender tu camino.
-            </li>
-            <li>
-              <strong>Habla con tus palabras:</strong> No necesitas usar
-              términos técnicos, lo importante es que se entienda.
-            </li>
-            <li>
-              <strong>Tu pregunta puede ayudar a otros:</strong> ¡Anímate a
-              escribirla!
-            </li>
-          </ul>
-          <div className="mt-5 text-sm text-muted-foreground italic">
-            Cuanto más claro seas, más fácil será ayudarte.
-          </div>
+        <div className="bg-accent dark:bg-[#252627] p-6">
+          <span className="font-medium text-sm md:text-base block mb-3">
+            Escribe tu pregunta con detalle
+          </span>
+          <SimpleEditor onChange={setContent} />
+          <button
+            onClick={handleSubmit}
+            className="mt-3 w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 duration-200 rounded-md cursor-pointer text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? "Enviando pregunta..." : "Publicar mi pregunta"}
+          </button>
         </div>
       </div>
-    </div>
+    </>
   );
 }
