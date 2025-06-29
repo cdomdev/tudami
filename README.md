@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+  <img src="./public/logo.svg" alt="Tudami Logo" width="200"/>
+  <h1>Tudami</h1>
+  <p><strong>Tu comunidad para aprender, preguntar y crecer.</strong></p>
+</div>
 
-## Getting Started
+## ¿Qué es Tudami?
 
-First, run the development server:
+**Tudami** es una plataforma de preguntas y respuestas diseñada para conectar a personas que buscan conocimiento con aquellas que desean compartirlo. ¿Tienes una duda sobre programación, diseño, o cualquier otro tema? ¡Publícala en Tudami y recibe ayuda de una comunidad de expertos y entusiastas!
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Nuestra misión es crear un espacio abierto y colaborativo donde el aprendizaje sea accesible para todos. En Tudami, puedes:
+
+- **Hacer preguntas:** Publica tus dudas y obtén respuestas claras y precisas.
+- **Compartir tu conocimiento:** Ayuda a otros respondiendo sus preguntas y gana reconocimiento.
+- **Crear tu perfil:** Muestra tus habilidades e intereses.
+- **Explorar contenido:** Descubre nuevas preguntas y temas de tu interés.
+
+---
+
+## Información Técnica
+
+Para los curiosos de la tecnología, aquí hay un vistazo de cómo está construido Tudami.
+
+### Arquitectura y Tecnologías
+
+Este proyecto está desarrollado con un stack moderno de JavaScript, enfocado en el rendimiento y la escalabilidad.
+
+- **Framework Principal:** [Next.js](https://nextjs.org/) (con React y TypeScript) - Nos permite tener una aplicación web rápida y optimizada para SEO.
+- **Estilos:** [Tailwind CSS](https://tailwindcss.com/) - Un framework de CSS que nos ayuda a construir interfaces de usuario de forma ágil y consistente.
+- **Componentes de UI:** [Radix UI](https://www.radix-ui.com/) y [Lucide Icons](https://lucide.dev/) - Para crear componentes accesibles y visualmente atractivos.
+- **Gestión de Estado:** [Zustand](https://zustand-demo.pmnd.rs/) - Una solución simple y potente para manejar el estado de la aplicación.
+- **Base de Datos y Autenticación:** [Supabase](https://supabase.io/) - Usamos Supabase como nuestra solución de backend, que nos provee de una base de datos, autenticación y más.
+- **Formularios:** [React Hook Form](https://react-hook-form.com/) y [Zod](https://zod.dev/) - Para construir formularios robustos con validación de datos.
+
+### Estructura del Proyecto
+
+El código está organizado siguiendo las convenciones de Next.js, con una clara separación de responsabilidades:
+
+```
+/src
+|-- /app           # Páginas y rutas principales de la aplicación
+|-- /components    # Componentes reutilizables (botones, inputs, etc.)
+|-- /lib           # Funciones de utilidad y configuración de librerías
+|-- /hooks         # Hooks personalizados de React
+|-- /context       # Contextos de React para el estado global
+|-- /styles        # Estilos globales
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+¡Gracias por tu interés en Tudami! Si tienes alguna pregunta o sugerencia, no dudes en contactarnos.

@@ -7,10 +7,22 @@ import { toast } from "sonner";
 import { useSession } from "@/context/context.sesion";
 import { createQuestion } from "../lib/createQuestions";
 import { useRouter } from "next/navigation";
+import tags from "../utils/tags.json";
+import { MultiSelect } from "../components/multi-select";
+
+
 
 export default function Editor() {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const options = tags.map((tag) => ({
+    value: tag.id,
+    label: tag.name,
+  }));
+
+
   const [loading, setLoading] = useState(false);
   const { user } = useSession();
 
@@ -36,7 +48,11 @@ export default function Editor() {
     }
 
     try {
-      const res = await createQuestion(result.data.title, result.data.content);
+      const res = await createQuestion(
+        result.data.title,
+        result.data.content,
+        selectedTags
+      );
       if (!res || !res.success) {
         throw new Error("Error al crear la pregunta");
       }
@@ -44,7 +60,6 @@ export default function Editor() {
       toast.success("¡Pregunta publicada con éxito!");
       router.push(`/create-questions/status?text=pregunta-creada-con-exito`);
 
-      // Limpiar el formulario
       setTitle("");
       setContent("");
     } catch (error) {
@@ -71,6 +86,20 @@ export default function Editor() {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Ej: ¿Cómo vincular varias evidencias en Sofiaplus?"
             className="w-full border py-2 px-3 mt-2 rounded-md focus:outline-none text-xs md:text-sm focus:ring-1 focus:ring-primary bg-white text-black"
+          />
+        </div>
+
+        <div className="mb-2 bg-accent dark:bg-[#252627] p-6">
+          <label
+            htmlFor="etiquetas"
+            className="font-medium text-sm md:text-base"
+          >
+            Selecciona etiquetas relevantes
+          </label>
+          <MultiSelect
+            options={options}
+            onValueChange={setSelectedTags}
+            defaultValue={selectedTags}
           />
         </div>
 

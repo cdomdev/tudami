@@ -13,7 +13,7 @@ import {
 import Image from "next/image";
 import { AlignJustify, X } from "lucide-react";
 import Session from "../app/auth/validateSesion/ValidateSesion.client";
-
+import {ModeToggle} from "./ToggleTheme";
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [showNav] = useState(true);
@@ -96,6 +96,7 @@ export function NavBar() {
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
+            <ModeToggle />
           </NavigationMenuList>
         </NavigationMenu>
 

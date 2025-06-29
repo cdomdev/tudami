@@ -11,7 +11,7 @@ export function HowIsWorks() {
   const items = [
     {
       paso: 1,
-      link: "",
+      link: "/explore-questions",
       title: "Navega por preguntas reales de otros aprendices",
       descrition: "Tal vez ya alguien preguntó lo mismo que tú.",
       comment: [
@@ -23,7 +23,7 @@ export function HowIsWorks() {
     },
     {
       paso: 2,
-      link: "",
+      link: "/create-questions",
       title: "¿No encontraste lo que buscabas? Comparte tu duda.",
       descrition: "Solo escribe lo que necesitas y listo.",
       comment: [
@@ -35,7 +35,7 @@ export function HowIsWorks() {
     },
     {
       paso: 3,
-      link: "",
+      link: "/explore-questions",
       title: "Otros personas responderán con ideas o consejos.",
       descrition: "Tú decides cuál respuesta te sirvió más.",
       comment: [" Aquí todos aprendemos con la experiencia de otros."],
@@ -66,6 +66,7 @@ export function HowIsWorks() {
               description={item.descrition}
               title={item.title}
               paso={item.paso}
+              link={item.link}
               coment={item.comment}
               iconUrl={item.urlIcon}
             />

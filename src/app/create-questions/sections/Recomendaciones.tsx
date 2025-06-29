@@ -29,8 +29,8 @@ export function Recomendaciones() {
           sea clara y contenga la información necesaria para recibir ayuda.
         </li>
       </ul>
-      <div className="p-3 bg-gray-700 dark:bg-accent rounded-xs mt-6 border border-primary/20">
-        <p className="text-sm text-primary-foreground font-medium">
+      <div className="p-3 bg-gray-300  dark:bg-gray-500  rounded-xs mt-6 border border-primary/20">
+        <p className="text-sm text-accent-foreground font-normal">
           Las preguntas bien formuladas reciben respuestas hasta 3 veces más
           rápido.
         </p>

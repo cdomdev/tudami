@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import { Rubik } from "next/font/google";
+import { Baloo_2 } from "next/font/google";
 import "@/app/globals.css";
 import { NavBar } from "@/components/NavBar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SessionHydrator } from "@/app/auth/callback/SessionHydrator";
 import { Footer } from "@/components/Footer";
-import { Toaster } from "@/components/ui/sonner"
- 
-const rubikFont = Rubik({
-  variable: "--font-rubik",
+import { Toaster } from "@/components/ui/sonner";
+
+const balooFont = Baloo_2({
+  variable: "--font-baloo",
   subsets: ["latin"],
   display: "swap",
 });
+
 
 export const metadata: Metadata = {
   title: {
@@ -56,7 +57,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={rubikFont.variable} suppressHydrationWarning>
+    <html
+      lang="es"
+      className={`  ${balooFont.variable}`}
+      suppressHydrationWarning
+    >
       <body>
         <ThemeProvider
           attribute="class"

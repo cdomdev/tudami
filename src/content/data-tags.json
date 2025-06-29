@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Programación",
+    "slug": "programming",
+    "color": "#4F46E5",
+    "relevance": 10
+  },
+  {
+    "id": 2,
+    "name": "SENA",
+    "slug": "sena",
+    "color": "#10B981",
+    "relevance": 9
+  },
+  {
+    "id": 3,
+    "name": "Diseño",
+    "slug": "design",
+    "color": "#F59E0B",
+    "relevance": 8
+  },
+  {
+    "id": 4,
+    "name": "Otros",
+    "slug": "other",
+    "color": "#6B7280",
+    "relevance": 7
+  }
+]

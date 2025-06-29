@@ -1,24 +1,51 @@
 import { supabase } from "@/lib/supabase";
 
-export async function createQuestion(title: string, content: string) {
+export async function createQuestion(
+  title: string,
+  content: string,
+  tags: string[] = []
+) {
   const { data: sessionData } = await supabase.auth.getUser();
   const userId = sessionData?.user?.id;
+
+  console.log("datos del contenido:", { title, content, tags });
 
   if (!userId) {
     throw new Error("Usuario no autenticado");
   }
 
-  const { data, error } = await supabase.from("questions").insert([
-    {
-      user_id: userId,
-      title,
-      content,
-      status: "pendiente",
-    },
-  ]);
+  const { data, error } = await supabase
+    .from("questions")
+    .insert([
+      {
+        user_id: userId,
+        title,
+        content,
+        status: "pendiente",
+      },
+    ])
+    .select("id");
 
   if (error) {
     throw new Error(`Error al guardar en Supabase: ${error.message}`);
+  }
+
+  console.log("Pregunta guardada:", data);
+
+  // // inserta tags en la tabla de relacion entre questions y tags
+  if (data && tags.length > 0) {
+    const tagInserts = tags.map((tag) => ({
+      question_id: data[0]?.id,
+      tag_id: tag,
+    }));
+
+    const { error: tagError } = await supabase
+      .from("questions_tags")
+      .insert(tagInserts);
+
+    if (tagError) {
+      throw new Error(`Error al insertar tags: ${tagError.message}`);
+    }
   }
 
   // validar insignia de pregunta del usuario
@@ -47,7 +74,7 @@ export async function createQuestion(title: string, content: string) {
 
   return {
     success: true,
-    data, 
+    data,
     datainsignia,
   };
 }

@@ -1,5 +1,5 @@
 "use client";
-import { SectionContainer } from "@/components/SectionContainer";
+// import { SectionContainer } from "@/components/SectionContainer";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { mockPosts } from "./utils/mockContent";
@@ -12,24 +12,23 @@ export default function ExploreQuestionsPage() {
 
   return (
     <>
-      <SectionContainer className="py-8">
-        <div className="space-y-6 mb-8">
-          {posts.map((post) => (
-            <CardPost
-              id={post.id}
-              key={post.id}
-              author={post.author}
-              commentsCount={post.commentsCount}
-              content={post.content}
-              date={post.date}
-              likesCount={post.likesCount}
-              tags={post.tags}
-              title={post.title}
-              authorAvatar={post.authorAvatar}
-            />
-          ))}
-        </div>
-
+      <section className="py-8 mb-8 space-y-6">
+        {posts.map((post) => (
+          <CardPost
+            id={post.id}
+            key={post.id}
+            author={post.author}
+            commentsCount={post.commentsCount}
+            content={post.content}
+            date={post.date}
+            likesCount={post.likesCount}
+            tags={post.tags}
+            title={post.title}
+            authorAvatar={post.authorAvatar}
+          />
+        ))}
+      </section>
+      <section className="py-8">
         {/* Paginación */}
         <div className="flex justify-center gap-2">
           <Button variant="outline" size="sm">
@@ -48,7 +47,7 @@ export default function ExploreQuestionsPage() {
             Siguiente
           </Button>
         </div>
-      </SectionContainer>
+      </section>
     </>
   );
 }

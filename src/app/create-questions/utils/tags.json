@@ -1,0 +1,30 @@
+[
+  {
+    "id": "tag_programming",
+    "name": "Programación",
+    "slug": "programming",
+    "color": "#4F46E5",
+    "relevance": 10
+  },
+  {
+    "id": "tag_sena",
+    "name": "SENA",
+    "slug": "sena",
+    "color": "#10B981",
+    "relevance": 9
+  },
+  {
+    "id": "tag_design",
+    "name": "Diseño",
+    "slug": "design",
+    "color": "#F59E0B",
+    "relevance": 8
+  },
+  {
+    "id": "tag_other",
+    "name": "Otros",
+    "slug": "other",
+    "color": "#6B7280",
+    "relevance": 7
+  }
+]
