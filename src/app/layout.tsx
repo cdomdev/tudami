@@ -13,7 +13,6 @@ const balooFont = Baloo_2({
   display: "swap",
 });
 
-
 export const metadata: Metadata = {
   title: {
     default: "Tudami",
@@ -70,8 +69,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div
-            aria-hidden
-            className="fixed inset-0 -z-10 h-screen w-screen overflow-hidden bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] dark:bg-[size:30px_20px]"
+            aria-hidden="true"
+            className="fixed inset-0 -z-10 h-screen w-screen overflow-hidden
+    bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]
+    dark:bg-[radial-gradient(#ffffff1a_1px,#111827_1px)] dark:bg-[size:24px_24px]"
           />
           <SessionHydrator />
           <NavBar />

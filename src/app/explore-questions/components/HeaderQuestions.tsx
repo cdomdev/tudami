@@ -29,12 +29,6 @@ export function Header() {
     other: "Otros",
   };
 
-  const sortMap: Record<string, string> = {
-    recent: "Más recientes",
-    popular: "Más populares",
-    commented: "Más comentadas",
-  };
-
   const queryValue = searchParams.get("query") || "new";
 
   const getActiveTab = () => {
@@ -48,7 +42,12 @@ export function Header() {
     } else {
       params.delete(key);
     }
-    router.push(`/explore-questions/questions?${params.toString()}`);
+    if (key === "page") {
+      params.set("page", "1");
+    }
+    router.push(`/explore-questions/questions?${params.toString()}`, {
+      scroll: false,
+    });
   };
 
   const handleTabChange = (value: string) => {
@@ -61,13 +60,14 @@ export function Header() {
 
   const handleSearch = () => {
     const trimmed = searchTerm.trim();
+    if (!trimmed) return;
     navigateWithParam("search", trimmed);
   };
 
   return (
     <>
       <div className="z-10 pt-8  mt-5">
-        <div className="max-w-6xl bg-accent p-4 rounded-md mx-auto shadow-sm mb-4">
+        <div className="max-w-6xl  bg-card p-4 rounded-md mx-auto shadow-sm mb-4">
           {/* Encabezado y descripción */}
           <div className="mb-6">
             <h1 className="text-2xl font-bold mb-3">Explorar Preguntas</h1>
@@ -84,18 +84,18 @@ export function Header() {
               <Input
                 aria-label="Buscar preguntas"
                 placeholder="Buscar preguntas..."
-                className="pl-10 bg-white dark:bg-slate-200 dark:text-slate-900 hover:bg-slate-200 focus:ring-0 dark:focus:border-blue-300"
+                className="pl-10 bg-white dark:bg-slate-300 dark:text-slate-900 hover:bg-slate-200 focus:ring-0 dark:focus:border-blue-300"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               />
             </div>
 
-            <div className="flex gap-3 w-full md:w-auto">
+            <div className="flex gap-3 w-full md:w-auto ">
               <Select
                 onValueChange={(value) => navigateWithParam("topic", value)}
               >
-                <SelectTrigger className="w-[180px] dark:bg-slate-200 dark:text-slate-900 cursor-pointer">
+                <SelectTrigger className="min-w-44 dark:bg-slate-300   cursor-pointer ring-0 ring-slate-300 hover:ring-slate-400 focus:ring-0 dark:text-black hover:bg-slate-200 dark:hover:bg-slate-200">
                   <SelectValue
                     placeholder={
                       topicMap[searchParams.get("topic") || ""] ||
@@ -111,35 +111,25 @@ export function Header() {
                 </SelectContent>
               </Select>
 
-              <Select
-                onValueChange={(value) => navigateWithParam("sort", value)}
-              >
-                <SelectTrigger className="w-[180px] dark:bg-slate-200 dark:text-slate-900 cursor-pointer">
-                  <SelectValue
-                    placeholder={
-                      sortMap[searchParams.get("sort") || ""] || "Ordenar por"
-                    }
-                  />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="recent">Más recientes</SelectItem>
-                  <SelectItem value="popular">Más populares</SelectItem>
-                  <SelectItem value="commented">Más comentadas</SelectItem>
-                </SelectContent>
-              </Select>
+              <Button asChild className="group sm:ml-auto">
+                <Link href="/create-questions">
+                  <Plus className="mr-2 h-4 w-4 group-hover:rotate-90 transition-transform" />
+                  Nueva pregunta
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
 
         {/* Tabs de navegación */}
       </div>
-      <div className="flex flex-col w-full sm:flex-row justify-between items-start sm:items-center gap-4  max-w-6xl mx-auto sm:px-4 md:px-0 sticky top-20  self-start max-h-[calc(100vh-2rem)] overflow-y-auto">
+      <div className="flex flex-col w-full sm:flex-row justify-between items-start sm:items-center gap-4  max-w-6xl mx-auto sm:px-4 md:px-0 sticky top-20  self-start max-h-[calc(100vh-2rem)] ">
         <Tabs
           value={getActiveTab()}
           onValueChange={handleTabChange}
           className="w-full sm:w-auto"
         >
-          <TabsList className="w-full sm:w-auto ">
+          <TabsList className="w-full sm:w-auto dark:bg-card">
             <TabsTrigger
               value="all"
               className="cursor-pointer hover:bg-gray-50 duration-300"
@@ -166,13 +156,6 @@ export function Header() {
             </TabsTrigger>
           </TabsList>
         </Tabs>
-
-        <Button asChild className="group sm:ml-auto">
-          <Link href="/create-questions">
-            <Plus className="mr-2 h-4 w-4 group-hover:rotate-90 transition-transform" />
-            Nueva pregunta
-          </Link>
-        </Button>
       </div>
     </>
   );

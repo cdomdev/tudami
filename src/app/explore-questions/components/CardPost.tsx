@@ -1,48 +1,44 @@
-interface PostProps {
-  id: string;
-  author: string;
-  authorAvatar?: string;
-  date: string;
-  title: string;
-  content: string;
-  tags: string[];
-  likesCount: number;
-  commentsCount: number;
-}
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Post } from "../interface/post";
 import {
   Bookmark,
-  MessageSquare,
+  // MessageSquare,
   Share2,
   UserCircle,
   ThumbsUp,
 } from "lucide-react";
+import { formatTimestamp } from "@/utils/formatDate";
+import { ToggleLike } from "./toggle-like";
 
 export function CardPost({
-  author,
-  commentsCount,
-  content,
-  date,
   id,
-  likesCount,
-  tags,
   title,
-  authorAvatar,
-}: PostProps) {
+  content,
+  created_at,
+  question_likes,
+  question_tags,
+  users,
+  // comments_count,
+}: Post) {
+
+  console.log("Post data:", { id, question_likes, question_tags });
+  const likesCount = question_likes?.length ?? 0;
+  
+
   return (
     <article
       key={id}
       className="bg-card border border-border rounded-xl p-5 shadow-sm hover:shadow transition"
     >
-      {/* Cabecera del */}
+      {/* Cabecera del autor */}
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center overflow-hidden">
-            {authorAvatar ? (
+            {users?.avatar_url ? (
               <Image
-                src={authorAvatar}
-                alt={author}
+                src={users.avatar_url}
+                alt={users.full_name}
                 width={40}
                 height={40}
                 priority
@@ -53,8 +49,10 @@ export function CardPost({
             )}
           </div>
           <div>
-            <p className="font-medium">{author}</p>
-            <p className="text-xs text-muted-foreground">{date}</p>
+            <p className="font-medium">{users?.full_name || "Anónimo"}</p>
+            <p className="text-xs text-muted-foreground">
+              {formatTimestamp(created_at)}
+            </p>
           </div>
         </div>
         <Button variant="ghost" size="icon">
@@ -62,35 +60,41 @@ export function CardPost({
         </Button>
       </div>
 
-      {/* Contenido del */}
+      {/* Título y contenido */}
       <div className="mb-4">
         <h2 className="text-xl font-semibold mb-2">{title}</h2>
-        <p className="text-muted-foreground text-sm">{content}</p>
+        <div
+          className="text-muted-foreground text-sm"
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
       </div>
 
       {/* Etiquetas */}
-      <div className="flex flex-wrap gap-2 my-3">
-        {tags.map((tag, i) => (
-          <span
-            key={i}
-            className="bg-primary/10 text-primary text-xs px-2.5 py-0.5 rounded-full"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
+      {question_tags && question_tags.length > 0 && (
+        <div className="flex flex-wrap gap-2 my-4">
+          {question_tags.map((questionTag) => (
+            <span
+              key={questionTag.tag.id}
+              className="bg-primary/10 text-primary text-xs px-2.5 py-0.5 rounded-full"
+            >
+              {questionTag.tag.name}
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* Acciones */}
+      <Button
+        variant="ghost"
+        size="sm"
+        className="flex items-center gap-1 hover:bg-none hover:bg-transparent"
+      >
+        <ThumbsUp className="h-4 w-4" />
+        <span>{likesCount}</span>
+      </Button>
       <div className="flex justify-between items-center pt-3 border-t border-border">
         <div className="flex gap-4">
-          <Button variant="ghost" size="sm" className="flex items-center gap-1">
-            <ThumbsUp className="h-4 w-4" />
-            <span>{likesCount}</span>
-          </Button>
-          <Button variant="ghost" size="sm" className="flex items-center gap-1">
-            <MessageSquare className="h-4 w-4" />
-            <span>{commentsCount}</span>
-          </Button>
+          <ToggleLike question_id={id} />
         </div>
         <Button variant="ghost" size="icon">
           <Share2 className="h-4 w-4" />

@@ -1,19 +1,19 @@
 "use client";
 
-import { ComponentPropsWithoutRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import Image from "next/image";
 import { AlignJustify, X } from "lucide-react";
 import Session from "../app/auth/validateSesion/ValidateSesion.client";
-import {ModeToggle} from "./ToggleTheme";
+import { ModeToggle } from "./ToggleTheme";
+import { Characteristics } from "./header/charactheristics";
+import { MovilNav } from "./header/MovilNav";
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [showNav] = useState(true);
@@ -46,7 +46,12 @@ export function NavBar() {
             href="/"
             className="flex items-center gap-1 font-bold text-primary text-2xl"
           >
-            <Image src="/logo.svg" width={50} height={50} className="w-9 h-7" alt="logo-tudami" />
+            <Image
+              src="/logo.svg"
+              width={35}
+              height={35}
+              alt="logo-tudami"
+            />
             Tudami
           </Link>
         </div>
@@ -54,25 +59,7 @@ export function NavBar() {
         <NavigationMenu className="hidden md:flex flex-1">
           <NavigationMenuList className="flex gap-4 justify-center w-full">
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent hover:dark:bg-gray-50/5 text-sm md:text-base">
-                Características
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[600px] gap-2 p-4 md:grid-cols-2">
-                  <ListItem href="/explorar" title="Explora dudas">
-                    Encuentra respuestas públicas a preguntas frecuentes de otros aprendices.
-                  </ListItem>
-                  <ListItem href="/ofertas" title="Ofertas de ayuda">
-                    Solicita acompañamiento personalizado por parte de otros usuarios.
-                  </ListItem>
-                  <ListItem href="/#preguntas" title="Respuestas entre aprendices">
-                    Recibe orientación directa de personas que ya pasaron por lo mismo.
-                  </ListItem>
-                  <ListItem href="/#faq" title="Ahorra tiempo">
-                    Accede rápidamente a soluciones compartidas por la comunidad.
-                  </ListItem>
-                </ul>
-              </NavigationMenuContent>
+              <Characteristics />
             </NavigationMenuItem>
 
             <NavigationMenuItem>
@@ -106,49 +93,21 @@ export function NavBar() {
             onClick={() => setOpenMenu(!openMenu)}
             className="md:hidden  text-black dark:text-white relative pl-6"
           >
-            {openMenu ? <X className="w-8 h-8" /> : <AlignJustify className="w-8 h-8  " />}
+            {openMenu ? (
+              <X className="w-8 h-8" />
+            ) : (
+              <AlignJustify className="w-8 h-8  " />
+            )}
+            <span className="sr-only">{openMenu ? "Cerrar menú" : "Abrir menú"}</span>
           </button>
         </div>
       </div>
 
-      <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out
-          ${openMenu ? "max-h-80 py-3 opacity-100" : "max-h-0 opacity-0"}
-          ${
-            scrolled 
-              ? " backdrop-blur-none"
-              : "backdrop-blur-sm shadow-none"
-          }
-          w-full text-black dark:text-white flex flex-col items-center space-y-4 text-lg font-medium`}
-      >
-        <Link href="/" onClick={() => setOpenMenu(false)}>Inicio</Link>
-        <Link href="/ofertas" onClick={() => setOpenMenu(false)}>Ofertas</Link>
-        <Link href="/preguntas" onClick={() => setOpenMenu(false)}>Preguntas</Link>
-        <Link href="/perfil" onClick={() => setOpenMenu(false)}>Perfil</Link>
-      </div>
+      <MovilNav
+        openMenu={openMenu}
+        scrolled={scrolled}
+        setOpenMenu={setOpenMenu}
+      />
     </nav>
-  );
-}
-
-function ListItem({
-  title,
-  children,
-  href,
-  ...props
-}: ComponentPropsWithoutRef<"li"> & { href: string }) {
-  return (
-    <li {...props}>
-      <NavigationMenuLink asChild>
-        <Link
-          href={href}
-          className="block select-none rounded-sm p-3 leading-none no-underline outline-none transition-colors hover:bg-none"
-        >
-          <div className="text-lg font-normal">{title}</div>
-          <p className="text-muted-foreground text-sm leading-snug">
-            {children}
-          </p>
-        </Link>
-      </NavigationMenuLink>
-    </li>
   );
 }

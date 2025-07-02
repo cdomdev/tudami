@@ -1,27 +1,31 @@
 [
   {
-    "id": "tag_programming",
+    "id": "1",
+    "id_tag": "tag_programming",
     "name": "Programación",
     "slug": "programming",
     "color": "#4F46E5",
     "relevance": 10
   },
   {
-    "id": "tag_sena",
+    "id": "2",
+    "id_tag": "tag_sena",
     "name": "SENA",
     "slug": "sena",
     "color": "#10B981",
     "relevance": 9
   },
   {
-    "id": "tag_design",
+    "id": "3",
+    "id_tag": "tag_design",
     "name": "Diseño",
     "slug": "design",
     "color": "#F59E0B",
     "relevance": 8
   },
   {
-    "id": "tag_other",
+    "id": "4",
+    "id_tag": "tag_other",
     "name": "Otros",
     "slug": "other",
     "color": "#6B7280",

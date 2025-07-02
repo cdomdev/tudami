@@ -23,9 +23,9 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-1  lg:grid-cols-2 gap-6 text-center my-10">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 text-sm">
             <div className="flex flex-col items-start  text-left">
-              <h5 className="text-base font-semibold mb-3 uppercase text-gray-700 dark:text-gray-300">
+              <h4 className="text-base font-semibold mb-3 uppercase text-gray-700 dark:text-gray-300">
                 Recursos
-              </h5>
+              </h4>
               <ul className="space-y-2">
                 <li>
                   <Link
@@ -47,9 +47,9 @@ export function Footer() {
             </div>
 
             <div className="flex flex-col items-start  text-left">
-              <h5 className="text-base font-semibold mb-3 uppercase text-gray-700 dark:text-gray-300">
+              <h4 className="text-base font-semibold mb-3 uppercase text-gray-700 dark:text-gray-300">
                 Funcionalidades
-              </h5>
+              </h4>
               <ul className="space-y-2">
                 <li>
                   <Link
@@ -79,9 +79,9 @@ export function Footer() {
             </div>
 
             <div className="flex flex-col items-start  text-left">
-              <h5 className="text-base font-semibold mb-3 uppercase text-gray-700 dark:text-gray-300">
+              <h4 className="text-base font-semibold mb-3 uppercase text-gray-700 dark:text-gray-300">
                 Legales
-              </h5>
+              </h4>
               <ul className="space-y-2">
                 <li>
                   <Link

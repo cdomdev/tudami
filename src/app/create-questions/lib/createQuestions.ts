@@ -8,7 +8,6 @@ export async function createQuestion(
   const { data: sessionData } = await supabase.auth.getUser();
   const userId = sessionData?.user?.id;
 
-  console.log("datos del contenido:", { title, content, tags });
 
   if (!userId) {
     throw new Error("Usuario no autenticado");
@@ -30,7 +29,6 @@ export async function createQuestion(
     throw new Error(`Error al guardar en Supabase: ${error.message}`);
   }
 
-  console.log("Pregunta guardada:", data);
 
   // // inserta tags en la tabla de relacion entre questions y tags
   if (data && tags.length > 0) {
@@ -55,7 +53,6 @@ export async function createQuestion(
     .select("id", { count: "exact", head: true })
     .eq("user_id", userId);
 
-  console.log("Preguntas totales del usuario:", count);
 
   let datainsignia = null;
   // 3. Otorgar la insignia si no la tiene aún
