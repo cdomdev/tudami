@@ -19,6 +19,7 @@ export interface Post {
     tag: {
       id: string;
       name: string;
+      color: string;
     };
   }[];
 

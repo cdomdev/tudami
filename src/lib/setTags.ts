@@ -15,13 +15,20 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
+
 async function seedTags() {
-  const { data, error } = await supabase.from("tags").insert(tags)
+  const tagsWithId = tags.map((tag) => ({
+    ...tag,
+    id_tag: tag.id_tag ?? `tag_${tag.slug}`,
+  }));
+
+  const { data, error } = await supabase.from("tags").insert(tagsWithId);
   if (error) {
     console.error("❌ Error insertando tags:", error.message);
   } else {
     console.log("✅ Tags insertados correctamente:", data);
   }
 }
+
 
 seedTags();

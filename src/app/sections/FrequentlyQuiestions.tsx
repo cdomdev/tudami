@@ -63,7 +63,7 @@ export function FrequentlyQuestions() {
             <AccordionItem
               key={item.value}
               value={item.value}
-              className="bg-accent dark:bg-[#0d1828] rounded-lg shadow-sm mb-3 px-4 "
+              className="bg-accent dark:bg-[#121213] rounded-lg shadow-sm mb-3 px-4 "
             >
               <AccordionTrigger className="md:text-lg cursor-pointer  ">
                 {item.title}

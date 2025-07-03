@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { subscribe } from "@/lib/subcription";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-
+import { toast } from "sonner";
 const formSchema = z.object({
   email: z
     .string()
@@ -30,8 +30,18 @@ export function FormSubcription() {
       email: "",
     },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("Form submitted with values:", values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const {error} = await subscribe(values.email.toLocaleLowerCase());    
+    if (error) {
+      if (error.code === "23505") {
+        toast.error("Ya estás suscrito a nuestro boletín.");
+      } else {
+        toast.error("No pudimos suscribirte. Inténtalo de nuevo más tarde.");
+      }
+    } else {
+      toast.success("Te has suscrito correctamente. ¡Gracias!");
+      form.reset();
+    }
   }
   return (
     <>
@@ -39,7 +49,9 @@ export function FormSubcription() {
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
             <Image src="/Email.svg" alt="imagen-buzon" width={30} height={30} />
-            <h2 className="text-lg md:text-2xl font-bold">¿Quieres mantenerte al día?</h2>
+            <h2 className="text-lg md:text-2xl font-bold">
+              ¿Quieres mantenerte al día?
+            </h2>
           </div>
           <p className="text-muted-foreground text-sm md:text-base mt-1 text-balance">
             Recibe una notificación por correo electrónico cuando publiquemos un
@@ -57,9 +69,13 @@ export function FormSubcription() {
                 <FormItem>
                   <FormLabel>Tu correo electrónico</FormLabel>
                   <FormControl>
-                    <Input placeholder="tunombre@correo.com" {...field} className="md:w-md"/>
+                    <Input
+                      placeholder="tunombre@correo.com"
+                      {...field}
+                      className="md:w-md"
+                    />
                   </FormControl>
-                  <FormDescription >
+                  <FormDescription>
                     Solo te notificaremos sobre nuevos artículos. Sin spam.
                   </FormDescription>
                   <FormMessage />
@@ -67,7 +83,7 @@ export function FormSubcription() {
               )}
             />
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-              <Button type="submit">
+              <Button type="submit" className="cursor-pointer">
                 Notificarme cuando haya nuevo contenido
               </Button>
               <p className="text-xs  text-muted-foreground">

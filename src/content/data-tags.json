@@ -1,30 +1,218 @@
 [
   {
-    "id": 1,
+    "id": "1",
+    "id_tag": "tag_programming",
     "name": "Programación",
     "slug": "programming",
     "color": "#4F46E5",
     "relevance": 10
   },
   {
-    "id": 2,
+    "id": "2",
+    "id_tag": "tag_sena",
     "name": "SENA",
     "slug": "sena",
     "color": "#10B981",
+    "relevance": 10
+  },
+  {
+    "id": "3",
+    "id_tag": "tag_javascript",
+    "name": "JavaScript",
+    "slug": "javascript",
+    "color": "#FACC15",
+    "relevance": 10
+  },
+  {
+    "id": "4",
+    "id_tag": "tag_typescript",
+    "name": "TypeScript",
+    "slug": "typescript",
+    "color": "#3B82F6",
     "relevance": 9
   },
   {
-    "id": 3,
+    "id": "5",
+    "id_tag": "tag_python",
+    "name": "Python",
+    "slug": "python",
+    "color": "#2563EB",
+    "relevance": 10
+  },
+  {
+    "id": "6",
+    "id_tag": "tag_java",
+    "name": "Java",
+    "slug": "java",
+    "color": "#DC2626",
+    "relevance": 9
+  },
+  {
+    "id": "7",
+    "id_tag": "tag_csharp",
+    "name": "C#",
+    "slug": "csharp",
+    "color": "#7C3AED",
+    "relevance": 8
+  },
+  {
+    "id": "8",
+    "id_tag": "tag_php",
+    "name": "PHP",
+    "slug": "php",
+    "color": "#6B7280",
+    "relevance": 7
+  },
+  {
+    "id": "9",
+    "id_tag": "tag_html",
+    "name": "HTML",
+    "slug": "html",
+    "color": "#F97316",
+    "relevance": 8
+  },
+  {
+    "id": "10",
+    "id_tag": "tag_css",
+    "name": "CSS",
+    "slug": "css",
+    "color": "#0EA5E9",
+    "relevance": 8
+  },
+  {
+    "id": "11",
+    "id_tag": "tag_sql",
+    "name": "SQL",
+    "slug": "sql",
+    "color": "#059669",
+    "relevance": 8
+  },
+  {
+    "id": "12",
+    "id_tag": "tag_react",
+    "name": "React",
+    "slug": "react",
+    "color": "#60A5FA",
+    "relevance": 10
+  },
+  {
+    "id": "13",
+    "id_tag": "tag_nodejs",
+    "name": "Node.js",
+    "slug": "nodejs",
+    "color": "#22C55E",
+    "relevance": 9
+  },
+  {
+    "id": "14",
+    "id_tag": "tag_vue",
+    "name": "Vue",
+    "slug": "vue",
+    "color": "#4ADE80",
+    "relevance": 7
+  },
+  {
+    "id": "15",
+    "id_tag": "tag_astro",
+    "name": "Astro",
+    "slug": "astro",
+    "color": "#7DD3FC",
+    "relevance": 7
+  },
+  {
+    "id": "16",
+    "id_tag": "tag_nextjs",
+    "name": "Next.js",
+    "slug": "nextjs",
+    "color": "#111827",
+    "relevance": 9
+  },
+  {
+    "id": "17",
+    "id_tag": "tag_git",
+    "name": "Git",
+    "slug": "git",
+    "color": "#EF4444",
+    "relevance": 9
+  },
+  {
+    "id": "18",
+    "id_tag": "tag_figma",
+    "name": "Figma",
+    "slug": "figma",
+    "color": "#DB2777",
+    "relevance": 7
+  },
+  {
+    "id": "19",
+    "id_tag": "tag_design",
     "name": "Diseño",
     "slug": "design",
     "color": "#F59E0B",
     "relevance": 8
   },
   {
-    "id": 4,
-    "name": "Otros",
-    "slug": "other",
-    "color": "#6B7280",
+    "id": "20",
+    "id_tag": "tag_uxui",
+    "name": "UX/UI",
+    "slug": "ux-ui",
+    "color": "#E879F9",
     "relevance": 7
+  },
+  {
+    "id": "21",
+    "id_tag": "tag_devops",
+    "name": "DevOps",
+    "slug": "devops",
+    "color": "#A855F7",
+    "relevance": 8
+  },
+  {
+    "id": "22",
+    "id_tag": "tag_cloud",
+    "name": "Cloud",
+    "slug": "cloud",
+    "color": "#06B6D4",
+    "relevance": 7
+  },
+  {
+    "id": "23",
+    "id_tag": "tag_ai",
+    "name": "Inteligencia Artificial",
+    "slug": "ia",
+    "color": "#8B5CF6",
+    "relevance": 8
+  },
+  {
+    "id": "24",
+    "id_tag": "tag_machinelearning",
+    "name": "Machine Learning",
+    "slug": "machine-learning",
+    "color": "#D946EF",
+    "relevance": 7
+  },
+  {
+    "id": "25",
+    "id_tag": "tag_error",
+    "name": "Errores comunes",
+    "slug": "errores",
+    "color": "#F43F5E",
+    "relevance": 6
+  },
+  {
+    "id": "26",
+    "id_tag": "tag_bestpractices",
+    "name": "Buenas prácticas",
+    "slug": "buenas-practicas",
+    "color": "#34D399",
+    "relevance": 6
+  },
+  {
+    "id": "27",
+    "id_tag": "tag_otros",
+    "name": "Otros",
+    "slug": "otros",
+    "color": "#9CA3AF",
+    "relevance": 5
   }
 ]

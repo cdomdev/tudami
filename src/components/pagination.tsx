@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { PaginationProps } from "../interface/pagination";
+import { PaginationProps } from "@/interface/pagination";
 
 export function Pagination({
   currentPage,
@@ -11,14 +11,6 @@ export function Pagination({
   basePath,
   searchParams,
 }: PaginationProps) {
-  console.log("Pagination component rendered with:", {
-    currentPage,
-    totalItems,
-    pageSize,
-    basePath,
-    searchParams: searchParams.toString(),
-  });
-
   const totalPages = Math.ceil(totalItems / pageSize);
 
   // if (totalPages <= 1) return null;
@@ -31,9 +23,10 @@ export function Pagination({
 
   // Lógica para mostrar un rango de páginas
   const getPageNumbers = () => {
-    const delta = 2; // Páginas a mostrar antes y después de la actual
+    // Páginas a mostrar antes y después de la actual
+    const delta = 2; 
     const pages: (number | string)[] = [];
-    
+
     if (totalPages <= 7) {
       // Si hay pocas páginas, mostrar todas
       for (let i = 1; i <= totalPages; i++) {
@@ -42,29 +35,29 @@ export function Pagination({
     } else {
       // Siempre mostrar la primera página
       pages.push(1);
-      
+
       if (currentPage > delta + 2) {
         pages.push("...");
       }
-      
+
       // Páginas alrededor de la actual
       const start = Math.max(2, currentPage - delta);
       const end = Math.min(totalPages - 1, currentPage + delta);
-      
+
       for (let i = start; i <= end; i++) {
         pages.push(i);
       }
-      
+
       if (currentPage < totalPages - delta - 1) {
         pages.push("...");
       }
-      
+
       // Siempre mostrar la última página
       if (totalPages > 1) {
         pages.push(totalPages);
       }
     }
-    
+
     return pages;
   };
 
@@ -84,12 +77,15 @@ export function Pagination({
         {pageNumbers.map((page, index) => {
           if (page === "...") {
             return (
-              <span key={`ellipsis-${index}`} className="px-2 text-muted-foreground">
+              <span
+                key={`ellipsis-${index}`}
+                className="px-2 text-muted-foreground"
+              >
                 ...
               </span>
             );
           }
-          
+
           const pageNum = page as number;
           return (
             <Button
@@ -110,7 +106,7 @@ export function Pagination({
           </Button>
         )}
       </div>
-      
+
       {/* Información adicional */}
       <div className="text-center text-sm text-muted-foreground mt-4">
         Página {currentPage} de {totalPages} ({totalItems} elementos en total)

@@ -1,28 +1,40 @@
 import { supabase } from "@/lib/supabase";
 
 export async function toggleLike(questionId: number, user_id: string) {
-
-  console.log("Toggling like for questionId:", questionId, "and user_id:", user_id);
-
-
-  
   const { data: existingLike } = await supabase
     .from("question_likes")
     .select("id")
     .eq("question_id", questionId)
     .eq("user_id", user_id)
-    .single();
+    .maybeSingle();
+
+
 
   if (existingLike) {
-    // Quitar el like
-    await supabase.from("question_likes").delete().eq("id", existingLike.id);
+    const { error: deleteError } = await supabase
+      .from("question_likes")
+      .delete()
+      .eq("question_id", questionId)
+      .eq("user_id", user_id);
+    return { liked: false, error: deleteError };
   } else {
-    // Agregar el like
-    await supabase.from("question_likes").insert({
-      question_id: questionId,
-      user_id: user_id,
-    });
+    const { error: insertError } = await supabase
+      .from("question_likes")
+      .insert({
+        question_id: questionId,
+        user_id,
+      });
+    return { liked: true, error: insertError };
   }
-
-  // Opcional: refrescar el conteo
 }
+
+export const checkIfLiked = async (questionId: number, user_id: string) => {
+  const { data: existingLike } = await supabase
+    .from("question_likes")
+    .select("id")
+    .eq("question_id", questionId)
+    .eq("user_id", user_id)
+    .maybeSingle();
+
+  return !!existingLike;
+};

@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/navigation-menu";
 import Image from "next/image";
 import { AlignJustify, X } from "lucide-react";
-import Session from "../app/auth/validateSesion/ValidateSesion.client";
-import { ModeToggle } from "./ToggleTheme";
-import { Characteristics } from "./header/charactheristics";
-import { MovilNav } from "./header/MovilNav";
+import Session from "@/app/auth/validateSesion/ValidateSesion.client";
+// import { ModeToggle } from "@/components/ToggleTheme";
+import { Characteristics } from "./charactheristics";
+import { MovilNav } from "./MovilNav";
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [showNav] = useState(true);
@@ -83,7 +83,7 @@ export function NavBar() {
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <ModeToggle />
+            {/* <ModeToggle /> */}
           </NavigationMenuList>
         </NavigationMenu>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { CardHowItWorks } from "@/components/CardHowItWorks";
-import { ButtonGsap } from "../ui/ButtonsGsap";
+import { ButtonGsap } from "../../components/ui/ButtonsGsap";
 import Image from "next/image";
 import { useSession } from "@/context/context.sesion";
 import { useRouter } from "next/navigation";
