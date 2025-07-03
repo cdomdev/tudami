@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useSession } from "@/context/context.sesion";
 import { createQuestion } from "../lib/createQuestions";
 import { useRouter } from "next/navigation";
-import tags from "../utils/tags.json";
+import tags from "@/content/data-tags.json";
 import { MultiSelect } from "../components/multi-select";
 
 
@@ -74,8 +74,8 @@ export default function Editor() {
 
   return (
     <>
-      <div className="md:col-span-4 w-full rounded-xs shadow-sm order-2 lg:order-1">
-        <div className="mb-2 bg-accent dark:bg-[#252627] p-6">
+      <div className="md:col-span-4 w-full rounded-md shadow-sm order-2 lg:order-1">
+        <div className="mb-2 bg-accent  p-6">
           <label htmlFor="titulo" className="font-medium text-sm md:text-base">
             Dale un título claro a tu pregunta
           </label>
@@ -89,7 +89,7 @@ export default function Editor() {
           />
         </div>
 
-        <div className="mb-2 bg-accent dark:bg-[#252627] p-6">
+        <div className="mb-2 bg-accent  p-6">
           <label
             htmlFor="etiquetas"
             className="font-medium text-sm md:text-base"
@@ -103,7 +103,7 @@ export default function Editor() {
           />
         </div>
 
-        <div className="bg-accent dark:bg-[#252627] p-6">
+        <div className="bg-accent  p-6">
           <span className="font-medium text-sm md:text-base block mb-3">
             Escribe tu pregunta con detalle
           </span>

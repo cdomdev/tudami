@@ -1,16 +1,9 @@
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Post } from "../interface/post";
-import {
-  Bookmark,
-  // MessageSquare,
-  Share2,
-  UserCircle,
-  ThumbsUp,
-} from "lucide-react";
+import { Post } from "../../../interface/post";
+import { UserCircle } from "lucide-react";
 import { formatTimestamp } from "@/utils/formatDate";
-import { ToggleLike } from "./toggle-like";
-
+import { LikeSection } from "./LikeSecction";
+import { ToggleSaveButton } from "../components/ToggelSaveButton";
 export function CardPost({
   id,
   title,
@@ -19,12 +12,8 @@ export function CardPost({
   question_likes,
   question_tags,
   users,
-  // comments_count,
 }: Post) {
-
-  console.log("Post data:", { id, question_likes, question_tags });
-  const likesCount = question_likes?.length ?? 0;
-  
+  const likeCount = question_likes ? question_likes.length : 0;
 
   return (
     <article
@@ -55,9 +44,7 @@ export function CardPost({
             </p>
           </div>
         </div>
-        <Button variant="ghost" size="icon">
-          <Bookmark className="h-5 w-5" />
-        </Button>
+        <ToggleSaveButton question_id={id} />
       </div>
 
       {/* Título y contenido */}
@@ -75,7 +62,8 @@ export function CardPost({
           {question_tags.map((questionTag) => (
             <span
               key={questionTag.tag.id}
-              className="bg-primary/10 text-primary text-xs px-2.5 py-0.5 rounded-full"
+              className={`text-xs px-2.5 py-0.5 rounded-full  text-gray-50 font-normal`}
+              style={{ backgroundColor: `${questionTag.tag.color}` }}
             >
               {questionTag.tag.name}
             </span>
@@ -84,22 +72,7 @@ export function CardPost({
       )}
 
       {/* Acciones */}
-      <Button
-        variant="ghost"
-        size="sm"
-        className="flex items-center gap-1 hover:bg-none hover:bg-transparent"
-      >
-        <ThumbsUp className="h-4 w-4" />
-        <span>{likesCount}</span>
-      </Button>
-      <div className="flex justify-between items-center pt-3 border-t border-border">
-        <div className="flex gap-4">
-          <ToggleLike question_id={id} />
-        </div>
-        <Button variant="ghost" size="icon">
-          <Share2 className="h-4 w-4" />
-        </Button>
-      </div>
+      <LikeSection question_id={id} likes={likeCount} />
     </article>
   );
 }

@@ -4,14 +4,6 @@ import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Search, Plus } from "lucide-react";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -20,14 +12,6 @@ export function Header() {
   const [searchTerm, setSearchTerm] = useState("");
   const searchParams = useSearchParams();
   const router = useRouter();
-
-  // Diccionarios de nombres legibles para selects
-  const topicMap: Record<string, string> = {
-    sena: "SENA",
-    programming: "Programación",
-    design: "Diseño",
-    other: "Otros",
-  };
 
   const queryValue = searchParams.get("query") || "new";
 
@@ -66,8 +50,8 @@ export function Header() {
 
   return (
     <>
-      <div className="z-10 pt-8  mt-5">
-        <div className="max-w-6xl  bg-card p-4 rounded-md mx-auto shadow-sm mb-4">
+      <div className="z-10 md:pt-8">
+        <div className="max-w-6xl  bg-accent dark:bg-card p-4 rounded-md mx-auto shadow-sm mb-4">
           {/* Encabezado y descripción */}
           <div className="mb-6">
             <h1 className="text-2xl font-bold mb-3">Explorar Preguntas</h1>
@@ -78,40 +62,28 @@ export function Header() {
           </div>
 
           {/* Filtros y búsqueda */}
-          <div className="flex flex-col md:flex-row gap-4 mb-4">
-            <div className="relative flex-1">
+          <div className="grid gap-1 mb-4 md:grid-cols-3">
+            <div className="relative flex  col-span-2 mb-4 ">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
                 aria-label="Buscar preguntas"
                 placeholder="Buscar preguntas..."
-                className="pl-10 bg-white dark:bg-slate-300 dark:text-slate-900 hover:bg-slate-200 focus:ring-0 dark:focus:border-blue-300"
+                className="pl-10 bg-white dark:bg-slate-300 dark:text-slate-900 hover:bg-slate-200 focus:ring-0 dark:focus:border-blue-300 w-8/12 md:w-9/12 md:max-w-10/12"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               />
+              <Button
+                variant="default"
+                className="absolute md:right-10 right-1 w-24 top-1/2 -translate-y-1/2 cursor-pointer"
+                onClick={handleSearch}
+              >
+                Buscar
+              </Button>
             </div>
 
-            <div className="flex gap-3 w-full md:w-auto ">
-              <Select
-                onValueChange={(value) => navigateWithParam("topic", value)}
-              >
-                <SelectTrigger className="min-w-44 dark:bg-slate-300   cursor-pointer ring-0 ring-slate-300 hover:ring-slate-400 focus:ring-0 dark:text-black hover:bg-slate-200 dark:hover:bg-slate-200">
-                  <SelectValue
-                    placeholder={
-                      topicMap[searchParams.get("topic") || ""] ||
-                      "Filtrar por tema"
-                    }
-                  />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="sena">SENA</SelectItem>
-                  <SelectItem value="programming">Programación</SelectItem>
-                  <SelectItem value="design">Diseño</SelectItem>
-                  <SelectItem value="other">Otros</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Button asChild className="group sm:ml-auto">
+            <div className="flex gap-3 w-full md:w-auto col-span-1  ">
+              <Button asChild className="group sm:ml-auto w-full md:w-10/12">
                 <Link href="/create-questions">
                   <Plus className="mr-2 h-4 w-4 group-hover:rotate-90 transition-transform" />
                   Nueva pregunta

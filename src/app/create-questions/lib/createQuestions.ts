@@ -38,7 +38,7 @@ export async function createQuestion(
     }));
 
     const { error: tagError } = await supabase
-      .from("questions_tags")
+      .from("question_tags")
       .insert(tagInserts);
 
     if (tagError) {

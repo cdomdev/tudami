@@ -28,7 +28,7 @@ export default function SuccessPage() {
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-md z-20">
-        <Link href="/explore-questions" className="w-full">
+        <Link href="/explore-questions/questions?query=my" className="w-full">
           <Button
             variant="default"
             size="lg"

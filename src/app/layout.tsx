@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Baloo_2 } from "next/font/google";
 import "@/app/globals.css";
-import { NavBar } from "@/components/NavBar";
+import { NavBar } from "@/components/header/NavBar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SessionHydrator } from "@/app/auth/callback/SessionHydrator";
 import { Footer } from "@/components/Footer";

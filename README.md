@@ -34,16 +34,20 @@ Este proyecto está desarrollado con un stack moderno de JavaScript, enfocado en
 
 ### Estructura del Proyecto
 
-El código está organizado siguiendo las convenciones de Next.js, con una clara separación de responsabilidades:
+El código está organizado siguiendo las convenciones de Next.js, con una clara separación de responsabilidades para mantener el proyecto ordenado y escalable:
 
 ```
+/public             # Contiene todos los archivos estáticos como imágenes, fuentes y SVGs.
 /src
-|-- /app           # Páginas y rutas principales de la aplicación
-|-- /components    # Componentes reutilizables (botones, inputs, etc.)
-|-- /lib           # Funciones de utilidad y configuración de librerías
-|-- /hooks         # Hooks personalizados de React
-|-- /context       # Contextos de React para el estado global
-|-- /styles        # Estilos globales
+|-- /app            # Páginas y rutas de la aplicación (App Router de Next.js).
+|-- /components     # Componentes de React reutilizables en toda la aplicación.
+|-- /content        # Contenido estático o datos, como archivos JSON.
+|-- /context        # Contextos de React para la gestión del estado global (ej. sesión de usuario).
+|-- /hooks          # Hooks personalizados de React para lógica reutilizable.
+|-- /lib            # Módulos y funciones de utilidad (ej. conexión con Supabase, utils de Tiptap).
+|-- /styles         # Estilos globales y variables SASS.
+|-- /utils          # Funciones de utilidad generales (ej. formateo de fechas).
+|-- middleware.ts   # Middleware de Next.js para gestionar rutas y sesiones.
 ```
 
 ¡Gracias por tu interés en Tudami! Si tienes alguna pregunta o sugerencia, no dudes en contactarnos.

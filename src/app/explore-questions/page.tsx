@@ -1,11 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import { CardPost } from "./components/CardPost";
-import { Pagination } from "./components/pagination";
+import { Pagination } from "@/components/pagination";
 import { useSearchParams } from "next/navigation";
-import { fetchQuestions } from "./lib/listQuestions";
-import { Post } from "./interface/post";
-import { SkeletonCard } from "./components/skeleton-post";
+import { fetchGeneralQuestions } from "./lib/listQuestions";
+import { Post } from "../../interface/post";
+import { SkeletonCard } from "./components/SkeletonPost";
+import { Count } from "./components/Count";
+import { NoContent } from "./components/NoContent";
 
 export default function ExploreQuestionsPage() {
   const searchParams = useSearchParams();
@@ -13,37 +15,26 @@ export default function ExploreQuestionsPage() {
   const [questions, setQuestions] = useState<Post[]>([]);
   const [total, setTotal] = useState(0);
   const page = parseInt(searchParams.get("page") || "1", 10);
-  const topic = searchParams.get("topic") || undefined;
-  const search = searchParams.get("search") || undefined;
-  const pageSize = 10; // Definir pageSize constante
-
-  const sortParam = searchParams.get("sort");
-  const validSortValues = ["recent", "popular", "commented"] as const;
-
-  const sort: (typeof validSortValues)[number] | undefined =
-    validSortValues.includes(sortParam as (typeof validSortValues)[number])
-      ? (sortParam as (typeof validSortValues)[number])
-      : "recent";
+  const pageSize = 10;
 
   useEffect(() => {
     setLoading(true);
-    fetchQuestions({ page, topic, sort, search, pageSize })
+    fetchGeneralQuestions(page, pageSize)
       .then((res) => {
-        console.log("fetchQuestions response:", res);
         setQuestions(res.questions);
         setTotal(res.total);
       })
       .finally(() => setLoading(false));
-  }, [page, topic, sort, search, pageSize]);
-
-  console.log("Page state:", { loading, total, questionsLength: questions.length });
-
+  }, [page, pageSize]);
 
   return (
     <>
       <section className="py-8 mb-8 space-y-6">
+        <Count count={total} />
         {loading ? (
-          <SkeletonCard/>
+          <SkeletonCard />
+        ) : questions.length === 0 ? (
+          <NoContent />
         ) : (
           questions.map((post) => (
             <CardPost
