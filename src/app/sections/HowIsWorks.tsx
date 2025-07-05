@@ -48,7 +48,7 @@ export function HowIsWorks() {
 
   const handleClickBtnExplore = () => {
     if (user) {
-      router.push("/explore-questions");
+      router.push("/create-questions");
     } else {
       openModal();
     }

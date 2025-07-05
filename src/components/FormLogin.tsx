@@ -1,3 +1,4 @@
+
 import { User } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { Modal } from "@/components/ui/Modal";
@@ -9,14 +10,20 @@ import { useSession } from "@/context/context.sesion";
 
 export default function FormLogin() {
   const { isModalOpen, openModal, closeModal } = useSession();
+
+  const HOST = process.env.NEXT_PUBLIC_HOST
+
+  console.log("host para el redirect --->", HOST)
+
   const loginWith = async (provider: "google" | "github") => {
     await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${HOST}/auth/callback`,
       },
     });
   };
+
 
   return (
     <>
@@ -74,6 +81,7 @@ export default function FormLogin() {
               onClick={() => loginWith("github")}
               className="bg-gray-900 text-white px-4 py-2 rounded-md flex items-center justify-center gap-3 hover:bg-gray-950 transition-colors cursor-pointer"
             >
+
               <GitHubIcon className="w-5 h-5" />
               Continuar con GitHub
             </button>

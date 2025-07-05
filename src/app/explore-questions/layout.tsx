@@ -1,5 +1,6 @@
 import { Header } from "./components/HeaderQuestions";
 import { Metadata } from "next";
+import { MapsTags } from "./components/MapsTags";
 
 export const metadata: Metadata = {
   title: "Explorar preguntas",
@@ -21,9 +22,12 @@ export default function ExploreQuestionsLayout({
             {children}
           </main>
 
-          <aside className="hidden lg:flex lg:col-span-1 bg-accent sticky top-20  self-start max-h-[calc(100vh-2rem)] px-4 rounded-sm">
+          <aside className="hidden lg:flex lg:col-span-1 bg-accent sticky top-20  self-start max-h-[calc(100vh-2rem)] px-4 rounded-md">
             <div className="mx-3 pb-3">
-              <p className="pt-4">aqui hay contenido</p>
+              <h2 className="pt-4 text-base lg:text-lg font-semibold text-slate-700 dark:text-slate-200 mb-2">
+                Temas populares
+              </h2>
+              <MapsTags />
             </div>
           </aside>
         </div>
