@@ -75,7 +75,7 @@ export default function Editor() {
   return (
     <>
       <div className="md:col-span-4 w-full rounded-md shadow-sm order-2 lg:order-1">
-        <div className="mb-2 bg-accent  p-6">
+        <div className="mb-2 bg-accent p-6 rounded-t-md ">
           <label htmlFor="titulo" className="font-medium text-sm md:text-base">
             Dale un título claro a tu pregunta
           </label>
@@ -103,7 +103,7 @@ export default function Editor() {
           />
         </div>
 
-        <div className="bg-accent  p-6">
+        <div className="bg-accent  p-6 rounden-br-md rounded-b-md">
           <span className="font-medium text-sm md:text-base block mb-3">
             Escribe tu pregunta con detalle
           </span>

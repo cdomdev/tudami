@@ -49,9 +49,9 @@ export function CardPost({
 
       {/* Título y contenido */}
       <div className="mb-4">
-        <h2 className="text-xl font-semibold mb-2">{title}</h2>
+        <h2 className="text-lg md:text-xl font-semibold mb-2">{title}</h2>
         <div
-          className="text-muted-foreground text-sm"
+          className="text-black text-pretty text-sm md:text-md "
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </div>

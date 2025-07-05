@@ -15,7 +15,7 @@ import { Pagination } from "@/components/pagination";
 
 export default function QuestionPage({}: { params: { query: string } }) {
   const [questions, setQuestions] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
   const searchParams = useSearchParams();
   const search = searchParams.get("search") || undefined;
@@ -61,20 +61,7 @@ export default function QuestionPage({}: { params: { query: string } }) {
         ) : questions.length === 0 ? (
           <p className="text-center">No hay preguntas.</p>
         ) : (
-          questions.map((post) => (
-            <CardPost
-              key={post.id}
-              user_id={post.user_id}
-              id={post.id}
-              users={post.users}
-              content={post.content}
-              created_at={post.created_at}
-              question_tags={post.question_tags}
-              title={post.title}
-              question_likes={post.question_likes}
-              // comments_count={post.comments_count}
-            />
-          ))
+          questions.map((post) => <CardPost key={post.id} {...post} />)
         )}
       </section>
       <Pagination

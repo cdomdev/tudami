@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { SaveButton } from "./Save";
 import { useSession } from "@/context/context.sesion";
 import { isQuestionSaved, toggleSave } from "../lib/saveQuestions";
 import { supabase } from "@/lib/supabase";
-import {toast} from "sonner";
+import { toast } from "sonner";
+import { Bookmark } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function ToggleSaveButton({ question_id }: { question_id: number }) {
   const { user } = useSession();
@@ -46,10 +47,27 @@ export function ToggleSaveButton({ question_id }: { question_id: number }) {
   const handleSave = async () => {
     if (!user) return;
     const { saved } = await toggleSave(question_id, user.id);
-    if(saved) toast.success("Se guardó la pregunta en tu perfil");
+    if (saved) toast.success("Se guardó la pregunta en tu perfil");
     else toast.error("Se eliminó la pregunta de tus guardados");
     setIsSaved(saved);
   };
 
-  return <SaveButton isSaved={isSaved} onSave={handleSave} />;
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={handleSave}
+      className={`cursor-pointer ${
+        isSaved
+          ? "bg-green-500 text-white hover:bg-green-600 dark:hover:bg-green-700"
+          : "bg-gray-200 text-gray-800 hover:bg-gray-300 dark:hover:text-white dark:hover:bg-gray-400"
+      } px-4 py-2 rounded-md transition-colors duration-200 `}
+    >
+      <Bookmark
+        className={`h-5 w-5 ${
+          isSaved ? "text-white" : "text-gray-800 hover:text-white"
+        }`}
+      />
+    </Button>
+  );
 }

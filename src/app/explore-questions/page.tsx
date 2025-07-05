@@ -36,20 +36,7 @@ export default function ExploreQuestionsPage() {
         ) : questions.length === 0 ? (
           <NoContent />
         ) : (
-          questions.map((post) => (
-            <CardPost
-              key={post.id}
-              user_id={post.user_id}
-              id={post.id}
-              users={post.users}
-              content={post.content}
-              created_at={post.created_at}
-              question_tags={post.question_tags}
-              title={post.title}
-              question_likes={post.question_likes}
-              // comments_count={post.comments_count}
-            />
-          ))
+          questions.map((post) => <CardPost key={post.id} {...post} />)
         )}
       </section>
       <Pagination

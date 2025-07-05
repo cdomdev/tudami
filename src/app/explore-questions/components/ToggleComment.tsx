@@ -36,7 +36,8 @@ export function ToggleComment({ question_id }: { question_id: number }) {
       <Button
         variant="ghost"
         onClick={() => setOpen(!open)}
-        className="text-sm text-primary hover:bg-transparent flex items-center gap-1 cursor-pointer"
+        size={"sm"}
+        className="text-sm text-primary hover:bg-transparent flex items-center gap-1 cursor-pointer "
       >
         <MessageCircle className="size-4" />
         Comentar

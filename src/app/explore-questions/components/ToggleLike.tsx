@@ -46,8 +46,8 @@ export function ToggleLike({
   };
 
   const styleLiked = hasLiked
-    ? "text-white hover:text-white bg-blue-700 hover:bg-blue-800"
-    : "text-gray-700 hover:text-gray-800 hover:bg-gray-200";
+    ? "text-white hover:text-white bg-blue-700 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
+    : "text-gray-700 hover:text-gray-800 dark:hover:bg-accent dark:text-gray-300";
 
   return (
     <>
@@ -56,9 +56,9 @@ export function ToggleLike({
         disabled={loading}
         variant="ghost"
         size="sm"
-        className={`flex items-center gap-1 duration-200 cursor-pointer ${styleLiked}`}
+        className={`flex  items-center gap-1 duration-200 cursor-pointer  ${styleLiked}`}
       >
-        <ThumbsUp className={hasLiked ? "text-white" : "text-gray-500"} />
+        <ThumbsUp className={hasLiked ? "text-white" : "text-gray-500 dark:text-white dark:hover:text-white"} />
         {hasLiked ? "Te gusta" : "Me gusta"}
       </Button>
 

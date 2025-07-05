@@ -1,10 +1,8 @@
 import { supabase } from "@/lib/supabase";
 
 export function buildQuestionsQuery() {
-    return supabase
-        .from("questions")
-        .select(
-            `
+  return supabase.from("questions").select(
+    `
       *,
       users:users (
         id,
@@ -22,6 +20,6 @@ export function buildQuestionsQuery() {
         id
       )
       `,
-            { count: "exact" }
-        );
+    { count: "exact" }
+  );
 }

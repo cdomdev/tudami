@@ -40,7 +40,10 @@ export function LikeCount({
   }, [question_id, setCount]);
 
   return (
-    <Button variant="ghost" className="hover:bg-none hover:bg-transparent">
+    <Button
+      variant="ghost"
+      className="hover:bg-none hover:bg-transparent dark:hover:bg-transparent "
+    >
       <ThumbsUp /> {count}
     </Button>
   );
