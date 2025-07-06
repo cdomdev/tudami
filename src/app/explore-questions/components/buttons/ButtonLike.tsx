@@ -4,11 +4,12 @@ import { supabase } from "@/lib/supabase";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ThumbsUp } from "lucide-react";
-import { toggleLike, checkIfLiked } from "../lib/likeQuestions";
+import { toggleLike, checkIfLiked } from "../../lib/likeQuestions";
 import { useSession } from "@/context/context.sesion";
-import { ToggleComment } from "./ToggleComment";
+import {ButtonComment} from "./ButtonComment"
 
-export function ToggleLike({
+
+export function ButtonLike({
   question_id,
   onLikeChange,
 }: {
@@ -62,7 +63,7 @@ export function ToggleLike({
         {hasLiked ? "Te gusta" : "Me gusta"}
       </Button>
 
-      <ToggleComment question_id={question_id}  />
+     
     </>
   );
 }

@@ -44,6 +44,8 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  
 }
 
 :root {
@@ -80,7 +82,9 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  
+  /* varibles customizadas del componente para texto enriquecido */
+
+
 }
 
 .dark {
@@ -176,16 +180,6 @@
   background: rgb(182, 177, 177);
 }
 
-.tiptap-button[data-active-state="on"] {
-  background-color: #1da0f7 !important;
-  border-radius: 5px
-}
-
-.tiptap-button:hover {
-  background-color: #38acfa !important;
-  border-radius: 5px;
-  cursor: pointer;
-}
 
 
 html {

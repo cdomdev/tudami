@@ -16,7 +16,7 @@ export default function QuestionsPage() {
       </h1>
       <SectionContainer className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-6 gap-4">
         <Editor />
-        <div className="md:col-span-2  rounded-md p-6 bg-muted shadow-md order-1 lg:order-2">
+        <div className="md:col-span-2  rounded-md p-6 bg-muted shadow-sm order-1 lg:order-2">
           <Recomendaciones />
         </div>
       </SectionContainer>

@@ -13,8 +13,6 @@ export default function FormLogin() {
 
   const HOST = process.env.NEXT_PUBLIC_HOST
 
-  console.log("host para el redirect --->", HOST)
-
   const loginWith = async (provider: "google" | "github") => {
     await supabase.auth.signInWithOAuth({
       provider,

@@ -1,5 +1,5 @@
 import Tags from "@/content/data-tags.json";
-import { CardTags } from "./CardTags";
+import { CardTags } from "./Cards/CardTags";
 
 export function MapsTags() {
   return (

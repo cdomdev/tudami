@@ -9,7 +9,7 @@ interface ShareButtonProps {
   url?: string;
 }
 
-export function ShareButton({ title, text, url }: ShareButtonProps) {
+export function ButtonShare({ title, text, url }: ShareButtonProps) {
   const handleShare = async () => {
     const currentUrl = url || window.location.href;
 

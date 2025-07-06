@@ -68,7 +68,7 @@ export function Header() {
               <Input
                 aria-label="Buscar preguntas"
                 placeholder="Buscar preguntas..."
-                className="pl-10 bg-white dark:bg-slate-300 dark:text-slate-900 hover:bg-slate-200 focus:ring-0 dark:focus:border-blue-300 w-8/12 md:w-9/12 md:max-w-10/12"
+                className="pl-10 bg-white dark:bg-gray-50 dark:text-slate-900 hover:bg-slate-200 focus:ring-0 dark:focus:border-blue-300 w-8/12 md:w-9/12 md:max-w-10/12"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
@@ -104,9 +104,9 @@ export function Header() {
           <TabsList className="w-full sm:w-auto dark:bg-card">
             <TabsTrigger
               value="all"
-              className="cursor-pointer hover:bg-gray-50 duration-300"
+              className="cursor-pointer hover:bg-gray-50 duration-300 "
             >
-              Inicio
+              Todas
             </TabsTrigger>
             <TabsTrigger
               value="popular"
@@ -122,7 +122,7 @@ export function Header() {
             </TabsTrigger>
             <TabsTrigger
               value="my"
-              className="cursor-pointer hover:bg-gray-50 duration-300"
+              className="cursor-pointer hover:bg-gray-50 duration-300 "
             >
               Mis preguntas
             </TabsTrigger>

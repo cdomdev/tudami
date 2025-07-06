@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from "@/context/context.sesion";
-import { isQuestionSaved, toggleSave } from "../lib/saveQuestions";
+import { isQuestionSaved, toggleSave } from "../../lib/saveQuestions";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 import { Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export function ToggleSaveButton({ question_id }: { question_id: number }) {
+export function ButtonSavePost({ question_id }: { question_id: number }) {
   const { user } = useSession();
   const [isSaved, setIsSaved] = useState(false);
 
@@ -57,16 +57,14 @@ export function ToggleSaveButton({ question_id }: { question_id: number }) {
       variant="ghost"
       size="icon"
       onClick={handleSave}
-      className={`cursor-pointer ${
-        isSaved
+      className={`cursor-pointer ${isSaved
           ? "bg-green-500 text-white hover:bg-green-600 dark:hover:bg-green-700"
           : "bg-gray-200 text-gray-800 hover:bg-gray-300 dark:hover:text-white dark:hover:bg-gray-400"
-      } px-4 py-2 rounded-md transition-colors duration-200 `}
+        } px-4 py-2 rounded-md transition-colors duration-200 `}
     >
       <Bookmark
-        className={`h-5 w-5 ${
-          isSaved ? "text-white" : "text-gray-800 hover:text-white"
-        }`}
+        className={`h-5 w-5 ${isSaved ? "text-white" : "text-gray-800 hover:text-white"
+          }`}
       />
     </Button>
   );

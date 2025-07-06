@@ -9,8 +9,8 @@ import {
 } from "../lib/getQuestionByQuery";
 import { Post } from "../../../interface/post";
 import { SkeletonCard } from "../components/SkeletonPost";
-import { CardPost } from "../components/CardPost";
-import { Count } from "../components/Count";
+import { CardPost } from "../components/Cards/CardPost";
+import { Count } from "../components/CountQuestions";
 import { Pagination } from "@/components/pagination";
 
 export default function QuestionPage({}: { params: { query: string } }) {

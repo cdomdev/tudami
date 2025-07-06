@@ -25,8 +25,8 @@
 
   &[data-highlighted="true"],
   &[data-focus-visible="true"] {
-    background-color: var(--tt-button-hover-bg-color);
-    color: var(--tt-button-hover-text-color);
+    // background-color: red;
+    color: white;
     // outline: 2px solid var(--tt-button-active-icon-color);
   }
 
@@ -183,8 +183,10 @@
 -------------------------------------------- */
 
 .tiptap-button {
-  background-color: var(--tt-button-default-bg-color);
-  color: var(--tt-button-default-text-color);
+  // background-color: rgb(223, 221, 221);
+  color: black;
+  border-radius: 2px;
+  cursor:pointer;
 
   .tiptap-button-icon {
     color: var(--tt-button-default-icon-color);
@@ -205,8 +207,8 @@
   /* hover state of a button */
   &:hover,
   &[data-active-item="true"]:not([disabled]) {
-    background-color: var(--tt-button-hover-bg-color);
-    color: var(--tt-button-hover-text-color);
+    background-color: rgb(129, 121, 121);
+    color: white;
 
     .tiptap-button-icon {
       color: var(--tt-button-hover-icon-color);
@@ -225,8 +227,9 @@
   /* Active state of a button */
   &[data-active-state="on"]:not([disabled]),
   &[data-state="open"]:not([disabled]) {
-    background-color: var(--tt-button-active-bg-color);
-    color: var(--tt-button-active-text-color);
+    background-color: rgb(63, 63, 236);
+    color: white;
+    cursor: pointer;
 
     .tiptap-button-icon {
       color: var(--tt-button-active-icon-color);
@@ -242,7 +245,7 @@
     }
 
     &:hover {
-      background-color: var(--tt-button-active-hover-bg-color);
+      background-color: rgb(67, 85, 246);
     }
 
     /* Emphasized */

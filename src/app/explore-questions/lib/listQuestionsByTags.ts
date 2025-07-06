@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import { buildQuestionsQuery } from "./buildQuestionsQuery";
 
 export async function getQuestionsByTag(
   tagSlug: string,
@@ -22,30 +23,7 @@ export async function getQuestionsByTag(
   }
 
   // Luego obtenemos las preguntas que tienen este tag
-  let query = supabase
-    .from("questions")
-    .select(
-      `
-      *,
-      users:users (
-        id,
-        full_name,
-        avatar_url
-      ),
-      question_tags!inner (
-        tag:tags (
-          id,
-          name,
-          color,
-          slug
-        )
-      ),
-      question_likes (
-        id
-      )
-    `
-    )
-    .eq("question_tags.tag_id", tagData.id);
+  let query = buildQuestionsQuery(from, to).eq("question_tags.tag_id", tagData.id);
 
   if (search) {
     query = query.ilike("title", `%${search}%`);

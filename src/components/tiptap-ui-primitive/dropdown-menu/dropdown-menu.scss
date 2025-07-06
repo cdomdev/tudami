@@ -5,7 +5,7 @@
   --tt-popover-label: var(--tt-gray-light-a-400);
 
   .dark & {
-    --tt-popover-border-color: var(--tt-gray-dark-a-50);
+    // --tt-popover-border-color: var(--tt-gray-dark-a-50);
     --tt-popover-bg-color: #000000;
     --tt-popover-text-color: var(--tt-gray-dark-a-600);
     --tt-popover-label: var(--tt-gray-dark-a-400);
@@ -17,7 +17,7 @@
       -------------------------------------------- */
 .tiptap-dropdown-menu {
   --padding: 0.25rem;
-  --border-width: 1px;
+  // --border-width: 1px;
 
   z-index: 200;
   border-radius: calc(

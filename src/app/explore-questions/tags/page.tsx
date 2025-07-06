@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Count } from "../components/Count";
+import { Count } from "../components/CountQuestions";
 import { Post } from "@/interface/post";
 import { useSearchParams } from "next/navigation";
 import { getQuestionsByTag } from "../lib/listQuestionsByTags";
 import { SkeletonCard } from "../components/SkeletonPost";
-import { CardPost } from "../components/CardPost";
+import { CardPost } from "../components/Cards/CardPost";
 
 export default function PageTags() {
   const [loading, setLoading] = useState(false);

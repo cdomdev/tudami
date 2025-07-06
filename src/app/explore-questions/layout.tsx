@@ -18,15 +18,16 @@ export default function ExploreQuestionsLayout({
       <div className="min-h-dvh flex flex-col mt-20">
         <Header />
         <div className="grid grid-cols-1 lg:grid-cols-4 max-w-6xl  gap-3 w-full mx-auto ">
-          <main className="w-full lg:col-span-3 px-2 lg:pr-6  mx-auto ">
+          <main className="w-full bg-accent dark:bg-card lg:col-span-3 px-6 shadow-sm mx-auto ">
             {children}
           </main>
 
-          <aside className="hidden lg:flex lg:col-span-1 bg-accent sticky top-20  self-start max-h-[calc(100vh-2rem)] px-4 rounded-md">
-            <div className="mx-3 pb-3">
-              <h2 className="pt-4 text-base lg:text-lg font-semibold text-slate-700 dark:text-slate-200 mb-2">
+          <aside className="hidden lg:flex lg:col-span-1 bg-accent dark:bg-card sticky top-20  self-start max-h-[calc(100vh-3rem)] px-4 rounded-md shadow-sm">
+            <div className="my-1">
+              <h2 className="pt-4 text-base lg:text-lg font-semibold text-slate-700 dark:text-slate-200 ">
                 Temas populares
               </h2>
+              <div className="border-t border-dashed bg-gray-700 mt-2 dark:bg-gray-400 mb-4 dark:border-dashed dark:border-gray-700" />
               <MapsTags />
             </div>
           </aside>

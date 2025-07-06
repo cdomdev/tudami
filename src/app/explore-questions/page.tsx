@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import { CardPost } from "./components/CardPost";
+import { CardPost } from "./components/Cards/CardPost";
 import { Pagination } from "@/components/pagination";
 import { useSearchParams } from "next/navigation";
 import { fetchGeneralQuestions } from "./lib/listQuestions";
 import { Post } from "../../interface/post";
 import { SkeletonCard } from "./components/SkeletonPost";
-import { Count } from "./components/Count";
+import { Count } from "./components/CountQuestions";
 import { NoContent } from "./components/NoContent";
 
 export default function ExploreQuestionsPage() {
@@ -27,6 +27,7 @@ export default function ExploreQuestionsPage() {
       .finally(() => setLoading(false));
   }, [page, pageSize]);
 
+  console.log("datos de preguntas --->", questions)
   return (
     <>
       <section className="py-8 mb-8 space-y-6">

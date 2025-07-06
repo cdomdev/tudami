@@ -9,7 +9,7 @@ export async function getPopularQuestions(
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
-  let query = buildQuestionsQuery().range(0, 999);
+  let query = buildQuestionsQuery(from, to);
 
   if (search) {
     query = query.ilike("title", `%${search}%`);
@@ -37,10 +37,7 @@ export async function getUnansweredQuestions(
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
-  let query = buildQuestionsQuery()
-    .eq("status", "pendiente")
-    .order("created_at", { ascending: false })
-    .range(from, to);
+  let query = buildQuestionsQuery(from, to).eq("status", "pendiente")
 
   if (search) {
     query = query.ilike("title", `%${search}%`);
@@ -63,7 +60,7 @@ export async function getMyQuestions(page = 1, pageSize = 10, search?: string) {
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
-  let query = buildQuestionsQuery()
+  let query = buildQuestionsQuery(from, to)
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
     .range(from, to);

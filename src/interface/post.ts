@@ -24,11 +24,22 @@ export interface Post {
   }[];
 
   question_likes?: {
-  id: number;
-  user_id: string;
-  users: {
-    id: string;
-    full_name: string;
-  };
-}[];
+    id: number;
+    user_id: string;
+    users: {
+      id: string;
+      full_name: string;
+    };
+  }[];
+
+  question_comments?: {
+    id: number;
+    user_id: string;
+    users: {
+      id: string;
+      full_name: string;
+    };
+  }[];
+
+
 }

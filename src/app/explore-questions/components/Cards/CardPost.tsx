@@ -1,9 +1,12 @@
 import Image from "next/image";
-import { Post } from "../../../interface/post";
+import { Post } from "../../../../interface/post";
 import { UserCircle } from "lucide-react";
 import { formatTimestamp } from "@/utils/formatDate";
-import { LikeSection } from "./LikeSecction";
-import { ToggleSaveButton } from "../components/ToggelSaveButton";
+import { FooterCardPost } from "./FooterCardPost";
+import { ButtonSavePost } from "../buttons/ButtonSavePost";
+import { ButtonShare } from "../buttons/ButtonShare";
+
+
 export function CardPost({
   id,
   title,
@@ -12,13 +15,17 @@ export function CardPost({
   question_likes,
   question_tags,
   users,
+  question_comments
 }: Post) {
   const likeCount = question_likes ? question_likes.length : 0;
+  const commentCount = question_comments ? question_comments.length : 0;
+
+  console.log(question_comments);
 
   return (
     <article
       key={id}
-      className="bg-card border border-border rounded-xl p-5 shadow-sm hover:shadow transition"
+      className="bg-card border border-border rounded-xl p-5  hover:shadow transition"
     >
       {/* Cabecera del autor */}
       <div className="flex items-start justify-between mb-3">
@@ -44,14 +51,17 @@ export function CardPost({
             </p>
           </div>
         </div>
-        <ToggleSaveButton question_id={id} />
+        <div className="flex gap-5 items-center">
+          <ButtonShare title="Comparte esta pregunta" />
+          <ButtonSavePost question_id={id} />
+        </div>
       </div>
 
       {/* Título y contenido */}
       <div className="mb-4">
         <h2 className="text-lg md:text-xl font-semibold mb-2">{title}</h2>
         <div
-          className="text-black text-pretty text-sm md:text-md "
+          className="text-black dark:text-foreground text-pretty text-sm md:text-md "
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </div>
@@ -71,8 +81,8 @@ export function CardPost({
         </div>
       )}
 
-      {/* Acciones */}
-      <LikeSection question_id={id} likes={likeCount} />
+      {/* Acciones botones y contadores de los preguntas */}
+      <FooterCardPost question_id={id} likes={likeCount} comments={commentCount} />
     </article>
   );
 }

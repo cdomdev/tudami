@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 
-export function buildQuestionsQuery() {
+export function buildQuestionsQuery(from: number | 0, to: number | 999
+) {
   return supabase.from("questions").select(
     `
       *,
@@ -18,8 +19,13 @@ export function buildQuestionsQuery() {
       ),
       question_likes (
         id
+      ), 
+      question_comments (
+        id
       )
       `,
     { count: "exact" }
-  );
+  )
+    .order("created_at", { ascending: false })
+    .range(from, to)
 }

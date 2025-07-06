@@ -13,7 +13,7 @@ export function Pagination({
 }: PaginationProps) {
   const totalPages = Math.ceil(totalItems / pageSize);
 
-  // if (totalPages <= 1) return null;
+  if (totalPages <= 1) return null;
 
   const createPageLink = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -65,7 +65,7 @@ export function Pagination({
 
   return (
     <section className="py-8">
-      <div className="flex justify-center items-center gap-2 flex-wrap">
+      <div className="flex justify-center items-center  gap-2 flex-wrap">
         {/* Botón Anterior */}
         {currentPage > 1 && (
           <Button asChild variant="outline" size="sm">

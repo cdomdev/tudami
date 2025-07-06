@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ThumbsUp } from "lucide-react";
 
-export function LikeCount({
+export function BtnCounterLikes({
   question_id,
   count,
   setCount,
