@@ -7,9 +7,6 @@ export async function toggleLike(questionId: number, user_id: string) {
     .eq("question_id", questionId)
     .eq("user_id", user_id)
     .maybeSingle();
-
-
-
   if (existingLike) {
     const { error: deleteError } = await supabase
       .from("question_likes")

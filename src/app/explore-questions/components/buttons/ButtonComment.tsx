@@ -9,7 +9,7 @@ import { MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 
 
-export function ButtonComment({ question_id }: { question_id: number }) {
+export function ButtonComment({ question_id, onCommentChange }: { question_id: number, onCommentChange?: (count: number) => void }) {
   const { user } = useSession();
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState("");
@@ -31,6 +31,11 @@ export function ButtonComment({ question_id }: { question_id: number }) {
       setOpen(false);
     }
 
+    // validar cantidad de comnetarios para emitir el evento 
+
+    const { count } = await supabase.from("question_comments").select("*", { count: "exact", head: true }).eq("question_id", question_id)
+
+    onCommentChange?.(count ?? 0)
     toast.success("Comentario enviado");
 
     setLoading(false);
@@ -50,13 +55,13 @@ export function ButtonComment({ question_id }: { question_id: number }) {
       </Button>
 
       {open && (
-        <div className="-translate-x-22 w-xs md:min-w-3xl bg-card  mt-5 ">
+        <div className="-translate-x-22 w-xs md:min-w-3xl mt-5 ">
           <Textarea
             placeholder="Escribe tu comentario..."
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={3}
-            className="w-full resize-none focus:outline-none ring-0 focus:ring-0 dark:focus:ring-0 dark:focus:underline-none "
+            className="w-full resize-none focus:outline-none ring-0  focus:ring-0 focus:underline-none dark:focus:ring-0 dark:focus:underline-none "
           />
           <div className="flex gap-2 justify-end mt-2">
             <Button
@@ -71,7 +76,7 @@ export function ButtonComment({ question_id }: { question_id: number }) {
               Cancelar
             </Button>
             <Button
-            className="cursor-pointer"
+              className="cursor-pointer"
               size="sm"
               onClick={handleSubmit}
               disabled={loading || !content.trim()}

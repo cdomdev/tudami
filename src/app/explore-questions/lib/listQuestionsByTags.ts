@@ -23,7 +23,7 @@ export async function getQuestionsByTag(
   }
 
   // Luego obtenemos las preguntas que tienen este tag
-  let query = buildQuestionsQuery(from, to).eq("question_tags.tag_id", tagData.id);
+  let query = buildQuestionsQuery().range(from, to).eq("question_tags.tag_id", tagData.id);
 
   if (search) {
     query = query.ilike("title", `%${search}%`);

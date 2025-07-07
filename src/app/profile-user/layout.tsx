@@ -3,7 +3,7 @@
 import { useSession } from "@/context/context.sesion";
 import Image from "next/image";
 import Link from "next/link";
-import { House, Settings } from "lucide-react";
+import { House, Settings, Bookmark, Layout } from "lucide-react";
 
 export default function LayoutProfile({
   children,
@@ -11,6 +11,24 @@ export default function LayoutProfile({
   children: React.ReactNode;
 }) {
   const { user } = useSession();
+
+  const itemsSide = [
+    {
+      name: "Inicio",
+      href: `/profile-user?id=${user?.id}`,
+      icon: House,
+    },
+    {
+      name: "Cuenta",
+      href: `/profile-user/account-setting`,
+      icon: Settings,
+    },
+    {
+      name: "Guardados",
+      href: "/profile-user/save",
+      icon: Bookmark,
+    }
+  ]
 
   return (
     <section
@@ -20,7 +38,7 @@ export default function LayoutProfile({
     >
       {/* Barra lateral */}
       <aside
-        className="md:col-span-1 max-w-xs pr-4 pl-2 pt-6 hidden md:block bg-accent rounded-xl shadow-md dark:bg-gray-800"
+        className="md:col-span-1 max-w-xs pr-4 pl-2 pt-6 hidden md:block bg-accent rounded-md shadow-md dark:bg-gray-800 h-56 max-h-80"
         role="navigation"
         aria-label="Opciones de perfil"
       >
@@ -28,30 +46,23 @@ export default function LayoutProfile({
           id="profile-section-title"
           className="text-lg font-bold mb-6 text-accent-foreground px-3"
         >
-         Opciones
+          Opciones
         </h2>
 
         <nav>
           <ul className="space-y-2">
-            <li>
-              <Link
-                href={`/profile-user?id=${user?.id}`}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-accent-foreground/10 dark:hover:bg-gray-700 text-accent-foreground"
-              >
-                <House className="size-5 text-primary" />
-                <span className="text-sm font-medium">Inicio</span>
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                href={`/profile-user/preferencias`}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-accent-foreground/10 dark:hover:bg-gray-700 text-accent-foreground"
-              >
-                <Settings className="size-5 text-primary" />
-                <span className="text-sm font-medium">Preferencias</span>
-              </Link>
-            </li>
+            {itemsSide.map((item) => (
+              <li key={item.name} aria-label="{item.name">
+                <Link
+                  href={item.href}
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-accent-foreground/10 dark:hover:bg-gray-700 text-accent-foreground"
+                >
+                  <item.icon className="size-5 text-primary" />
+                  <span className="text-sm font-medium">{item.name}</span>
+                </Link>
+              </li>
+            ))
+            }
           </ul>
         </nav>
       </aside>
@@ -59,7 +70,7 @@ export default function LayoutProfile({
       {/* Contenido principal */}
       <main className="md:col-span-5">
         <header
-          className="flex mb-6 bg-accent dark:bg-gray-800 p-4 rounded-lg shadow-sm"
+          className="flex mb-4 bg-accent dark:bg-gray-800 p-4 rounded-md shadow-md"
           role="banner"
         >
           <Image
@@ -81,7 +92,7 @@ export default function LayoutProfile({
             </p>
           </div>
         </header>
-        <nav aria-label="Navegación de perfil ">
+        <nav aria-label="Navegación de perfil " className="block md:hidden">
           <ul className="flex gap-4 mb-6 bg-accent dark:bg-gray-800 px-4 py-2 rounded-md shadow-sm">
             <li>
               <Link href="#" className="hover:underline">
@@ -95,8 +106,29 @@ export default function LayoutProfile({
             </li>
           </ul>
         </nav>
-        <div>{children}</div>
+        {children}
       </main>
     </section>
   );
 }
+
+
+// <li>
+//               <Link
+//                 href={`/profile-user?id=${user?.id}`}
+//                 className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-accent-foreground/10 dark:hover:bg-gray-700 text-accent-foreground"
+//               >
+//                 <House className="size-5 text-primary" />
+//                 <span className="text-sm font-medium">Inicio</span>
+//               </Link>
+//             </li>
+
+//             <li>
+//               <Link
+//                 href={`/profile-user/preferencias`}
+//                 className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-accent-foreground/10 dark:hover:bg-gray-700 text-accent-foreground"
+//               >
+//                 <Settings className="size-5 text-primary" />
+//                 <span className="text-sm font-medium">Preferencias</span>
+//               </Link>
+//             </li>

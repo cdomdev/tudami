@@ -6,6 +6,7 @@ type Session = {
   full_name: string;
   avatar_url?: string;
   provider?: string;
+  phone?: string;
 };
 
 type SessionState = {

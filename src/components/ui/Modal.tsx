@@ -33,6 +33,7 @@ export function Modal({
             aria-label="Cerrar"
           >
             <X className="h-6 w-6" />
+            <span className="sr-only">clode Modal</span>
           </button>
         </DialogClose>
         {children}

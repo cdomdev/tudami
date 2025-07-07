@@ -20,7 +20,6 @@ export function CardPost({
   const likeCount = question_likes ? question_likes.length : 0;
   const commentCount = question_comments ? question_comments.length : 0;
 
-  console.log(question_comments);
 
   return (
     <article

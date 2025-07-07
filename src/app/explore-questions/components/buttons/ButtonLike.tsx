@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { ThumbsUp } from "lucide-react";
 import { toggleLike, checkIfLiked } from "../../lib/likeQuestions";
 import { useSession } from "@/context/context.sesion";
-import {ButtonComment} from "./ButtonComment"
 
 
 export function ButtonLike({
@@ -38,11 +37,13 @@ export function ButtonLike({
     const { liked } = await toggleLike(question_id, user.id);
     setHasLiked(liked);
 
+    // validar cantidad de likes
     const { count } = await supabase
       .from("question_likes")
       .select("*", { count: "exact", head: true })
       .eq("question_id", question_id);
 
+      // emitir evento para el cambio del count
     onLikeChange?.(count ?? 0);
   };
 
@@ -63,7 +64,7 @@ export function ButtonLike({
         {hasLiked ? "Te gusta" : "Me gusta"}
       </Button>
 
-     
+
     </>
   );
 }

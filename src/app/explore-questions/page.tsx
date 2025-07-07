@@ -27,7 +27,6 @@ export default function ExploreQuestionsPage() {
       .finally(() => setLoading(false));
   }, [page, pageSize]);
 
-  console.log("datos de preguntas --->", questions)
   return (
     <>
       <section className="py-8 mb-8 space-y-6">
