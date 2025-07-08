@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useSession } from "@/context/context.sesion";
 import { createQuestion } from "../lib/createQuestions";
 import { useRouter } from "next/navigation";
-import tags from "@/content/data-tags.json";
+import tags from "@/content/tags/data-tags.json";
 import { MultiSelect } from "../components/multi-select";
 import { Button } from "@/components/ui/button";
 

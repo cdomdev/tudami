@@ -1,33 +1,6 @@
 import { create } from "zustand";
 
-// Middleware personalizado para cookies
-// const cookieStorage = {
-//   getItem: (name: string): string | null => {
-//     if (typeof document === "undefined") return null;
-//     const value = `; ${document.cookie}`;
-//     const parts = value.split(`; ${name}=`);
-//     if (parts.length === 2) {
-//       const cookieValue = parts.pop()?.split(";").shift();
-//       return cookieValue ? decodeURIComponent(cookieValue) : null;
-//     }
-//     return null;
-//   },
-//   setItem: (name: string, value: string): void => {
-//     if (typeof document === "undefined") return;
-//     const expires = new Date();
-//     // Cookie expira en 7 días
-//     expires.setDate(expires.getDate() + 7);
-//     document.cookie = `${name}=${encodeURIComponent(
-//       value
-//     )}; expires=${expires.toUTCString()}; path=/; SameSite=Strict; Secure=${
-//       location.protocol === "https:"
-//     }`;
-//   },
-//   removeItem: (name: string): void => {
-//     if (typeof document === "undefined") return;
-//     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-//   },
-// };
+
 
 type Session = {
   id: string;
@@ -37,7 +10,11 @@ type Session = {
   provider?: string;
   phone?: string;
   bio?: string;
+  country?: string;
+  city?: string;
+  department?: string;
   created_at?: string;
+  approval_token: string;
   profile_public?: boolean;
   allow_email?: boolean;
   allow_whatsapp?: boolean;
@@ -61,9 +38,9 @@ type SessionState = {
     preferences: Partial<
       Pick<
         Session,
-        "phone" | "bio" | "profile_public" | "allow_email" | "allow_whatsapp"
+        "phone" | "bio" | "profile_public" | "allow_email" | "allow_whatsapp" | "country" | "city" | "department"
       >
-    >
+    >,
   ) => void;
   clearUser: () => void;
   setLoading: (value: boolean) => void;
@@ -105,3 +82,40 @@ export const useSession = create<SessionState>((set, get) => ({
   openModal: () => set({ isModalOpen: true }),
   closeModal: () => set({ isModalOpen: false }),
 }));
+
+
+/**
+ * 
+// Middleware personalizado para cookies
+ * 
+const cookieStorage = {
+  getItem: (name: string): string | null => {
+    if (typeof document === "undefined") return null;
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+      const cookieValue = parts.pop()?.split(";").shift();
+      return cookieValue ? decodeURIComponent(cookieValue) : null;
+    }
+    return null;
+  },
+  setItem: (name: string, value: string): void => {
+    if (typeof document === "undefined") return;
+    const expires = new Date();
+    // Cookie expira en 7 días
+    expires.setDate(expires.getDate() + 7);
+    document.cookie = `${name}=${encodeURIComponent(
+      value
+    )}; expires=${expires.toUTCString()}; path=/; SameSite=Strict; Secure=${
+      location.protocol === "https:"
+    }`;
+  },
+  removeItem: (name: string): void => {
+    if (typeof document === "undefined") return;
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  },
+};
+ * 
+
+ * 
+ */

@@ -7,6 +7,8 @@ export interface UserPreferences {
   allow_whatsapp?: boolean;
   phone?: string;
   bio?: string;
+  city?: string;
+  department?: string;
 }
 
 /**
@@ -23,6 +25,8 @@ export async function updateProfile(
       .update({
         phone: preferences.phone,
         bio: preferences.bio,
+        city: preferences.city,
+        department: preferences.department,
       })
       .eq("id", userId)
       .select()
@@ -97,32 +101,32 @@ export async function getSavedQuestions(userId: string) {
       .from("questions_saveds")
       .select(
         `
+    id,
+    questions:question_id (
+      id,
+      title,
+      content,
+      created_at,
+      user: user_id (
         id,
-        users:user_id (
+        full_name,
+        avatar_url
+      ),
+      question_tags (
+        tag:tags (
           id,
-          full_name,
-          avatar_url
-        ),
-        questions:question_id (
-          id,
-          title,
-          content,
-          created_at,
-          question_tags (
-            tag:tags (
-              id,
-              name,
-              color
-            )
-          ),
-          question_likes (
-            id
-          ),
-          question_comments (
-            id
-          )
+          name,
+          color
         )
-        `
+      ),
+      question_likes (
+        id
+      ),
+      question_comments (
+        id
+      )
+    )
+  `
       )
       .eq("user_id", userId);
 

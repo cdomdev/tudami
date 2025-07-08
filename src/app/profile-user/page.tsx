@@ -20,7 +20,6 @@ export default function UserProfile() {
     ],
   };
 
-  console.log("Estadísticas del usuario:", user);
 
   const itemsActivity = [
     {

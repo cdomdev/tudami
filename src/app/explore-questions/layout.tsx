@@ -22,7 +22,7 @@ export default function ExploreQuestionsLayout({
             {children}
           </main>
 
-          <aside className="hidden lg:flex lg:col-span-1 bg-accent dark:bg-card sticky top-20  self-start max-h-[calc(100vh-3rem)] px-4 rounded-md shadow-sm">
+          <aside className="hidden lg:flex lg:col-span-1 bg-accent dark:bg-card sticky top-20  self-start max-h-[calc(100vh-3rem)] px-4 py-4 rounded-md shadow-sm">
             <div className="my-1">
               <h2 className="pt-4 text-base lg:text-lg font-semibold text-slate-700 dark:text-slate-200 ">
                 Temas populares

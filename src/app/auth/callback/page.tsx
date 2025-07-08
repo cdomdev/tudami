@@ -38,6 +38,22 @@ export default function AuthCallback() {
       const avatar_url = user_metadata?.avatar_url || "";
       const provider = app_metadata?.provider || "email";
 
+      // Generar token de aprobación usando la API
+      const tokenResponse = await fetch("/api/generate-token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: id }),
+      });
+
+      if (!tokenResponse.ok) {
+        console.error("Error al generar token de aprobación");
+        return;
+      }
+
+      const { token: tokenApproval } = await tokenResponse.json();
+
       // Insertar/actualizar usuario en la tabla users
       const { error: upsertError, data: upsertedUser } = await supabase
         .from("users")
@@ -47,6 +63,8 @@ export default function AuthCallback() {
           full_name,
           avatar_url,
           provider,
+          country: "Colombia",
+          approval_token: tokenApproval,
         })
         .select()
         .single();
@@ -71,6 +89,10 @@ export default function AuthCallback() {
         provider,
         phone: upsertedUser?.phone ?? "",
         bio: upsertedUser?.bio ?? "",
+        city: userProfile?.city ?? "",
+        department: userProfile?.department ?? "",
+        country: userProfile?.country ?? "Colombia",
+        approval_token: upsertedUser?.approval_token ?? "",
         created_at: upsertedUser?.created_at ?? new Date().toISOString(),
         profile_public:
           userProfile?.user_profile_preferences?.profile_public ?? true,

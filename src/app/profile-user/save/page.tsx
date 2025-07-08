@@ -1,54 +1,64 @@
-// "use client";
+"use client";
 
-// import { useSearchParams } from "next/navigation";
-// import { getSavedQuestions } from "../lib/profile";
-// import { useEffect, useState } from "react";
-// import { Post } from "@/interface/post";
+import { useSearchParams } from "next/navigation";
+import { getSavedQuestions } from "../lib/profile";
+import { useEffect, useState } from "react";
+import { CardsQuestionSaves } from "../components/cards/CardsQuestionSaves";
+import { SchemaQuestionsSaveds } from "../schema/schema.questions_saveds";
 
-// export default function SavePage() {
-//   const searchParams = useSearchParams();
-//   const userId = searchParams.get("user_id");
-//   const [savedQuestions, setSavedQuestions] = useState<Post[]>([]);
-//   const [loading, setLoading] = useState(true);
+export default function SavePage() {
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("user_id");
+  const [savedQuestions, setSavedQuestions] = useState<SchemaQuestionsSaveds[]>(
+    []
+  );
+  const [loading, setLoading] = useState(true);
 
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       if (!userId) {
-//         console.error("No user ID provided");
-//         setLoading(false);
-//         return;
-//       }
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!userId) {
+        setLoading(false);
+        return;
+      }
+      await getSavedQuestions(userId)
+        .then(({ data }) => {
+          setSavedQuestions((data || []) as SchemaQuestionsSaveds[]);
+        })
+        .catch((error) => {
+          console.error("Error fetching saved questions:", error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    };
 
-//       try {
-//         const { data } = await getSavedQuestions(userId);
-//         // setSavedQuestions(data);
-//       } catch (error) {
-//         console.error("Error fetching saved questions:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
+    fetchData();
+  }, [userId]);
 
-//     fetchData();
-//   }, [userId]);
-
-//   console.log("Estan son la pregnuta guardadas", savedQuestions);
-
-//   return (
-//     <section className="p-6 dark:bg-slate-800 bg-accent shadow-md">
-//       {loading && (
-//         <p className="text-foreground">Cargando preguntas guardadas...</p>
-//       )}
-//       {!loading && savedQuestions.length === 0 && (
-//         <p>No hay preguntas guardadas.</p>
-//       )}
-//       {!loading && savedQuestions.length > 0 && (
-//         <ul>
-//           {savedQuestions.map((question) => (
-//             <li key={question.id}>{question.title}</li>
-//           ))}
-//         </ul>
-//       )}
-//     </section>
-//   );
-// }
+  return (
+    <section className="p-6 dark:bg-gray-800 bg-accent shadow-md rounded-md">
+      {loading && (
+        <p className="text-foreground text-center">
+          Cargando preguntas guardadas...
+        </p>
+      )}
+      {!loading && savedQuestions.length === 0 && (
+        <p className="text-foreground text-center">
+          No hay preguntas guardadas.
+        </p>
+      )}
+      {!loading && savedQuestions.length > 0 && (
+        <>
+          <h2 className="text-lg font-normal mb-4 border-b pb-1">
+            Estas son tus preguntas guardadas
+          </h2>
+          <div className="space-y-4">
+          {savedQuestions.map((question) => (
+            <CardsQuestionSaves key={question.id} {...question} />
+          ))}
+          </div>
+        </>
+      )}
+    </section>
+  );
+}

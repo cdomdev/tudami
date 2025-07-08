@@ -2,7 +2,17 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { PaginationProps } from "@/interface/pagination";
+
+import {ReadonlyURLSearchParams} from "next/navigation";
+
+export interface PaginationProps {
+  currentPage: number;
+  totalItems: number;
+  pageSize: number;
+  basePath: string;
+  searchParams: ReadonlyURLSearchParams;
+}
+
 
 export function Pagination({
   currentPage,

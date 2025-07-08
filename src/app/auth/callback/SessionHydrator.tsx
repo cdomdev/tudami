@@ -17,8 +17,8 @@ export function SessionHydrator() {
 
         if (!isMounted) return;
 
+        // Si no hay usuario autenticado, simplemente limpiamos y continuamos sin error
         if (authError || !authData?.user) {
-          console.error("Sin sesión:", authError);
           clearUser();
           return;
         }
@@ -34,7 +34,7 @@ export function SessionHydrator() {
         if (!isMounted) return;
 
         if (profileError || !profileData) {
-          console.error("Error perfil:", profileError);
+          console.error("Error obteniendo perfil del usuario:", profileError);
           clearUser();
           return;
         }
@@ -47,6 +47,10 @@ export function SessionHydrator() {
           provider,
           phone: profileData.phone || "",
           bio: profileData.bio || "",
+          country: profileData.country || "Colombia",
+          department: profileData.department || "",
+          city: profileData.city || "",
+          approval_token: profileData.approval_token || null,
           created_at: profileData.created_at || new Date().toISOString(),
           profile_public:
             profileData.user_profile_preferences?.profile_public ?? true,
@@ -67,7 +71,7 @@ export function SessionHydrator() {
 
         setUser(userObject);
       } catch (error) {
-        console.error("Error en SessionHydrator:", error);
+        console.error("Error inesperado en SessionHydrator:", error);
         clearUser();
       } finally {
         if (isMounted) setLoading(false);

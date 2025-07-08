@@ -5,12 +5,19 @@ import { useSession } from "@/context/context.sesion";
 import { isQuestionSaved, toggleSave } from "../../lib/saveQuestions";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
-import { Bookmark } from "lucide-react";
+import { Bookmark, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export function ButtonSavePost({ question_id }: { question_id: number }) {
+export function ButtonSavePost({
+  question_id,
+  saved = true,
+}: {
+  question_id: number;
+  saved?: boolean;
+}) {
   const { user } = useSession();
   const [isSaved, setIsSaved] = useState(false);
+  const [isBtnSaved, setIsBtnSaved] = useState(saved);
 
   // Verifica al montar si ya está guardado
   useEffect(() => {
@@ -21,7 +28,6 @@ export function ButtonSavePost({ question_id }: { question_id: number }) {
   // Suscripción en tiempo real
   useEffect(() => {
     if (!user) return;
-
     const channel = supabase
       .channel(`save-question-${question_id}`)
       .on(
@@ -49,23 +55,43 @@ export function ButtonSavePost({ question_id }: { question_id: number }) {
     const { saved } = await toggleSave(question_id, user.id);
     if (saved) toast.success("Se guardó la pregunta en tu perfil");
     else toast.error("Se eliminó la pregunta de tus guardados");
+    setIsBtnSaved(!isBtnSaved);
     setIsSaved(saved);
   };
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={handleSave}
-      className={`cursor-pointer ${isSaved
-          ? "bg-green-500 text-white hover:bg-green-600 dark:hover:bg-green-700"
-          : "bg-gray-200 text-gray-800 hover:bg-gray-300 dark:hover:text-white dark:hover:bg-gray-400"
-        } px-4 py-2 rounded-md transition-colors duration-200 `}
-    >
-      <Bookmark
-        className={`h-5 w-5 ${isSaved ? "text-white" : "text-gray-800 hover:text-white"
-          }`}
-      />
-    </Button>
+    <>
+      {isBtnSaved ? (
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleSave}
+          className={`cursor-pointer 
+           bg-gray-200 text-gray-800 hover:bg-gray-300 dark:hover:text-white dark:hover:bg-gray-400 px-4 py-2 rounded-md transition-colors duration-200 `}
+        >
+          <Bookmark
+            className={`h-5 w-5 ${
+              isSaved ? "text-white" : "text-gray-800 hover:text-white"
+            }`}
+          />
+          <span className="sr-only">Guardar pregunta en perfil</span>
+        </Button>
+      ) : (
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleSave}
+          className={`cursor-pointer 
+          bg-red-500 text-white hover:bg-red-600 dark:hover:bg-red-700 px-4 py-2 rounded-md transition-colors duration-200 `}
+        >
+          <Trash
+            className={`h-5 w-5 ${
+              isSaved ? "text-white" : "text-gray-800 hover:text-white"
+            }`}
+          />
+          <span className="sr-only">Eliminar pregunta de guardados</span>
+        </Button>
+      )}
+    </>
   );
 }

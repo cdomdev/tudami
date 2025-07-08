@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { Tags } from "@/interface/tags";
+export interface Tags {
+    id: string,
+    name: string,
+    color: string,
+    id_tag?: string,
+    slug?: string,
+    relevance?: number
+}
 
 export function CardTags({ name, id, slug }: Tags) {
   return (

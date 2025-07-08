@@ -194,6 +194,11 @@
   border-radius: 0px 10px 10px 0px;
 }
 
+.popoveer-content::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
 html {
   scroll-behavior: smooth;
 }
