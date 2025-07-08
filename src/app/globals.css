@@ -44,7 +44,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-
+  --shadow-global: var(--shadow);
   
 }
 
@@ -119,8 +119,7 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-
-
+ 
    
 }
 
@@ -181,6 +180,19 @@
 }
 
 
+.dialog-content-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.dialog-content-scrollbar::-webkit-scrollbar-thumb {
+  background: #9e9d9d;
+  border-radius: 0px 10px 10px 0px;
+  height: 10px;
+}
+.dialog-content-scrollbar::-webkit-scrollbar-track{
+  background: #302f2f;
+  border-radius: 0px 10px 10px 0px;
+}
 
 html {
   scroll-behavior: smooth;

@@ -1,16 +1,18 @@
 "use client";
 
 import { BarraReputacion } from "./components/BarraDeReputacion";
-import { CardInsignia } from "./components/CardInsignia";
-import { obtenerProgresoReputacion, getColorByLevel } from "./utils/reputacion";
+import { CardInsignia } from "./components/cards/CardInsignia";
+import { obtenerProgresoReputacion } from "./utils/reputacion";
 import { obtenerInsigniasUsuario } from "./utils/mapearInsignias";
-import Image from "next/image";
+import { CardsCounts } from "./components/cards/CardActivity";
+import { CardReputaction } from "./components/cards/CardsReputation";
+import { useSession } from "@/context/context.sesion";
 
 export default function UserProfile() {
+  const { user } = useSession();
+
   const estadisticas = {
-    preguntasHechas: 12,
-    respuestasDadas: 8,
-    puntos: 200,
+    puntos: 10,
     insignias: [
       { badge: "cuenta_creada" },
       { badge: "primera_pregunta" },
@@ -18,6 +20,20 @@ export default function UserProfile() {
     ],
   };
 
+  console.log("Estadísticas del usuario:", user);
+
+  const itemsActivity = [
+    {
+      title: "Preguntas hechas",
+      count: user?.reputation?.questions,
+      icon: "i-heroicons-question-mark-circle-solid",
+    },
+    {
+      title: "Respuestas dadas",
+      count: user?.reputation?.responses,
+      icon: "i-heroicons-chat-bubble-left-right-solid",
+    },
+  ];
   const progresoReputacion = obtenerProgresoReputacion(estadisticas.puntos);
   const insigniasObtenidas = obtenerInsigniasUsuario(estadisticas.insignias);
 
@@ -37,46 +53,10 @@ export default function UserProfile() {
         </h2>
         <BarraReputacion puntos={estadisticas.puntos} />
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div className="rounded-xl p-5 text-white shadow-sm hover:scale-[1.02] transition bg-gradient-to-tl z-0 overflow-hidden relative  before:absolute before:w-full before:aspect-square before:left-0 before:top-0 before:rounded-full before:blur-3xl before:opacity-80 before:-z-10 before:transition from-[rgba(163,166,228,0.7)] to-[rgba(107,22,185,0.7)] before:[background-image:radial-gradient(circle,_rgba(145,70,255)_0,_rgba(13,16,35,0.4)_100%)] dark:from-[rgba(32,35,91,0.7)] dark:to-[rgba(7,9,33,0.7)] dark:before:[background-image:radial-gradient(circle,_rgba(145,70,255)_0,_rgba(13,16,35,0.4)_100%)]">
-            <p className="text-xl md:text-4xl font-bold text-center">
-              {estadisticas.preguntasHechas}
-            </p>
-            <p className="mt-2 text-sm opacity-90  text-center">Preguntas hechas</p>
-          </div>
-
-          <div className="rounded-xl p-5 text-white shadow-sm hover:scale-[1.02] transition bg-gradient-to-tl z-0 overflow-hidden relative  before:absolute before:w-full before:aspect-square before:left-0 before:top-0 before:rounded-full before:blur-3xl before:opacity-80 before:-z-10 before:transition from-[rgba(163,166,228,0.7)] to-[rgba(107,22,185,0.7)] before:[background-image:radial-gradient(circle,_rgba(145,70,255)_0,_rgba(13,16,35,0.4)_100%)] dark:from-[rgba(32,35,91,0.7)] dark:to-[rgba(7,9,33,0.7)] dark:before:[background-image:radial-gradient(circle,_rgba(145,70,255)_0,_rgba(13,16,35,0.4)_100%)]">
-            <p className="text-xl md:text-4xl font-bold text-center">
-              {estadisticas.respuestasDadas}
-            </p>
-            <p className="mt-2 text-sm opacity-90 text-center">Respuestas dadas</p>
-          </div>
-
-          <div
-            className="rounded-xl p-5 text-center shadow-sm transition hover:scale-[1.02] relative overflow-hidden z-0 "
-            style={{
-              background: `linear-gradient(to top, ${getColorByLevel(
-                progresoReputacion.actual.nombre
-              )})`,
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-black/5 to-transparent opacity-30 z-[-1] "></div>
-            <div className="bg-white shadow-sm backdrop-blur-sm flex px-3 py-1 items-center justify-center gap-2 rounded-lg">
-              <p className="inline-block px-4 py-1 border backdrop-blur-sm bg-gradient-to-bl from-indigo-500 to-sky-400 text-transparent bg-clip-text rounded-full text-sm font-semibold shadow-inner">
-                {progresoReputacion.actual.nombre}
-              </p>
-              <Image
-                src={progresoReputacion.actual.image || "/principiante.svg"}
-                width={45}
-                height={45}
-                alt={
-                  progresoReputacion.actual.imageAlt || "Nivel de principiante"
-                }
-              />
-            </div>
-            <p className="mt-3 text-sm text-white font-medium">
-              Nivel de reputación
-            </p>
-          </div>
+          {itemsActivity.map((item, index) => (
+            <CardsCounts key={index} counter={item.count} text={item.title} />
+          ))}
+          <CardReputaction progresoReputacion={progresoReputacion} />
         </div>
       </article>
 

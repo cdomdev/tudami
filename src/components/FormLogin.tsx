@@ -7,19 +7,36 @@ import Image from "next/image";
 import { GoogleIcon } from "./icons/Google";
 import { GitHubIcon } from "./icons/GitgubIcon";
 import { useSession } from "@/context/context.sesion";
+import { Spinner } from "@/components/Spiner";
+import { useState, useEffect } from "react";
 
 export default function FormLogin() {
   const { isModalOpen, openModal, closeModal } = useSession();
+  const [loadingProvider, setLoadingProvider] = useState<"google" | "github" | null>(null);
 
-  const HOST = process.env.NEXT_PUBLIC_HOST
+  const HOST = process.env.NEXT_PUBLIC_HOST;
+
+  // Limpiar estado de carga cuando el componente se desmonte
+  useEffect(() => {
+    return () => {
+      setLoadingProvider(null);
+    };
+  }, []);
 
   const loginWith = async (provider: "google" | "github") => {
-    await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
-        redirectTo: `${HOST}/auth/callback`,
-      },
-    });
+    try {
+      setLoadingProvider(provider);
+      
+      await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: `${HOST}/auth/callback`,
+        },
+      });
+    } catch (error) {
+      console.error(`Error al iniciar sesión con ${provider}:`, error);
+      setLoadingProvider(null);
+    }
   };
 
 
@@ -42,6 +59,8 @@ export default function FormLogin() {
         onOpenChange={(open) => {
           if (!open) {
             closeModal();
+            // Limpiar el estado de carga cuando se cierre el modal
+            setLoadingProvider(null);
           }
         }}
       >
@@ -57,31 +76,53 @@ export default function FormLogin() {
           </div>
 
           <div className="text-center mb-6">
-            <h4 className="text-lg font-semibold text-slate-800 dark:text-white ">
+            <h4 className="text-lg font-semibold text-slate-800 dark:text-white">
               Bienvenido a Tudami
             </h4>
-            <p className="text-sm/tight text-muted-foreground  mx-auto ">
-              Inicia sesión para compartir tus dudas, explorar respuestas o
-              ayudar a otros.
+            <p className="text-sm/tight text-muted-foreground mx-auto">
+              {loadingProvider ? (
+                `Conectando con ${loadingProvider === "google" ? "Google" : "GitHub"}...`
+              ) : (
+                "Inicia sesión para compartir tus dudas, explorar respuestas o ayudar a otros."
+              )}
             </p>
           </div>
 
           <div className="flex flex-col gap-3 w-full">
             <button
               onClick={() => loginWith("google")}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md flex items-center justify-center gap-3 hover:bg-blue-500 transition-colors cursor-pointer"
+              disabled={loadingProvider !== null}
+              className="bg-blue-600 text-white px-4 py-2 rounded-md flex items-center justify-center gap-3 hover:bg-blue-500 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600"
             >
-              <GoogleIcon className="w-5 h-5" />
-              Continuar con Google
+              {loadingProvider === "google" ? (
+                <>
+                  <Spinner className="w-5 h-5" />
+                  Conectando con Google...
+                </>
+              ) : (
+                <>
+                  <GoogleIcon className="w-5 h-5" />
+                  Continuar con Google
+                </>
+              )}
             </button>
 
             <button
               onClick={() => loginWith("github")}
-              className="bg-gray-900 text-white px-4 py-2 rounded-md flex items-center justify-center gap-3 hover:bg-gray-950 transition-colors cursor-pointer"
+              disabled={loadingProvider !== null}
+              className="bg-gray-900 text-white px-4 py-2 rounded-md flex items-center justify-center gap-3 hover:bg-gray-950 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-900"
             >
-
-              <GitHubIcon className="w-5 h-5" />
-              Continuar con GitHub
+              {loadingProvider === "github" ? (
+                <>
+                  <Spinner className="w-5 h-5" />
+                  Conectando con GitHub...
+                </>
+              ) : (
+                <>
+                  <GitHubIcon className="w-5 h-5" />
+                  Continuar con GitHub
+                </>
+              )}
             </button>
           </div>
         </div>

@@ -51,19 +51,19 @@ export function BtnCounterComment({ question_id, count, setCount }: { question_i
             <span className="sr-only">open dialog</span>
           </Button>
         </DialogTrigger>
-        <DialogContent className="w-2xl lg:min-w-4xl overflow-y-auto max-h-1/3 [&>button:last-child]:hidden">
+        <DialogContent className="w-2xl lg:min-w-4xl overflow-y-auto max-h-3/5 [&>button:last-child]:hidden dialog-content-scrollbar">
           <DialogHeader className="sticky top-0 z-10 p-2  border-b">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between bg-white/50 py-2">
               <>
                 <DialogTitle className="sr-only">Respuestas</DialogTitle>
-                <DialogDescription>
+                <DialogDescription className="text-sm pl-2 font-semibold text-gray-900 dark:text-white">
                   Respuestas
                 </DialogDescription>
               </>
               <>
                 <DialogClose asChild >
                   <button
-                    className="absolute right-4 top-0 rounded-md cursor-pointer p-2 text-muted-foreground hover:text-foreground hover:bg-accent focus:outline-none focus:ring-0 "
+                    className="absolute right-4  rounded-md cursor-pointer p-2 text-muted-foreground hover:text-foreground focus:outline-none focus:ring-0 "
                     aria-label="Cerrar"
                   >
                     <X className="h-6 w-6" />

@@ -36,25 +36,25 @@ export function obtenerProgresoReputacion(puntos: number) {
  export function getColorByLevel(nivel: string) {
     switch (nivel.toLowerCase()) {
       case "principiante":
-        return "#4ade80, #22c55e";
-      // Verde suave a verde brillante
+        return "#10b981, #06b6d4, #0ea5e9";
+      // Verde esmeralda a cyan (gradiente fresco)
       case "aprendiz":
-        return "#60a5fa, #3b82f6";
-      // Azul claro a azul
+        return "#3b82f6, #6366f1, #8b5cf6";
+      // Azul a púrpura (gradiente Tudami)
       case "intermedio":
-        return "#a78bfa, #8b5cf6";
-      // Púrpura claro a púrpura
+        return "#8b5cf6, #a855f7, #c026d3";
+      // Púrpura vibrante (gradiente intermedio)
       case "avanzado":
-        return "#f472b6, #ec4899";
-      // Rosa claro a rosa intenso
+        return "#ec4899, #f43f5e, #ef4444";
+      // Rosa a rojo (gradiente cálido)
       case "experto":
-        return "#fb923c, #f97316";
-      // Naranja claro a naranja
+        return "#f59e0b, #f97316, #dc2626";
+      // Naranja a rojo (gradiente experto)
       case "maestro":
-        return "#facc15, #eab308";
-      // Amarillo claro a amarillo dorado
+        return "#eab308, #f59e0b, #ec4899";
+      // Dorado a rosa (gradiente maestro premium)
       default:
-        return "#94a3b8, #64748b";
-      // Gris claro a gris (nivel por defecto)
+        return "#64748b, #475569, #334155";
+      // Gris neutro progresivo
     }
   }

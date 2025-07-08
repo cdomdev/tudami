@@ -9,6 +9,7 @@ import { createQuestion } from "../lib/createQuestions";
 import { useRouter } from "next/navigation";
 import tags from "@/content/data-tags.json";
 import { MultiSelect } from "../components/multi-select";
+import { Button } from "@/components/ui/button";
 
 
 
@@ -108,12 +109,13 @@ export default function Editor() {
             Escribe tu pregunta con detalle
           </span>
           <SimpleEditor onChange={setContent} />
-          <button
+          <Button
+          variant={"default"}
             onClick={handleSubmit}
-            className="mt-3 w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 duration-200 rounded-md cursor-pointer text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+            className="mt-3 w-full py-2 px-4  duration-200 rounded-md cursor-pointer font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Enviando pregunta..." : "Publicar mi pregunta"}
-          </button>
+          </Button>
         </div>
       </div>
     </>

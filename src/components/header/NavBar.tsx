@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import { AlignJustify, X } from "lucide-react";
 import Session from "@/app/auth/validateSesion/ValidateSesion.client";
-import { ModeToggle } from "@/components/ToggleTheme";
+// import { ModeToggle } from "@/components/ToggleTheme";
 import { Characteristics } from "./charactheristics";
 import { MovilNav } from "./MovilNav";
 export function NavBar() {
@@ -83,7 +83,7 @@ export function NavBar() {
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <ModeToggle />
+            {/* <ModeToggle /> */}
           </NavigationMenuList>
         </NavigationMenu>
 

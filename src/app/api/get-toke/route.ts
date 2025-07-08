@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const cookiesStore = await cookies();
-    const token = cookiesStore.get("sb-token")?.value;
+    const token = cookiesStore.get("sb-access-token")?.value;
 
     if (!token) {
       return NextResponse.json({ token: null }, { status: 401 });

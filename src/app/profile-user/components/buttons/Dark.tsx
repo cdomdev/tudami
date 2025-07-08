@@ -1,8 +1,36 @@
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export function ButtonDark() {
-
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  // Prevenir hidratación hasta que el componente esté montado
+  if (!mounted) {
+    return (
+      <button
+        type="button"
+        className="flex flex-col gap-2 w-48 bg-surface-200 cursor-pointer rounded-md border shadow-sm group p-3 transition-colors border-strong hover:border-stronger hover:bg-surface-300"
+      >
+        <svg viewBox="0 0 163 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* SVG content */}
+        </svg>
+        <div className="flex gap-2 w-full">
+          <div className="relative w-3 h-3 min-w-3 mt-0.5">
+            <div className="absolute w-3 h-3 border rounded-full transition-colors border-stronger group-hover:border-foreground-light"></div>
+          </div>
+          <label className="text-xs text-left text-light group-hover:text-foreground">
+            Oscuro
+          </label>
+        </div>
+      </button>
+    );
+  }
+  
   const seleccionado = theme === "dark";
 
   return (

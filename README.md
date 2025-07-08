@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./public/logo.svg" alt="Tudami Logo" width="200"/>
+  <img src="./public/README.webp" alt="Tudami" width="full"/>
   <h1>Tudami</h1>
   <p><strong>Tu comunidad para aprender, preguntar y crecer.</strong></p>
 </div>

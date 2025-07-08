@@ -3,7 +3,7 @@
 import { useSession } from "@/context/context.sesion";
 import Image from "next/image";
 import Link from "next/link";
-import { House, Settings, Bookmark, Layout } from "lucide-react";
+import { House, Settings, Bookmark, Edit } from "lucide-react";
 
 export default function LayoutProfile({
   children,
@@ -20,14 +20,14 @@ export default function LayoutProfile({
     },
     {
       name: "Cuenta",
-      href: `/profile-user/account-setting`,
+      href: `/profile-user/account-setting?name=${user?.full_name}&id=${user?.id}`,
       icon: Settings,
     },
     {
       name: "Guardados",
-      href: "/profile-user/save",
+      href: `/profile-user/save?user_id=${user?.id}`,
       icon: Bookmark,
-    }
+    },
   ]
 
   return (
@@ -52,7 +52,7 @@ export default function LayoutProfile({
         <nav>
           <ul className="space-y-2">
             {itemsSide.map((item) => (
-              <li key={item.name} aria-label="{item.name">
+              <li key={item.name} aria-label={item.name}>
                 <Link
                   href={item.href}
                   className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-accent-foreground/10 dark:hover:bg-gray-700 text-accent-foreground"
@@ -88,7 +88,14 @@ export default function LayoutProfile({
               {user?.full_name}
             </h1>
             <p className="text-xs md:text-sm text-accent-foreground">
-              Explora y aprende algo nuevo.
+             {user?.bio || "¡Cuéntanos sobre ti! Puedes agregar una biografía en la sección de configuración de tu perfil."}
+             <Link
+                href={`/profile-user/account-setting/edit?id=${user?.id}`}
+                className="text-blue-500 pl-3 hover:underline"
+              >
+                <Edit className="inline size-4" />
+                <span className="sr-only">link navigate edit profile</span>
+              </Link>
             </p>
           </div>
         </header>
