@@ -73,6 +73,19 @@ export default function AuthCallback() {
         console.error("Error al insertar usuario:", upsertError.message);
       }
 
+      /**
+       * Actulizar preferncias de usuarios por default, perfil publico y datos de contacto privado
+       */
+      const { error: updateError } = await supabase.from("user_profile_preferences").upsert({
+        user_id: id,
+        profile_public: true,
+        allow_email: false,
+        allow_whatsapp: false,
+      })
+
+
+      if (updateError) console.error("Erro al intregrar las preferncias del usuario:", updateError)
+
       const { data: userProfile } = await getUserProfileQuery(id);
 
       if (!userProfile) {
@@ -80,7 +93,10 @@ export default function AuthCallback() {
         return;
       }
 
-      // Setear usuario con preferencias en el contexto
+      /**
+       * Setear usuario con preferencias en el contexto
+       */
+      
       setUser({
         id,
         email: email || "",

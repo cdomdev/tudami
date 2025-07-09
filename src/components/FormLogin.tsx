@@ -79,9 +79,9 @@ export default function FormLogin() {
             <h4 className="text-lg font-semibold text-slate-800 dark:text-white">
               Bienvenido a Tudami
             </h4>
-            <p className="text-sm/tight text-muted-foreground mx-auto">
+            <p className="text-sm/tight text-muted-foreground mx-auto py-2">
               {loadingProvider ? (
-                `Conectando con ${loadingProvider === "google" ? "Google" : "GitHub"}...`
+                `Aprende con otros. Comparte con todos...`
               ) : (
                 "Inicia sesión para compartir tus dudas, explorar respuestas o ayudar a otros."
               )}
@@ -96,12 +96,12 @@ export default function FormLogin() {
             >
               {loadingProvider === "google" ? (
                 <>
-                  <Spinner className="w-5 h-5" />
+                  <Spinner className="w-5 h-5 text-white" />
                   Conectando con Google...
                 </>
               ) : (
                 <>
-                  <GoogleIcon className="w-5 h-5" />
+                  <GoogleIcon className="w-5 h-5 text-white" />
                   Continuar con Google
                 </>
               )}

@@ -1,6 +1,6 @@
 "use client";
 
-import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
+import { SimpleEditor } from "../components/simple/simple-editor";
 import { useState } from "react";
 import { preguntaSchema } from "../schema/schemaEditor";
 import { toast } from "sonner";
@@ -76,7 +76,7 @@ export default function Editor() {
   return (
     <>
       <div className="md:col-span-4 w-full rounded-md shadow-sm order-2 lg:order-1">
-        <div className="mb-2 bg-accent p-6 rounded-t-md ">
+        <div className="mb-1 bg-accent dark:bg-[var(--custom-bg)] p-6 rounded-t-md ">
           <label htmlFor="titulo" className="font-medium text-sm md:text-base">
             Dale un título claro a tu pregunta
           </label>
@@ -86,11 +86,11 @@ export default function Editor() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Ej: ¿Cómo vincular varias evidencias en Sofiaplus?"
-            className="w-full border py-2 px-3 mt-2 rounded-md focus:outline-none text-xs md:text-sm focus:ring-1 focus:ring-primary bg-white text-black"
+            className="w-full border py-2 px-3 mt-2 rounded-xs focus:outline-none text-xs md:text-sm focus:ring-1 focus:ring-primary bg-white text-black"
           />
         </div>
 
-        <div className="mb-2 bg-accent  p-6">
+        <div className="mb-1 bg-accent dark:bg-[var(--custom-bg)] p-6">
           <label
             htmlFor="etiquetas"
             className="font-medium text-sm md:text-base"
@@ -104,7 +104,7 @@ export default function Editor() {
           />
         </div>
 
-        <div className="bg-accent  p-6 rounden-br-md rounded-b-md">
+        <div className="bg-accent dark:bg-[var(--custom-bg)] p-6 rounden-br-md rounded-b-md">
           <span className="font-medium text-sm md:text-base block mb-3">
             Escribe tu pregunta con detalle
           </span>
@@ -112,7 +112,7 @@ export default function Editor() {
           <Button
           variant={"default"}
             onClick={handleSubmit}
-            className="mt-3 w-full py-2 px-4  duration-200 rounded-md cursor-pointer font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+            className="mt-3 w-full py-2 px-4  duration-200 rounded-xs cursor-pointer font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Enviando pregunta..." : "Publicar mi pregunta"}
           </Button>

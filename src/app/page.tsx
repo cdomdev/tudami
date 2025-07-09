@@ -1,9 +1,9 @@
-import { Hero } from "@/app/sections/Hero";
+import { Hero } from "@/components/sections/Hero";
 import { SectionContainer } from "@/components/SectionContainer";
-import { HowIsWorks } from "@/app/sections/HowIsWorks";
-import { Histories } from "@/app/sections/Histories";
-import { FormSubcription } from "@/app/sections/FormSubcribtions";
-import { FrequentlyQuestions } from "@/app/sections/FrequentlyQuiestions";
+import { HowIsWorks } from "@/components/sections/HowIsWorks";
+import { Histories } from "@/components/sections/Histories";
+import { FormSubcription } from "@/components/sections/FormSubcribtions";
+import { FrequentlyQuestions } from "@/components/sections/FrequentlyQuiestions";
 
 export default function Home() {
   return (

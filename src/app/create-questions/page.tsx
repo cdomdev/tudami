@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 export default function QuestionsPage() {
   return (
     <>
-      <h1 className="mt-28 text-center font-medium -mb-10 text-xl md:text-2xl text-primary">
+      <h1 className="relative -left-1/4 mt-30 text-center font-medium -mb-16 text-xl md:text-2xl text-primary">
         ¿En qué necesitas ayuda?
       </h1>
-      <SectionContainer className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-6 gap-4">
+      <SectionContainer className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-6 gap-2">
         <Editor />
-        <div className="md:col-span-2  rounded-md p-6 bg-muted shadow-sm order-1 lg:order-2">
+        <div className="md:col-span-2  rounded-md p-6 dark:bg-[var(--custom-bg)] shadow-sm order-1 lg:order-2">
           <Recomendaciones />
         </div>
       </SectionContainer>

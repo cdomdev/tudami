@@ -38,7 +38,7 @@ export default function LayoutProfile({
     >
       {/* Barra lateral */}
       <aside
-        className="md:col-span-1 max-w-xs pr-4 pl-2 pt-6 hidden md:block bg-accent rounded-md shadow-md dark:bg-gray-800 h-56 max-h-80"
+        className="md:col-span-1 max-w-xs pr-4 pl-2 pt-6 hidden md:block bg-accent rounded-md shadow-md dark:bg-[var(--custom-bg)] h-56 max-h-80"
         role="navigation"
         aria-label="Opciones de perfil"
       >
@@ -55,7 +55,7 @@ export default function LayoutProfile({
               <li key={item.name} aria-label={item.name}>
                 <Link
                   href={item.href}
-                  className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-accent-foreground/10 dark:hover:bg-gray-700 text-accent-foreground"
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-accent-foreground/10 dark:[var(--custom-bg)] text-accent-foreground"
                 >
                   <item.icon className="size-5 text-primary" />
                   <span className="text-sm font-medium">{item.name}</span>
@@ -70,7 +70,7 @@ export default function LayoutProfile({
       {/* Contenido principal */}
       <main className="md:col-span-5">
         <header
-          className="flex mb-4 bg-accent dark:bg-gray-800 p-4 rounded-md shadow-md"
+          className="flex mb-4 bg-accent dark:bg-[var(--custom-bg)] p-4 rounded-md shadow-md"
           role="banner"
         >
           <Image
@@ -100,7 +100,7 @@ export default function LayoutProfile({
           </div>
         </header>
         <nav aria-label="Navegación de perfil " className="block md:hidden">
-          <ul className="flex gap-4 mb-6 bg-accent dark:bg-gray-800 px-4 py-2 rounded-md shadow-sm">
+          <ul className="flex gap-4 mb-6 bg-accent dark:bg-[var(--custom-bg)] px-4 py-2 rounded-md shadow-sm">
             <li>
               <Link href="#" className="hover:underline">
                 Perfil

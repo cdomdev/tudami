@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { getDataProfilePublic } from "../lib/getDataProfile";
 import { SchemaProfileResponse } from "../schema/schemaResponse";
 import { WhatSappIcon } from "@/components/icons/WhatSappIcon";
+import { ProfileNotAvailable } from "../components/ProfileNotAvailable";
 
 export default function ViewProfileUserPage() {
   const [loading, setLoading] = useState(true);
@@ -45,9 +46,7 @@ export default function ViewProfileUserPage() {
 
   if (!dataProfile) {
     return (
-      <div className="max-w-2xl mx-auto text-center mt-30 text-gray-600 dark:text-gray-300">
-        Este perfil no está disponible o no es público.
-      </div>
+      <ProfileNotAvailable/>
     );
   }
 

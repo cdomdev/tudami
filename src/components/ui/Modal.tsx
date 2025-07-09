@@ -29,7 +29,7 @@ export function Modal({
         </DialogHeader>
         <DialogClose asChild>
           <button
-            className="absolute right-4 top-4 rounded-md cursor-pointer p-2 text-muted-foreground hover:text-foreground hover:bg-accent focus:outline-none focus:ring-0 focus:ring-ring border-gray-200 border"
+            className="absolute right-4 top-4 rounded-md cursor-pointer p-1 text-muted-foreground hover:text-foreground hover:bg-accent focus:outline-none focus:ring-0 focus:ring-ring "
             aria-label="Cerrar"
           >
             <X className="h-6 w-6" />
