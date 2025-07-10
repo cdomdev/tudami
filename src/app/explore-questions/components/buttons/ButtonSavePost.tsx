@@ -71,7 +71,7 @@ export function ButtonSavePost({
         >
           <Bookmark
             className={`h-5 w-5 ${
-              isSaved ? "text-white" : "text-gray-800 hover:text-white"
+              isSaved ? "text-white dark:text-black" : "text-gray-800 hover:text-white"
             }`}
           />
           <span className="sr-only">Guardar pregunta en perfil</span>

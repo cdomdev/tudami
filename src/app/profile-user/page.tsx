@@ -40,7 +40,7 @@ export default function UserProfile() {
     <section className="space-y-10">
       {/* Estadísticas */}
       <article
-        className="p-6 dark:bg-slate-800 bg-white rounded-2xl shadow-sm"
+        className="p-6 bg-accent dark:bg-[var(--custom-bg)]  rounded-2xl shadow-sm"
         role="region"
         aria-labelledby="estadisticas-title"
       >
@@ -61,7 +61,7 @@ export default function UserProfile() {
 
       {/* Insignias */}
       <article
-        className="p-6 dark:bg-slate-800 bg-white rounded-2xl shadow-sm"
+        className="p-6 bg-accent dark:bg-[var(--custom-bg)] rounded-2xl shadow-sm"
         role="region"
         aria-labelledby="insignias-title"
       >

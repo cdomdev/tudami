@@ -32,7 +32,7 @@ export default function LayoutProfile({
 
   return (
     <section
-      className="grid grid-cols-1 md:grid-cols-6 gap-4 p-4 max-w-6xl mx-auto mt-20 md:mt-36"
+      className="grid grid-cols-1 md:grid-cols-6 gap-2 p-4 max-w-6xl mx-auto mt-20 md:mt-24"
       role="region"
       aria-labelledby="profile-section-title"
     >
@@ -70,7 +70,7 @@ export default function LayoutProfile({
       {/* Contenido principal */}
       <main className="md:col-span-5">
         <header
-          className="flex mb-4 bg-accent dark:bg-[var(--custom-bg)] p-4 rounded-md shadow-md"
+          className="flex mb-2 bg-accent dark:bg-[var(--custom-bg)] p-4 rounded-md shadow-md"
           role="banner"
         >
           <Image

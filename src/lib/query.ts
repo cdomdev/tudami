@@ -1,7 +1,8 @@
 import { supabase } from "@/lib/supabase";
+import { SupabaseClient } from "@supabase/supabase-js";
 
-export function getUserProfileQuery(userId: string) {
-  return supabase
+export function getUserProfileQuery(userId: string, client: SupabaseClient = supabase) {
+  return client
     .from("users")
     .select(`
       *,

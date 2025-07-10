@@ -191,7 +191,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
                       type="tel"
                       placeholder="Ej: +57 123 456 7890"
                       {...field}
-                      className="w-full"
+                      className="w-full bg-white/70 text-black dark:text-muted-foreground"
                       aria-describedby={
                         fieldState.error ? "phone-error" : "phone-description"
                       }
@@ -233,7 +233,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
                         handleDepartmentChange(value);
                       }}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="bg-white/70 text-black dark:text-muted-foreground">
                         <SelectValue placeholder="Selecciona un departamento" />
                       </SelectTrigger>
                       <SelectContent>
@@ -281,7 +281,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
                       onValueChange={field.onChange}
                       disabled={!form.watch("department") || filteredCities.length === 0}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="bg-white/70 text-black dark:text-muted-foreground">
                         <SelectValue 
                           placeholder={
                             !form.watch("department") 
@@ -335,7 +335,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
                         {...field}
                         rows={3}
                         maxLength={50}
-                        className="w-full resize-none"
+                        className="w-full resize-none bg-white/70 text-black dark:text-muted-foreground"
                         aria-describedby={
                           fieldState.error
                             ? "biografia-error"
@@ -343,7 +343,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
                         }
                         aria-invalid={!!fieldState.error}
                       />
-                      <div className="absolute bottom-2 right-2 text-xs text-muted-foreground">
+                      <div className="absolute bottom-2 right-2 text-xs text-black dark:text-muted-foreground">
                         {field.value?.length || 0}/50
                       </div>
                     </div>

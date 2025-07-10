@@ -8,7 +8,7 @@ export function BarraReputacion({ puntos }: BarraReputacionProps) {
   const { actual, siguiente, progreso } = obtenerProgresoReputacion(puntos);
 
   return (
-    <div className="p-4 bg-white dark:bg-slate-800 ">
+    <div className="p-4 ">
       <div className="flex justify-between mb-1 text-xs md:text-sm font-medium">
         <span className="text-gray-700 dark:text-gray-200">
           {actual.nombre}

@@ -29,7 +29,7 @@ export function CardPost({
   return (
     <article
       key={id}
-      className="bg-card border border-border rounded-xl p-5  hover:shadow transition"
+      className="bg-card dark:bg-[#374151] border border-border rounded-xl p-5  hover:shadow transition"
     >
       {/* Cabecera del autor */}
       <div className="flex items-start justify-between mb-3">

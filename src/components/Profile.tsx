@@ -21,12 +21,32 @@ export function Profile() {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await fetch("/api/logout", {
-      method: "POST",
-    });
-    await supabase.auth.signOut();
-    clearUser();
-    router.push("/");
+    try {
+      // 1. Llamar a la API de logout para limpiar cookies y sesión del servidor
+      const response = await fetch("/api/auth/logout", {
+        method: "POST",
+      });
+
+      if (!response.ok) {
+        console.warn('Error al cerrar sesión en el servidor, continuando con logout local');
+      }
+
+      // 2. Cerrar sesión en Supabase (cliente)
+      await supabase.auth.signOut();
+
+      // 3. Limpiar contexto local
+      clearUser();
+
+      // 4. Redireccionar al home
+      router.push("/");
+      
+    } catch (error) {
+      console.error('Error durante logout:', error);
+      // Incluso con error, hacemos logout local
+      await supabase.auth.signOut();
+      clearUser();
+      router.push("/");
+    }
   };
 
   return (

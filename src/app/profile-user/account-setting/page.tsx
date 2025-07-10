@@ -13,8 +13,8 @@ export default function PreferenciasTema() {
   const { user } = useSession();  
   
   return (
-    <section className="space-y-5">
-      <article className="p-6 dark:bg-[var(--bg-custom)] bg-white rounded-md shadow-md">
+    <section className="space-y-2">
+      <article className="p-6 dark:bg-[var(--custom-bg)] bg-accent rounded-md shadow-md">
         <div className="flex justify-between items-center border-b">
           <h2
             id="info-profile-title"
@@ -31,7 +31,7 @@ export default function PreferenciasTema() {
         <InfoUser />
       </article>
       <article
-        className="p-6 dark:bg-[var(--bg-custom)] bg-white rounded-md shadow-md  "
+        className="p-6 dark:bg-[var(--custom-bg)] bg-accent rounded-md shadow-md  "
         role="region"
         aria-labelledby="opciones-tema-title"
       >
@@ -47,7 +47,7 @@ export default function PreferenciasTema() {
       </article>
 
       <article
-        className="p-6 dark:bg-[var(--bg-custom)] bg-white rounded-md shadow-md"
+        className="p-6 dark:bg-[var(--custom-bg)] bg-accent rounded-md shadow-md"
         role="region"
         aria-labelledby="preferencias-contacto-title"
       >
@@ -61,7 +61,7 @@ export default function PreferenciasTema() {
         <FormPrefenceContact />
       </article>
       <article
-        className="p-6 dark:bg-[var(--bg-custom)] bg-white border border-red-500 rounded-md shadow-md"
+        className="p-6 dark:bg-[var(--custom-bg)] bg-accent border border-red-500 rounded-md shadow-md"
         role="region"
         aria-labelledby="zona-peligro-title"
       >

@@ -51,7 +51,7 @@ export function Header() {
   return (
     <>
       <div className="z-10 md:pt-8">
-        <div className="max-w-6xl  bg-accent dark:bg-card p-4 rounded-md mx-auto shadow-sm mb-4">
+        <div className="max-w-6xl  bg-accent dark:bg-[var(--custom-bg)] p-4 rounded-md mx-auto shadow-sm mb-4">
           {/* Encabezado y descripción */}
           <div className="mb-6">
             <h1 className="text-2xl font-bold mb-3">Explorar Preguntas</h1>
@@ -101,7 +101,7 @@ export function Header() {
           onValueChange={handleTabChange}
           className="w-full sm:w-auto"
         >
-          <TabsList className="w-full sm:w-auto dark:bg-card">
+          <TabsList className="w-full sm:w-auto dark:bg-[var(--custom-bg)]">
             <TabsTrigger
               value="all"
               className="cursor-pointer hover:bg-gray-50 duration-300 "

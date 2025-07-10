@@ -16,7 +16,7 @@ export default function ExploreQuestionsPage() {
   const [total, setTotal] = useState(0);
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageSize = 10;
-  
+
   useEffect(() => {
     setLoading(true);
     fetchGeneralQuestions(page, pageSize)
@@ -29,8 +29,8 @@ export default function ExploreQuestionsPage() {
 
   return (
     <>
-      <section className="py-8 mb-8 space-y-6">
-        <Count count={total} />
+      <Count count={total} />
+      <section className="py-8 mb-8 space-y-6 bg-accent dark:bg-[var(--custom-bg)] p-10 rounded-sm shadow-sm">
         {loading ? (
           <SkeletonCard />
         ) : questions.length === 0 ? (
