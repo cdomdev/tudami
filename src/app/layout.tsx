@@ -3,7 +3,7 @@ import { Baloo_2 } from "next/font/google";
 import "@/app/globals.css";
 import { NavBar } from "@/components/header/NavBar";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SessionHydrator } from "@/app/auth/callback/SessionHydrator";
+// import { SessionHydrator } from "@/app/auth/callback/SessionHydrator";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -68,7 +68,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SessionHydrator />
+          {/* <SessionHydrator /> */}
           <NavBar />
           <main className="w-screen min-h-dvh ">{children}</main>
           <Toaster position="top-center" theme="system" />

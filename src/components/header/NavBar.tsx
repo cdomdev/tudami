@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import Image from "next/image";
 import { AlignJustify, X } from "lucide-react";
-import Session from "@/app/auth/validateSesion/ValidateSesion.client";
+import { ClientSessionRenderer } from "@/app/auth/validateSesion/ClientSessionRenderer";
 import { ModeToggle } from "@/components/ToggleTheme";
 import { Characteristics } from "./charactheristics";
 import { MovilNav } from "./MovilNav";
@@ -46,12 +46,7 @@ export function NavBar() {
             href="/"
             className="flex items-center gap-1 font-bold text-primary text-2xl"
           >
-            <Image
-              src="/logo.svg"
-              width={35}
-              height={35}
-              alt="logo-tudami"
-            />
+            <Image src="/logo.svg" width={35} height={35} alt="logo-tudami" />
             Tudami
           </Link>
         </div>
@@ -88,7 +83,7 @@ export function NavBar() {
         </NavigationMenu>
 
         <div className="flex md:gap-3 items-center justify-center">
-          <Session />
+          <ClientSessionRenderer />
           <button
             onClick={() => setOpenMenu(!openMenu)}
             className="md:hidden  text-black dark:text-white relative pl-6"
@@ -98,7 +93,9 @@ export function NavBar() {
             ) : (
               <AlignJustify className="w-8 h-8  " />
             )}
-            <span className="sr-only">{openMenu ? "Cerrar menú" : "Abrir menú"}</span>
+            <span className="sr-only">
+              {openMenu ? "Cerrar menú" : "Abrir menú"}
+            </span>
           </button>
         </div>
       </div>

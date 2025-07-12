@@ -48,7 +48,7 @@ export function CardsQuestionSaves({ id, questions }: SchemaQuestionsSaveds) {
         </Link>
         <div className="flex gap-5 items-center">
           <ButtonShare title="Comparte esta pregunta" />
-          <ButtonSavePost question_id={questions.id} saved={false} />
+          <ButtonSavePost question_id={questions.id} />
         </div>
       </div>
 
