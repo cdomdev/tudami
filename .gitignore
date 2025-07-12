@@ -42,3 +42,10 @@ next-env.d.ts
 
 # firbase-studio
 .idx
+
+# MCP (Model Context Protocol) configuration - Personal use only
+.vscode/mcp.json
+.vscode/settings.json
+
+# Notion integration - Personal configuration
+# Note: Notion tokens and database IDs are already covered by .env* above
