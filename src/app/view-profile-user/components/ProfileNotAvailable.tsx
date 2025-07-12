@@ -1,9 +1,12 @@
-"use client"
+"use client";
 
+import { ButtonGsap } from "@/components/ui/ButtonsGsap";
 import { Lock, UserX } from "lucide-react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function ProfileNotAvailable() {
+  const router = useRouter();
+
   return (
     <section className="max-w-5xl mx-auto p-6 mt-30">
       {/* Encabezado de perfil no disponible */}
@@ -23,28 +26,28 @@ export function ProfileNotAvailable() {
             Este perfil es privado o no existe
           </h1>
           <p className="text-gray-600 dark:text-gray-300 mt-2 text-center max-w-md">
-            El usuario que intentas ver ha configurado su perfil como privado o no se encuentra disponible en este momento.
+            El usuario que intentas ver ha configurado su perfil como privado o
+            no se encuentra disponible en este momento.
           </p>
         </div>
       </div>
 
-
-
       {/* Mensaje adicional */}
-      <div className="mt-8 bg-white dark:bg-slate-800 rounded-lg shadow p-6 text-center">
+      <div className="mt-8 bg-white dark:bg-custom-card rounded-sm shadow p-6 text-center">
         <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-          Solo los perfiles públicos permiten ver la información, actividad y medios de contacto.
+          Solo los perfiles públicos permiten ver la información, actividad y
+          medios de contacto.
         </p>
       </div>
 
       {/* Botón de volver o explorar */}
       <div className="mt-6 flex justify-center">
-        <Link
-          href="/"
-          className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium shadow transition"
-        >
-          Volver al inicio
-        </Link>
+        <ButtonGsap
+          text="Volver al inicio"
+          flairColor="bg-sky-500"
+          className="text-base sm:text-lg cursor-pointer font-bold border border-white px-6 py-2 rounded-md bg-black text-white"
+          onclick={() => router.push("/")}
+        />
       </div>
     </section>
   );

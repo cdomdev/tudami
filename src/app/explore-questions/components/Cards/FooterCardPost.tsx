@@ -14,17 +14,28 @@ export function FooterCardPost({
   comments: number;
 }) {
   const [countLikes, setCountLikes] = useState(likes);
-  const [countComment, setCountComments] = useState(comments || 0)
+  const [countComment, setCountComments] = useState(comments || 0);
 
   return (
     <>
-      <BtnCounterLikes question_id={question_id} count={countLikes} setCount={setCountLikes} />
-      <BtnCounterComment question_id={question_id} count={countComment} setCount={setCountComments} />
+      <BtnCounterLikes
+        question_id={question_id}
+        count={countLikes}
+        setCount={setCountLikes}
+      />
+      <BtnCounterComment
+        question_id={question_id}
+        count={countComment}
+        setCount={setCountComments}
+      />
 
       <div className="flex  justify-between items-center pt-3 border-t border-border">
-        <div className="flex gap-2">
+        <div className="flex gap-2 w-full">
           <ButtonLike question_id={question_id} onLikeChange={setCountLikes} />
-          <ButtonComment question_id={question_id} onCommentChange={setCountComments} />
+          <ButtonComment
+            question_id={question_id}
+            onCommentChange={setCountComments}
+          />
         </div>
       </div>
     </>

@@ -10,14 +10,11 @@ import { Button } from "@/components/ui/button";
 
 export function ButtonSavePost({
   question_id,
-  saved = true,
 }: {
   question_id: number;
-  saved?: boolean;
 }) {
   const { user } = useSession();
   const [isSaved, setIsSaved] = useState(false);
-  const [isBtnSaved, setIsBtnSaved] = useState(saved);
 
   // Verifica al montar si ya está guardado
   useEffect(() => {
@@ -55,25 +52,20 @@ export function ButtonSavePost({
     const { saved } = await toggleSave(question_id, user.id);
     if (saved) toast.success("Se guardó la pregunta en tu perfil");
     else toast.error("Se eliminó la pregunta de tus guardados");
-    setIsBtnSaved(!isBtnSaved);
     setIsSaved(saved);
   };
 
   return (
     <>
-      {isBtnSaved ? (
+      {!isSaved ? (
         <Button
           variant="ghost"
           size="icon"
           onClick={handleSave}
           className={`cursor-pointer 
-           bg-gray-200 text-gray-800 hover:bg-gray-300 dark:hover:text-white dark:hover:bg-gray-400 px-4 py-2 rounded-md transition-colors duration-200 `}
+           bg-gray-200 text-gray-800 hover:bg-green-500 hover:text-white dark:hover:bg-green-500 px-4 py-2 rounded-md transition-colors duration-200 `}
         >
-          <Bookmark
-            className={`h-5 w-5 ${
-              isSaved ? "text-white dark:text-black" : "text-gray-800 hover:text-white"
-            }`}
-          />
+          <Bookmark className={`h-5 w-5 `} />
           <span className="sr-only">Guardar pregunta en perfil</span>
         </Button>
       ) : (
@@ -82,13 +74,9 @@ export function ButtonSavePost({
           size="icon"
           onClick={handleSave}
           className={`cursor-pointer 
-          bg-red-500 text-white hover:bg-red-600 dark:hover:bg-red-700 px-4 py-2 rounded-md transition-colors duration-200 `}
+          bg-red-500  hover:bg-red-600 text-white dark:hover:bg-red-700  px-4 py-2 rounded-md transition-colors duration-200 hover:text-white `}
         >
-          <Trash
-            className={`h-5 w-5 ${
-              isSaved ? "text-white" : "text-gray-800 hover:text-white"
-            }`}
-          />
+          <Trash className={`h-5 w-5 `} />
           <span className="sr-only">Eliminar pregunta de guardados</span>
         </Button>
       )}

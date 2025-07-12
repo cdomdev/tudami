@@ -38,7 +38,8 @@ export const config = {
     "/explore-questions/:path*",
     "/profile-user",
     "/profile-user/:path*",
-    "/view-profile-user",
-    "/view-profile-user/:path*",
+    // Removido "/view-profile-user" ya que debe ser público
+    // "/view-profile-user",
+    // "/view-profile-user/:path*",
   ],
 };

@@ -16,6 +16,25 @@ function generateSimpleApprovalToken(userId: string): string {
  */
 export async function POST(request: NextRequest) {
   try {
+    // Validar configuración de Supabase antes de continuar
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+      console.error('[AUTH] NEXT_PUBLIC_SUPABASE_URL no está configurada');
+      return NextResponse.json(
+        { error: "Error de configuración del servidor" },
+        { status: 500 }
+      );
+    }
+
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.error('[AUTH] SUPABASE_SERVICE_ROLE_KEY no está configurada');
+      return NextResponse.json(
+        { error: "Error de configuración del servidor" },
+        { status: 500 }
+      );
+    }
+
+    console.log('[AUTH] Configuración validada - URL y Service Key presentes');
+
     const body = await request.json();
     const { accessToken } = body;
 
@@ -28,7 +47,11 @@ export async function POST(request: NextRequest) {
 
     // 1. Validar el token de acceso con Supabase
     const { data: { user: authUser }, error: authError } = await supabaseServer.auth.getUser(accessToken);
-    
+
+    console.log("datos del usuario", authUser);
+
+
+
     if (authError || !authUser) {
       console.error("Error al validar token:", authError);
       return NextResponse.json(
@@ -42,11 +65,15 @@ export async function POST(request: NextRequest) {
     const full_name = user_metadata?.full_name || user_metadata?.name || "";
     const avatar_url = user_metadata?.avatar_url || "";
     const provider = app_metadata?.provider || "email";
-
-    console.log('[AUTH] Iniciando proceso de login para usuario:', id);
-
+    
     // 3. Generar token de aprobación
     const approvalToken = generateSimpleApprovalToken(id);
+
+
+    console.log('[AUTH] Generando token de aprobación:', {
+      userId: id,
+      approvalToken
+    });
 
     // 4. Configurar cookies de forma segura
     const cookieStore = await cookies();
@@ -72,8 +99,6 @@ export async function POST(request: NextRequest) {
       maxAge: 60 * 60 * 24, 
     });
 
-    console.log('[AUTH] Cookies configuradas exitosamente');
-
     // 5. Insertar/actualizar usuario en la base de datos
     const { error: upsertError, data: upsertedUser } = await supabaseServer
       .from("users")
@@ -97,7 +122,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log('[AUTH] Usuario insertado/actualizado exitosamente:', upsertedUser.id);
 
     // 6. Crear preferencias por defecto solo si el usuario no las tiene
     const { data: existingPreferences } = await supabaseServer
@@ -124,11 +148,9 @@ export async function POST(request: NextRequest) {
     }
 
     // 7. Obtener perfil completo del usuario con todas las relaciones
-    console.log('[AUTH] Obteniendo perfil completo del usuario...');
     const { data: userProfile, error: profileError } = await getUserProfileQuery(id, supabaseServer);
 
     if (profileError) {
-      console.error('[AUTH] Error obteniendo perfil del usuario:', profileError);
       return NextResponse.json(
         { error: "Error obteniendo perfil del usuario" },
         { status: 500 }
@@ -136,14 +158,14 @@ export async function POST(request: NextRequest) {
     }
 
     if (!userProfile) {
-      console.error('[AUTH] Perfil de usuario no encontrado');
       return NextResponse.json(
         { error: "Error obteniendo perfil del usuario" },
         { status: 500 }
       );
     }
 
-    console.log('[AUTH] Perfil obtenido exitosamente:', {
+    console.log('[AUTH] Perfil obtenido exitosamente:', 
+      {
       hasPreferences: !!userProfile.user_profile_preferences,
       preferencesLength: userProfile.user_profile_preferences?.length || 0
     });
@@ -180,7 +202,8 @@ export async function POST(request: NextRequest) {
     };
 
     // 9. Log de autenticación exitosa
-    console.log('[AUTH] Usuario autenticado exitosamente:', {
+    console.log('[AUTH] Usuario autenticado exitosamente:',
+       {
       userId: id,
       provider,
       timestamp: new Date().toISOString(),

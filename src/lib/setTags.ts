@@ -1,7 +1,7 @@
 import "dotenv/config"
 import {config} from "dotenv"
 import { createClient } from "@supabase/supabase-js";
-import tags from "@/content/data-tags.json" assert { type: "json" };
+import tags from "@/content/tags/data-tags.json" assert { type: "json" };
 
 config({path: ".env.local"});   
 

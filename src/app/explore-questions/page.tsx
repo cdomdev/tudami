@@ -30,7 +30,7 @@ export default function ExploreQuestionsPage() {
   return (
     <>
       <Count count={total} />
-      <section className="py-8 mb-8 space-y-6 bg-accent dark:bg-[var(--custom-bg)] p-10 rounded-sm shadow-sm">
+      <section className="py-2 mb-8 space-y-6  ">
         {loading ? (
           <SkeletonCard />
         ) : questions.length === 0 ? (

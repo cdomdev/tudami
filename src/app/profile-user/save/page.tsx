@@ -36,7 +36,7 @@ export default function SavePage() {
   }, [userId]);
 
   return (
-    <section className="p-6 dark:bg-gray-800 bg-accent shadow-md rounded-md">
+    <section className="p-6 dark:bg-custom-card  shadow-sm rounded-sm">
       {loading && (
         <p className="text-foreground text-center">
           Cargando preguntas guardadas...
@@ -53,9 +53,9 @@ export default function SavePage() {
             Estas son tus preguntas guardadas
           </h2>
           <div className="space-y-4">
-          {savedQuestions.map((question) => (
-            <CardsQuestionSaves key={question.id} {...question} />
-          ))}
+            {savedQuestions.map((question) => (
+              <CardsQuestionSaves key={question.id} {...question} />
+            ))}
           </div>
         </>
       )}

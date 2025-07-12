@@ -28,7 +28,9 @@ export function BodyListComment({ question_id }: { question_id: number }) {
   return (
     <div className="flex flex-col space-y-3 ">
       {loading ? (
-        <p className="text-center text-background">Cargando respuesta</p>
+        <p className="text-center text-black dark:text-background">
+          Cargando respuesta
+        </p>
       ) : comments.length === 0 ? (
         <p>Algo salio mal al intentar cargar las respuetas</p>
       ) : (

@@ -5,9 +5,9 @@ export function Count({ count }: { count: number }) {
     <span
       className={`${
         count > 0 ? "block" : "hidden"
-      } text-card-foreground w-full bg-accent dark:bg-[var(--custom-bg)] mb-1 shadow-sm  rounded-sm py-2   `}
+      } text-muted-foreground w-full   `}
     >
-      <strong className="text-black dark:text-white mr-2 pl-10 text-base">
+      <strong className="text-foreground mr-2 pl-5 text-base">
         {count}{" "}
       </strong>{" "}
       {textForMuchQuestions}

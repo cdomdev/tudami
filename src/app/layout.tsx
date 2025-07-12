@@ -61,19 +61,13 @@ export default function RootLayout({
       className={`  ${balooFont.variable}`}
       suppressHydrationWarning
     >
-      <body>
+      <body className="dark:bg-custom ">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <div
-            aria-hidden="true"
-            className="fixed inset-0 -z-10 h-screen w-screen overflow-hidden
-    bg-[radial-gradient(#f1f1f1_1px,transparent_1px)] [background-size:17px_17px]
-    dark:bg-[radial-gradient(#ffffff1a_1px,#111827_1px)] dark:bg-[size:24px_24px]"
-          />
           <SessionHydrator />
           <NavBar />
           <main className="w-screen min-h-dvh ">{children}</main>

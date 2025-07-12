@@ -43,11 +43,14 @@ export async function getDataProfilePublic({
       return { success: false, message: "Usuario no encontrado" };
     }
 
-    console.log("Datos del perfil:", data);
 
-
-    const preferences = data.user_profile_preferences?.[0];
+    // Obtener las preferencias del usuario (puede ser array u objeto)
+    const preferencesRaw = data.user_profile_preferences;
+    const preferences = Array.isArray(preferencesRaw) ? preferencesRaw[0] : preferencesRaw;
+    
+    
     if (!preferences || !preferences.profile_public) {
+      console.log("Perfil no público o preferencias no encontradas");
       return { success: false, message: "Este perfil no es público" };
     }
 

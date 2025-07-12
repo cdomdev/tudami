@@ -3,7 +3,7 @@ import { CardTags } from "./Cards/CardTags";
 
 export function MapsTags() {
   return (
-    <article className="flex flex-wrap gap-3 ">
+    <article className="flex flex-wrap justify-center gap-3 ">
       {Tags.slice(0, 10).map((tag) => (
         <CardTags
           key={tag.id}

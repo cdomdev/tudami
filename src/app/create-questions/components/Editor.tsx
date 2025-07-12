@@ -1,6 +1,6 @@
 "use client";
 
-import { SimpleEditor } from "../components/simple/simple-editor";
+import { SimpleEditor } from "./simple/simple-editor";
 import { useState } from "react";
 import { preguntaSchema } from "../schema/schemaEditor";
 import { toast } from "sonner";
@@ -8,10 +8,8 @@ import { useSession } from "@/context/context.sesion";
 import { createQuestion } from "../lib/createQuestions";
 import { useRouter } from "next/navigation";
 import tags from "@/content/tags/data-tags.json";
-import { MultiSelect } from "../components/multi-select";
+import { MultiSelect } from "./multi-select";
 import { Button } from "@/components/ui/button";
-
-
 
 export default function Editor() {
   const [content, setContent] = useState("");
@@ -22,7 +20,6 @@ export default function Editor() {
     value: tag.id,
     label: tag.name,
   }));
-
 
   const [loading, setLoading] = useState(false);
   const { user } = useSession();
@@ -75,48 +72,43 @@ export default function Editor() {
 
   return (
     <>
-      <div className="md:col-span-4 w-full rounded-md  order-2 lg:order-1">
-        <div className="mb-1 bg-accent dark:bg-[var(--custom-bg)] p-6 rounded-t-md shadow-sm ">
-          <label htmlFor="titulo" className="font-medium text-sm md:text-base">
-            Dale un título claro a tu pregunta
-          </label>
-          <input
-            type="text"
-            id="titulo"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Ej: ¿Cómo vincular varias evidencias en Sofiaplus?"
-            className="w-full border py-2 px-3 mt-2 rounded-md focus:outline-none text-xs md:text-sm focus:ring-1 focus:ring-slate-200 bg-white text-black"
-          />
-        </div>
+      <div className="p-6">
+        <label htmlFor="titulo" className="font-medium text-sm md:text-base">
+          Dale un título claro a tu pregunta
+        </label>
+        <input
+          type="text"
+          id="titulo"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Ej: ¿Cómo vincular varias evidencias en Sofiaplus?"
+          className="w-full border py-2 px-3 mt-2 rounded-md focus:outline-none text-xs md:text-sm focus:ring-1 focus:ring-slate-200 bg-white text-black"
+        />
+      </div>
 
-        <div className="mb-1 bg-accent dark:bg-[var(--custom-bg)] p-6 sahdow-sm">
-          <label
-            htmlFor="etiquetas"
-            className="font-medium text-sm md:text-base"
-          >
-            Selecciona etiquetas relevantes
-          </label>
-          <MultiSelect
-            options={options}
-            onValueChange={setSelectedTags}
-            defaultValue={selectedTags}
-          />
-        </div>
+      <div className="px-6 ">
+        <label htmlFor="etiquetas" className="font-medium text-sm md:text-base">
+          Selecciona etiquetas relevantes
+        </label>
+        <MultiSelect
+          options={options}
+          onValueChange={setSelectedTags}
+          defaultValue={selectedTags}
+        />
+      </div>
 
-        <div className="bg-accent dark:bg-[var(--custom-bg)] p-6 rounden-br-md rounded-b-md shadow-sm">
-          <span className="font-medium text-sm md:text-base block mb-3">
-            Escribe tu pregunta con detalle
-          </span>
-          <SimpleEditor onChange={setContent} />
-          <Button
+      <div className="p-6 ">
+        <span className="font-medium text-sm md:text-base block mb-3">
+          Escribe tu pregunta con detalle
+        </span>
+        <SimpleEditor onChange={setContent} />
+        <Button
           variant={"default"}
-            onClick={handleSubmit}
-            className="mt-3 w-full px-4   duration-200 rounded-md cursor-pointer font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? "Enviando pregunta..." : "Publicar mi pregunta"}
-          </Button>
-        </div>
+          onClick={handleSubmit}
+          className="mt-3 px-4   duration-200 rounded-md cursor-pointer font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {loading ? "Enviando pregunta..." : "Publicar mi pregunta"}
+        </Button>
       </div>
     </>
   );

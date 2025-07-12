@@ -10,11 +10,11 @@ import { Edit } from "lucide-react";
 import { useSession } from "@/context/context.sesion";
 
 export default function PreferenciasTema() {
-  const { user } = useSession();  
-  
+  const { user } = useSession();
+
   return (
     <section className="space-y-2">
-      <article className="p-6 dark:bg-[var(--custom-bg)] bg-accent rounded-md shadow-md">
+      <article className="p-6 dark:bg-custom-card  rounded-sm shadow-sm">
         <div className="flex justify-between items-center border-b">
           <h2
             id="info-profile-title"
@@ -22,7 +22,10 @@ export default function PreferenciasTema() {
           >
             Información de perfil
           </h2>
-          <Link href={`/profile-user/account-setting/edit?id=${user?.id}`} className="text-accent-foreground hover:text-accent-foreground/80 ">
+          <Link
+            href={`/profile-user/account-setting/edit?id=${user?.id}`}
+            className="text-accent-foreground hover:text-accent-foreground/80 "
+          >
             <Edit />
             <span className="sr-only">button edit profile</span>
           </Link>
@@ -31,7 +34,7 @@ export default function PreferenciasTema() {
         <InfoUser />
       </article>
       <article
-        className="p-6 dark:bg-[var(--custom-bg)] bg-accent rounded-md shadow-md  "
+        className="p-6 dark:bg-custom-card  rounded-sm shadow-sm  "
         role="region"
         aria-labelledby="opciones-tema-title"
       >
@@ -47,7 +50,7 @@ export default function PreferenciasTema() {
       </article>
 
       <article
-        className="p-6 dark:bg-[var(--custom-bg)] bg-accent rounded-md shadow-md"
+        className="p-6 dark:bg-custom-card  rounded-sm shadow-sm"
         role="region"
         aria-labelledby="preferencias-contacto-title"
       >
@@ -61,7 +64,7 @@ export default function PreferenciasTema() {
         <FormPrefenceContact />
       </article>
       <article
-        className="p-6 dark:bg-[var(--custom-bg)] bg-accent border border-red-500 rounded-md shadow-md"
+        className="p-6 dark:bg-custom-card  border border-red-500 rounded-sm shadow-sm"
         role="region"
         aria-labelledby="zona-peligro-title"
       >

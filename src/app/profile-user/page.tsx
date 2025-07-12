@@ -20,7 +20,6 @@ export default function UserProfile() {
     ],
   };
 
-
   const itemsActivity = [
     {
       title: "Preguntas hechas",
@@ -37,10 +36,10 @@ export default function UserProfile() {
   const insigniasObtenidas = obtenerInsigniasUsuario(estadisticas.insignias);
 
   return (
-    <section className="space-y-10">
+    <section className="space-y-5">
       {/* Estadísticas */}
       <article
-        className="p-6 bg-accent dark:bg-[var(--custom-bg)]  rounded-2xl shadow-sm"
+        className="p-6 dark:bg-custom-card  rounded-sm shadow-sm"
         role="region"
         aria-labelledby="estadisticas-title"
       >
@@ -61,7 +60,7 @@ export default function UserProfile() {
 
       {/* Insignias */}
       <article
-        className="p-6 bg-accent dark:bg-[var(--custom-bg)] rounded-2xl shadow-sm"
+        className="p-6  dark:bg-custom-card rounded-sm shadow-sm"
         role="region"
         aria-labelledby="insignias-title"
       >

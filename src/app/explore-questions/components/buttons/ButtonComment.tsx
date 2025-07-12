@@ -24,11 +24,15 @@ export function ButtonComment({
     if (!user || !content.trim()) return;
     setLoading(true);
 
-    const { data: commentData, error } = await supabase.from("question_comments").insert({
-      text: content.trim(),
-      question_id,
-      user_id: user.id,
-    }).select().single();
+    const { data: commentData, error } = await supabase
+      .from("question_comments")
+      .insert({
+        text: content.trim(),
+        question_id,
+        user_id: user.id,
+      })
+      .select()
+      .single();
 
     /**
      * obtener autor de la pregunta para emitir la notificacion */
@@ -52,7 +56,7 @@ export function ButtonComment({
         content: `${user.full_name || "Alguien"} comentó en tu pregunta.`,
         url: `/explore-questions/questions?query=my`,
         read: false,
-      };      
+      };
 
       const { error: notificationError } = await supabase
         .from("notifications")
@@ -82,27 +86,27 @@ export function ButtonComment({
   };
 
   return (
-    <div className="relative inline-block w-full  ">
+    <div className="w-full">
       <Button
         variant="ghost"
         onClick={() => setOpen(!open)}
-        size={"sm"}
-        className="text-sm text-primary hover:bg-transparent flex items-center gap-1 cursor-pointer "
+        size="sm"
+        className="text-sm text-primary hover:bg-transparent flex items-center gap-1 cursor-pointer"
       >
         <MessageCircle className="size-4" />
         Comentar
       </Button>
 
       {open && (
-        <div className="-translate-x-22 w-xs md:min-w-3xl mt-5 ">
+        <div className="mt-4 w-full">
           <Textarea
             placeholder="Escribe tu comentario..."
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={3}
-            className="w-full resize-none focus:outline-none ring-0  focus:ring-0 focus:underline-none dark:focus:ring-0 dark:focus:underline-none "
+            className="w-full resize-none rounded-md border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 transition"
           />
-          <div className="flex gap-2 justify-end mt-2">
+          <div className="flex gap-2 justify-end mt-3">
             <Button
               variant="ghost"
               size="sm"
@@ -115,8 +119,8 @@ export function ButtonComment({
               Cancelar
             </Button>
             <Button
-              className="cursor-pointer"
               size="sm"
+              className="cursor-pointer"
               onClick={handleSubmit}
               disabled={loading || !content.trim()}
             >

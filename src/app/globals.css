@@ -45,11 +45,15 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --shadow-global: var(--shadow);
-  --custom-dark:var(--custome-bg)
+  
+  /* Colores personalizados */
+  --color-custom: var(--custom);
+  --color-custom-card: var(--custom-card);
 }
 
 :root {
-  --custom-bg: #1f2937;
+  --custom: #f1f1f1;
+  --custom-card: #f1f1f1;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -83,12 +87,11 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  /* varibles customizadas del componente para texto enriquecido */
-
-
 }
 
 .dark {
+  --custom: #12151b;
+  --custom-card: #232a35;
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -120,8 +123,8 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
- 
-   
+
+
 }
 
 
@@ -156,7 +159,7 @@
   min-height: 280px;
 }
 
-.continer-scrollbar-explore-questions{
+.continer-scrollbar-explore-questions {
   scrollbar-gutter: stable;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -166,7 +169,8 @@
   width: 10px;
   height: 10px;
 }
-.continer-scrollbar-explore-questions::-webkit-scrollbar-track{
+
+.continer-scrollbar-explore-questions::-webkit-scrollbar-track {
   background: #302f2f;
 }
 
@@ -185,12 +189,14 @@
   width: 10px;
   height: 10px;
 }
+
 .dialog-content-scrollbar::-webkit-scrollbar-thumb {
   background: #9e9d9d;
   border-radius: 0px 10px 10px 0px;
   height: 10px;
 }
-.dialog-content-scrollbar::-webkit-scrollbar-track{
+
+.dialog-content-scrollbar::-webkit-scrollbar-track {
   background: #302f2f;
   border-radius: 0px 10px 10px 0px;
 }

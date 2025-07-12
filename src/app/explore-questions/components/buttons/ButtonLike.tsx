@@ -7,7 +7,6 @@ import { ThumbsUp } from "lucide-react";
 import { toggleLike, checkIfLiked } from "../../lib/likeQuestions";
 import { useSession } from "@/context/context.sesion";
 
-
 export function ButtonLike({
   question_id,
   onLikeChange,
@@ -43,28 +42,29 @@ export function ButtonLike({
       .select("*", { count: "exact", head: true })
       .eq("question_id", question_id);
 
-      // emitir evento para el cambio del count
+    // emitir evento para el cambio del count
     onLikeChange?.(count ?? 0);
   };
-
-  const styleLiked = hasLiked
-    ? "text-white hover:text-white bg-blue-700 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
-    : "text-gray-700 hover:text-gray-800 dark:hover:bg-accent dark:text-gray-300";
 
   return (
     <>
       <Button
-        onClick={handleLike}
         disabled={loading}
-        variant="ghost"
-        size="sm"
-        className={`flex  items-center gap-1 duration-200 cursor-pointer  ${styleLiked}`}
+        variant={"ghost"}
+        onClick={handleLike}
+        className={`transition-colors duration-200 cursor-pointer  p-1 ${
+          hasLiked
+            ? "bg-transparent text-blue-600 hover:text-blue-600 dark:hover:bg-transparent dark:bg-transparent "
+            : "text-black dark:text-white hover:bg-gray-200 dark:hover:text-blue-600"
+        }`}
       >
-        <ThumbsUp className={hasLiked ? "text-white" : "text-gray-500 dark:text-white dark:hover:text-white"} />
-        {hasLiked ? "Te gusta" : "Me gusta"}
+        <ThumbsUp
+          className={`w-5 h-5 ${
+            hasLiked ? "fill-blue-600 hover:text-white" : "fill-none"
+          }`}
+        />
+        <span className="sr-only">{hasLiked ? "Quitar like" : "Dar like"}</span>
       </Button>
-
-
     </>
   );
 }

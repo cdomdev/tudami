@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { MessageCircle, Mail} from "lucide-react";
+import { Clipboard, Mail, MessageSquare, Reply } from "lucide-react";
 import { HeaderProfile } from "../components/HeaderProfile";
 import { ProfileSkeleton } from "../components/ProfileSkeleton";
 import { useEffect, useState } from "react";
@@ -9,12 +9,12 @@ import { getDataProfilePublic } from "../lib/getDataProfile";
 import { SchemaProfileResponse } from "../schema/schemaResponse";
 import { WhatSappIcon } from "@/components/icons/WhatSappIcon";
 import { ProfileNotAvailable } from "../components/ProfileNotAvailable";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export default function ViewProfileUserPage() {
   const [loading, setLoading] = useState(true);
-  const [dataProfile, setDataProfile] = useState<SchemaProfileResponse | null>(
-    null
-  );
+  const [dataProfile, setDataProfile] = useState<SchemaProfileResponse>();
 
   const searchParams = useSearchParams();
   const userId = searchParams.get("user_id");
@@ -26,10 +26,10 @@ export default function ViewProfileUserPage() {
         return;
       }
 
-      const { data, success } = await getDataProfilePublic({ userId });
+      const res = await getDataProfilePublic({ userId });
 
-      if (success && data) {
-        setDataProfile(data);
+      if (res.success && res.data) {
+        setDataProfile(res.data);
       }
 
       setLoading(false);
@@ -42,12 +42,8 @@ export default function ViewProfileUserPage() {
     return <ProfileSkeleton />;
   }
 
-  console.log("Profile data:", dataProfile);
-
   if (!dataProfile) {
-    return (
-      <ProfileNotAvailable/>
-    );
+    return <ProfileNotAvailable />;
   }
 
   const handleWhatsAppContact = () => {
@@ -61,6 +57,17 @@ export default function ViewProfileUserPage() {
     )}?text=${message}`;
     window.open(whatsappUrl, "_blank");
   };
+  const handleCopyEmailContact = async () => {
+    if (!dataProfile.email) return;
+
+    try {
+      await navigator.clipboard.writeText(dataProfile.email);
+      toast.success("Correo copiado al portapapeles");
+    } catch (error) {
+      console.error("Error al copiar:", error);
+      toast.error("No se pudo copiar el correo");
+    }
+  };
 
   const handleEmailContact = () => {
     if (!dataProfile.email) return;
@@ -72,81 +79,135 @@ export default function ViewProfileUserPage() {
     window.open(emailUrl, "_blank");
   };
 
+  const notContactAvailable = !dataProfile.phone && !dataProfile.email;
+
   return (
     <>
-      <section className="max-w-5xl mx-auto p-6 mt-10">
-        <HeaderProfile {...dataProfile} />
-      </section>
-      <section className="max-w-5xl mx-auto dark:bg-slate-800 mb-8 shadow-sm overflow-hidden bg-accent p-4  rounded-sm">
-        <div className="pb-8 space-y-6 ">
-          <div className="bg-gray-50 dark:bg-slate-700 p-4 rounded-lg">
-            <h3 className="font-semibold mb-2 text-gray-900 dark:text-white">
-              Sobre {dataProfile.full_name}
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              {dataProfile.bio || "Este usuario no ha añadido una biografía."}
-            </p>
-          </div>
+      <HeaderProfile {...dataProfile} />
+      <section className="max-w-5xl mx-auto  overflow-hidden ">
+        {/* Header con avatar y datos básicos */}
+        <div className="px-6 py-4 space-y-4 dark:bg-custom-card rounded-sm shadow-sm ">
+          <h2 className="text-xl font-semibold text-slate-800 dark:text-white">
+            Contacto
+          </h2>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                {dataProfile.questions[0]?.count ?? 0}
-              </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">
-                Preguntas
-              </div>
-            </div>
-            <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                {dataProfile.question_comments[0]?.count ?? 0}
-              </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">
-                Respuestas
-              </div>
-            </div>
-          </div>
+          <p className="text-sm text-slate-600 dark:text-slate-400">
+            {notContactAvailable
+              ? "Este usuario no ha proporcionado información de contacto."
+              : "Este usuario permite que te comuniques a través de los siguientes medios disponibles:"}
+          </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
+          <div className="flex flex-col gap-3 ">
             {dataProfile.phone && (
               <button
                 onClick={handleWhatsAppContact}
-                className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-medium flex items-center justify-center space-x-2 cursor-pointer"
+                className="inline-flex cursor-pointer transition duration-200 items-center gap-2 w-50 justify-center bg-green-500 hover:bg-green-600 text-white text-xs font-medium py-2 px-3 rounded-md"
               >
-               <WhatSappIcon className="w-5 h-5" />
-                <span>Contactar por WhatsApp</span>
+                <WhatSappIcon className="w-4 h-4" />
+                WhatsApp
               </button>
             )}
+
             {dataProfile.email && (
-              <button
-                onClick={handleEmailContact}
-                className="flex-1 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-700 cursor-pointer py-3 px-6 rounded-lg font-medium flex items-center justify-center space-x-2"
-              >
-                <Mail className="w-5 h-5" />
-                <span>Contactar por Gmail</span>
-              </button>
+              <div className="flex flex-col items-start ">
+                <div className="flex items-center gap-2">
+                  <Button
+                    className="flex cursor-pointer transition duration-200 text-muted-foreground dark:bg-gray-200 hover:bg-gray-300 dark:hover:bg-gray-300 dark:hover:text-black"
+                    variant="outline"
+                    onClick={handleCopyEmailContact}
+                  >
+                    <span className="truncate">{dataProfile.email}</span>
+                    <Clipboard className="w-4 h-4 text-slate-500" />
+                  </Button>
+
+                  <Button
+                    className="cursor-pointer"
+                    onClick={handleEmailContact}
+                  >
+                    <Mail className="w-4 h-4" />
+                    <span className="sr-only">Enviar correo electrónico</span>
+                  </Button>
+                </div>
+                <span className="text-[11px] mt-1 text-slate-500 dark:text-slate-400">
+                  {" "}
+                  Haz clic para copiar el correo electrónico.
+                </span>
+              </div>
             )}
           </div>
+        </div>
+
+        {/* Stats y bio */}
+        <div className="p-6 space-y-6">
+          <h3 className="text-lg font-semibold mb-4 text-slate-800 dark:text-white">
+            Actividad de {dataProfile.full_name}
+          </h3>
+          <div className="grid grid-cols-2 grid-rows-1 sm:grid-cols-4 gap-4 text-center">
+            <div className="flex flex-col items-center p-2 rounded-sm bg-slate-50 dark:bg-slate-800 shadow-sm">
+              <p className="text-xl flex items-center gap-2 font-bold text-indigo-600 dark:text-indigo-400">
+                <MessageSquare className="w-5 h-5 text-indigo-500 " />
+                {dataProfile.questions[0]?.count ?? 0}
+              </p>
+              <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">
+                Preguntas
+              </p>
+            </div>
+
+            <div className="flex  flex-col items-center p-2 rounded-sm bg-slate-50 dark:bg-slate-800 shadow-sm">
+              <p className="text-xl flex items-center gap-2 font-bold text-indigo-600 dark:text-indigo-400">
+                <Reply className="w-5 h-5 text-indigo-500" />
+                {dataProfile.question_comments[0]?.count ?? 0}
+              </p>
+              <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">
+                Respuestas
+              </p>
+            </div>
+          </div>
+
+          {/* Acciones */}
         </div>
       </section>
-      <section className="max-w-5xl mx-auto p-6 bg-white dark:bg-slate-800 shadow-lg rounded-xl overflow-hidden">
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-xl font-semibold flex items-center text-gray-900 dark:text-white">
-            <MessageCircle className="w-5 h-5 mr-2" />
-            Actividad Reciente
+
+      <section className="max-w-5xl mx-auto  overflow-hidden grid grid-cols-1 sm:grid-cols-6  gap-6 p-6">
+        {/* Actividad */}
+        <div className="md:col-span-4 p-6">
+          <h2 className="text-lg font-semibold mb-4 text-slate-800 dark:text-white flex items-center">
+            <MessageSquare className="w-5 h-5 mr-2" />
+            Preguntas realizadas por {dataProfile.full_name}
           </h2>
-        </div>
-        <div className="space-y-4">
-          <div className="border-l-4 border-blue-300 dark:border-blue-600 pl-4 py-2">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Hace 2 días
-            </p>
-            <p className="font-medium text-gray-900 dark:text-gray-100">
-              Respondió a: &ldquo;¿Cómo implementar autenticación en
-              React?&rdquo;
-            </p>
+
+          <div className="space-y-4">
+            <div className="border-l-4 border-indigo-500 pl-4">
+              <p className="text-xs text-gray-500 dark:text-slate-400 mb-1">
+                Hace 2 días
+              </p>
+              <p className="font-medium text-slate-900 dark:text-slate-100">
+                Respondió a: &ldquo;¿Cómo implementar autenticación en
+                React?&rdquo;
+              </p>
+            </div>
+            {/* Aquí puedes mapear la actividad real */}
           </div>
-          {/* Aquí podrías mapear actividad real en el futuro */}
+        </div>
+
+        <div className="md:col-span-2 p-6 border-l border-slate-200 dark:border-slate-700">
+          <h2 className="text-lg font-semibold mb-4 text-slate-800 dark:text-white flex items-center">
+            <MessageSquare className="w-5 h-5 mr-2" />
+            Etiquetas más usadas por {dataProfile.full_name}
+          </h2>
+
+          <div className="space-y-4">
+            <div className="border-l-4 border-indigo-500 pl-4">
+              <p className="text-xs text-gray-500 dark:text-slate-400 mb-1">
+                Hace 2 días
+              </p>
+              <p className="font-medium text-slate-900 dark:text-slate-100">
+                Respondió a: &ldquo;¿Cómo implementar autenticación en
+                React?&rdquo;
+              </p>
+            </div>
+            {/* Aquí puedes mapear la actividad real */}
+          </div>
         </div>
       </section>
     </>

@@ -28,7 +28,7 @@ export default function LayoutProfile({
       href: `/profile-user/save?user_id=${user?.id}`,
       icon: Bookmark,
     },
-  ]
+  ];
 
   return (
     <section
@@ -38,7 +38,7 @@ export default function LayoutProfile({
     >
       {/* Barra lateral */}
       <aside
-        className="md:col-span-1 max-w-xs pr-4 pl-2 pt-6 hidden md:block bg-accent rounded-md shadow-md dark:bg-[var(--custom-bg)] h-56 max-h-80"
+        className="md:col-span-1 max-w-xs pr-4 pl-2 pt-6 hidden md:block  rounded-sm shadow-sm dark:bg-custom-card h-56 max-h-80"
         role="navigation"
         aria-label="Opciones de perfil"
       >
@@ -55,14 +55,13 @@ export default function LayoutProfile({
               <li key={item.name} aria-label={item.name}>
                 <Link
                   href={item.href}
-                  className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-accent-foreground/10 dark:[var(--custom-bg)] text-accent-foreground"
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-accent-foreground/10 dark:cusbg-custom-card text-accent-foreground"
                 >
                   <item.icon className="size-5 text-primary" />
                   <span className="text-sm font-medium">{item.name}</span>
                 </Link>
               </li>
-            ))
-            }
+            ))}
           </ul>
         </nav>
       </aside>
@@ -70,14 +69,14 @@ export default function LayoutProfile({
       {/* Contenido principal */}
       <main className="md:col-span-5">
         <header
-          className="flex mb-2 bg-accent dark:bg-[var(--custom-bg)] p-4 rounded-md shadow-md"
+          className="flex mb-2 dark:bg-custom-card p-4 rounded-sm shadow-sm"
           role="banner"
         >
           <Image
             src={user?.avatar_url || "/default-avatar.png"}
             alt={`Avatar de ${user?.full_name}`}
             width={120}
-            className="rounded-md mr-4"
+            className="rounded-sm mr-4"
             height={120}
           />
           <div className="flex flex-col justify-center">
@@ -88,8 +87,9 @@ export default function LayoutProfile({
               {user?.full_name}
             </h1>
             <p className="text-xs md:text-sm text-accent-foreground">
-             {user?.bio || "¡Cuéntanos sobre ti! Puedes agregar una biografía en la sección de configuración de tu perfil."}
-             <Link
+              {user?.bio ||
+                "¡Cuéntanos sobre ti! Puedes agregar una biografía en la sección de configuración de tu perfil."}
+              <Link
                 href={`/profile-user/account-setting/edit?id=${user?.id}`}
                 className="text-blue-500 pl-3 hover:underline"
               >
@@ -100,7 +100,7 @@ export default function LayoutProfile({
           </div>
         </header>
         <nav aria-label="Navegación de perfil " className="block md:hidden">
-          <ul className="flex gap-4 mb-6 bg-accent dark:bg-[var(--custom-bg)] px-4 py-2 rounded-md shadow-sm">
+          <ul className="flex gap-4 mb-6 bg-accent dark:bg-custom-card px-4 py-2 rounded-sm shadow-sm">
             <li>
               <Link href="#" className="hover:underline">
                 Perfil
@@ -118,24 +118,3 @@ export default function LayoutProfile({
     </section>
   );
 }
-
-
-// <li>
-//               <Link
-//                 href={`/profile-user?id=${user?.id}`}
-//                 className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-accent-foreground/10 dark:hover:bg-gray-700 text-accent-foreground"
-//               >
-//                 <House className="size-5 text-primary" />
-//                 <span className="text-sm font-medium">Inicio</span>
-//               </Link>
-//             </li>
-
-//             <li>
-//               <Link
-//                 href={`/profile-user/preferencias`}
-//                 className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors hover:bg-accent-foreground/10 dark:hover:bg-gray-700 text-accent-foreground"
-//               >
-//                 <Settings className="size-5 text-primary" />
-//                 <span className="text-sm font-medium">Preferencias</span>
-//               </Link>
-//             </li>

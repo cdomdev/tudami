@@ -6,6 +6,12 @@ export const QuestionSchema = z.object({
 
 export type Question = z.infer<typeof QuestionSchema>;
 
+export const UserProfilePreferencesSchema = z.object({
+  profile_public: z.boolean(),
+  allow_email: z.boolean(),
+  allow_whatsapp: z.boolean(),
+});
+
 export const SchemaProfileResponseSchema = z.object({
   id: z.string(),
   full_name: z.string(),
@@ -17,7 +23,7 @@ export const SchemaProfileResponseSchema = z.object({
   city: z.string().nullable(),
   department: z.string().nullable(),
   created_at: z.coerce.date(),
-  user_profile_preferences: z.record(z.any()),
+  user_profile_preferences: UserProfilePreferencesSchema,
   questions: z.array(QuestionSchema),
   question_comments: z.array(QuestionSchema),
 });
