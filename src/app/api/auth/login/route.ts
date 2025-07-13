@@ -2,13 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabase-server";
 import { getUserProfileQuery } from "@/lib/query";
 import { cookies } from "next/headers";
+import { generateSimpleApprovalToken } from "@/utils/generateToken";
 
-// Función simple para generar token de aprobación
-function generateSimpleApprovalToken(userId: string): string {
-  const timestamp = Date.now().toString();
-  const randomPart = Math.random().toString(36).substring(2);
-  return `${userId}-${timestamp}-${randomPart}`;
-}
 
 /**
  * Ruta principal de autenticación - Maneja todo el flujo de inicio de sesión
@@ -48,9 +43,6 @@ export async function POST(request: NextRequest) {
     // 1. Validar el token de acceso con Supabase
     const { data: { user: authUser }, error: authError } = await supabaseServer.auth.getUser(accessToken);
 
-    console.log("datos del usuario", authUser);
-
-
 
     if (authError || !authUser) {
       console.error("Error al validar token:", authError);
@@ -63,17 +55,11 @@ export async function POST(request: NextRequest) {
     // 2. Extraer datos del usuario autenticado
     const { id, email, user_metadata, app_metadata } = authUser;
     const full_name = user_metadata?.full_name || user_metadata?.name || "";
-    const avatar_url = user_metadata?.avatar_url || "";
+    const avatar_url = user_metadata?.picture || user_metadata?.avatar_url || "";
     const provider = app_metadata?.provider || "email";
     
     // 3. Generar token de aprobación
     const approvalToken = generateSimpleApprovalToken(id);
-
-
-    console.log('[AUTH] Generando token de aprobación:', {
-      userId: id,
-      approvalToken
-    });
 
     // 4. Configurar cookies de forma segura
     const cookieStore = await cookies();
@@ -163,13 +149,6 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       );
     }
-
-    console.log('[AUTH] Perfil obtenido exitosamente:', 
-      {
-      hasPreferences: !!userProfile.user_profile_preferences,
-      preferencesLength: userProfile.user_profile_preferences?.length || 0
-    });
-
     // 8. Construir objeto de usuario completo para el contexto del cliente
     const userForContext = {
       id,
@@ -201,13 +180,6 @@ export async function POST(request: NextRequest) {
       },
     };
 
-    // 9. Log de autenticación exitosa
-    console.log('[AUTH] Usuario autenticado exitosamente:',
-       {
-      userId: id,
-      provider,
-      timestamp: new Date().toISOString(),
-    });
 
     return NextResponse.json({
       success: true,

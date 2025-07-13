@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 
 
-type Session = {
+export type Session = {
   id: string;
   email: string;
   full_name: string;

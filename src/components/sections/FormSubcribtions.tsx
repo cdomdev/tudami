@@ -45,7 +45,7 @@ export function FormSubcription() {
   }
   return (
     <>
-      <div className="w-11/12 md:w-full md:max-w-4xl mx-auto p-6 sm:p-8 dark:bg-custom-card border border-muted rounded-xl shadow-sm flex flex-col gap-4">
+      <div className="mb-32 w-11/12 md:w-full md:max-w-4xl mx-auto p-6 sm:p-8 dark:bg-custom-card border border-muted rounded-xl shadow-sm flex flex-col gap-4">
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
             <Image src="/Email.svg" alt="imagen-buzon" width={30} height={30} />

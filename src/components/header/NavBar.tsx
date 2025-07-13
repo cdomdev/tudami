@@ -14,6 +14,7 @@ import { ClientSessionRenderer } from "@/app/auth/validateSesion/ClientSessionRe
 import { ModeToggle } from "@/components/ToggleTheme";
 import { Characteristics } from "./charactheristics";
 import { MovilNav } from "./MovilNav";
+
 export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [showNav] = useState(true);
@@ -83,7 +84,7 @@ export function NavBar() {
         </NavigationMenu>
 
         <div className="flex md:gap-3 items-center justify-center">
-          <ClientSessionRenderer />
+          <ClientSessionRenderer  />
           <button
             onClick={() => setOpenMenu(!openMenu)}
             className="md:hidden  text-black dark:text-white relative pl-6"

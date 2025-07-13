@@ -85,7 +85,10 @@ export function SimpleEditor({ onChange }: { onChange?: (html: string) => void }
         <ToolbarSeparator />
 
         <ToolbarGroup>
-          <ListDropdownMenu types={["bulletList", "orderedList", "taskList"]} />
+          <ListDropdownMenu types={[
+            // "bulletList", 
+            // "orderedList",
+            "taskList"]} />
           <BlockQuoteButton />
           <CodeBlockButton />
         </ToolbarGroup>
@@ -100,12 +103,10 @@ export function SimpleEditor({ onChange }: { onChange?: (html: string) => void }
         </ToolbarGroup>
       </Toolbar>
 
-      <div className=" border  bg-background ">
-        <EditorContent
-          editor={editor}
-          className="prose min-w-full min-h-80 overflow-y-auto max-h-80 dark:bg-white dark:text-black p-2 w-full rounded-xs"
-        />
-      </div>
+      <EditorContent
+        editor={editor}
+        className="border p-2 rounded-sm"
+      />
     </EditorContext.Provider>
   );
 }

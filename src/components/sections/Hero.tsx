@@ -18,13 +18,13 @@ export function Hero() {
   const textoRef = useRef<HTMLSpanElement>(null);
   const [index, setIndex] = useState(0);
   const router = useRouter();
-  const { openModal, user } = useSession();
+  const {  user } = useSession();
   
   const handleClickBtnQuestions = () => {
     if (user) {
       router.push("/create-questions");
     } else {
-      openModal();
+      router.push("/auth/login");
     }
   };
 
@@ -32,7 +32,7 @@ export function Hero() {
     if (user) {
       router.push("/explore-questions");
     } else {
-      openModal();
+      router.push("/auth/login")
     }
   };
   useEffect(() => {

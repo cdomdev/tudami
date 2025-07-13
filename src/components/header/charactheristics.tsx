@@ -7,10 +7,11 @@ import { ComponentPropsWithoutRef } from "react";
 import Link from "next/link";
 import { useSession } from "@/context/context.sesion";
 import { Button } from "../ui/button";
-
+import { useRouter } from "next/navigation";
 export function Characteristics() {
 
-  const { user, openModal } = useSession();
+  const router = useRouter()
+  const { user } = useSession();
 
   const items = [
     {
@@ -40,7 +41,7 @@ export function Characteristics() {
   ];
 
   const handleNavigation = () => {
-    openModal();
+    router.push("/auth/login")
   };
 
   return (

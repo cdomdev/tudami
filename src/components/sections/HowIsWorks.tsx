@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 export function HowIsWorks() {
 
-  const { user, openModal } = useSession();
+  const { user, } = useSession();
   const router = useRouter();
   const items = [
     {
@@ -50,7 +50,7 @@ export function HowIsWorks() {
     if (user) {
       router.push("/create-questions");
     } else {
-      openModal();
+      router.push("/auth/login")
     }
   };
   return (

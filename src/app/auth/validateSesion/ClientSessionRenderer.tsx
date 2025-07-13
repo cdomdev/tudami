@@ -2,13 +2,15 @@ import { Profile } from "@/components/Profile";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { User } from "lucide-react";
+import { useSession } from "@/context/context.sesion";
 
-export function ClientSessionRenderer({
-  isAuthenticated,
-}: {
-  isAuthenticated?: boolean;
-}) {
-  return isAuthenticated ? (
+export function ClientSessionRenderer() {
+
+  const { isLoggedIn } = useSession()
+  
+  console.log(isLoggedIn)
+
+  return isLoggedIn ? (
     <Profile />
   ) : (
     <Link href="/auth/login" className="flex items-center">
