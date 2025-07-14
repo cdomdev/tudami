@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { supabaseServer } from "@/lib/supabase-server";
+import { supabaseServerClient } from "@/lib/supabase-server";
 import { cookies } from "next/headers";
 
 /**
@@ -10,17 +10,21 @@ import { cookies } from "next/headers";
  * Valida el token de autorización desde el header Authorization
  */
 export async function validateAuthToken(request: NextRequest) {
-  const authHeader = request.headers.get('authorization');
-  const token = authHeader?.replace('Bearer ', '');
+  const authHeader = request.headers.get("authorization");
+  const token = authHeader?.replace("Bearer ", "");
 
   if (!token) {
-    throw new Error('Token de autorización requerido');
+    throw new Error("Token de autorización requerido");
   }
+  const supabaseServer = supabaseServerClient(token);
 
-  const { data: { user }, error } = await supabaseServer.auth.getUser(token);
-  
+  const {
+    data: { user },
+    error,
+  } = await supabaseServer.auth.getUser(token);
+
   if (error || !user) {
-    throw new Error('Token inválido o expirado');
+    throw new Error("Token inválido o expirado");
   }
 
   return user;
@@ -31,16 +35,20 @@ export async function validateAuthToken(request: NextRequest) {
  */
 export async function validateAuthFromCookie() {
   const cookieStore = await cookies();
-  const token = cookieStore.get('sb-access-token')?.value;
+  const token = cookieStore.get("sb-access-token")?.value;
 
   if (!token) {
-    throw new Error('No hay sesión activa');
+    throw new Error("No hay sesión activa");
   }
+  const supabaseServer = supabaseServerClient(token);
 
-  const { data: { user }, error } = await supabaseServer.auth.getUser(token);
-  
+  const {
+    data: { user },
+    error,
+  } = await supabaseServer.auth.getUser(token);
+
   if (error || !user) {
-    throw new Error('Sesión expirada');
+    throw new Error("Sesión expirada");
   }
 
   return { user, token };
@@ -51,18 +59,21 @@ export async function validateAuthFromCookie() {
  */
 export async function getApprovalTokenFromCookie() {
   const cookieStore = await cookies();
-  const approvalToken = cookieStore.get('approval_token')?.value;
+  const approvalToken = cookieStore.get("approval_token")?.value;
 
   if (!approvalToken) {
-    throw new Error('Token de aprobación no encontrado');
+    throw new Error("Token de aprobación no encontrado");
   }
 
   return approvalToken;
 }
 
-export async function validateUserOwnership(userId: string, requestedUserId: string) {
+export async function validateUserOwnership(
+  userId: string,
+  requestedUserId: string
+) {
   if (userId !== requestedUserId) {
-    throw new Error('No tienes permisos para acceder a este recurso');
+    throw new Error("No tienes permisos para acceder a este recurso");
   }
 }
 
@@ -74,15 +85,20 @@ export function sanitizeUserInput(data: Record<string, unknown>) {
 }
 
 export function handleApiError(error: unknown) {
-  console.error('API Error:', error);
-  
+  console.error("API Error:", error);
+
   if (error instanceof Error) {
-    return { 
+    return {
       error: error.message,
-      status: error.message.includes('autorización') || error.message.includes('Token') ? 401 : 
-              error.message.includes('permisos') ? 403 : 500
+      status:
+        error.message.includes("autorización") ||
+        error.message.includes("Token")
+          ? 401
+          : error.message.includes("permisos")
+          ? 403
+          : 500,
     };
   }
-  
-  return { error: 'Error interno del servidor', status: 500 };
+
+  return { error: "Error interno del servidor", status: 500 };
 }

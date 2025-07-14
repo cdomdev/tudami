@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseServer } from "@/lib/supabase-server";
+import { supabaseServerClient } from "@/lib/supabase-server";
 import { getUserProfileQuery } from "@/lib/query";
 import { cookies } from "next/headers";
 import { generateSimpleApprovalToken } from "@/utils/generateToken";
-
 
 /**
  * Ruta principal de autenticación - Maneja todo el flujo de inicio de sesión
@@ -12,26 +11,17 @@ import { generateSimpleApprovalToken } from "@/utils/generateToken";
 export async function POST(request: NextRequest) {
   try {
     // Validar configuración de Supabase antes de continuar
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-      console.error('[AUTH] NEXT_PUBLIC_SUPABASE_URL no está configurada');
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.error("[AUTH] NEXT_PUBLIC_SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY no está configurada");
       return NextResponse.json(
         { error: "Error de configuración del servidor" },
         { status: 500 }
       );
     }
-
-    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      console.error('[AUTH] SUPABASE_SERVICE_ROLE_KEY no está configurada');
-      return NextResponse.json(
-        { error: "Error de configuración del servidor" },
-        { status: 500 }
-      );
-    }
-
-    console.log('[AUTH] Configuración validada - URL y Service Key presentes');
 
     const body = await request.json();
     const { accessToken } = body;
+    const supabase = supabaseServerClient(accessToken);
 
     if (!accessToken) {
       return NextResponse.json(
@@ -41,8 +31,10 @@ export async function POST(request: NextRequest) {
     }
 
     // 1. Validar el token de acceso con Supabase
-    const { data: { user: authUser }, error: authError } = await supabaseServer.auth.getUser(accessToken);
-
+    const {
+      data: { user: authUser },
+      error: authError,
+    } = await supabase.auth.getUser(accessToken);
 
     if (authError || !authUser) {
       console.error("Error al validar token:", authError);
@@ -55,38 +47,15 @@ export async function POST(request: NextRequest) {
     // 2. Extraer datos del usuario autenticado
     const { id, email, user_metadata, app_metadata } = authUser;
     const full_name = user_metadata?.full_name || user_metadata?.name || "";
-    const avatar_url = user_metadata?.picture || user_metadata?.avatar_url || "";
+    const avatar_url =
+      user_metadata?.picture || user_metadata?.avatar_url || "";
     const provider = app_metadata?.provider || "email";
-    
+
     // 3. Generar token de aprobación
     const approvalToken = generateSimpleApprovalToken(id);
 
-    // 4. Configurar cookies de forma segura
-    const cookieStore = await cookies();
-    
-    const cookieOptions = {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax" as const,
-      path: "/",
-    };
-
-    // Cookie para el token de acceso (1 día)
-    cookieStore.set("sb-access-token", accessToken, {
-      ...cookieOptions,
-      // 24 horas
-      maxAge: 60 * 60 * 24, 
-    });
-
-    // Cookie para el token de aprobación (1 día)
-    cookieStore.set("approval_token", approvalToken, {
-      ...cookieOptions,
-      // 24 horas
-      maxAge: 60 * 60 * 24, 
-    });
-
-    // 5. Insertar/actualizar usuario en la base de datos
-    const { error: upsertError, data: upsertedUser } = await supabaseServer
+    // 4. Insertar/actualizar usuario en la base de datos
+    const { error: upsertError, data: upsertedUser } = await supabase
       .from("users")
       .upsert({
         id,
@@ -101,16 +70,43 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (upsertError) {
-      console.error('[AUTH] Error al insertar usuario:', upsertError.message, upsertError);
+      console.error(
+        "[AUTH] Error al insertar usuario:",
+        upsertError.message,
+        upsertError
+      );
       return NextResponse.json(
         { error: "Error al crear/actualizar usuario" },
         { status: 500 }
       );
     }
 
+    // 5. Configurar cookies de forma segura
+    const cookieStore = await cookies();
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax" as const,
+      path: "/",
+    };
+
+    // Cookie para el token de acceso (1 día)
+    cookieStore.set("sb-access-token", accessToken, {
+      ...cookieOptions,
+      // 24 horas
+      maxAge: 60 * 60 * 24,
+    });
+
+    // Cookie para el token de aprobación (1 día)
+    cookieStore.set("approval_token", approvalToken, {
+      ...cookieOptions,
+      // 24 horas
+      maxAge: 60 * 60 * 24,
+    });
 
     // 6. Crear preferencias por defecto solo si el usuario no las tiene
-    const { data: existingPreferences } = await supabaseServer
+    const { data: existingPreferences } = await supabase
       .from("user_profile_preferences")
       .select("user_id")
       .eq("user_id", id)
@@ -118,7 +114,7 @@ export async function POST(request: NextRequest) {
 
     // Solo crear preferencias si no existen
     if (!existingPreferences) {
-      const { error: insertError } = await supabaseServer
+      const { error: insertError } = await supabase
         .from("user_profile_preferences")
         .insert({
           user_id: id,
@@ -128,13 +124,17 @@ export async function POST(request: NextRequest) {
         });
 
       if (insertError) {
-        console.error("Error al crear las preferencias del usuario:", insertError);
+        console.error(
+          "Error al crear las preferencias del usuario:",
+          insertError
+        );
         // No retornamos error aquí porque las preferencias pueden crearse después
       }
     }
 
     // 7. Obtener perfil completo del usuario con todas las relaciones
-    const { data: userProfile, error: profileError } = await getUserProfileQuery(id, supabaseServer);
+    const { data: userProfile, error: profileError } =
+      await getUserProfileQuery(id, supabase);
 
     if (profileError) {
       return NextResponse.json(
@@ -180,13 +180,11 @@ export async function POST(request: NextRequest) {
       },
     };
 
-
     return NextResponse.json({
       success: true,
       message: "Autenticación exitosa",
       user: userForContext,
     });
-
   } catch (error) {
     console.error("Error en auth/login:", error);
     return NextResponse.json(

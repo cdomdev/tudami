@@ -56,9 +56,9 @@ export function Notifications() {
         <Button
           variant="outline"
           size="icon"
-          className="relative h-9 w-9 p-0 border-none"
+          className="relative h-8 w-8 p-0 border-none cursor-pointer"
         >
-          <Bell className="h-5 w-5" />
+          <Bell className="h-4 w-4" />
           {unreadCount > 0 && (
             <span className="absolute top-0 right-0 h-2.5 w-2.5 rounded-full bg-red-500" />
           )}

@@ -1,19 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { Search, Plus } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SearchInput } from "./Search";
 
 export function Header() {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const handleSearch = () => {
-    const trimmed = searchTerm.trim();
-    if (!trimmed) return;
-  };
-
   return (
     <>
       <div className="z-10 w-full pt-24 pb-8 bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -33,24 +25,7 @@ export function Header() {
           {/* Buscador y botones */}
           <div className="flex flex-col md:flex-row md:items-center gap-4 mb-2">
             {/* Buscador */}
-            <div className="relative flex flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
-              <Input
-                aria-label="Buscar preguntas"
-                placeholder="Buscar preguntas..."
-                className="pl-10 bg-white dark:bg-slate-700 dark:text-slate-100  d focus:ring-0 focus:border-blue-300 pr-0"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-              />
-              <Button
-                variant="ghost"
-                className="absolute right-2 top-1/2 -translate-y-1/2 w-20 md:w-24 cursor-pointer"
-                onClick={handleSearch}
-              >
-                Buscar
-              </Button>
-            </div>
+            <SearchInput />
 
             {/* Botones de acción */}
             <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto justify-center">

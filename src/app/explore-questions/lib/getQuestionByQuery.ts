@@ -1,6 +1,40 @@
 import { supabase } from "@/lib/supabase";
-import { buildQuestionsQuery } from "./buildQuestionsQuery";
 
+/**
+ *
+ * This function fetches general questions with pagination
+ */
+export async function fetchGeneralQuestions(
+  page = 1,
+  pageSize = 10,
+  search?: string
+) {
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+
+  let query = supabase
+    .from("view_all_questions")
+    .select("*", { count: "exact" })
+    .range(from, to);
+
+  if (search) {
+    query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
+  }
+
+  const { data, count, error } = await query;
+
+  if (error) {
+    console.error("Error en home:", error);
+    throw new Error(error.message);
+  }
+
+  return { questions: data ?? [], total: count ?? 0 };
+}
+
+/**
+ *
+ *
+ */
 export async function getPopularQuestions(
   page = 1,
   pageSize = 10,
@@ -9,10 +43,13 @@ export async function getPopularQuestions(
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
-  let query = buildQuestionsQuery().range(from, to);
+  let query = supabase
+    .from("view_popular_questions")
+    .select(`*`)
+    .range(from, to);
 
   if (search) {
-    query = query.ilike("title", `%${search}%`);
+    query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
   }
 
   const { data, error } = await query;
@@ -21,12 +58,7 @@ export async function getPopularQuestions(
     console.error("Error al obtener preguntas populares:", error);
     return [];
   }
-
-  const sorted = (data ?? []).sort(
-    (a, b) => (b.question_likes?.length ?? 0) - (a.question_likes?.length ?? 0)
-  );
-
-  return sorted.slice(from, to);
+  return data ?? [];
 }
 
 export async function getUnansweredQuestions(
@@ -37,10 +69,13 @@ export async function getUnansweredQuestions(
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
-  let query = buildQuestionsQuery().range(from, to).eq("status", "pendiente")
+  let query = supabase
+    .from("view_unanswered_questions")
+    .select("*")
+    .range(from, to);
 
   if (search) {
-    query = query.ilike("title", `%${search}%`);
+    query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
   }
 
   const { data, error } = await query;
@@ -60,13 +95,14 @@ export async function getMyQuestions(page = 1, pageSize = 10, search?: string) {
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
-  let query = buildQuestionsQuery().range(from, to)
-    .eq("user_id", user.id)
-    .order("created_at", { ascending: false })
-    .range(from, to);
+  let query = supabase
+    .from("view_all_questions")
+    .select("*")
+    .range(from, to)
+    .eq("user_id", user.id);
 
   if (search) {
-    query = query.ilike("title", `%${search}%`);
+    query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
   }
 
   const { data, error } = await query;

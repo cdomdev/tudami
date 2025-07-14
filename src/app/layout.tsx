@@ -59,9 +59,6 @@ export default async function RootLayout({
 }>) {
 
   const user = await getServerUser()
-
-  console.log("usuaarios en el layout", user)
-
   return (
     <html
       lang="es"

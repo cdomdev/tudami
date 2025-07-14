@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Count } from "../components/CountQuestions";
-import { Post } from "@/interface/post";
+import {SchemaPost} from '../schema/schema.post'
 import { useSearchParams } from "next/navigation";
 import { getQuestionsByTag } from "../lib/listQuestionsByTags";
 import { SkeletonCard } from "../components/SkeletonPost";
@@ -9,7 +9,7 @@ import { CardPost } from "../components/Cards/CardPost";
 
 export default function PageTags() {
   const [loading, setLoading] = useState(false);
-  const [questions, setQuestions] = useState<Post[]>([]);
+  const [questions, setQuestions] = useState<SchemaPost[]>([]);
   const [total, setTotal] = useState(0);
   const searchParams = useSearchParams();
   const tag = searchParams.get("slug") || "";
@@ -28,6 +28,8 @@ export default function PageTags() {
     setLoading(false);
   }, [tag]);
 
+
+  
   return (
     <section className="py-8 mb-8 space-y-6">
       <Count count={total} />

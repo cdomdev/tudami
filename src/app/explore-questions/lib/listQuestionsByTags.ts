@@ -1,6 +1,4 @@
 import { supabase } from "@/lib/supabase";
-import { buildQuestionsQuery } from "./buildQuestionsQuery";
-
 export async function getQuestionsByTag(
   tagSlug: string,
   page = 1,
@@ -10,7 +8,7 @@ export async function getQuestionsByTag(
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
-  // Primero obtenemos el ID del tag por su slug
+  // Obtener el ID del tag por el slug
   const { data: tagData, error: tagError } = await supabase
     .from("tags")
     .select("id")
@@ -22,21 +20,25 @@ export async function getQuestionsByTag(
     return [];
   }
 
-  // Luego obtenemos las preguntas que tienen este tag
-  let query = buildQuestionsQuery().range(from, to).eq("question_tags.tag_id", tagData.id);
+  let query = supabase
+    .from("view_all_questions")
+    .select("*")
+    .contains("tag_ids", [tagData.id])
+    .range(from, to);
 
+  // Filtro adicional por búsqueda (en título o contenido)
   if (search) {
-    query = query.ilike("title", `%${search}%`);
+    query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
   }
 
-  const { data, error } = await query.range(from, to);
+  const { data, error } = await query;
 
   if (error) {
     console.error("Error al obtener preguntas por tag:", error);
     return [];
   }
 
-  // Ordenamos por popularidad (número de likes)
+  // Ordenar por cantidad de likes (ya que no hay .order por longitud en Supabase directamente)
   const sorted = (data ?? []).sort(
     (a, b) => (b.question_likes?.length ?? 0) - (a.question_likes?.length ?? 0)
   );

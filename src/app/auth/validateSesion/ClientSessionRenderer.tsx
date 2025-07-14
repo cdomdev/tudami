@@ -8,8 +8,6 @@ export function ClientSessionRenderer() {
 
   const { isLoggedIn } = useSession()
   
-  console.log(isLoggedIn)
-
   return isLoggedIn ? (
     <Profile />
   ) : (

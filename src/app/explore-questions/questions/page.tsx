@@ -7,19 +7,19 @@ import {
   getUnansweredQuestions,
   getMyQuestions,
 } from "../lib/getQuestionByQuery";
-import { Post } from "../../../interface/post";
+import { SchemaPost } from "../schema/schema.post";
 import { SkeletonCard } from "../components/SkeletonPost";
 import { CardPost } from "../components/Cards/CardPost";
 import { Count } from "../components/CountQuestions";
 import { Pagination } from "@/components/pagination";
 
 export default function QuestionPage({}: { params: { query: string } }) {
-  const [questions, setQuestions] = useState<Post[]>([]);
+  const [questions, setQuestions] = useState<SchemaPost[]>([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
   const searchParams = useSearchParams();
-  const search = searchParams.get("search") || undefined;
   const query = searchParams.get("query") || undefined;
+  const search = searchParams.get("search") || undefined;
 
   const pageSize = 10;
   const page = parseInt(searchParams.get("page") || "1", 10);
@@ -51,7 +51,6 @@ export default function QuestionPage({}: { params: { query: string } }) {
 
     fetchQuestions();
   }, [page, search, query]);
-
   return (
     <>
       <section className="py-8 mb-8 space-y-6">

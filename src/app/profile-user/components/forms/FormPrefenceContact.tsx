@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,16 +16,19 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { useSession } from "@/context/context.sesion";
 import { updateUserPreferences } from "../../lib/profile";
+import { Spinner } from "@/components/Spiner";
 
 const FormSchema = z.object({
-    public_profile: z.boolean().optional(),
-    allow_email: z.boolean(),
-    allow_whatsapp: z.boolean(),
+  public_profile: z.boolean().optional(),
+  allow_email: z.boolean(),
+  allow_whatsapp: z.boolean(),
 });
 
 export function FormPrefenceContact() {
-    const { user, updateUserPreferences: updateUserPreferencesContext } = useSession();
-  
+  const [loading, setLoading] = useState(false);
+  const { user, updateUserPreferences: updateUserPreferencesContext } =
+    useSession();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -47,6 +50,7 @@ export function FormPrefenceContact() {
   }, [user, form]);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setLoading(true);
     if (!user?.id) {
       toast.error("No se pudo identificar el usuario");
       return;
@@ -62,6 +66,7 @@ export function FormPrefenceContact() {
 
       if (error) {
         toast.error("Error al guardar las preferencias");
+        setLoading(false);
         return;
       }
 
@@ -73,9 +78,11 @@ export function FormPrefenceContact() {
       });
 
       toast.success("Preferencias guardadas correctamente");
+      setLoading(false);
     } catch (error) {
       console.error("Error al actualizar preferencias:", error);
       toast.error("Error al guardar las preferencias");
+      setLoading(false);
     }
   }
 
@@ -162,7 +169,16 @@ export function FormPrefenceContact() {
           </div>
         </div>
 
-        <Button type="submit">Guardar preferencias</Button>
+        <Button type="submit" disabled={loading}>
+          {loading ? (
+            <>
+              <Spinner className="w-4 h-4" />
+              Guardando...
+            </>
+          ) : (
+            "Guardar preferencias"
+          )}
+        </Button>
       </form>
     </Form>
   );

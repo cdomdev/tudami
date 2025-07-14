@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     siteName: "Tudami",
     images: [
       {
-        url: "/og-image.png", 
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Tudami App",
@@ -32,14 +32,10 @@ export const metadata: Metadata = {
   },
 };
 
-
-
 export default function AuthPage() {
-
-
   return (
-    <section className="grid h-full min-h-screen place-items-center grid-cols-1 lg:grid-cols-6 gap-1 ">
+    <div className="grid h-full min-h-screen place-items-center grid-cols-1 lg:grid-cols-8  ">
       <VisualLogin />
-    </section>
+    </div>
   );
 }

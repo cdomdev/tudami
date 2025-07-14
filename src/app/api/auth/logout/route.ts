@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { validateAuthFromCookie, handleApiError } from "@/lib/server-utils";
-import { supabaseServer } from "@/lib/supabase-server";
+import { supabaseServerClient } from "@/lib/supabase-server";
 
 /**
  * Cerrar sesión del usuario
@@ -14,10 +14,11 @@ export async function POST() {
     // 1. Intentar obtener el token para invalidar la sesión en Supabase
     try {
       const { token } = await validateAuthFromCookie();
+      const supabase = supabaseServerClient(token);
       
       // Invalidar la sesión en Supabase
-      await supabaseServer.auth.admin.signOut(token);
-      
+      await supabase.auth.admin.signOut(token);
+
       console.log('[AUTH] Sesión invalidada en Supabase');
     } catch {
       // Si no hay token válido, continuamos con la limpieza local

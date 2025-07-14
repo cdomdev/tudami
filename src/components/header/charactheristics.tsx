@@ -30,7 +30,7 @@ export function Characteristics() {
       title: "Respuestas entre aprendices",
       description:
         "Recibe orientación directa de personas que ya pasaron por lo mismo.",
-      href: "/explore-questions",
+      href: "/create-questions",
     },
     {
       title: "Ahorra tiempo",
