@@ -72,7 +72,7 @@ export function ExploresQuestionsByTagsLayout() {
           </TabsList>
         </Tabs>
       </nav>
-      <h3 className="pt-5 mb-1 text-center text-base lg:text-lg font-normal text-slate-700 dark:text-slate-200 ">
+      <h3 className="pt-5 mb-1 text-base lg:text-lg font-normal text-slate-700 dark:text-slate-200 ">
         Temas populares
       </h3>
       <div className="border-t border-dashed  dark:bg-gray-400 mb-4 dark:border-dashed " />
