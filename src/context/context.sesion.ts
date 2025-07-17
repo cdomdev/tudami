@@ -1,7 +1,5 @@
 import { create } from "zustand";
 
-
-
 export type Session = {
   id: string;
   email: string;
@@ -23,7 +21,7 @@ export type Session = {
     responses?: number;
     score?: string;
     achievement?: {
-      achievement_id?: string;
+      achievement_id?: string | null;
     };
   };
 };
@@ -32,55 +30,46 @@ type SessionState = {
   user: Session | null;
   isLoggedIn: boolean;
   isLoading: boolean;
-  isModalOpen: boolean;
   setUser: (user: Session) => void;
   updateUserPreferences: (
     preferences: Partial<
       Pick<
         Session,
-        "phone" | "bio" | "profile_public" | "allow_email" | "allow_whatsapp" | "country" | "city" | "department"
+        | "phone"
+        | "bio"
+        | "profile_public"
+        | "allow_email"
+        | "allow_whatsapp"
+        | "country"
+        | "city"
+        | "department"
       >
-    >,
+    >
   ) => void;
   clearUser: () => void;
   setLoading: (value: boolean) => void;
-  openModal: () => void;
-  closeModal: () => void;
 };
 
 export const useSession = create<SessionState>((set, get) => ({
-  // Estado inicial seguro para SSR
-  user: null, 
+  user: null,
   isLoggedIn: false,
   isLoading: true,
-  isModalOpen: false,
+
   setUser: (user) => {
     set({ user, isLoggedIn: true, isLoading: false });
-    if (typeof window !== "undefined") {
-      document.cookie = `session-data=${encodeURIComponent(
-        JSON.stringify({ user, isLoggedIn: true })
-      )}; path=/; SameSite=Strict; Secure=${location.protocol === "https:"}`;
-    }
   },
+
   updateUserPreferences: (preferences) => {
-    const state = get();
-    const updatedUser = state.user ? { ...state.user, ...preferences } : null;
+    const currentUser = get().user;
+    if (!currentUser) return;
+
+    const updatedUser = { ...currentUser, ...preferences };
     set({ user: updatedUser });
-    if (typeof window !== "undefined") {
-      document.cookie = `session-data=${encodeURIComponent(
-        JSON.stringify({ user: updatedUser, isLoggedIn: state.isLoggedIn })
-      )}; path=/; SameSite=Strict; Secure=${location.protocol === "https:"}`;
-    }
   },
+
   clearUser: () => {
     set({ user: null, isLoggedIn: false, isLoading: false });
-    if (typeof window !== "undefined") {
-      document.cookie = `session-data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    }
   },
+
   setLoading: (value) => set({ isLoading: value }),
-  openModal: () => set({ isModalOpen: true }),
-  closeModal: () => set({ isModalOpen: false }),
 }));
-
-

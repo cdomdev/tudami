@@ -39,7 +39,7 @@ export function SearchInput() {
       />
       <Button
         variant="ghost"
-        className="absolute right-2 top-1/2 -translate-y-1/2 w-20 md:w-24 cursor-pointer"
+        className="absolute right-2 top-1/2 -translate-y-1/2 w-20 md:w-24 cursor-pointer hover:bg-transparent dark:hover:bg-transparent"
         onClick={handleSearch}
       >
         Buscar
