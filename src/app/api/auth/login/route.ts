@@ -1,28 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseServerClient } from "@/lib/supabase-server";
 import { getUserProfileQuery } from "@/lib/query";
 import { cookies } from "next/headers";
 import { generateSimpleApprovalToken } from "@/utils/generateToken";
-
+import { supabaseAuth } from "@/utils/supabase/supabaseClient";
 /**
  * Ruta principal de autenticación - Maneja todo el flujo de inicio de sesión
  * Incluye: validación de sesión, generación de tokens, guardado en cookies, inicialización de usuario
  */
+
 export async function POST(request: NextRequest) {
   try {
-    // Validar configuración de Supabase antes de continuar
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      console.error("[AUTH] NEXT_PUBLIC_SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY no está configurada");
-      return NextResponse.json(
-        { error: "Error de configuración del servidor" },
-        { status: 500 }
-      );
-    }
-
     const body = await request.json();
     const { accessToken } = body;
-    const supabase = supabaseServerClient(accessToken);
-
+    const supabase = await supabaseAuth(accessToken);
     if (!accessToken) {
       return NextResponse.json(
         { error: "Token de acceso requerido" },
@@ -37,7 +27,6 @@ export async function POST(request: NextRequest) {
     } = await supabase.auth.getUser(accessToken);
 
     if (authError || !authUser) {
-      console.error("Error al validar token:", authError);
       return NextResponse.json(
         { error: "Token de acceso inválido" },
         { status: 401 }

@@ -32,7 +32,7 @@ export function VisualLogin() {
 
   return (
     <>
-      <main className="grid place-items-center border-r bg-custom-card w-full h-full p-4 lg:col-span-3">
+      <main className="grid place-items-center border-r bg-custom-card w-full h-full p-4 lg:col-span-3 mr-7">
         <div className="py-3 grid place-content max-w-sm ">
           <div className="text-center mb-6">
             <h1 className="text-2xl font-semibold text-slate-800 dark:text-white">
@@ -52,9 +52,9 @@ export function VisualLogin() {
               className="bg-blue-600 border border-gray-400 text-white px-4 py-2 rounded-md flex items-center justify-center gap-3 hover:bg-blue-500 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600 min-w-sm"
             >
               {loadingProvider === "google" ? (
-                  <Spinner className="w-5 h-5 text-white" />
+                <Spinner className="w-5 h-5 text-white" />
               ) : (
-                  <GoogleIcon className="w-5 h-5 text-white" />
+                <GoogleIcon className="w-5 h-5 text-white" />
               )}
               Google
             </button>

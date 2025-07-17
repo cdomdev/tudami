@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { useSession } from "@/context/context.sesion";
 import { Spinner } from "@/components/Spiner";
+import { toast } from "sonner";
 
 export default function AuthCallback() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function AuthCallback() {
 
         const { session } = data;
         const accessToken = session.access_token;
-
+        
         // 2. Llamar a la nueva API de autenticación unificada
         const response = await fetch("/api/auth/login", {
           method: "POST",
@@ -36,9 +37,10 @@ export default function AuthCallback() {
         });
 
         if (!response.ok) {
+          toast.error("Error de autenticación. Por favor, inténtalo de nuevo.");
           const errorData = await response.json();
           console.error("Error en autenticación:", errorData.error);
-          router.replace("/?error=auth_server_failed");
+          router.replace("/auth/login/?error=auth_server_failed");
           return;
         }
 

@@ -1,15 +1,16 @@
 import { cookies } from "next/headers";
-import { supabaseServerClient } from "@/lib/supabase-server";
-import { getUserProfileQuery } from "@/lib/query";
+import { supabaseClient } from "@/utils/supabase/supabaseClient";
 
 export async function getServerUser() {
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get("sb-access-token")?.value;
   if (!sessionToken) return null;
-  const supabaseServer = supabaseServerClient(sessionToken);
+  const supabase = await supabaseClient();
 
-  const { data: userData, error: userError } =
-    await supabaseServer.auth.getUser(sessionToken);
+  const { data: userData, error: userError } = await supabase.auth.getUser(
+    sessionToken
+  );
+
   if (userError || !userData?.user) return null;
 
   const { id, email, user_metadata, app_metadata } = userData.user;
@@ -17,11 +18,30 @@ export async function getServerUser() {
   const avatar_url = user_metadata?.picture || user_metadata.avatar_url || "";
   const provider = app_metadata?.provider || "email";
 
-  const { data: profileData, error: profileError } = await getUserProfileQuery(
-    id,
-    supabaseServer
-  );
-  if (profileError || !profileData) return null;
+  const { data: profileData, error } = await supabase
+    .from("users")
+    .select(
+      `
+      *,
+      user_profile_preferences (
+        profile_public,
+        allow_email,
+        allow_whatsapp
+      ),
+      questions(count),
+      question_comments(count),
+      user_achievements (
+        achievement_id
+      )
+    `
+    )
+    .eq("id", id)
+    .single();
+  if (error || !profileData) {
+    console.error("Error obteniendo perfil del usuario:", error);
+    return null;
+  }
+
 
   return {
     id,
@@ -35,7 +55,7 @@ export async function getServerUser() {
     department: profileData.department || "",
     city: profileData.city || "",
     approval_token: profileData.approval_token || null,
-    created_at: profileData.created_at || new Date().toISOString(),
+    created_at: profileData.created_at || null,
     profile_public:
       profileData.user_profile_preferences?.profile_public ?? true,
     allow_email: profileData.user_profile_preferences?.allow_email ?? false,
