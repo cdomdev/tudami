@@ -19,15 +19,11 @@ export function HeaderProfile({
             <Image
               src={avatar_url || "/logo.svg"}
               alt={full_name}
-              width={256}
-              height={256}
-              className="w-36 h-36 rounded-full border-4 border-blue-200 object-cover shadow-md"
+              width={200}
+              height={200}
+              className="w-28 h-28 rounded-full border-4 border-blue-200 object-cover shadow-md"
               loading="lazy"
             />
-
-            {/* <div className="absolute bottom-1 right-5 bg-blue-500 text-white p-1 rounded-full">
-              <BadgeCheck className="w-3 h-3" />
-            </div> */}
           </div>
 
           <div className="flex flex-col items-center">

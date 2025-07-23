@@ -19,7 +19,7 @@ export function CardsQuestionSaves({ id, questions }: SchemaQuestionsSaveds) {
       {/* Cabecera del autor */}
       <div className="flex items-start justify-between mb-3">
         <Link
-          href={`/view-profile-user/${questions?.user.full_name}?user_id=${questions.user?.id}&aprov=${approval_token}`}
+          href={`/view-profile-user/${questions.user?.full_name}?u_view_profile_p=${questions.user?.id}&aprov=${approval_token}`}
         >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center overflow-hidden">

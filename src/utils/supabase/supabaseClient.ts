@@ -37,8 +37,8 @@ export async function supabaseClient() {
       },
     },
     auth: {
-      autoRefreshToken: false,
-      persistSession: false,
+      autoRefreshToken: true,
+      persistSession: true,
     },
   });
 }

@@ -114,23 +114,6 @@ export function VisualLogin() {
             crecer.
           </p>
         </div>
-
-        {/* Contenido accesible para lectores de pantalla */}
-        <p className="sr-only">
-          Aprende con otros, comparte con todos. Únete a Tudami y conecta con
-          aprendices que quieren ayudarte a crecer.
-        </p>
-
-        <div className="absolute bottom-6 z-0 w-48 lg:w-64 opacity-90 dark:opacity-70">
-          <Image
-            src="/mascota-tudami.svg"
-            alt="Mascota Tudami"
-            width={300}
-            height={300}
-            className="w-full h-auto select-none pointer-events-none"
-            priority
-          />
-        </div>
       </aside>
     </>
   );

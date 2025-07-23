@@ -32,7 +32,7 @@ export function BodyListComment({ question_id }: { question_id: number }) {
           Cargando respuesta
         </p>
       ) : comments.length === 0 ? (
-        <p>Algo salio mal al intentar cargar las respuetas</p>
+        <p className="text-center">Esta pregunta no tiene respuestas aún.</p>
       ) : (
         comments.map((com, i) => (
           <div

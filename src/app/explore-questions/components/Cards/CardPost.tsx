@@ -33,7 +33,7 @@ export function CardPost({
     >
       {/* Cabecera del autor */}
       <div className="flex items-start justify-between mb-3">
-        <Link href={`/view-profile-user/${users.full_name}?user_id=${users?.id}&aprov=${approvalToken}`} className="flex items-center gap-3">
+        <Link href={`/view-profile-user/${users.full_name}?u_view_profile_p=${users?.id}&aprov=${approvalToken}`} className="flex items-center gap-3">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center overflow-hidden">
               {users?.avatar_url ? (
