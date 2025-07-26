@@ -16,7 +16,7 @@ export function supabaseServerClient(accessToken: string) {
       },
     },
     auth: {
-      autoRefreshToken: false,
+      autoRefreshToken: true,
       persistSession: false,
     },
   });

@@ -20,12 +20,12 @@ import {
   ToolbarSeparator,
 } from "@/app/create-questions/components/tiptap-ui-primitive/toolbar";
 import { MarkButton } from "@/app/create-questions/components/tiptap-ui/mark-button";
-import { LinkPopover } from "@/app/create-questions/components/tiptap-ui/link-popover";
-import { ListDropdownMenu } from "@/app/create-questions/components/tiptap-ui/list-dropdown-menu";
 import { TextAlignButton } from "@/app/create-questions/components/tiptap-ui/text-align-button";
 import { UndoRedoButton } from "@/app/create-questions/components/tiptap-ui/undo-redo-button";
-import { CodeBlockButton } from "@/app/create-questions/components/tiptap-ui/code-block-button";
-import { BlockQuoteButton } from "@/app/create-questions/components/tiptap-ui/blockquote-button";
+// import { LinkPopover } from "@/app/create-questions/components/tiptap-ui/link-popover";
+// import { ListDropdownMenu } from "@/app/create-questions/components/tiptap-ui/list-dropdown-menu";
+// import { BlockQuoteButton } from "@/app/create-questions/components/tiptap-ui/blockquote-button";
+// import { CodeBlockButton } from "@/app/create-questions/components/tiptap-ui/code-block-button";
 
 export function SimpleEditor({ onChange }: { onChange?: (html: string) => void }) {
   const editor = useEditor({
@@ -78,20 +78,20 @@ export function SimpleEditor({ onChange }: { onChange?: (html: string) => void }
 
         <ToolbarSeparator />
 
-        <ToolbarGroup>
+        {/* <ToolbarGroup>
           <LinkPopover />
-        </ToolbarGroup>
+        </ToolbarGroup> */}
 
         <ToolbarSeparator />
 
-        <ToolbarGroup>
+        {/* <ToolbarGroup>
           <ListDropdownMenu types={[
             // "bulletList", 
             // "orderedList",
             "taskList"]} />
           <BlockQuoteButton />
           <CodeBlockButton />
-        </ToolbarGroup>
+        </ToolbarGroup> */}
 
         <ToolbarSeparator />
 
@@ -105,7 +105,7 @@ export function SimpleEditor({ onChange }: { onChange?: (html: string) => void }
 
       <EditorContent
         editor={editor}
-        className="border p-2 rounded-sm"
+        className="border p-2 rounded-sm bg-slate-50 dark:bg-white text-black focus:outline-none"
       />
     </EditorContext.Provider>
   );

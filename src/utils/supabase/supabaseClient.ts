@@ -29,8 +29,13 @@ export async function supabaseAuth(accessToken: string) {
 export async function supabaseClient() {
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get("sb-access-token")?.value;
+  const refreshToken = cookieStore.get("sb-refresh-token")?.value;
 
-  return createClient(supabaseUrl, supabaseAnonKey, {
+  if (!sessionToken) {
+    throw new Error("No se encontró token de sesión");
+  }
+
+  const client = createClient(supabaseUrl, supabaseAnonKey, {
     global: {
       headers: {
         Authorization: `Bearer ${sessionToken}`,
@@ -41,4 +46,16 @@ export async function supabaseClient() {
       persistSession: true,
     },
   });
+
+  // Si hay un token de refresco disponible, intentar usarlo en caso de problemas
+  if (refreshToken) {
+    client.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'TOKEN_REFRESHED' && session) {
+        // Aquí podrías actualizar las cookies con los nuevos tokens
+        console.log("Token refrescado exitosamente");
+      }
+    });
+  }
+
+  return client;
 }
