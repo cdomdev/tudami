@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getUserProfileQuery } from "@/lib/query";
 import { cookies } from "next/headers";
-import { generateSimpleApprovalToken } from "@/utils/generateToken";
+import { generateApprovalToken } from "@/app/api/auth/utils/generateTokenAprov";
 import { supabaseAuth } from "@/utils/supabase/supabaseClient";
 /**
  * Ruta principal de autenticación - Maneja todo el flujo de inicio de sesión
@@ -11,7 +11,7 @@ import { supabaseAuth } from "@/utils/supabase/supabaseClient";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { accessToken } = body;
+    const { accessToken, refreshToken } = body;
     const supabase = await supabaseAuth(accessToken);
     if (!accessToken) {
       return NextResponse.json(
@@ -41,7 +41,8 @@ export async function POST(request: NextRequest) {
     const provider = app_metadata?.provider || "email";
 
     // 3. Generar token de aprobación
-    const approvalToken = generateSimpleApprovalToken(id);
+    const approvalToken = generateApprovalToken(id);
+
 
     // 4. Insertar/actualizar usuario en la base de datos
     const { error: upsertError, data: upsertedUser } = await supabase
@@ -87,6 +88,12 @@ export async function POST(request: NextRequest) {
       maxAge: 60 * 60 * 24,
     });
 
+    // Cookie para refresh token (7 días)
+    cookieStore.set("sb-refresh-token", refreshToken, {
+      ...cookieOptions,
+      // 7 días
+      maxAge: 60 * 60 * 24 * 7,
+    });
     // Cookie para el token de aprobación (1 día)
     cookieStore.set("approval_token", approvalToken, {
       ...cookieOptions,

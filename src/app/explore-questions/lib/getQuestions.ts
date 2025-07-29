@@ -124,15 +124,17 @@ export async function getQuestionsById(
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
+  console.log("ID de la pregunta ene la funcion getQuestionBy-->:", id);
+
   let query = supabase
     .from("questions")
     .select(
       `
-    id,
+      id,
       title,
       content,
       created_at,
-      user: user_id (
+      users: user_id (
         id,
         full_name,
         avatar_url
@@ -150,6 +152,7 @@ export async function getQuestionsById(
       question_comments (
         id
       )
+     
     `
     )
     .range(from, to)
@@ -166,5 +169,58 @@ export async function getQuestionsById(
     return [];
   }
 
-  return data ?? [];
+  // Asegurarnos de que siempre devolvemos un array para que sea compatible con SchemaPost[]
+  return data || [];
+}
+
+/**
+ * This function fetches questions by a specific tags selected by the user.
+ * It retrieves the tag ID based on the slug and then fetches questions that contain that tag
+ */
+
+export async function getQuestionsByTag(
+  tagSlug: string,
+  page = 1,
+  pageSize = 10,
+  search?: string
+) {
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+
+  // Obtener el ID del tag por el slug
+  const { data: tagData, error: tagError } = await supabase
+    .from("tags")
+    .select("id")
+    .eq("slug", tagSlug)
+    .single();
+
+  if (tagError || !tagData) {
+    console.error("Error al obtener el tag:", tagError);
+    return [];
+  }
+
+  let query = supabase
+    .from("view_all_questions")
+    .select("*")
+    .contains("tag_ids", [tagData.id])
+    .range(from, to);
+
+  // Filtro adicional por búsqueda (en título o contenido)
+  if (search) {
+    query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error("Error al obtener preguntas por tag:", error);
+    return [];
+  }
+
+  // Ordenar por cantidad de likes (ya que no hay .order por longitud en Supabase directamente)
+  const sorted = (data ?? []).sort(
+    (a, b) => (b.question_likes?.length ?? 0) - (a.question_likes?.length ?? 0)
+  );
+
+  return sorted;
 }

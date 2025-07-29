@@ -29,7 +29,7 @@ export async function supabaseAuth(accessToken: string) {
 export async function supabaseClient() {
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get("sb-access-token")?.value;
-  const refreshToken = cookieStore.get("sb-refresh-token")?.value;
+  // const refreshToken = cookieStore.get("sb-refresh-token")?.value;
 
   if (!sessionToken) {
     throw new Error("No se encontró token de sesión");
@@ -44,18 +44,22 @@ export async function supabaseClient() {
     auth: {
       autoRefreshToken: true,
       persistSession: true,
+      detectSessionInUrl: false,
     },
   });
 
-  // Si hay un token de refresco disponible, intentar usarlo en caso de problemas
-  if (refreshToken) {
-    client.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'TOKEN_REFRESHED' && session) {
-        // Aquí podrías actualizar las cookies con los nuevos tokens
-        console.log("Token refrescado exitosamente");
-      }
-    });
-  }
+  // Agregar un interceptor personalizado para manejar errores de sesión
+  client.auth.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_OUT') {
+      console.log("Usuario desconectado o sesión terminada");
+    } else if (event === 'TOKEN_REFRESHED' && session) {
+      console.log("Token refrescado exitosamente");
+      // Aquí podrías actualizar las cookies en un handler de servidor
+    }
+  });
+
+  // No necesitamos esta parte porque ya tenemos un listener arriba
+  // Esta línea se puede eliminar
 
   return client;
 }

@@ -6,8 +6,8 @@ import {
   getPopularQuestions,
   getUnansweredQuestions,
   getMyQuestions,
-  getQuestionsById
-} from "../lib/getQuestionByQuery";
+  getQuestionsById,
+} from "../lib/getQuestions";
 import { SchemaPost } from "../schema/schema.post";
 import { SkeletonCard } from "../components/SkeletonPost";
 import { CardPost } from "../components/Cards/CardPost";
@@ -21,11 +21,11 @@ export default function QuestionPage({}: { params: { query: string } }) {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || undefined;
   const search = searchParams.get("search") || undefined;
-  const id = searchParams.get("redirect_id") || undefined;
-
+  const id = searchParams.get("redirect_id_question") || undefined;
 
   const pageSize = 10;
   const page = parseInt(searchParams.get("page") || "1", 10);
+
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -58,12 +58,14 @@ export default function QuestionPage({}: { params: { query: string } }) {
     fetchQuestions();
   }, [page, search, query, id]);
 
+
   console.log("Questions fetched:", questions);
+
   
   return (
     <>
-      <section className="py-8 mb-8 space-y-6">
-        <Count count={questions.length} />
+      <Count count={questions.length} />
+      <section className="py-2 mb-8 space-y-6">
         {loading ? (
           <SkeletonCard />
         ) : questions.length === 0 ? (

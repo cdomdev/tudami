@@ -22,9 +22,9 @@ export function CardPost({
   const likeCount = question_likes ? question_likes.length : 0;
   const commentCount = question_comments ? question_comments.length : 0;
 
-  const { user } = useSession();
+  const { user: dataUserSesion } = useSession();
 
-  const approvalToken = user?.approval_token || "";
+  const approvalToken = dataUserSesion?.approval_token || "";
 
   return (
     <article
@@ -33,10 +33,13 @@ export function CardPost({
     >
       {/* Cabecera del autor */}
       <div className="flex items-start justify-between mb-3">
-        <Link href={`/view-profile-user/${users.full_name}?u_view_profile_p=${users?.id}&aprov=${approvalToken}`} className="flex items-center gap-3">
+        <Link
+          href={`/view-profile-user/${users.full_name}?u_view_profile_p=${users.id}&aprov=${approvalToken}`}
+          className="flex items-center gap-3"
+        >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center overflow-hidden">
-              {users?.avatar_url ? (
+              {users.avatar_url ? (
                 <Image
                   src={users.avatar_url}
                   alt={users.full_name}
@@ -52,7 +55,7 @@ export function CardPost({
             <div>
               <p className="font-medium">{users?.full_name || "Anónimo"}</p>
               <p className="text-xs text-muted-foreground">
-                {formatTimestamp(created_at.toString())}
+                Hace {formatTimestamp(created_at.toString())}
               </p>
             </div>
           </div>
@@ -76,13 +79,18 @@ export function CardPost({
       {question_tags && question_tags.length > 0 && (
         <div className="flex flex-wrap gap-2 my-4">
           {question_tags.map((questionTag) => (
-            <span
+            <Link
+              href={`/explore-questions/tags?slug=${questionTag.tag.slug}`}
               key={questionTag.tag.id}
-              className={`text-xs px-2.5 py-0.5 rounded-full  text-gray-50 font-normal`}
-              style={{ backgroundColor: `${questionTag.tag.color}` }}
             >
-              {questionTag.tag.name}
-            </span>
+              <span
+                key={questionTag.tag.id}
+                className={`text-xs px-2.5 py-0.5 rounded-full  dark:text-gray-50 font-normal hover:opacity-80 transition`}
+                style={{ border: `1px solid ${questionTag.tag.color}` }}
+              >
+                {questionTag.tag.name}
+              </span>
+            </Link>
           ))}
         </div>
       )}

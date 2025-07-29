@@ -26,20 +26,20 @@ export function CardQuestionUser({
 }: CardQuestionUserProps) {
   const commentsCount = question_comments?.[0]?.count ?? 0;
 
+  const commentLabel = commentsCount === 1 ? "comentario" : "comentarios";
+
   return (
-    <div className="border-b border-gray-200 dark:border-gray-700 relative mx-10 grid before:absolute before:left-[-36px] before:block before:h-full before:border-l-2 before:border-black/20 dark:before:border-white/15 before:content-[''] md:grid-cols-5 md:gap-1 md:space-x-4">
+    <div className="border-b  border-gray-200 dark:border-gray-700 relative  grid before:absolute before:left-[-15px] before:block before:h-full before:border-l-2 before:border-black/20 dark:before:border-white/15 before:content-[''] md:grid-cols-5 md:gap-1 md:space-x-4">
       <div className="relative pb-5 md:col-span-2">
         <div className="sticky top-0">
-          <span className="text-yellow-400 -left-[42px] absolute rounded-full text-5xl">
+          <span className="text-sky-500 -left-[21px] absolute rounded-full text-5xl ">
             •
           </span>
           <Link
-            href={`/explore-questions/questions?query=redirect&title=${title
-              .replace(/\s+/g, "-")
-              .toLowerCase()}&redirect_id=${id}&${new Date().getTime()}`}
+            href={`/explore-questions/questions?query=redirect&redirect_id_question=${id}`}
             className="text-lg font-semibold text-gray-800 dark:text-white hover:underline"
           >
-            <h3 className="text-base leading-4 text-black text-pretty">
+            <h3 className="text-base leading-4 text-black dark:text-foreground text-pretty">
               {title}
             </h3>
           </Link>
@@ -50,6 +50,9 @@ export function CardQuestionUser({
         </div>
       </div>
       <div className="md:col-span-3 flex flex-col justify-start items-start">
+        <h4 className="text-sm text-gray-600 dark:text-white">
+          Etiquetas:
+        </h4>
         {question_tags?.length > 0 && (
           <div className="flex gap-2 ">
             {question_tags.map(({ tag }) => (
@@ -67,11 +70,11 @@ export function CardQuestionUser({
           </div>
         )}
 
-        <div className="flex items-center justify-start gap-x-10 mt-2">
+        <div className="flex items-center justify-start gap-x-10 my-3 ">
           <Link
             href="#"
             role="link"
-            className="inline-flex items-center text-base font-medium text-yellow-500 dark:text-yellow-200 dark:hover:text-yellow-300 hover:text-yellow-700"
+            className="inline-flex items-center text-base font-medium text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-700 transition-colors"
           >
             Ver pregunta
             <svg
@@ -91,7 +94,7 @@ export function CardQuestionUser({
             </svg>
           </Link>
           <h4 className="font-semibold text-sm text-gray-600 dark:text-white">
-            {commentsCount} comentarios
+            {commentsCount} {commentLabel}
           </h4>
         </div>
       </div>

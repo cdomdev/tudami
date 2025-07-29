@@ -5,11 +5,11 @@ export function Count({ count }: { count: number }) {
     <span
       className={`${
         count > 0 ? "block" : "hidden"
-      } text-muted-foreground w-full   `}
+      } flex text-muted-foreground items-center`}
     >
-      <strong className="text-foreground mr-2 pl-5 text-base">
-        {count}{" "}
-      </strong>{" "}
+      <strong className="text-foreground mr-1 pl-5 text-base">
+        {count}
+      </strong>
       {textForMuchQuestions}
     </span>
   );

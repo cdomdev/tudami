@@ -26,8 +26,8 @@ export async function POST() {
     }
 
     // 2. Limpiar todas las cookies relacionadas con la autenticación
-    const cookiesToClear = ['sb-access-token', 'approval_token'];
-    
+    const cookiesToClear = ['sb-access-token', 'approval_token', 'sb-refresh-token'];
+
     cookiesToClear.forEach(cookieName => {
       cookieStore.set(cookieName, '', {
         httpOnly: true,

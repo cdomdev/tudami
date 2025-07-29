@@ -26,14 +26,15 @@ export default function AuthCallback() {
 
         const { session } = data;
         const accessToken = session.access_token;
-        
+        const refreshToken = session.refresh_token;
+
         // 2. Llamar a la nueva API de autenticación unificada
         const response = await fetch("/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ accessToken }),
+          body: JSON.stringify({ accessToken, refreshToken }),
         });
 
         if (!response.ok) {
@@ -55,7 +56,7 @@ export default function AuthCallback() {
 
       } catch (error) {
         console.error("Error inesperado en autenticación:", error);
-        router.replace("/?error=unexpected_error");
+        router.replace("/auth/login/?error=unexpected_error");
       }
     };
 

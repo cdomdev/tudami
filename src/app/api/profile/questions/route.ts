@@ -7,11 +7,9 @@ export async function GET(request: NextRequest) {
   
   try {
     const supabase = await supabaseClient();
-    console.log("Obteniendo preguntas con id:", id);
 
   //   obtener todasa las preguntas de un usuario
   if (!id) {
-    console.error("ID de pregunta no proporcionado");
     return new Response(
       JSON.stringify({ error: "ID de pregunta no proporcionado" }),
       {

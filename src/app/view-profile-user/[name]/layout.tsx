@@ -158,7 +158,7 @@ export default function LayoutClient({
           </div>
         </div>
       </section>
-      <section className="mt-3 grid grid-cols-1 md:flex px-6 py-4 gap-6">
+      <section className="mt-3 grid grid-cols-1 gap-x-10 md:flex px-6 py-4 gap-6">
         <aside className="min-w-28 ">
           <ul className="flex md:flex-col ">
             {listItems.map((item) => (
@@ -173,7 +173,7 @@ export default function LayoutClient({
             ))}
           </ul>
         </aside>
-        <main className="border-l w-full p-2">{children}</main>
+        <main className="border-l w-full p-2 pl-10">{children}</main>
       </section>
     </>
   );

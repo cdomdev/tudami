@@ -8,6 +8,7 @@ import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { getServerUser } from "@/utils/supabase/sesion";
 import { Session } from "@/context/context.sesion";
+import { SessionGuard } from "@/components/SessionGuard";
 
 const balooFont = Baloo_2({
   variable: "--font-baloo",
@@ -73,10 +74,13 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <SessionHydrator user={user as Session | null} />
-          <NavBar />
-          <main className="w-screen min-h-dvh ">{children}</main>
-          <Toaster position="top-center" theme="system" />
-          <Footer />
+          {/* El SessionGuard se encarga de manejar la renovación automática de sesiones */}
+          <SessionGuard>
+            <NavBar />
+            <main className="w-screen min-h-dvh ">{children}</main>
+            <Toaster position="top-center" theme="system" />
+            <Footer />
+          </SessionGuard>
         </ThemeProvider>
       </body>
     </html>
