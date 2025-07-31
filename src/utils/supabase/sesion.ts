@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
-import { supabaseClient } from "@/utils/supabase/supabaseClient";
+import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 
 export async function getServerUser() {
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get("sb-access-token")?.value;
   if (!sessionToken) return null;
-  const supabase = await supabaseClient();
+  const supabase = await supabaseServerClient();
 
   const { data: userData, error: userError } = await supabase.auth.getUser(
     sessionToken

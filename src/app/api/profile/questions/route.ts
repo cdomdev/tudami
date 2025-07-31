@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseClient } from "@/utils/supabase/supabaseClient";
+import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const id = url.searchParams.get("id");
   
   try {
-    const supabase = await supabaseClient();
+    const supabase = await supabaseServerClient();
 
   //   obtener todasa las preguntas de un usuario
   if (!id) {

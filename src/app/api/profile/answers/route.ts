@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { supabaseClient } from "@/utils/supabase/supabaseClient";
+import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const userId = searchParams.get("u_view_profile_p");
   const approval = searchParams.get("aprov");
-  const supabase = await supabaseClient();
+  const supabase = await supabaseServerClient();
   try {
     if (!userId) {
       return NextResponse.json(

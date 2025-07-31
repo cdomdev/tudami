@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { supabaseServerClient } from "@/lib/supabase-server";
+import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 
 export async function POST() {
   try {
@@ -13,20 +13,39 @@ export async function POST() {
         { status: 401 }
       );
     }
+    const supabase = await supabaseServerClient();
 
-    // Creamos un cliente usando nuestro utility
-    const dummyToken = "placeholder";
-    const supabase = supabaseServerClient(dummyToken);
-
+    // Intentamos refrescar la sesión con el token proporcionado
     const { data, error } = await supabase.auth.refreshSession({
       refresh_token: refreshToken,
     });
 
     if (error) {
       console.error("Error al refrescar sesión:", error);
+      
+      // Si el error es por token ya usado, limpiamos las cookies
+      // para evitar futuros intentos con el mismo token inválido
+      if (error.message?.includes("Already Used") || 
+          error.code === 'refresh_token_already_used') {
+        cookieStore.delete("sb-refresh-token");
+        cookieStore.delete("sb-access-token");
+        cookieStore.delete("approval_token");
+        
+        return NextResponse.json(
+          { 
+            error: "El token de refresco ya ha sido utilizado. Por favor, inicie sesión nuevamente.", 
+            code: "SESSION_EXPIRED",
+            details: error.message 
+          },
+          { status: 401 }
+        );
+      }
+      
+      // Para otros errores
       cookieStore.delete("sb-refresh-token");
       cookieStore.delete("sb-access-token");
       cookieStore.delete("approval_token");
+      
       return NextResponse.json(
         { error: "Error al refrescar la sesión", details: error.message },
         { status: 401 }

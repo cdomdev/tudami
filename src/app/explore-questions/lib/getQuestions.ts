@@ -1,175 +1,131 @@
-import { supabase } from "@/lib/supabase";
 
 /**
  *
  * This function fetches general questions with pagination
  */
-export async function fetchGeneralQuestions(
+export async function fetchGeneralQuestionsApi(
   page = 1,
   pageSize = 10,
   search?: string
 ) {
-  const from = (page - 1) * pageSize;
-  const to = from + pageSize - 1;
+  const url = `/api/explore-questions/general-questions?page=${page}&pageSize=${pageSize}${
+    search ? `&search=${search}` : ""
+  }`;
 
-  let query = supabase
-    .from("view_all_questions")
-    .select("*", { count: "exact" })
-    .range(from, to);
+  const data = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-  if (search) {
-    query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
+  if (!data.ok) {
+    console.error("Error fetching general questions:", data.statusText);
+    throw new Error("Failed to fetch general questions");
   }
 
-  const { data, count, error } = await query;
+  const { questions, total } = await data.json();
+  console.log("Fetching general questions from API:", { questions, total });
 
-  if (error) {
-    console.error("Error en home:", error);
-    throw new Error(error.message);
-  }
-
-  return { questions: data ?? [], total: count ?? 0 };
+  return { questions, total };
 }
 
-/**
- *
- *
- */
-export async function getPopularQuestions(
+export async function getPopularQuestionsApi(
   page = 1,
   pageSize = 10,
   search?: string
 ) {
-  const from = (page - 1) * pageSize;
-  const to = from + pageSize - 1;
+  const url = `/api/explore-questions/popular-questions?page=${page}&pageSize=${pageSize}${
+    search ? `&search=${search}` : ""
+  }`;
 
-  let query = supabase
-    .from("view_popular_questions")
-    .select(`*`)
-    .range(from, to);
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-  if (search) {
-    query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
+  if (!res.ok) {
+    console.error("Error fetching popular questions:", res.statusText);
+    throw new Error("Failed to fetch popular questions");
   }
 
-  const { data, error } = await query;
+  const data = await res.json();
 
-  if (error) {
-    console.error("Error al obtener preguntas populares:", error);
-    return [];
-  }
-  return data ?? [];
+  return data || [];
 }
 
-export async function getUnansweredQuestions(
+export async function getUnansweredQuestionsApi(
   page = 1,
   pageSize = 10,
   search?: string
 ) {
-  const from = (page - 1) * pageSize;
-  const to = from + pageSize - 1;
-
-  let query = supabase
-    .from("view_unanswered_questions")
-    .select("*")
-    .range(from, to);
-
-  if (search) {
-    query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
+  const url = `/api/explore-questions/unanswer-questions?page=${page}&pageSize=${pageSize}${
+    search ? `&search=${search}` : ""
+  }`;
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!res.ok) {
+    console.error("Error fetching unanswered questions:", res.statusText);
+    throw new Error("Failed to fetch unanswered questions");
   }
-
-  const { data, error } = await query;
-
-  if (error) {
-    console.error("Error al obtener preguntas sin responder:", error);
-    return [];
-  }
+  const data = await res.json();
 
   return data ?? [];
 }
 
-export async function getMyQuestions(page = 1, pageSize = 10, search?: string) {
-  const user = (await supabase.auth.getUser()).data?.user;
-  if (!user) return [];
+export async function getMyQuestionsApi(
+  page = 1,
+  pageSize = 10,
+  search?: string
+) {
+  const url = `/api/explore-questions/my-questions?page=${page}&pageSize=${pageSize}${
+    search ? `&search=${search}` : ""
+  }`;
 
-  const from = (page - 1) * pageSize;
-  const to = from + pageSize - 1;
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-  let query = supabase
-    .from("view_all_questions")
-    .select("*")
-    .range(from, to)
-    .eq("user_id", user.id);
-
-  if (search) {
-    query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
+  if (!res.ok) {
+    console.error("Error fetching my questions:", res.statusText);
+    throw new Error("Failed to fetch my questions");
   }
 
-  const { data, error } = await query;
-
-  if (error) {
-    console.error("Error al obtener preguntas del usuario:", error);
-    return [];
-  }
+  const data = await res.json();
 
   return data ?? [];
 }
 
-export async function getQuestionsById(
+export async function getQuestionsByIdApi(
   page = 1,
   pageSize = 10,
   search?: string,
   id?: string
 ) {
-  const from = (page - 1) * pageSize;
-  const to = from + pageSize - 1;
-
-  console.log("ID de la pregunta ene la funcion getQuestionBy-->:", id);
-
-  let query = supabase
-    .from("questions")
-    .select(
-      `
-      id,
-      title,
-      content,
-      created_at,
-      users: user_id (
-        id,
-        full_name,
-        avatar_url
-      ),
-      question_tags (
-        tag:tags (
-          id,
-          name,
-          color
-        )
-      ),
-      question_likes (
-        id
-      ),
-      question_comments (
-        id
-      )
-     
-    `
-    )
-    .range(from, to)
-    .eq("id", id);
-
-  if (search) {
-    query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
+  const url = `/api/explore-questions/question-by-id?id=${id}&page=${page}&pageSize=${pageSize}${
+    search ? `&search=${search}` : ""
+  }`;
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!res.ok) {
+    console.error("Error fetching question by ID:", res.statusText);
+    throw new Error("Failed to fetch question by ID");
   }
 
-  const { data, error } = await query;
-
-  if (error) {
-    console.error("Error al obtener preguntas del usuario:", error);
-    return [];
-  }
-
-  // Asegurarnos de que siempre devolvemos un array para que sea compatible con SchemaPost[]
+  const data = await res.json();
   return data || [];
 }
 
@@ -178,49 +134,30 @@ export async function getQuestionsById(
  * It retrieves the tag ID based on the slug and then fetches questions that contain that tag
  */
 
-export async function getQuestionsByTag(
+export async function getQuestionsByTagApi(
   tagSlug: string,
   page = 1,
   pageSize = 10,
   search?: string
 ) {
-  const from = (page - 1) * pageSize;
-  const to = from + pageSize - 1;
+  const url = `/api/explore-questions/questions-by-tag?slug=${tagSlug}&page=${page}&pageSize=${pageSize}${
+    search ? `&search=${search}` : ""
+  }`;
 
-  // Obtener el ID del tag por el slug
-  const { data: tagData, error: tagError } = await supabase
-    .from("tags")
-    .select("id")
-    .eq("slug", tagSlug)
-    .single();
 
-  if (tagError || !tagData) {
-    console.error("Error al obtener el tag:", tagError);
-    return [];
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    console.error("Error fetching questions by tag:", res.statusText);
+    throw new Error("Failed to fetch questions by tag");
   }
+  const data = await res.json();
+  console.log("Fetching questions by tag from API:", data);
 
-  let query = supabase
-    .from("view_all_questions")
-    .select("*")
-    .contains("tag_ids", [tagData.id])
-    .range(from, to);
-
-  // Filtro adicional por búsqueda (en título o contenido)
-  if (search) {
-    query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
-  }
-
-  const { data, error } = await query;
-
-  if (error) {
-    console.error("Error al obtener preguntas por tag:", error);
-    return [];
-  }
-
-  // Ordenar por cantidad de likes (ya que no hay .order por longitud en Supabase directamente)
-  const sorted = (data ?? []).sort(
-    (a, b) => (b.question_likes?.length ?? 0) - (a.question_likes?.length ?? 0)
-  );
-
-  return sorted;
+  return data || [];
 }

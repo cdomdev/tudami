@@ -38,4 +38,13 @@ export const SchemaPostSchema = z.object({
   question_likes: z.array(QuestionSchema),
   question_comments: z.array(QuestionSchema),
 });
+
 export type SchemaPost = z.infer<typeof SchemaPostSchema>;
+
+
+export const SchemaPostResponse = z.object({
+  data: z.array(SchemaPostSchema),
+  count: z.number(),
+});
+
+export type SchemaPostResponse = z.infer<typeof SchemaPostResponse>;

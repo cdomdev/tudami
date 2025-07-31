@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
-  getPopularQuestions,
-  getUnansweredQuestions,
-  getMyQuestions,
-  getQuestionsById,
+  getPopularQuestionsApi,
+  getUnansweredQuestionsApi,
+  getMyQuestionsApi,
+  getQuestionsByIdApi,
 } from "../lib/getQuestions";
-import { SchemaPost } from "../schema/schema.post";
+import { SchemaPost  } from "../schema/schema.post";
 import { SkeletonCard } from "../components/SkeletonPost";
 import { CardPost } from "../components/Cards/CardPost";
 import { Count } from "../components/CountQuestions";
@@ -26,7 +26,6 @@ export default function QuestionPage({}: { params: { query: string } }) {
   const pageSize = 10;
   const page = parseInt(searchParams.get("page") || "1", 10);
 
-
   useEffect(() => {
     const fetchQuestions = async () => {
       setLoading(true);
@@ -35,16 +34,16 @@ export default function QuestionPage({}: { params: { query: string } }) {
 
       switch (query) {
         case "popular":
-          data = await getPopularQuestions(page, pageSize, search);
+          data = await getPopularQuestionsApi(page, pageSize, search);
           break;
         case "unanswered":
-          data = await getUnansweredQuestions(page, pageSize, search);
+          data = await getUnansweredQuestionsApi(page, pageSize, search);
           break;
         case "redirect":
-          data = await getQuestionsById(page, pageSize, search, id);
+          data = await getQuestionsByIdApi(page, pageSize, search, id);
           break;
         case "my":
-          data = await getMyQuestions(page, pageSize, search);
+          data = await getMyQuestionsApi(page, pageSize, search);
           break;
         default:
           data = [];
@@ -58,10 +57,8 @@ export default function QuestionPage({}: { params: { query: string } }) {
     fetchQuestions();
   }, [page, search, query, id]);
 
-
   console.log("Questions fetched:", questions);
 
-  
   return (
     <>
       <Count count={questions.length} />

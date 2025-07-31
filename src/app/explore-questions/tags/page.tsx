@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import { Count } from "../components/CountQuestions";
 import { SchemaPost } from "../schema/schema.post";
 import { useRouter, useSearchParams } from "next/navigation";
-import { getQuestionsByTag } from "../lib/getQuestions";
+import { getQuestionsByTagApi } from "../lib/getQuestions";
 import { SkeletonCard } from "../components/SkeletonPost";
 import { CardPost } from "../components/Cards/CardPost";
-import { X } from "lucide-react";
+import { Plus, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function PageTags() {
   const [loading, setLoading] = useState(false);
@@ -23,7 +25,7 @@ export default function PageTags() {
   useEffect(() => {
     setLoading(true);
     async function fetchQuestions() {
-      const data = await getQuestionsByTag(tag, 1, 10);
+      const data = await getQuestionsByTagApi(tag, 1, 10);
       if (data) {
         setQuestions(data);
         setTotal(data.length);
@@ -55,10 +57,21 @@ export default function PageTags() {
         {loading ? (
           <SkeletonCard />
         ) : questions.length === 0 ? (
-          <p className="text-center text-accent-foreground block bg-accent p-4 rounded-md">
-            No se encontraron preguntas relacionadas con:{" "}
-            <strong className="ml-2">{tag}</strong>
-          </p>
+          <div className="flex flex-col p-10">
+            <p className="text-center text-accent-foreground block rounded-md">
+              Algo salio mal. No se encontraron preguntas relacionadas al tema
+              seleccionado.
+            </p>
+            <strong className="text-center text-lg mb-5 bg-gradient-to-bl from-indigo-500 to-sky-300 text-transparent bg-clip-text">
+              ¡Sé el primero en preguntar!
+            </strong>
+            <Button asChild className="mx-auto group w-fit">
+              <Link href="/create-questions" className="flex items-center">
+                <Plus className="mr-2 h-4 w-4 group-hover:rotate-90 transition-transform" />
+                Nueva pregunta
+              </Link>
+            </Button>
+          </div>
         ) : (
           questions.map((question) => (
             <CardPost key={question.id} {...question} />

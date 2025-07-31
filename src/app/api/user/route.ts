@@ -1,4 +1,4 @@
-import { supabaseClient } from "@/utils/supabase/supabaseClient";
+import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json(); 
     console.log("Obteniendo perfil del usuario con body:", body);
-    const supabase = await supabaseClient();
+    const supabase = await supabaseServerClient();
     const { userId } = body;
     const { data: profileData, error } = await supabase.from("users")
        .select(`
