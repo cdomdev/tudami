@@ -58,7 +58,7 @@ export function BodyListComment({ question_id }: { question_id: number }) {
             </div>
             <div className="translate-x-16 flex gap-2 items-center">
               <span className="text-xs text-accent-foreground">
-                {formatTimestamp(com.created_at.toString())}
+                Respuesta dada hace {formatTimestamp(com.created_at.toString())}
               </span>
               {/* <div className=" ">
                                     <Button

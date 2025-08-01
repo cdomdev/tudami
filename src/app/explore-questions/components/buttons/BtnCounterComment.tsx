@@ -1,7 +1,7 @@
 import { MessageCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react"
-import { supabase } from "@/lib/supabase"
+import { supabase } from "@/utils/supabase/supabaseClient";
 import {
   Dialog,
   DialogContent,
@@ -14,7 +14,7 @@ import { BodyListComment } from "../BodyListComment";
 import { DialogClose } from "@radix-ui/react-dialog";
 
 
-export function BtnCounterComment({ question_id, count, setCount }: { question_id: number, count: number, setCount: (val: number) => void }) {
+export  function BtnCounterComment({ question_id, count, setCount }: { question_id: number, count: number, setCount: (val: number) => void }) {
   useEffect(() => {
     const channel = supabase
       .channel(`question-comments-${question_id}`)
@@ -53,7 +53,7 @@ export function BtnCounterComment({ question_id, count, setCount }: { question_i
         </DialogTrigger>
         <DialogContent className="w-2xl lg:min-w-4xl overflow-y-auto max-h-3/5 [&>button:last-child]:hidden dialog-content-scrollbar">
           <DialogHeader className="sticky top-0 z-10 p-2  border-b">
-            <div className="flex items-center justify-between bg-white/50 py-2">
+            <div className="flex items-center justify-between bg-white/50  dark:bg-gray-800 py-2">
               <>
                 <DialogTitle className="sr-only">Respuestas</DialogTitle>
                 <DialogDescription className="text-sm pl-2 font-semibold text-gray-900 dark:text-white">

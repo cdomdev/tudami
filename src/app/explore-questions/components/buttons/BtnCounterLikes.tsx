@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/utils/supabase/supabaseClient";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ThumbsUp } from "lucide-react";

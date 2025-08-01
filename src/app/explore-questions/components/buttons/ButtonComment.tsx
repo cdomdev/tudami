@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/context/context.sesion";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/utils/supabase/supabaseClient";
 import { MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 

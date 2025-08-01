@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase"
+import { supabase } from "@/utils/supabase/supabaseClient";
 
 export async function getCommentBy(question_id: number) {
     const { data, error } = await supabase.from(

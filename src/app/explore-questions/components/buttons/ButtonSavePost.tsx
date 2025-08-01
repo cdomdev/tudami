@@ -3,16 +3,17 @@
 import { useEffect, useState } from "react";
 import { useSession } from "@/context/context.sesion";
 import { isQuestionSaved, toggleSave } from "../../lib/saveQuestions";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/utils/supabase/supabaseClient";
 import { toast } from "sonner";
 import { Bookmark, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-export function ButtonSavePost({
-  question_id,
-}: {
-  question_id: number;
-}) {
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+export function ButtonSavePost({ question_id }: { question_id: number }) {
   const { user } = useSession();
   const [isSaved, setIsSaved] = useState(false);
 
@@ -56,30 +57,42 @@ export function ButtonSavePost({
   };
 
   return (
-    <>
-      {!isSaved ? (
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleSave}
-          className={`cursor-pointer 
-           bg-gray-200 text-gray-800 hover:bg-green-500 hover:text-white dark:hover:bg-green-500 px-4 py-2 rounded-md transition-colors duration-200 `}
-        >
-          <Bookmark className={`h-5 w-5 `} />
-          <span className="sr-only">Guardar pregunta en perfil</span>
-        </Button>
-      ) : (
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleSave}
-          className={`cursor-pointer 
+    <TooltipProvider>
+      <Tooltip delayDuration={150}>
+        <TooltipTrigger asChild>
+          {!isSaved ? (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleSave}
+              className={`cursor-pointer 
+              bg-gray-200 text-gray-800 hover:bg-green-500 hover:text-white dark:hover:bg-green-500 px-4 py-2 rounded-md transition-colors duration-200 `}
+            >
+              <Bookmark className="h-5 w-5" />
+              <span className="sr-only">Guardar pregunta en perfil</span>
+            </Button>
+          ) : (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleSave}
+              className={`cursor-pointer 
           bg-red-500  hover:bg-red-600 text-white dark:hover:bg-red-700  px-4 py-2 rounded-md transition-colors duration-200 hover:text-white `}
+            >
+              <Trash className="h-5 w-5" />
+              <span className="sr-only">Eliminar pregunta de guardados</span>
+            </Button>
+          )}
+        </TooltipTrigger>
+        <TooltipContent
+          side="top"
+          align="center"
         >
-          <Trash className={`h-5 w-5 `} />
-          <span className="sr-only">Eliminar pregunta de guardados</span>
-        </Button>
-      )}
-    </>
+          {isSaved
+            ? "Eliminar pregunta de guardados"
+            : "Guardar pregunta en perfil"}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }

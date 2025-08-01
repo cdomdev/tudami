@@ -1,6 +1,6 @@
 "use client";
 
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/utils/supabase/supabaseClient";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ThumbsUp } from "lucide-react";
@@ -45,6 +45,9 @@ export function ButtonLike({
     // emitir evento para el cambio del count
     onLikeChange?.(count ?? 0);
   };
+
+  
+  
 
   return (
     <>

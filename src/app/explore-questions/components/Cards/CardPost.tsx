@@ -55,7 +55,7 @@ export function CardPost({
             <div>
               <p className="font-medium">{users?.full_name || "Anónimo"}</p>
               <p className="text-xs text-muted-foreground">
-                Hace {formatTimestamp(created_at.toString())}
+                Publicado hace {formatTimestamp(created_at.toString())}
               </p>
             </div>
           </div>

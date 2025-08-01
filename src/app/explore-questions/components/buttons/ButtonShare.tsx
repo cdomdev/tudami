@@ -2,7 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { Share2 } from "lucide-react";
-
+import {
+  Tooltip,
+  TooltipProvider,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 interface ShareButtonProps {
   title: string;
   text?: string;
@@ -30,13 +35,21 @@ export function ButtonShare({ title, text, url }: ShareButtonProps) {
   };
 
   return (
-    <Button
-      onClick={handleShare}
-      variant="ghost"
-      size="icon"
-      className="cursor-pointer"
-    >
-      <Share2 className="h-4 w-4" />
-    </Button>
+    <TooltipProvider>
+      <Tooltip delayDuration={150} >
+        <TooltipTrigger asChild>
+          <Button
+            onClick={handleShare}
+            variant="ghost"
+            size="icon"
+            className="cursor-pointer"
+          >
+            <Share2 className="h-4 w-4" />
+            <span className="sr-only">Compartir pregunta</span>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>Compartir pregunta</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }

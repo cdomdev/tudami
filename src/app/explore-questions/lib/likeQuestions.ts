@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/utils/supabase/supabaseClient";
 
 export async function toggleLike(questionId: number, user_id: string) {
   const { data: existingLike } = await supabase

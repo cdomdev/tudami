@@ -25,7 +25,6 @@ export async function fetchGeneralQuestionsApi(
   }
 
   const { questions, total } = await data.json();
-  console.log("Fetching general questions from API:", { questions, total });
 
   return { questions, total };
 }
