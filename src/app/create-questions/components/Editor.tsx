@@ -5,7 +5,7 @@ import { useState } from "react";
 import { preguntaSchema } from "../schema/schemaEditor";
 import { toast } from "sonner";
 import { useSession } from "@/context/context.sesion";
-import { createQuestion } from "../lib/createQuestions";
+import { createQuestionApi } from "../lib/createQuestions";
 import { useRouter } from "next/navigation";
 import tags from "@/content/tags/data-tags.json";
 import { MultiSelect } from "./multi-select";
@@ -46,7 +46,7 @@ export default function Editor() {
     }
 
     try {
-      const res = await createQuestion(
+      const res = await createQuestionApi(
         result.data.title,
         result.data.content,
         selectedTags

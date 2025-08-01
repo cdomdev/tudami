@@ -1,5 +1,5 @@
 
-export async function createQuestion(
+export async function createQuestionApi(
   title: string,
   content: string,
   tags: string[] = []
@@ -13,11 +13,14 @@ export async function createQuestion(
     body: JSON.stringify({ title, content, tags }),
   });
 
+
   if (!response.ok) {
     throw new Error("Error al crear la pregunta");
   }
 
+
   const { data, datainsignia } = await response.json();
+  
   return {
     success: true,
     data,
