@@ -4,14 +4,15 @@ import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const id = url.searchParams.get("id");
-  
+  const approval = url.searchParams.get("u_view_profile_p");
+
   try {
     const supabase = await supabaseServerClient();
 
   //   obtener todasa las preguntas de un usuario
-  if (!id) {
+  if (!id || approval === null) {
     return new Response(
-      JSON.stringify({ error: "ID de pregunta no proporcionado" }),
+      JSON.stringify({ error: "ID de pregunta y aprobación no proporcionados" }),
       {
         status: 400,
         headers: { "Content-Type": "application/json" },
