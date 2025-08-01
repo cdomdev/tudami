@@ -5,7 +5,7 @@ import { GoogleIcon } from "@/components/icons/Google";
 import { GitHubIcon } from "@/components/icons/GitgubIcon";
 import { Spinner } from "@/components/Spiner";
 import { useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/utils/supabase/supabaseClient";
 import Link from "next/link";
 
 export function VisualLogin() {

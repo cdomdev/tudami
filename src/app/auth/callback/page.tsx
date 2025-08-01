@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/utils/supabase/supabaseClient";
 import { useSession } from "@/context/context.sesion";
 import { Spinner } from "@/components/Spiner";
 import { toast } from "sonner";
@@ -53,7 +53,6 @@ export default function AuthCallback() {
         // 4. Redireccionar al destino original o home
         const redirect = params.get("redirectTo") || "/";
         router.replace(redirect);
-
       } catch (error) {
         console.error("Error inesperado en autenticación:", error);
         router.replace("/auth/login/?error=unexpected_error");
