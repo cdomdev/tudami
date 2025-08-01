@@ -12,14 +12,15 @@ import {
 import { useSession } from "@/context/context.sesion";
 import { LogOut, User as UserIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/utils/supabase/supabaseClient";
 import Link from "next/link";
 import { Notifications } from "./Notifications";
 import { Button } from "./ui/button";
+
+
 export function Profile() {
   const { user, clearUser } = useSession();
   const router = useRouter();
-
   const handleLogout = async () => {
     try {
       // 1. Llamar a la API de logout para limpiar cookies y sesión del servidor
@@ -28,7 +29,9 @@ export function Profile() {
       });
 
       if (!response.ok) {
-        console.warn('Error al cerrar sesión en el servidor, continuando con logout local');
+        console.warn(
+          "Error al cerrar sesión en el servidor, continuando con logout local"
+        );
       }
 
       // 2. Cerrar sesión en Supabase (cliente)
@@ -39,9 +42,8 @@ export function Profile() {
 
       // 4. Redireccionar al home
       router.push("/");
-      
     } catch (error) {
-      console.error('Error durante logout:', error);
+      console.error("Error durante logout:", error);
       // Incluso con error, hacemos logout local
       await supabase.auth.signOut();
       clearUser();
@@ -52,7 +54,7 @@ export function Profile() {
   return (
     <div className="flex items-center gap-5">
       <Notifications />
-      
+
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button

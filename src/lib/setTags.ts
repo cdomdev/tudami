@@ -1,20 +1,5 @@
-import "dotenv/config"
-import {config} from "dotenv"
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "@/utils/supabase/supabaseClient";
 import tags from "@/content/tags/data-tags.json" assert { type: "json" };
-
-config({path: ".env.local"});   
-
-if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-  throw new Error("Error al cargar variables de entorno");
-}
-
-// Crea el cliente con las variables de entorno
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
 
 async function seedTags() {
   const tagsWithId = tags.map((tag) => ({
@@ -29,6 +14,5 @@ async function seedTags() {
     console.log("✅ Tags insertados correctamente:", data);
   }
 }
-
 
 seedTags();

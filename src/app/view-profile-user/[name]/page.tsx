@@ -32,13 +32,14 @@ export default function ViewProfileUserPage() {
     fetchData();
   }, [userId]);
 
+
   if (loading) {
     <SkeletonActividadUsuario />;
   }
 
   return (
     <>
-      <h3 className=" text-lg font-semibold  text-slate-800 dark:text-white">
+      <h3 className="text-lg font-semibold  text-slate-800 dark:text-white">
         Actividad de {dataProfile?.full_name}
       </h3>
       <div className="p-6 space-y-6">
@@ -63,6 +64,11 @@ export default function ViewProfileUserPage() {
             </p>
           </div>
         </div>
+      </div>
+      <div className="p-6 space-y-6">
+        <h3 className="text-lg font-semibold text-slate-800 dark:text-white">
+          Reputación
+        </h3>
       </div>
     </>
   );

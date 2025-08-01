@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -19,6 +20,8 @@ export function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [showNav] = useState(true);
   const [openMenu, setOpenMenu] = useState(false);
+  const route = usePathname();
+  const isLoginPage = route === "/auth/login";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,6 +34,9 @@ export function NavBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrolled]);
 
+  if (isLoginPage) {
+    return null;
+  }
   return (
     <nav
       className={`fixed top-0 w-screen left-0 right-0 z-50 transition-all duration-300 ease-in-out px-3 md:px-0
@@ -84,7 +90,7 @@ export function NavBar() {
         </NavigationMenu>
 
         <div className="flex md:gap-3 items-center justify-center">
-          <ClientSessionRenderer  />
+          <ClientSessionRenderer />
           <button
             onClick={() => setOpenMenu(!openMenu)}
             className="md:hidden  text-black dark:text-white relative pl-6"

@@ -19,16 +19,17 @@ export async function supabaseAuth(accessToken: string) {
         Authorization: `Bearer ${accessToken}`,
       },
     },
+  
   });
 }
 
-// Cliente de Supabase para el uso en componentes con "use client"
-
-export async function supabaseClient() {
-  return createClient(supabaseUrl, supabaseAnonKey, {
-    auth: {
-      autoRefreshToken: true,
-      persistSession: true,
-    },
-  });
-}
+// Cliente para el lado del cliente (browser) con configuración personalizada de autenticación
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    storageKey: "tudami-sb-iyyeielwbsaybnczamix-auth-token",
+    detectSessionInUrl: true,
+    flowType: "pkce",
+  },
+});

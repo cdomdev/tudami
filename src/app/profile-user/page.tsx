@@ -11,8 +11,15 @@ import { useSession } from "@/context/context.sesion";
 export default function UserProfile() {
   const { user } = useSession();
 
+  console.log("Datos del usuario:", user);
+
+
+  const score = user?.reputation?.score ? parseInt(user?.reputation?.score) : 0;
+  // const achievements = user?.achievements || [];
+
+
   const estadisticas = {
-    puntos: 10,
+    puntos: score,
     insignias: [
       { badge: "cuenta_creada" },
       { badge: "primera_pregunta" },
@@ -32,7 +39,7 @@ export default function UserProfile() {
       icon: "i-heroicons-chat-bubble-left-right-solid",
     },
   ];
-  const progresoReputacion = obtenerProgresoReputacion(estadisticas.puntos);
+  const progresoReputacion = obtenerProgresoReputacion(score);
   const insigniasObtenidas = obtenerInsigniasUsuario(estadisticas.insignias);
 
   return (
@@ -49,7 +56,7 @@ export default function UserProfile() {
         >
           Tu actividad
         </h2>
-        <BarraReputacion puntos={estadisticas.puntos} />
+        <BarraReputacion puntos={score} />
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {itemsActivity.map((item, index) => (
             <CardsCounts key={index} counter={item.count} text={item.title} />

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Bell } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { getNotifications } from "@/lib/notifications";
 interface Notification {
   id: string;
   user_id: string;
@@ -28,17 +28,13 @@ interface Notification {
 export function Notifications() {
   const { user } = useSession();
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const unreadCount = notifications.filter((n) => !n.read).length;
 
   const fetchNotifications = async () => {
     if (!user?.id) return;
-    const { data, error } = await supabase
-      .from("notifications")
-      .select("*")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false });
-
-    if (!error) setNotifications(data);
+    const data = await getNotifications(user.id);
+    if (data) {
+      setNotifications(data);
+    }
   };
 
   // Cargar manualmente sin efecto
@@ -49,22 +45,22 @@ export function Notifications() {
     }
   };
 
-
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild onClick={handleOpen}>
         <Button
-          variant="outline"
+          variant="ghost"
           size="icon"
-          className="relative h-8 w-8 p-0 border-none cursor-pointer"
+          className="relative h-8 w-8 p-0 border-none cursor-pointer hover:bg-transparent dark:hover:bg-transparent"
         >
           <Bell className="h-4 w-4" />
-          {unreadCount > 0 && (
-            <span className="absolute top-0 right-0 h-2.5 w-2.5 rounded-full bg-red-500" />
-          )}
+           <span className="absolute top-0 right-0 h-2.5 w-2.5 rounded-full bg-red-500" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="center" className="w-full max-w-72 max-h-80 overflow-y-auto popoveer-content">
+      <DropdownMenuContent
+        align="center"
+        className="w-full max-w-72 max-h-80 overflow-y-auto popoveer-content"
+      >
         <DropdownMenuLabel>Notificaciones</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {notifications.length === 0 ? (
@@ -73,7 +69,10 @@ export function Notifications() {
           </p>
         ) : (
           notifications.map((n) => (
-            <p key={n.id} className="p-2 text-sm text-accent-foreground border-b border-muted">
+            <p
+              key={n.id}
+              className="p-2 text-sm text-accent-foreground border-b border-muted"
+            >
               {n.content}
             </p>
           ))

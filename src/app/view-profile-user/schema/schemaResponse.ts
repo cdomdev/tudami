@@ -12,6 +12,11 @@ export const UserProfilePreferencesSchema = z.object({
   allow_whatsapp: z.boolean(),
 });
 
+const userReputationSchema = z.object({
+  id: z.string().optional(),
+  score: z.number(),
+});
+
 export const SchemaProfileResponseSchema = z.object({
   id: z.string(),
   full_name: z.string(),
@@ -26,6 +31,7 @@ export const SchemaProfileResponseSchema = z.object({
   user_profile_preferences: UserProfilePreferencesSchema,
   questions: z.array(QuestionSchema),
   question_comments: z.array(QuestionSchema),
+  user_reputation: userReputationSchema,
 });
 
 export type SchemaProfileResponse = z.infer<typeof SchemaProfileResponseSchema>;

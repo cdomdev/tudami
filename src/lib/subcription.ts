@@ -1,13 +1,15 @@
-import { supabase } from "./supabase";
 
 export async function subscribe(email: string) {
-  const { data, error } = await supabase
-    .from("newsletter_subscribers")
-    .insert({ email: email });
+  const url = "api/subcription/new";
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  });
 
-  if (error) {
-    console.error("Error subscribing to changes:", error);
-  }
+  const data = await res.json();
 
-  return { data, error };
+  return data;
 }

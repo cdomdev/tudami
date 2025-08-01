@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { supabaseServerClient } from "@/lib/supabase-server";
+import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 import { cookies } from "next/headers";
 
 /**
@@ -13,15 +13,15 @@ export async function validateAuthToken(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
   const token = authHeader?.replace("Bearer ", "");
 
+  const supabase = await supabaseServerClient();
   if (!token) {
     throw new Error("Token de autorización requerido");
   }
-  const supabaseServer = supabaseServerClient(token);
 
   const {
     data: { user },
     error,
-  } = await supabaseServer.auth.getUser(token);
+  } = await supabase.auth.getUser(token);
 
   if (error || !user) {
     throw new Error("Token inválido o expirado");
@@ -37,15 +37,15 @@ export async function validateAuthFromCookie() {
   const cookieStore = await cookies();
   const token = cookieStore.get("sb-access-token")?.value;
 
+  const supabase = await supabaseServerClient();
   if (!token) {
     throw new Error("No hay sesión activa");
   }
-  const supabaseServer = supabaseServerClient(token);
 
   const {
     data: { user },
     error,
-  } = await supabaseServer.auth.getUser(token);
+  } = await supabase.auth.getUser(token);
 
   if (error || !user) {
     throw new Error("Sesión expirada");

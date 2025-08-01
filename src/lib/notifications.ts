@@ -1,46 +1,48 @@
-import { supabase } from "./supabase";
 
 export const createNotification = async (notificationData: {
   user_id: string;
   message: string;
 }) => {
-  const { data, error } = await supabase
-    .from("notifications")
-    .insert([notificationData]);
+  const url = `/api/notifications/new`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(notificationData),
+  });
 
-  if (error) {
-    console.error("Error creating notification:", error);
-    return null;
+  if (!response.ok) {
+    throw new Error("Error creating notification");
   }
-
+  const data = await response.json();
   return data;
 };
 
 export const getNotifications = async (userId: string) => {
-  const { data, error } = await supabase
-    .from("notifications")
-    .select("*")
-    .eq("user_id", userId)
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    console.error("Error fetching notifications:", error);
-    return [];
+  const url = `/api/notifications/get?userId=${userId}`;
+  const response = await fetch(url, {
+    method: "GET",
+  });
+  if (!response.ok) {
+    throw new Error("Error fetching notifications");
   }
-
+  const data = await response.json();
   return data;
 };
 
 export const markNotificationAsRead = async (notificationId: string) => {
-  const { data, error } = await supabase
-    .from("notifications")
-    .update({ read: true })
-    .eq("id", notificationId);
+  const url = `/api/notifications/mark?notificationId=${notificationId}`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-  if (error) {
-    console.error("Error marking notification as read:", error);
-    return null;
+  if (!response.ok) {
+    throw new Error("Error marking notification as read");
   }
-
+  const data = await response.json();
   return data;
 };

@@ -11,6 +11,11 @@ export function HeaderProfile({
   department,
   full_name,
 }: SchemaProfileResponse) {
+  const formattedCity = city || "Ciudad no especificada";
+  const formattedCountry = country || "País no especificado";
+  const formattedDepartment = department || "Departamento no especificado";
+
+  const dataUbation = `${formattedCountry} - ${formattedCity} - ${formattedDepartment}`;
   return (
     <header className="mt-20">
       <div className="text-center">
@@ -38,7 +43,7 @@ export function HeaderProfile({
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4" />
                 <span className="text-sm text-gray-600 dark:text-gray-300">
-                  {country}, {city} - {department}
+                  {dataUbation}
                 </span>
               </div>
             </div>

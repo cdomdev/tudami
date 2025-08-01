@@ -1,9 +1,15 @@
-export async function getQuestionUserBy(userId: string) {
+export async function getQuestionUserBy(userId: string, approval: string | undefined) {
   if (!userId) {
     console.error("User ID is required to fetch questions");
     return [];
   }
-  const response = await fetch(`/api/profile/questions?id=${userId}`);
+  const url = `/api/view-profile/questions?id=${userId}&u_view_profile_p=${approval}`;
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   if (!response.ok) {
     throw new Error("Error fetching profile data");
   }
@@ -11,13 +17,30 @@ export async function getQuestionUserBy(userId: string) {
   return data;
 }
 
-
-export async function getAnswerUserBy(userId: string) {
+/**
+ * 
+ * Fetches answers for a user by their ID and approval.
+ * @param userId 
+ * @param approval 
+ * @returns 
+ */
+export async function getAnswerUserBy(
+  userId: string,
+  approval: string | undefined
+) {
   if (!userId) {
     console.error("User ID is required to fetch answers");
     return [];
   }
-  const response = await fetch(`/api/profile/answers?id=${userId}`);
+  const url = `/api/view-profile/answers?id=${userId}&u_view_profile_p=${approval}`;
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    }
+  );
+
   if (!response.ok) {
     throw new Error("Error fetching profile data");
   }
@@ -26,13 +49,18 @@ export async function getAnswerUserBy(userId: string) {
   return data;
 }
 
-
-export async function getTagsUserBy(userId: string) {
+export async function getTagsUserBy(userId: string, approval: string | undefined) {
   if (!userId) {
     console.error("User ID is required to fetch tags");
     return [];
   }
-  const response = await fetch(`/api/profile/tags?id=${userId}`);
+  const url = `/api/view-profile/tags?id=${userId}&u_view_profile_p=${approval}`;
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   if (!response.ok) {
     throw new Error("Error fetching profile data");
   }

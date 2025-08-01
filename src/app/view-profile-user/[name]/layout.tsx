@@ -33,7 +33,7 @@ export default function LayoutClient({
       }
 
       const res = await getDataProfilePublic({ userId });
-
+      
       if (res.success && res.data) {
         setDataProfile(res.data);
       }
@@ -43,6 +43,9 @@ export default function LayoutClient({
 
     fetchData();
   }, [userId]);
+
+
+    console.log("dataProfile --->", dataProfile);
 
   if (loading) {
     return <ProfileSkeleton />;
@@ -107,6 +110,13 @@ export default function LayoutClient({
       <section className="overflow-hidden ">
         {/* Header con avatar y datos básicos */}
         <div className="px-6 py-4 space-y-4 border-b border-slate-200 dark:border-slate-700">
+          <h2 className="text-xl font-semibold text-slate-800 dark:text-white">
+            Biografía de{" "}
+            <span className="text-slate-800 dark:text-white">
+              {dataProfile.full_name}
+            </span>
+          </h2>
+          <p className="text-sm text-slate-600 dark:text-slate-400">{dataProfile.bio}</p>
           <h2 className="text-xl font-semibold text-slate-800 dark:text-white">
             Contacto
           </h2>

@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
+import { getUserProfile, buildUserContextObject } from "@/lib/user-profile";
 
 export async function getServerUser() {
   const cookieStore = await cookies();
@@ -17,57 +18,18 @@ export async function getServerUser() {
   const avatar_url = user_metadata?.picture || user_metadata.avatar_url || "";
   const provider = app_metadata?.provider || "email";
 
-  const { data: profileData, error } = await supabase
-    .from("users")
-    .select(
-      `
-      *,
-      user_profile_preferences (
-        profile_public,
-        allow_email,
-        allow_whatsapp
-      ),
-      questions(count),
-      question_comments(count),
-      user_achievements (
-        achievement_id
-      )
-    `
-    )
-    .eq("id", id)
-    .single();
-  if (error || !profileData) {
+  try {
+    const userProfile = await getUserProfile(id, supabase);    
+    return buildUserContextObject({
+      id,
+      email,
+      full_name,
+      avatar_url,
+      provider,
+      userProfile
+    });
+  } catch (error) {
     console.error("Error obteniendo perfil del usuario:", error);
     return null;
   }
-
-
-  return {
-    id,
-    email: email || "",
-    full_name,
-    avatar_url,
-    provider,
-    phone: profileData.phone || "",
-    bio: profileData.bio || "",
-    country: profileData.country || "Colombia",
-    department: profileData.department || "",
-    city: profileData.city || "",
-    approval_token: profileData.approval_token || null,
-    created_at: profileData.created_at || null,
-    profile_public:
-      profileData.user_profile_preferences?.profile_public ?? true,
-    allow_email: profileData.user_profile_preferences?.allow_email ?? false,
-    allow_whatsapp:
-      profileData.user_profile_preferences?.allow_whatsapp ?? false,
-    reputation: {
-      questions: profileData.questions?.[0]?.count ?? 0,
-      responses: profileData.question_comments?.[0]?.count ?? 0,
-      score: "bronze",
-      achievement: {
-        achievement_id:
-          profileData.user_achievements?.[0]?.achievement_id ?? null,
-      },
-    },
-  };
 }

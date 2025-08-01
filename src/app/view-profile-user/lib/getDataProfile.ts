@@ -1,6 +1,4 @@
-import { supabase } from "@/lib/supabase";
 import { SchemaProfileResponse } from "../schema/schemaResponse";
-
 type ProfileResponse = {
   data?: SchemaProfileResponse;
   success: boolean;
@@ -12,45 +10,32 @@ export async function getDataProfilePublic({
 }: {
   userId: string;
 }): Promise<ProfileResponse> {
+
   try {
-    const { data, error } = await supabase
-      .from("users")
-      .select(
-        `
-        id,
-        full_name,
-        avatar_url,
-        email,
-        phone,
-        bio,
-        country,
-        city,
-        department,
-        created_at,
-        user_profile_preferences (
-          profile_public,
-          allow_email,
-          allow_whatsapp
-        ),
-        questions(count),
-        question_comments(count)
-      `
-      )
-      .eq("id", userId)
-      .single();
+    const url = `/api/view-profile/info?id=${userId}`;
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    if (error || !data) {
-      return { success: false, message: "Usuario no encontrado" };
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: data.message || "Error al obtener perfil",
+      };
     }
-
 
     // Obtener las preferencias del usuario (puede ser array u objeto)
     const preferencesRaw = data.user_profile_preferences;
-    const preferences = Array.isArray(preferencesRaw) ? preferencesRaw[0] : preferencesRaw;
-    
-    
+    const preferences = Array.isArray(preferencesRaw)
+      ? preferencesRaw[0]
+      : preferencesRaw;
+
     if (!preferences || !preferences.profile_public) {
-      console.log("Perfil no público o preferencias no encontradas");
       return { success: false, message: "Este perfil no es público" };
     }
 
@@ -66,6 +51,10 @@ export async function getDataProfilePublic({
       user_profile_preferences: preferences,
       questions: data.questions || [],
       question_comments: data.question_comments || [],
+      user_reputation: {
+        id: data.user_reputation?.id,
+        score: data.user_reputation?.score,
+      },
       email: preferences.allow_email ? data.email : undefined,
       phone: preferences.allow_whatsapp ? String(data.phone) : undefined,
     };
