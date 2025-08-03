@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { createClient } from "@supabase/supabase-js"; // Mantenemos esta importación porque en middleware no podemos usar el cliente del servidor
+import { createClient } from "@supabase/supabase-js"; 
 
 export async function middleware(req: NextRequest) {
   const accessToken = req.cookies.get("sb-access-token")?.value;
