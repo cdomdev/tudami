@@ -5,13 +5,13 @@ import { getDataProfilePublic } from "../lib/getDataProfile";
 import { useSearchParams } from "next/navigation";
 import { ProfileSkeleton } from "../components/ProfileSkeleton";
 import { ProfileNotAvailable } from "../components/ProfileNotAvailable";
-import { SchemaProfileResponse } from "../schema/schemaResponse";
+import { UserSchema } from "@/schemas";
 import { HeaderProfile } from "../components/HeaderProfile";
 import { WhatSappIcon } from "@/components/icons/WhatSappIcon";
 import { Button } from "@/components/ui/button";
 import { Clipboard, Mail } from "lucide-react";
-import { toast } from "sonner";
 import Link from "next/link";
+import { handleWhatsAppContact, handleCopyEmailContact, handleEmailContact } from "../lib/contact"
 
 export default function LayoutClient({
   children,
@@ -19,7 +19,7 @@ export default function LayoutClient({
   children: React.ReactNode;
 }) {
   const [loading, setLoading] = useState(true);
-  const [dataProfile, setDataProfile] = useState<SchemaProfileResponse>();
+  const [dataProfile, setDataProfile] = useState<UserSchema>();
 
   const searchParams = useSearchParams();
   const userId = searchParams.get("u_view_profile_p");
@@ -33,7 +33,7 @@ export default function LayoutClient({
       }
 
       const res = await getDataProfilePublic({ userId });
-      
+
       if (res.success && res.data) {
         setDataProfile(res.data);
       }
@@ -44,9 +44,6 @@ export default function LayoutClient({
     fetchData();
   }, [userId]);
 
-
-    console.log("dataProfile --->", dataProfile);
-
   if (loading) {
     return <ProfileSkeleton />;
   }
@@ -54,37 +51,24 @@ export default function LayoutClient({
   if (!dataProfile) {
     return <ProfileNotAvailable />;
   }
+  // send message ws
 
-  const handleWhatsAppContact = () => {
-    if (!dataProfile.phone) return;
-    const message = encodeURIComponent(
-      `Hola ${dataProfile.full_name}, vi tu perfil en Tudami y me gustaría contactarte.`
-    );
-    const whatsappUrl = `https://wa.me/+57${dataProfile.phone.replace(
-      /\D/g,
-      ""
-    )}?text=${message}`;
-    window.open(whatsappUrl, "_blank");
-  };
-  const handleCopyEmailContact = async () => {
-    if (!dataProfile.email) return;
-    try {
-      await navigator.clipboard.writeText(dataProfile.email);
-      toast.success("Correo copiado al portapapeles");
-    } catch (error) {
-      console.error("Error al copiar:", error);
-      toast.error("No se pudo copiar el correo");
-    }
+  function handleWs() {
+    if (!dataProfile) return;
+    handleWhatsAppContact(dataProfile);
   };
 
-  const handleEmailContact = () => {
-    if (!dataProfile.email) return;
-    const subject = encodeURIComponent("Contacto desde Tudami");
-    const body = encodeURIComponent(
-      `Hola ${dataProfile.full_name},\n\nVi tu perfil en Tudami y me gustaría contactarte.\n\nSaludos.`
-    );
-    const emailUrl = `mailto:${dataProfile.email}?subject=${subject}&body=${body}`;
-    window.location.href = emailUrl;
+  // copy email
+
+  async function handleCopy() {
+    if (!dataProfile) return;
+    handleCopyEmailContact(dataProfile);
+  };
+
+  // send email
+  function handleEmail() {
+    if (!dataProfile) return;
+    handleEmailContact(dataProfile);
   };
 
   const notContactAvailable = !dataProfile.phone && !dataProfile.email;
@@ -108,7 +92,6 @@ export default function LayoutClient({
     <>
       <HeaderProfile {...dataProfile} />
       <section className="overflow-hidden ">
-        {/* Header con avatar y datos básicos */}
         <div className="px-6 py-4 space-y-4 border-b border-slate-200 dark:border-slate-700">
           <h2 className="text-xl font-semibold text-slate-800 dark:text-white">
             Biografía de{" "}
@@ -130,7 +113,7 @@ export default function LayoutClient({
           <div className="flex flex-col gap-3 ">
             {dataProfile.phone && (
               <button
-                onClick={handleWhatsAppContact}
+                onClick={handleWs}
                 className="inline-flex cursor-pointer transition duration-200 items-center gap-2 w-50 justify-center bg-green-500 hover:bg-green-600 text-white text-xs font-medium py-2 px-3 rounded-md"
               >
                 <WhatSappIcon className="w-4 h-4" />
@@ -144,7 +127,7 @@ export default function LayoutClient({
                   <Button
                     className="flex cursor-pointer transition duration-200 text-muted-foreground dark:bg-gray-200 hover:bg-gray-300 dark:hover:bg-gray-300 dark:hover:text-black"
                     variant="outline"
-                    onClick={handleCopyEmailContact}
+                    onClick={handleCopy}
                   >
                     <span className="truncate">{dataProfile.email}</span>
                     <Clipboard className="w-4 h-4 text-slate-500" />
@@ -152,7 +135,7 @@ export default function LayoutClient({
 
                   <Button
                     className="cursor-pointer"
-                    onClick={handleEmailContact}
+                    onClick={handleEmail}
                   >
                     <Mail className="w-4 h-4" />
                     <span className="sr-only">Enviar correo electrónico</span>

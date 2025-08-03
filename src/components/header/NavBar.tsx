@@ -22,6 +22,7 @@ export function NavBar() {
   const [openMenu, setOpenMenu] = useState(false);
   const route = usePathname();
   const isLoginPage = route === "/auth/login";
+  const isCallbackPge = route === "/auth/callback";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,17 +35,16 @@ export function NavBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrolled]);
 
-  if (isLoginPage) {
+  if (isLoginPage || isCallbackPge) {
     return null;
   }
   return (
     <nav
       className={`fixed top-0 w-screen left-0 right-0 z-50 transition-all duration-300 ease-in-out px-3 md:px-0
         ${showNav ? "opacity-100" : "opacity-0"}
-        ${
-          scrolled
-            ? "bg-white/10 backdrop-blur-md shadow-md"
-            : "bg-transparent shadow-none backdrop-blur-0"
+        ${scrolled
+          ? "bg-white/10 backdrop-blur-md shadow-md"
+          : "bg-transparent shadow-none backdrop-blur-0"
         }`}
     >
       <div className="flex items-center justify-between py-3 max-w-6xl mx-auto">

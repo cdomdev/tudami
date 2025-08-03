@@ -1,5 +1,5 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import { Session } from "@/context/context.sesion";
+import { UserSchema } from "@/schemas"
 
 /**
  * Interfaz para las preferencias del perfil de usuario
@@ -21,6 +21,7 @@ interface CountResult {
  * Interfaz para los logros del usuario
  */
 interface UserAchievement {
+  id?: string | null;
   achievement_id: string | null;
 }
 
@@ -28,6 +29,8 @@ interface UserAchievement {
  * Interfaz para la reputación del usuario
  */
 interface UserReputation {
+  questions: number;
+  responses: number;
   score: string | number;
 }
 
@@ -49,7 +52,7 @@ export interface UserProfileData {
   department?: string;
   country?: string;
   approval_token?: string;
-  created_at?: string;
+  created_at: Date;
 
   // Relaciones
   user_profile_preferences?: UserProfilePreference[];
@@ -71,7 +74,7 @@ export interface UserProfileData {
 export async function getUserProfile(
   userId: string,
   client: SupabaseClient
-): Promise<UserProfileData> {
+) {
   if (!userId) {
     throw new Error("ID de usuario requerido para obtener perfil");
   }
@@ -80,7 +83,16 @@ export async function getUserProfile(
     .from("users")
     .select(
       `
-      *,
+      id,
+      full_name,
+      avatar_url,
+      email,
+      phone,
+      bio,
+      country,
+      city,
+      department,
+      created_at,
       user_profile_preferences (
         profile_public,
         allow_email,
@@ -88,34 +100,36 @@ export async function getUserProfile(
       ),
       questions(count),
       question_comments(count),
-     user_achievements (
-        achievement_id
-      ),
       user_reputation (
+        id,
         score
-      )
+      ),
+      user_achievements(
+        id,
+        achievement_id
+      ) 
     `
     )
     .eq("id", userId)
     .single();
 
-    console.log("Datos del perfil -----> [API]-[USER_PROFILE.ts]:", data);
   if (error || !data) {
     throw new Error(
       `Error obteniendo perfil: ${error?.message || "No se encontró el perfil"}`
     );
   }
 
-  return data as UserProfileData;
+
+  return data;
 }
 
 /**
  * Construye el objeto de usuario para el contexto del cliente
  * Esta función es síncrona y simplemente transforma los datos del perfil
- * al formato Session para ser usado en el contexto de la aplicación
+ * al formato UserSchema para ser usado en el contexto de la aplicación
  *
  * @param params Parámetros necesarios para construir el objeto de usuario
- * @returns Objeto de usuario con formato Session para el contexto de la aplicación
+ * @returns Objeto de usuario con formato UserSchema para el contexto de la aplicación
  */
 export function buildUserContextObject({
   id,
@@ -131,7 +145,7 @@ export function buildUserContextObject({
   avatar_url: string;
   provider: string;
   userProfile: UserProfileData;
-}): Session {
+}): UserSchema {
   return {
     id,
     email: email || "",
@@ -144,21 +158,21 @@ export function buildUserContextObject({
     department: userProfile?.department || "",
     country: userProfile?.country || "Colombia",
     approval_token: userProfile?.approval_token || "",
-    created_at: userProfile?.created_at || new Date().toISOString(),
-    profile_public:
-      userProfile?.user_profile_preferences?.[0]?.profile_public ?? true,
-    allow_email:
-      userProfile?.user_profile_preferences?.[0]?.allow_email ?? false,
-    allow_whatsapp:
-      userProfile?.user_profile_preferences?.[0]?.allow_whatsapp ?? false,
-    reputation: {
+    created_at: userProfile.created_at,
+    user_profile_preferences: {
+      profile_public: userProfile?.user_profile_preferences?.[0]?.profile_public ?? true,
+      allow_email: userProfile?.user_profile_preferences?.[0]?.allow_email ?? false,
+      allow_whatsapp: userProfile?.user_profile_preferences?.[0]?.allow_whatsapp ?? false,
+    },
+    user_reputation: {
       questions: userProfile.questions?.[0]?.count ?? 0,
       responses: userProfile.question_comments?.[0]?.count ?? 0,
       score: userProfile.user_reputation?.[0]?.score?.toString() ?? "0",
-      achievement: {
-        achievement_id:
-          userProfile.user_achievements?.[0]?.achievement_id ?? null,
-      },
+
     },
+    user_achievements: {
+      id: userProfile.user_achievements?.[0].id || "",
+      achievement_id: userProfile.user_achievements?.[0]?.achievement_id || "",
+    }
   };
 }

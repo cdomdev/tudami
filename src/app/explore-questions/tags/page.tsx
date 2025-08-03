@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Count } from "../components/CountQuestions";
-import { SchemaPost } from "../schema/schema.post";
+import { SchemaPost } from "@/schemas";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getQuestionsByTagApi } from "../lib/getQuestions";
 import { SkeletonCard } from "../components/SkeletonPost";

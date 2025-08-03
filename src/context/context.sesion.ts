@@ -20,9 +20,11 @@ export type Session = {
     questions?: number;
     responses?: number;
     score?: string;
-    achievement?: {
-      achievement_id?: string | null;
-    };
+
+  };
+  achievements?: {
+    id: string | null,
+    achievement_id?: string | null;
   };
 };
 

@@ -101,6 +101,7 @@ export default function SummaryPage() {
     renderedContent = resTags.map((tag) => <CardTags key={tag.id} {...tag} />);
   }
 
+
   return (
     <>
       <h3 className="text-xl font-bold mb-4"> {title}</h3>

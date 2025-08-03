@@ -2,7 +2,7 @@
 
 import { SimpleEditor } from "./simple/simple-editor";
 import { useState } from "react";
-import { preguntaSchema } from "../schema/schemaEditor";
+import {  Question } from "@/schemas";
 import { toast } from "sonner";
 import { useSession } from "@/context/context.sesion";
 import { createQuestionApi } from "../lib/createQuestions";
@@ -33,7 +33,7 @@ export default function Editor() {
     }
 
     setLoading(true);
-    const result = preguntaSchema.safeParse({ title, content });
+    const result = Question.safeParse({ title, content });
 
     if (!result.success) {
       setLoading(false);

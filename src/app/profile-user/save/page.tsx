@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { getSavedQuestions } from "../lib/profile";
 import { useEffect, useState } from "react";
 import { CardsQuestionSaves } from "../components/cards/CardsQuestionSaves";
-import { SchemaQuestionsSaveds } from "../schema/schema.questions_saveds";
+import { SchemaQuestionsSaveds } from "@/schemas";
 
 export default function SavePage() {
   const searchParams = useSearchParams();

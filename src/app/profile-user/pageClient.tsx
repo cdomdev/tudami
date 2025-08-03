@@ -1,31 +1,21 @@
 "use client";
 
 import { BarraReputacion } from "./components/BarraDeReputacion";
-import { CardInsignia } from "./components/cards/CardInsignia";
 import { obtenerProgresoReputacion } from "./utils/reputacion";
-import { obtenerInsigniasUsuario } from "./utils/mapearInsignias";
 import { CardsCounts } from "./components/cards/CardActivity";
 import { CardReputaction } from "./components/cards/CardsReputation";
 import { useSession } from "@/context/context.sesion";
+import { getAchievementByuser } from "@/utils/mapAchienvements"
+import { CardAchievement } from "@/components/ui/Cards/CardAchievements";
 
 export default function Home() {
   const { user } = useSession();
 
-  console.log("Datos del usuario:", user);
 
-
+  console.log("datos del usuario en profile -->", user)
+  
   const score = user?.reputation?.score ? parseInt(user?.reputation?.score) : 0;
-  // const achievements = user?.achievements || [];
-
-
-  const estadisticas = {
-    puntos: score,
-    insignias: [
-      { badge: "cuenta_creada" },
-      { badge: "primera_pregunta" },
-      { badge: "primera_respuesta" },
-    ],
-  };
+  const achievements = user?.achievements || [];
 
   const itemsActivity = [
     {
@@ -39,8 +29,10 @@ export default function Home() {
       icon: "i-heroicons-chat-bubble-left-right-solid",
     },
   ];
+  
   const progresoReputacion = obtenerProgresoReputacion(score);
-  const insigniasObtenidas = obtenerInsigniasUsuario(estadisticas.insignias);
+  const insigniasObtenidas = getAchievementByuser(achievements ?? []);
+  console.log("datos del logros en el perfil propio ---[PROFIle]",  insigniasObtenidas)
 
   return (
     <section className="space-y-5">
@@ -78,13 +70,13 @@ export default function Home() {
           Tus insignias
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-x-auto  mx-auto overflow-y-hidden p-3">
-          {insigniasObtenidas.map((insignia, index) => (
-            <CardInsignia
+          {achievements && achievements.map((achievement, index) => (
+            <CardAchievement
               key={index}
-              titulo={insignia.titulo}
-              descripcion={insignia.descripcion}
-              icono={insignia.icono}
-              gradiente={insignia.color}
+              title={achievement.title}
+              description={achievement.description}
+              icon={achievement.icon}
+              color={achievement.color}
             />
           ))}
         </div>

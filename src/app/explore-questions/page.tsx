@@ -7,7 +7,7 @@ import { fetchGeneralQuestionsApi } from "./lib/getQuestions";
 import { SkeletonCard } from "./components/SkeletonPost";
 import { Count } from "./components/CountQuestions";
 import { NoContent } from "./components/NoContent";
-import { SchemaPost } from "./schema/schema.post";
+import { SchemaPost } from "../../schemas/schema.post";
 
 export default function ExploreQuestionsPage() {
   const searchParams = useSearchParams();

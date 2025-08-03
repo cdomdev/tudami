@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getCommentBy } from "../lib/listComment";
 import Image from "next/image";
 import { formatTimestamp } from "@/utils/formatDate";
-import { SchemaComment } from "../schema/schemaComments";
+import { SchemaComment } from "@/schemas";
 // import { Button } from "@/components/ui/button"
 // import { Textarea } from "@/components/ui/textarea"
 

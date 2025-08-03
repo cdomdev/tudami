@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { useSession, Session } from "@/context/context.sesion";
+import { useSession } from "@/context/context.sesion";
+import { Session } from "@/schemas"
 import { supabase } from "@/utils/supabase/supabaseClient";
 // Tiempo antes de la expiración para refrescar el token (5 minutos)
 const REFRESH_MARGIN = 5 * 60;
@@ -25,7 +26,7 @@ export function useAuth() {
   // Función para verificar si hay un refresco de sesión en curso
   const isRefreshInProgress = useCallback(() => {
     if (typeof window === "undefined") return false;
-    
+
     // Comprobar si hay un bloqueo activo y verificar su tiempo
     const lockTimestamp = localStorage.getItem(REFRESH_LOCK_KEY);
     if (lockTimestamp) {
@@ -56,7 +57,7 @@ export function useAuth() {
   // Función para comprobar el tiempo del último refresco
   const checkLastRefreshTime = useCallback(() => {
     if (typeof window === "undefined") return true;
-    
+
     const lastRefreshTimestamp = localStorage.getItem(REFRESH_TIMESTAMP_KEY);
     if (lastRefreshTimestamp) {
       const lastRefreshTime = parseInt(lastRefreshTimestamp, 10);
@@ -106,7 +107,7 @@ export function useAuth() {
               "Content-Type": "application/json",
             },
             credentials: "include",
-            cache: "no-store" 
+            cache: "no-store"
           });
 
           if (!response.ok) {
@@ -132,7 +133,7 @@ export function useAuth() {
                 document.cookie = "sb-access-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 document.cookie = "approval_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
               }
-              
+
               // Limpiamos el usuario actual
               clearUser();
 
@@ -237,24 +238,24 @@ export function useAuth() {
 
         const expiresAt = data.session.expires_at;
         const now = Math.floor(Date.now() / 1000);
-        
+
         // Solo refrescar si está próximo a expirar (5 minutos)
         if (expiresAt && expiresAt - now < REFRESH_MARGIN) {
-          console.log("Token próximo a expirar, refrescando...");
+          // console.log("Token próximo a expirar, refrescando...");
           return checkAndRefreshToken();
         }
-        
-      
+
+
         return true;
       } catch (error) {
-        console.error("Error al verificar si necesita refresco:", error);
+        // console.error("Error al verificar si necesita refresco:", error);
         return false;
       }
     };
-    
+
     // Verificamos solo al inicio de la aplicación o cuando el usuario vuelve a la pestaña
     checkIfRefreshNeeded();
-    
+
     // Verificar cuando el usuario vuelve a enfocar la pestaña
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
@@ -264,7 +265,7 @@ export function useAuth() {
 
     // Agregar el evento de visibilidad para verificar cuando el usuario vuelve a la pestaña
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    
+
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };

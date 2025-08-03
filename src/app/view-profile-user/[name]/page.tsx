@@ -1,11 +1,14 @@
 "use client";
 
 import { useSearchParams } from "next/dist/client/components/navigation";
-import { SchemaProfileResponse } from "../schema/schemaResponse";
+import { SchemaProfileResponse } from "@/schemas";
 import { useEffect, useState } from "react";
 import { MessageSquare, Reply } from "lucide-react";
 import { getDataProfilePublic } from "../lib/getDataProfile";
 import { SkeletonActividadUsuario } from "../components/SkeletonActivitieUser";
+import { getAchievementByuser } from "@/utils/mapAchienvements"
+import { CardAchievement } from "@/components/ui/Cards/CardAchievements"
+
 export default function ViewProfileUserPage() {
   const [dataProfile, setDataProfile] = useState<SchemaProfileResponse>();
   const [loading, setLoading] = useState(true);
@@ -33,15 +36,19 @@ export default function ViewProfileUserPage() {
   }, [userId]);
 
 
+  const achievements = getAchievementByuser(dataProfile?.user_achievements ?? []);
+
   if (loading) {
     <SkeletonActividadUsuario />;
   }
 
+  console.log(dataProfile);
+
   return (
     <>
-      <h3 className="text-lg font-semibold  text-slate-800 dark:text-white">
+      <h2 className="text-lg font-semibold  text-slate-800 dark:text-white">
         Actividad de {dataProfile?.full_name}
-      </h3>
+      </h2>
       <div className="p-6 space-y-6">
         <div className="grid grid-cols-2 grid-rows-1 sm:grid-cols-4 gap-4 text-center">
           <div className="flex flex-col items-center p-2 rounded-sm bg-slate-50 dark:bg-slate-800 shadow-sm">
@@ -67,8 +74,20 @@ export default function ViewProfileUserPage() {
       </div>
       <div className="p-6 space-y-6">
         <h3 className="text-lg font-semibold text-slate-800 dark:text-white">
-          Reputación
+          Insignias obtenidas
         </h3>
+
+        <div className="grid grid-cols-2 grid-rows-1 sm:grid-cols-4 gap-4 text-center">
+          {achievements && achievements.map((achievement, index) => (
+            <CardAchievement
+              key={index}
+              title={achievement.title}
+              description={achievement.description}
+              icon={achievement.icon}
+              color={achievement.color}
+            />
+          ))}
+        </div>
       </div>
     </>
   );

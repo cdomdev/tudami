@@ -1,6 +1,6 @@
 import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
-import { SchemaProfileResponse } from "../schema/schemaResponse";
+import { UserSchema } from "@/schemas";
 import { formatJoinDate } from "@/utils/formatDate";
 
 export function HeaderProfile({
@@ -10,14 +10,15 @@ export function HeaderProfile({
   created_at,
   department,
   full_name,
-}: SchemaProfileResponse) {
+}: UserSchema) {
   const formattedCity = city || "Ciudad no especificada";
   const formattedCountry = country || "País no especificado";
   const formattedDepartment = department || "Departamento no especificado";
 
   const dataUbation = `${formattedCountry} - ${formattedCity} - ${formattedDepartment}`;
+
   return (
-    <header className="mt-20">
+    <header className="mt-28">
       <div className="text-center">
         <div className="flex flex-col items-center space-y-4">
           <div className="relative">

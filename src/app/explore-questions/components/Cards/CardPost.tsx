@@ -1,12 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import { UserCircle } from "lucide-react";
 import { formatTimestamp } from "@/utils/formatDate";
+import { SchemaPost } from "@/schemas";
 import { FooterCardPost } from "./FooterCardPost";
 import { ButtonSavePost } from "../buttons/ButtonSavePost";
 import { ButtonShare } from "../buttons/ButtonShare";
-import { SchemaPost } from "../../schema/schema.post";
-import Link from "next/link";
-
 import { useSession } from "@/context/context.sesion";
 
 export function CardPost({

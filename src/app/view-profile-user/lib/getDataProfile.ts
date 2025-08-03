@@ -1,6 +1,8 @@
-import { SchemaProfileResponse } from "../schema/schemaResponse";
+import { UserSchema } from "@/schemas";
+
+
 type ProfileResponse = {
-  data?: SchemaProfileResponse;
+  data?: UserSchema;
   success: boolean;
   message?: string;
 };
@@ -39,27 +41,8 @@ export async function getDataProfilePublic({
       return { success: false, message: "Este perfil no es público" };
     }
 
-    const profileData: SchemaProfileResponse = {
-      id: data.id,
-      full_name: data.full_name,
-      avatar_url: data.avatar_url,
-      bio: data.bio,
-      country: data.country,
-      city: data.city,
-      department: data.department,
-      created_at: data.created_at,
-      user_profile_preferences: preferences,
-      questions: data.questions || [],
-      question_comments: data.question_comments || [],
-      user_reputation: {
-        id: data.user_reputation?.id,
-        score: data.user_reputation?.score,
-      },
-      email: preferences.allow_email ? data.email : undefined,
-      phone: preferences.allow_whatsapp ? String(data.phone) : undefined,
-    };
 
-    return { data: profileData, success: true };
+    return { data, success: true };
   } catch (error) {
     console.error("Error obteniendo perfil público:", error);
     return { success: false, message: "Error interno del servidor" };

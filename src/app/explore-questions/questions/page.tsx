@@ -8,7 +8,7 @@ import {
   getMyQuestionsApi,
   getQuestionsByIdApi,
 } from "../lib/getQuestions";
-import { SchemaPost  } from "../schema/schema.post";
+import { SchemaPost  } from "@/schemas";
 import { SkeletonCard } from "../components/SkeletonPost";
 import { CardPost } from "../components/Cards/CardPost";
 import { Count } from "../components/CountQuestions";
