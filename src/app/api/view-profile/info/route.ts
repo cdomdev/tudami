@@ -45,13 +45,15 @@ async function getDataProfilePublic(userId: string) {
                 user_reputation (
                   id,
                   score
-                ) 
+                ),
+                 user_achievements(
+                 id,
+                 achievement_id
+                 ) 
               `
       )
       .eq("id", userId)
       .single();
-
-      console.log("Datos del perfil:", data);
 
     if (error || !data) {
       return { success: false, message: "Usuario no encontrado" };
