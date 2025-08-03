@@ -68,7 +68,6 @@ export async function createQuestion(
   await insertTags(data, tags, supabaseClient);
 
   // validar insignia de pregunta del usuario
-
   const datainsignia = await asignBadgeIfNeeded(userId, supabaseClient);
 
   // Asignar puntos de reputación al usuario
@@ -119,18 +118,16 @@ async function asignBadgeIfNeeded(
   userId: string,
   supabaseClient: SupabaseClient
 ): Promise<AchievementData | null> {
-  const { count } = await supabaseClient
-    .from("questions")
-    .select("id", { count: "exact", head: true })
-    .eq("user_id", userId);
 
+  const { count } = await supabaseClient.from("questions")
+    .select("id", { count: "exact", head: true})
+    .eq("user_id", userId);
   let datainsignia: AchievementData | null = null;
   // 3. Otorgar la insignia si no la tiene aún
   if (count === 1) {
     const { data: insigniaData, error: insigniaError } = await supabaseClient
       .from("user_achievements")
       .insert([{ user_id: userId, achievement_id: "primera_pregunta" }]);
-
     if (insigniaError && insigniaError.code !== "23505") {
       console.error("Error otorgando insignia:", insigniaError.message);
     } else if (!insigniaError) {

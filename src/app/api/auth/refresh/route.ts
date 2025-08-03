@@ -59,7 +59,7 @@ export async function POST() {
             error: "Se ha excedido el límite de solicitudes. Por favor, inténtalo de nuevo más tarde.", 
             code: "RATE_LIMITED",
             details: error.message,
-            retryAfter: 30 // Sugiere un tiempo de espera de 30 segundos
+            retryAfter: 30
           },
           { status: 429 }
         );
@@ -75,7 +75,7 @@ export async function POST() {
         
         return NextResponse.json(
           { 
-            error: "El token de refresco ya ha sido utilizado. Por favor, inicie sesión nuevamente.", 
+            error: "Algo salio mal al renovar la sesion, Por favor, inicie sesión nuevamente.", 
             code: "SESSION_EXPIRED",
             details: error.message 
           },
