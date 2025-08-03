@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "achievement_id": "primera_pregunta",
+        "title": "Primera pregunta",
+        "description": "Hiciste tu primera pregunta.",
+        "icon": "❓",
+        "color": "#E0F2F7"
+    },
+    {
+        "id": 2,
+        "achievement_id": "primera_respuesta",
+        "title": "Primera respuesta",
+        "description": "Has respondido tu primera pregunta.",
+        "icon": "💬",
+        "color": "#DCFCE7"
+    },
+    {
+        "id": 3,
+        "achievement_id": "colaborador_frecuente",
+        "title": "Colaborador frecuente",
+        "description": "Has ayudado en muchas respuestas.",
+        "icon": "🤝",
+        "color": "#E0E7FF"
+    }
+]
