@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 export default function NotFound() {
- 
+
   return (
     <div className="flex flex-col items-center justify-center min-h-dvh px-6 py-12 text-center  text-gray-800 dark:text-accent-foreground">
       <span className="hidden dark:inline-block absolute -inset-x-4  size-40 mx-auto rounded-full bg-blue-200/20 blur-3xl z-0" />
@@ -24,7 +24,7 @@ export default function NotFound() {
           Lo sentimos, la página que buscas no existe o fue movida.
         </p>
 
-       
+
 
         <Link
           href="/"
@@ -33,7 +33,7 @@ export default function NotFound() {
           <div className="flex items-center">
             <span className="relative inline-flex overflow-hidden  p-[1px]">
               <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#3bbac6_0%,#265d7d_50%,#3bbac6_100%)]"></span>
-              <div className="inline-flex items-center justify-center w-full px-40 py-4 text-sm text-sky-400-800 bg-sky-500-100  cursor-pointer dark:bg-gray-800 dark:text-white/80 backdrop-blur-3xl whitespace-nowrap">
+              <div className="inline-flex items-center justify-center w-full px-40 py-4 text-sm text-sky-400-800 bg-sky-500-100  cursor-pointer bg-gray-100 dark:bg-gray-800 text-black dark:text-white/80 backdrop-blur-3xl whitespace-nowrap">
                 Volver al inicio
               </div>
             </span>
