@@ -1,18 +1,4 @@
-import { UserSchema } from "@/schemas";
-
-
-type ProfileResponse = {
-  data?: UserSchema;
-  success: boolean;
-  message?: string;
-};
-
-export async function getDataProfilePublic({
-  userId,
-}: {
-  userId: string;
-}): Promise<ProfileResponse> {
-
+export async function getDataProfilePublic({ userId }: { userId: string }) {
   try {
     const url = `/api/view-profile/info?id=${userId}`;
     const response = await fetch(url, {
@@ -23,6 +9,8 @@ export async function getDataProfilePublic({
     });
 
     const data = await response.json();
+
+    console.log("Data fetched:", data);
 
     if (!response.ok) {
       return {
@@ -40,7 +28,6 @@ export async function getDataProfilePublic({
     if (!preferences || !preferences.profile_public) {
       return { success: false, message: "Este perfil no es público" };
     }
-
 
     return { data, success: true };
   } catch (error) {

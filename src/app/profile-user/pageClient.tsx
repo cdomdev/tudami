@@ -5,34 +5,32 @@ import { obtenerProgresoReputacion } from "./utils/reputacion";
 import { CardsCounts } from "./components/cards/CardActivity";
 import { CardReputaction } from "./components/cards/CardsReputation";
 import { useSession } from "@/context/context.sesion";
-import { getAchievementByuser } from "@/utils/mapAchienvements"
+import { getAchievementByuser } from "@/utils/mapAchienvements";
 import { CardAchievement } from "@/components/ui/Cards/CardAchievements";
 
 export default function Home() {
   const { user } = useSession();
 
+  console.log("user", user);
+  const score = user?.user_reputation && user?.user_reputation[0].score || 0;
 
-  console.log("datos del usuario en profile -->", user)
-  
-  const score = user?.reputation?.score ? parseInt(user?.reputation?.score) : 0;
-  const achievements = user?.achievements || [];
+  const achievements = user?.user_achievements ?? [];
 
   const itemsActivity = [
     {
       title: "Preguntas hechas",
-      count: user?.reputation?.questions,
+      count: user?.questions[0].count,
       icon: "i-heroicons-question-mark-circle-solid",
     },
     {
       title: "Respuestas dadas",
-      count: user?.reputation?.responses,
+      count: user?.question_comments[0].count,
       icon: "i-heroicons-chat-bubble-left-right-solid",
     },
   ];
-  
+
   const progresoReputacion = obtenerProgresoReputacion(score);
-  const insigniasObtenidas = getAchievementByuser(achievements ?? []);
-  console.log("datos del logros en el perfil propio ---[PROFIle]",  insigniasObtenidas)
+  const achievementsObtained = getAchievementByuser(achievements);
 
   return (
     <section className="space-y-5">
@@ -44,7 +42,7 @@ export default function Home() {
       >
         <h2
           id="estadisticas-title"
-          className="text-lg md:text-xl font-normal mb-2"
+          className="text-lg md:text-lg font-semibold mb-2"
         >
           Tu actividad
         </h2>
@@ -65,20 +63,24 @@ export default function Home() {
       >
         <h3
           id="insignias-title"
-          className="text-lg md:text-xl font-normal mb-3"
+          className="text-lg md:text-lg font-semibold mb-3 fon"
         >
           Tus insignias
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-x-auto  mx-auto overflow-y-hidden p-3">
-          {achievements && achievements.map((achievement, index) => (
-            <CardAchievement
-              key={index}
-              title={achievement.title}
-              description={achievement.description}
-              icon={achievement.icon}
-              color={achievement.color}
-            />
-          ))}
+          {achievementsObtained && achievementsObtained.length === 0 ? (
+            <p className="text-gray-500">Aun no tienes insignias obtenidas.</p>
+          ) : (
+            achievementsObtained.map((achievement, index) => (
+              <CardAchievement
+                key={index}
+                title={achievement.title}
+                description={achievement.description}
+                icon={achievement.icon}
+                color={achievement.color}
+              />
+            ))
+          )}
         </div>
       </article>
     </section>

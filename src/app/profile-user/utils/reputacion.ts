@@ -18,11 +18,16 @@ export function obtenerProgresoReputacion(puntos: number) {
     ordenados.findLast((n) => puntos >= n.puntosMinimos) ?? ordenados[0];
   const siguiente = ordenados.find((n) => n.puntosMinimos > puntos);
 
-  const progreso = siguiente
+  let progreso = siguiente
     ? ((puntos - actual.puntosMinimos) /
         (siguiente.puntosMinimos - actual.puntosMinimos)) *
       100
     : 100;
+
+  // Si hay siguiente nivel y el progreso es 0, mostrar al menos 1%
+  if (siguiente && progreso === 0) {
+    progreso = 1;
+  }
 
   return {
     actual,

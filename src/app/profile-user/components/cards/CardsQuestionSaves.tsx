@@ -41,6 +41,7 @@ export function CardsQuestionSaves({ id, questions }: SchemaQuestionsSaveds) {
                 {questions.user?.full_name || "Anónimo"}
               </p>
               <p className="text-xs text-muted-foreground">
+                Publicado hace{" "}
                 {formatTimestamp(questions.created_at.toString())}
               </p>
             </div>
@@ -69,8 +70,8 @@ export function CardsQuestionSaves({ id, questions }: SchemaQuestionsSaveds) {
           {questions.question_tags.map((questionTag) => (
             <span
               key={questionTag.tag.id}
-              className={`text-xs px-2.5 py-0.5 rounded-full  text-gray-50 font-normal`}
-              style={{ backgroundColor: `${questionTag.tag.color}` }}
+              className={`text-xs px-2.5 py-0.5 rounded-full  dark:text-gray-50 font-normal`}
+              style={{ border: `1px solid ${questionTag.tag.color}` }}
             >
               {questionTag.tag.name}
             </span>

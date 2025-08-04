@@ -1,50 +1,16 @@
 import { create } from "zustand";
-
-export type Session = {
-  id: string;
-  email: string;
-  full_name: string;
-  avatar_url?: string;
-  provider?: string;
-  phone?: string;
-  bio?: string;
-  country?: string;
-  city?: string;
-  department?: string;
-  created_at?: string;
-  approval_token: string;
-  profile_public?: boolean;
-  allow_email?: boolean;
-  allow_whatsapp?: boolean;
-  reputation?: {
-    questions?: number;
-    responses?: number;
-    score?: string;
-
-  };
-  achievements?: {
-    id: string | null,
-    achievement_id?: string | null;
-  };
-};
+import { UserSchema } from "@/schemas/schema.user";
 
 type SessionState = {
-  user: Session | null;
+  user: UserSchema | null;
   isLoggedIn: boolean;
   isLoading: boolean;
-  setUser: (user: Session) => void;
+  setUser: (user: UserSchema) => void;
   updateUserPreferences: (
     preferences: Partial<
       Pick<
-        Session,
-        | "phone"
-        | "bio"
-        | "profile_public"
-        | "allow_email"
-        | "allow_whatsapp"
-        | "country"
-        | "city"
-        | "department"
+        UserSchema["user_profile_preferences"],
+        "profile_public" | "allow_email" | "allow_whatsapp"
       >
     >
   ) => void;

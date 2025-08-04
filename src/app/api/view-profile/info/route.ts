@@ -14,6 +14,8 @@ export async function GET(request: Request) {
 
   const profileData = await getDataProfilePublic(userId);
 
+  console.log("Profile data fetched [ROUTE]:", profileData);
+
   return NextResponse.json(profileData);
 }
 

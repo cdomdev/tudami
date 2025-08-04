@@ -19,7 +19,9 @@ export async function getServerUser() {
   const provider = app_metadata?.provider || "email";
 
   try {
-    const userProfile = await getUserProfile(id, supabase);    
+    
+    const userProfile = await getUserProfile(id, supabase);   
+    
     return buildUserContextObject({
       id,
       email,

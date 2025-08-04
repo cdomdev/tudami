@@ -33,8 +33,6 @@ export async function supabaseServerClient() {
         persistSession: true,
         detectSessionInUrl: false,
         flowType: "pkce",
-        
-
       },
     });
 

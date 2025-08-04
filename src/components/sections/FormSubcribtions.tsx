@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { subscribe } from "@/lib/subcription";
+import { alternativeSubcription, subscribe } from "@/lib/subcription";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -35,6 +35,8 @@ export function FormSubcription() {
     if (error) {
       if (error.code === "23505") {
         toast.error("Ya estás suscrito a nuestro boletín.");
+      } else if (error === "Error processing request") {
+        await alternativeSubcription(values.email.toLocaleLowerCase());
       } else {
         toast.error("No pudimos suscribirte. Inténtalo de nuevo más tarde.");
       }

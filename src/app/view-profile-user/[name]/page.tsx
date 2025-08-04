@@ -1,13 +1,13 @@
 "use client";
 
 import { useSearchParams } from "next/dist/client/components/navigation";
-import { SchemaProfileResponse } from "@/schemas";
+import {  SchemaProfileResponse} from "@/schemas";
 import { useEffect, useState } from "react";
 import { MessageSquare, Reply } from "lucide-react";
 import { getDataProfilePublic } from "../lib/getDataProfile";
 import { SkeletonActividadUsuario } from "../components/SkeletonActivitieUser";
-import { getAchievementByuser } from "@/utils/mapAchienvements"
-import { CardAchievement } from "@/components/ui/Cards/CardAchievements"
+import { getAchievementByuser } from "@/utils/mapAchienvements";
+import { CardAchievement } from "@/components/ui/Cards/CardAchievements";
 
 export default function ViewProfileUserPage() {
   const [dataProfile, setDataProfile] = useState<SchemaProfileResponse>();
@@ -15,6 +15,7 @@ export default function ViewProfileUserPage() {
 
   const searchParams = useSearchParams();
   const userId = searchParams.get("u_view_profile_p");
+  const achievements = dataProfile?.user_achievements ?? [];
 
   useEffect(() => {
     async function fetchData() {
@@ -25,6 +26,8 @@ export default function ViewProfileUserPage() {
 
       const res = await getDataProfilePublic({ userId });
 
+      console.log("Data fetched for user profile:", res);
+      
       if (res.success && res.data) {
         setDataProfile(res.data);
       }
@@ -35,14 +38,13 @@ export default function ViewProfileUserPage() {
     fetchData();
   }, [userId]);
 
+  const achievementsObtained = getAchievementByuser(achievements);
 
-  const achievements = getAchievementByuser(dataProfile?.user_achievements ?? []);
+  console.log("achievementsObtained", dataProfile);
 
   if (loading) {
     <SkeletonActividadUsuario />;
   }
-
-  console.log(dataProfile);
 
   return (
     <>
@@ -77,16 +79,17 @@ export default function ViewProfileUserPage() {
           Insignias obtenidas
         </h3>
 
-        <div className="grid grid-cols-2 grid-rows-1 sm:grid-cols-4 gap-4 text-center">
-          {achievements && achievements.map((achievement, index) => (
-            <CardAchievement
-              key={index}
-              title={achievement.title}
-              description={achievement.description}
-              icon={achievement.icon}
-              color={achievement.color}
-            />
-          ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 overflow-x-auto  mx-auto overflow-y-hidden ">
+          {achievementsObtained &&
+            achievementsObtained.map((achievement, index) => (
+              <CardAchievement
+                key={index}
+                title={achievement.title}
+                description={achievement.description}
+                icon={achievement.icon}
+                color={achievement.color}
+              />
+            ))}
         </div>
       </div>
     </>

@@ -1,37 +1,47 @@
-import { z } from "zod";
+import * as z from "zod";
 
-export const UserSchema = z.object({
-    id: z.string(),
-    email: z.string().email(),
-    full_name: z.string(),
-    avatar_url: z.string().nullable(),
-    provider: z.string(),
+export const QuestionSchema = z.object({
+  count: z.number(),
+});
+export type Question = z.infer<typeof QuestionSchema>;
 
-    phone: z.string().optional(),
-    bio: z.string().optional(),
-    city: z.string().optional(),
-    department: z.string().optional(),
-    country: z.string().default("Colombia"),
-    approval_token: z.string().optional(),
-    created_at: z.coerce.date(),
+export const UserAchievementSchema = z.object({
+  id: z.number(),
+  achievement_id: z.string(),
+});
+export type UserAchievement = z.infer<typeof UserAchievementSchema>;
 
-    user_profile_preferences: z.object({
-        profile_public: z.boolean(),
-        allow_email: z.boolean(),
-        allow_whatsapp: z.boolean(),
-    }),
+export const UserProfilePreferencesSchema = z.object({
+  allow_email: z.boolean(),
+  allow_whatsapp: z.boolean(),
+  profile_public: z.boolean(),
+});
+export type UserProfilePreferences = z.infer<
+  typeof UserProfilePreferencesSchema
+>;
 
-    user_reputation: z.object({
-        questions: z.number(),
-        responses: z.number(),
-        score: z.string(),
-    }),
-
-    user_achievements: z.object({
-        id: z.string().nullable(),
-        achievement_id: z.string().nullable(),
-    }),
+export const UserReputationSchema = z.object({
+  id: z.number(),
+  score: z.number(),
 });
 
-export type UserSchema = z.infer<typeof UserSchema>;
+export type UserReputation = z.infer<typeof UserReputationSchema>;
 
+export const User = z.object({
+  id: z.string(),
+  full_name: z.string(),
+  avatar_url: z.string(),
+  email: z.string(),
+  phone: z.number(),
+  bio: z.string(),
+  country: z.string(),
+  city: z.string(),
+  department: z.string(),
+  created_at: z.coerce.date(),
+  user_profile_preferences: UserProfilePreferencesSchema,
+  questions: z.array(QuestionSchema),
+  question_comments: z.array(QuestionSchema),
+  user_reputation: z.array(UserReputationSchema),
+  user_achievements: z.array(UserAchievementSchema),
+});
+export type UserSchema = z.infer<typeof User>;
