@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "@/context/context.sesion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,32 +29,35 @@ export function Notifications() {
   const { user } = useSession();
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  const fetchNotifications = async () => {
-    if (!user?.id) return;
-    const data = await getNotifications(user.id);
-    if (data) {
-      setNotifications(data);
-    }
-  };
+  useEffect(() => {
+    async function fetchNotifications() {
+      if (!user?.id) return;
+      const data = await getNotifications(user.id);
+      if (data) {
+        setNotifications(data);
+      }
+    };
+    fetchNotifications();
+  }, [])
 
-  // Cargar manualmente sin efecto
-  // Solo se ejecuta al hacer clic en la campana
-  const handleOpen = () => {
-    if (notifications.length === 0) {
-      fetchNotifications();
-    }
-  };
+  // // Cargar manualmente sin efecto
+  // // Solo se ejecuta al hacer clic en la campana
+  // const handleOpen = () => {
+  //   if (notifications.length === 0) {
+  //   }
+  // };
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger asChild onClick={handleOpen}>
+      <DropdownMenuTrigger asChild >
         <Button
           variant="ghost"
           size="icon"
           className="relative h-8 w-8 p-0 border-none cursor-pointer hover:bg-transparent dark:hover:bg-transparent"
         >
           <Bell className="h-4 w-4" />
-           <span className="absolute top-0 right-0 h-2.5 w-2.5 rounded-full bg-red-500" />
+          <span className="sr-only">handle notification</span>
+          <span className="absolute top-0 right-0 h-2.5 w-2.5 rounded-full bg-red-500" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
