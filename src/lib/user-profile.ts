@@ -102,6 +102,7 @@ export function buildUserContextObject({
   avatar_url,
   provider,
   userProfile,
+  approval_token
 }: {
   id: string;
   email: string | undefined;
@@ -109,6 +110,7 @@ export function buildUserContextObject({
   avatar_url: string;
   provider: string;
   userProfile: UserSchema;
+  approval_token: string | undefined;
 }) {
   return {
     provider,
@@ -116,6 +118,7 @@ export function buildUserContextObject({
     email: email || "",
     full_name,
     avatar_url,
+    approval_token,
     phone: userProfile.phone || "",
     bio: userProfile.bio || "",
     city: userProfile?.city || "",
