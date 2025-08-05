@@ -8,13 +8,13 @@ import {
   getMyQuestionsApi,
   getQuestionsByIdApi,
 } from "../lib/getQuestions";
-import { SchemaPost  } from "@/schemas";
+import { SchemaPost } from "@/schemas";
 import { SkeletonCard } from "../components/SkeletonPost";
 import { CardPost } from "../components/Cards/CardPost";
 import { Count } from "../components/CountQuestions";
 import { Pagination } from "@/components/pagination";
 
-export default function QuestionPage({}: { params: { query: string } }) {
+export default function QuestionPage({ }: { params: { query: string } }) {
   const [questions, setQuestions] = useState<SchemaPost[]>([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
@@ -57,8 +57,6 @@ export default function QuestionPage({}: { params: { query: string } }) {
     fetchQuestions();
   }, [page, search, query, id]);
 
-  console.log("Questions fetched:", questions);
-
   return (
     <>
       <Count count={questions.length} />
@@ -68,7 +66,7 @@ export default function QuestionPage({}: { params: { query: string } }) {
         ) : questions.length === 0 ? (
           <p className="text-center">No hay preguntas.</p>
         ) : (
-          questions.map((post) => <CardPost key={post.id} {...post} />)
+          questions.map((post, i) => <CardPost key={post.id || i} {...post} />)
         )}
       </section>
       <Pagination
