@@ -5,6 +5,7 @@ import { getUserProfile, buildUserContextObject } from "@/lib/user-profile";
 export async function getServerUser() {
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get("sb-access-token")?.value;
+  const approvaltoken = cookieStore.get("approval_token")?.value;
   if (!sessionToken) return null;
   const supabase = await supabaseServerClient();
 
@@ -28,7 +29,8 @@ export async function getServerUser() {
       full_name,
       avatar_url,
       provider,
-      userProfile
+      userProfile,
+      approval_token: approvaltoken
     });
   } catch (error) {
     console.error("Error obteniendo perfil del usuario:", error);
