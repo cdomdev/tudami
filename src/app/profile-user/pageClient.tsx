@@ -12,10 +12,6 @@ export default function Home() {
   const { user } = useSession();
 
   const score = user?.user_reputation.score ?? 0;
-
-  console.log(user)
-  console.log(score)
-
   const achievements = user?.user_achievements ?? [];
 
   const itemsActivity = [
