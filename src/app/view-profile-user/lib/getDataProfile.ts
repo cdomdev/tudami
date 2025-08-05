@@ -10,8 +10,6 @@ export async function getDataProfilePublic({ userId }: { userId: string }) {
 
     const data = await response.json();
 
-    console.log("Data fetched:", data);
-
     if (!response.ok) {
       return {
         success: false,

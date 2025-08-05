@@ -39,7 +39,7 @@ const FormSchema = z.object({
       return val.length >= 10 && val.length <= 15;
     }, "El número debe tener entre 10 y 15 dígitos")
     .refine((val) => {
-      if (!val || val.trim() === "") return true; 
+      if (!val || val.trim() === "") return true;
       return /^[\d\s\+\-\(\)]+$/.test(val);
     }, "Formato de número inválido")
     .optional(),
@@ -50,11 +50,11 @@ const FormSchema = z.object({
 });
 
 export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
-  const { user, updateUserPreferences: updateUserPreferencesContext } =
+  const { user, updateUserData } =
     useSession();
 
 
-  
+
   // Estado para las ciudades filtradas
   const [filteredCities, setFilteredCities] = useState<string[]>([]);
 
@@ -70,17 +70,17 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
 
   // Función para actualizar ciudades cuando cambia el departamento
   const handleDepartmentChange = useCallback((departmentName: string) => {
-    
+
     const selectedDepartment = locationsData.find(
       (location) => location.departamento === departmentName
     );
-        
+
     if (selectedDepartment) {
       setFilteredCities(selectedDepartment.ciudades);
     } else {
       setFilteredCities([]);
     }
-    
+
     // Solo limpiar la ciudad seleccionada si no está entre las opciones válidas
     const currentCity = form.getValues("city");
     if (currentCity && selectedDepartment && !selectedDepartment.ciudades.includes(currentCity)) {
@@ -91,19 +91,18 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
   // Actualizar valores del formulario cuando cambie el usuario
   useEffect(() => {
     if (user) {
-      
+
       const formData = {
         phone: user.phone ? String(user.phone) : "",
         bio: user.bio ? String(user.bio) : "",
         city: user.city ? String(user.city) : "",
         department: user.department ? String(user.department) : "",
       };
-            
+
       form.reset(formData);
-      
+
       // Si el usuario tiene un departamento, cargar sus ciudades
       if (user.department) {
-        console.log("🔍 Cargando ciudades para departamento:", user.department);
         handleDepartmentChange(String(user.department));
       }
     }
@@ -119,7 +118,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
       try {
         // Asegurar que todos los valores sean strings
         const formattedData = {
-          phone: data.phone ? String(data.phone) : "",
+          phone: data.phone ? Number(data.phone) :undefined ,
           bio: data.bio ? String(data.bio) : "",
           department: data.department ? String(data.department) : "",
           city: data.city ? String(data.city) : "",
@@ -134,7 +133,8 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
         }
 
         // Actualizar el contexto
-        updateUserPreferencesContext(formattedData);
+        updateUserData(formattedData);
+
 
         toast.success("Datos personales guardados correctamente");
       } catch (error) {
@@ -142,7 +142,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
         toast.error("Error al guardar los datos personales");
       }
     },
-    [user?.id, updateUserPreferencesContext]
+    [user?.id,  updateUserData]
   );
 
   return (
@@ -238,8 +238,8 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
                       </SelectTrigger>
                       <SelectContent>
                         {locationsData.map((location) => (
-                          <SelectItem 
-                            key={location.id} 
+                          <SelectItem
+                            key={location.id}
                             value={location.departamento}
                           >
                             {location.departamento}
@@ -282,12 +282,12 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
                       disabled={!form.watch("department") || filteredCities.length === 0}
                     >
                       <SelectTrigger className="bg-white/70 text-black dark:text-muted-foreground">
-                        <SelectValue 
+                        <SelectValue
                           placeholder={
-                            !form.watch("department") 
+                            !form.watch("department")
                               ? "Primero selecciona un departamento"
                               : "Selecciona una ciudad"
-                          } 
+                          }
                         />
                       </SelectTrigger>
                       <SelectContent>

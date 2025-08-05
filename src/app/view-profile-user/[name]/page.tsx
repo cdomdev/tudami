@@ -25,8 +25,6 @@ export default function ViewProfileUserPage() {
       }
 
       const res = await getDataProfilePublic({ userId });
-
-      console.log("Data fetched for user profile:", res);
       
       if (res.success && res.data) {
         setDataProfile(res.data);
@@ -40,7 +38,6 @@ export default function ViewProfileUserPage() {
 
   const achievementsObtained = getAchievementByuser(achievements);
 
-  console.log("achievementsObtained", dataProfile);
 
   if (loading) {
     <SkeletonActividadUsuario />;

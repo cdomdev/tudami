@@ -32,9 +32,9 @@ export function FormPrefenceContact() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      public_profile: user?.profile_public ?? false,
-      allow_email: user?.allow_email ?? false,
-      allow_whatsapp: user?.allow_whatsapp ?? false,
+      public_profile: user?.user_profile_preferences.profile_public ?? false,
+      allow_email: user?.user_profile_preferences.allow_email ?? false,
+      allow_whatsapp: user?.user_profile_preferences.allow_whatsapp ?? false,
     },
   });
 
@@ -42,9 +42,9 @@ export function FormPrefenceContact() {
   useEffect(() => {
     if (user) {
       form.reset({
-        public_profile: user.profile_public ?? false,
-        allow_email: user.allow_email ?? false,
-        allow_whatsapp: user.allow_whatsapp ?? false,
+        public_profile: user.user_profile_preferences.profile_public ?? false,
+        allow_email: user.user_profile_preferences.allow_email ?? false,
+        allow_whatsapp: user.user_profile_preferences.allow_whatsapp ?? false,
       });
     }
   }, [user, form]);
@@ -58,11 +58,13 @@ export function FormPrefenceContact() {
 
     try {
       // Actualizar en la base de datos
-      const { error } = await updateUserPreferences(user.id, {
+      const { error, data:resUp } = await updateUserPreferences(user.id, {
         profile_public: data.public_profile,
         allow_email: data.allow_email,
         allow_whatsapp: data.allow_whatsapp,
       });
+
+      console.log("data en la funcion de update profile preference ---[FORM]", resUp);
 
       if (error) {
         toast.error("Error al guardar las preferencias");

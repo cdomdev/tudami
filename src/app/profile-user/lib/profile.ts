@@ -5,7 +5,7 @@ export interface UserPreferences {
   profile_public?: boolean;
   allow_email?: boolean;
   allow_whatsapp?: boolean;
-  phone?: string;
+  phone?: number;
   bio?: string;
   city?: string;
   department?: string;
