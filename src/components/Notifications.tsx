@@ -12,6 +12,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Bell } from "lucide-react";
 import { getNotifications } from "@/lib/notifications";
+import Link from "next/link";
+
 interface Notification {
   id: string;
   user_id: string;
@@ -40,12 +42,8 @@ export function Notifications() {
     fetchNotifications();
   }, [])
 
-  // // Cargar manualmente sin efecto
-  // // Solo se ejecuta al hacer clic en la campana
-  // const handleOpen = () => {
-  //   if (notifications.length === 0) {
-  //   }
-  // };
+
+
 
   return (
     <DropdownMenu modal={false}>
@@ -62,24 +60,30 @@ export function Notifications() {
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="center"
-        className="w-full max-w-72 max-h-80 overflow-y-auto popoveer-content"
+        className="w-full max-w-72 max-h-80 overflow-y-auto popoveer-content p-0"
       >
         <DropdownMenuLabel>Notificaciones</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="mb-0" />
         {notifications.length === 0 ? (
           <p className="px-4 py-2 text-sm text-muted-foreground">
             No tienes notificaciones.
           </p>
         ) : (
-          notifications.map((n) => (
-            <p
-              key={n.id}
-              className="p-2 text-sm text-accent-foreground border-b border-muted"
-            >
-              {n.content}
-            </p>
-          ))
+          notifications.map((n) => {
+            const Wrapper = n.url ? Link : "div";
+
+            return (
+              <Wrapper
+                key={n.id}
+                href={n.url || ""}
+                className="block px-4 py-2 text-sm text-accent-foreground hover:bg-accent rounded-sm"
+              >
+                {n.content}
+              </Wrapper>
+            );
+          })
         )}
+
       </DropdownMenuContent>
     </DropdownMenu>
   );
