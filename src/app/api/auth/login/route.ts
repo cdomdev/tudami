@@ -85,30 +85,44 @@ export async function POST(request: NextRequest) {
       // No retornamos error aquí porque las preferencias pueden crearse después
     }
 
-    // 8. Obtener perfil completo del usuario y crear objeto para el contexto
-    let userForContext;
+    //obtener datos del usuario para retornar
+    let data
     try {
-      userForContext = await prepareUserContextObject({
-        id,
-        email,
-        full_name,
-        avatar_url,
-        provider,
-        upsertedUser,
-        supabase,
-      });
+      data = await getUserProfile(id, supabase)
     } catch (error) {
-      console.error("Error al construir objeto de usuario:", error);
+      console.error("Error al obtener perfil del usuario:", error);
       return NextResponse.json(
         { error: "Error obteniendo perfil del usuario" },
         { status: 500 }
       );
     }
 
+
+
+    // // 8. Obtener perfil completo del usuario y crear objeto para el contexto
+    // let userForContext;
+    // try {
+    //   userForContext = await prepareUserContextObject({
+    //     id,
+    //     email,
+    //     full_name,
+    //     avatar_url,
+    //     provider,
+    //     upsertedUser,
+    //     supabase,
+    //   });
+    // } catch (error) {
+    //   console.error("Error al construir objeto de usuario:", error);
+    //   return NextResponse.json(
+    //     { error: "Error obteniendo perfil del usuario" },
+    //     { status: 500 }
+    //   );
+    // }
+
     return NextResponse.json({
       success: true,
       message: "Autenticación exitosa",
-      user: userForContext,
+      user: data,
     });
   } catch (error) {
     console.error("Error en auth/login:", error);
@@ -117,6 +131,9 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+
+
+
 }
 
 /**
@@ -144,14 +161,14 @@ async function validateAccessToken(
 }
 
 // Definimos un tipo para el usuario que se inserta en la base de datos
-type UpsertedUser = {
-  phone?: string;
-  bio?: string;
-  approval_token?: string;
-  created_at?: string;
-  // Otros campos específicos pueden añadirse aquí
-  [key: string]: string | number | boolean | null | undefined;
-};
+// type UpsertedUser = {
+//   phone?: string;
+//   bio?: string;
+//   approval_token?: string;
+//   created_at?: string;
+//   // Otros campos específicos pueden añadirse aquí
+//   [key: string]: string | number | boolean | null | undefined;
+// };
 
 /**
  * Inserta o actualiza el perfil del usuario en la base de datos
@@ -272,73 +289,52 @@ async function ensureUserPreferences(userId: string, supabase: SupabaseClient) {
 
 /**
  * Prepara y construye el objeto de usuario completo para el contexto del cliente
- * Esta función obtiene el perfil del usuario y luego usa buildUserContextObject 
+ * Esta función obtiene el perfil del usuario y luego usa buildUserContextObject
  * de la utilidad centralizada para crear el objeto final
  */
-async function prepareUserContextObject({
-  id,
-  email,
-  full_name,
-  avatar_url,
-  provider,
-  upsertedUser,
-  supabase,
-}: {
-  id: string;
-  email: string | undefined;
-  full_name: string;
-  avatar_url: string;
-  provider: string;
-  upsertedUser: UpsertedUser;
-  supabase: SupabaseClient;
-}) {
-  // Obtener perfil completo con todas las relaciones
-  const { data: userProfile, error: profileError } = await getUserProfileQuery(
-    id,
-    supabase
-  );
+// async function prepareUserContextObject({
+//   id,
+//   email,
+//   full_name,
+//   avatar_url,
+//   provider,
+//   upsertedUser,
+//   supabase,
+// }: {
+//   id: string;
+//   email: string | undefined;
+//   full_name: string;
+//   avatar_url: string;
+//   provider: string;
+//   upsertedUser: UpsertedUser;
+//   supabase: SupabaseClient;
+// }) {
+//   // Obtener perfil completo con todas las relaciones
+//   const data = await getUserProfile(id, supabase)
+//   const { phone, bio, created_at } = data
+//   if (!data) {
+//     throw new Error(
+//       `Error obteniendo perfil: No se encontró el perfil`
+//     );
+//   }
 
-  if (profileError || !userProfile) {
-    throw new Error(
-      `Error obteniendo perfil: No se encontró el perfil`
-    );
-  }
+//   // Construir objeto de usuario para el contexto usando la función centralizada
+//   // Combinamos los datos del perfil con los datos actualizados del usuario
+//   const mergedProfile = {
+//     ...data,
+//     phone: upsertedUser?.phone ?? phone,
+//     bio: upsertedUser?.bio ?? bio,
+//     approval_token: upsertedUser?.approval_token,
+//     created_at: upsertedUser?.created_at ?? created_at,
+//   };
 
-  // Construir objeto de usuario para el contexto usando la función centralizada
-  // Combinamos los datos del perfil con los datos actualizados del usuario
-  const mergedProfile = {
-    ...userProfile,
-    phone: upsertedUser?.phone ?? userProfile?.phone,
-    bio: upsertedUser?.bio ?? userProfile?.bio,
-    approval_token: upsertedUser?.approval_token,
-    created_at: upsertedUser?.created_at ?? userProfile?.created_at,
-  };
-  
-  return buildUserContextObject({
-    id,
-    email,
-    full_name,
-    avatar_url,
-    provider,
-    userProfile: mergedProfile,
-  });
-}
+//   return buildUserContextObject({
+//     id,
+//     email,
+//     full_name,
+//     avatar_url,
+//     provider,
+//     userProfile: mergedProfile,
+//   });
+// }
 
-
-/**
- * Consulta el perfil del usuario con todas sus relaciones
- * Esta función es un wrapper sobre getUserProfile para mantener la compatibilidad
- */
-async function getUserProfileQuery(userId: string, client: SupabaseClient) {
-  if (!userId) {
-    throw new Error("ID de usuario requerido para obtener perfil");
-  }
-
-  try {
-    const data = await getUserProfile(userId, client);
-    return { data, error: null };
-  } catch (error) {
-    console.error("Error al obtener perfil de usuario:", error);
-    throw new Error(`Error obteniendo perfil: ${error instanceof Error ? error.message : String(error)}`);
-  }
-}

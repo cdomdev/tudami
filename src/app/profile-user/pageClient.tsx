@@ -11,20 +11,22 @@ import { CardAchievement } from "@/components/ui/Cards/CardAchievements";
 export default function Home() {
   const { user } = useSession();
 
-  console.log("user", user);
-  const score = user?.user_reputation && user?.user_reputation[0].score || 0;
+  const score = user?.user_reputation.score ?? 0;
+
+  console.log(user)
+  console.log(score)
 
   const achievements = user?.user_achievements ?? [];
 
   const itemsActivity = [
     {
       title: "Preguntas hechas",
-      count: user?.questions[0].count,
+      count: user?.questions,
       icon: "i-heroicons-question-mark-circle-solid",
     },
     {
       title: "Respuestas dadas",
-      count: user?.question_comments[0].count,
+      count: user?.question_comments,
       icon: "i-heroicons-chat-bubble-left-right-solid",
     },
   ];

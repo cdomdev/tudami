@@ -1,10 +1,10 @@
 "use client";
 import { useEffect } from "react";
-import { Session, useSession } from "@/context/context.sesion";
-
+import { useSession } from "@/context/context.sesion";
+import { UserSchema } from "@/schemas"
 
 type Props = {
-  user: Session | null;
+  user: UserSchema | null;
 }
 
 export function SessionHydrator({ user }: Props) {
