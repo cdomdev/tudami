@@ -34,6 +34,7 @@ export const User = z.object({
   email: z.string(),
   phone: z.number(),
   bio: z.string(),
+  approval_token: z.string().optional(),
   country: z.string(),
   city: z.string(),
   department: z.string(),
@@ -44,4 +45,5 @@ export const User = z.object({
   user_reputation: UserReputationSchema,
   user_achievements: z.array(UserAchievementSchema),
 });
+
 export type UserSchema = z.infer<typeof User>;

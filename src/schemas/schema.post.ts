@@ -1,5 +1,6 @@
 import z from "zod";
-import { UserSchema } from './schema.user'
+import { User } from '@/schemas/schema.user'
+
 export const QuestionSchema = z.object({
   id: z.number(),
 });
@@ -27,7 +28,7 @@ export const SchemaPostSchema = z.object({
   content: z.string(),
   status: z.string(),
   created_at: z.coerce.date(),
-  users: UserSchema,
+  users: User,
   question_tags: z.array(QuestionTagSchema),
   question_likes: z.array(QuestionSchema),
   question_comments: z.array(QuestionSchema),

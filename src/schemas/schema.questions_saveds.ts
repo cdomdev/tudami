@@ -1,5 +1,5 @@
 import z from "zod";
-import { UserSchema } from './schema.user'
+import { User } from './schema.user'
 
 
 export const QuestionSchema = z.object({
@@ -31,7 +31,7 @@ export const QuestionsSchema = z.object({
   question_tags: z.array(QuestionTagSchema),
   question_likes: z.array(QuestionSchema),
   question_comments: z.array(QuestionSchema),
-  user: UserSchema,
+  user: User
 });
 export type Questions = z.infer<typeof QuestionsSchema>;
 
