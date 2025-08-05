@@ -39,9 +39,9 @@ export const User = z.object({
   department: z.string(),
   created_at: z.coerce.date(),
   user_profile_preferences: UserProfilePreferencesSchema,
-  questions: z.array(QuestionSchema),
-  question_comments: z.array(QuestionSchema),
-  user_reputation: z.array(UserReputationSchema),
+  questions: z.number(),
+  question_comments: z.number(),
+  user_reputation: UserReputationSchema,
   user_achievements: z.array(UserAchievementSchema),
 });
 export type UserSchema = z.infer<typeof User>;

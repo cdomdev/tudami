@@ -70,7 +70,7 @@ export function FrequentlyQuestions() {
               </AccordionTrigger>
               <AccordionContent className="flex flex-col text-pretty md:text-base  dark:bg-card rounded-md px-4 py-2 ">
                 {item.content.map((text, index) => (
-                  <p key={index} className="text-muted-foreground text-base text-pretty">{text}</p>
+                  <p key={index} className="text-black text-base text-pretty">{text}</p>
                 ))}
               </AccordionContent>
             </AccordionItem>

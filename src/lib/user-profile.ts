@@ -7,6 +7,7 @@ import { UserSchema } from "@/schemas";
  * @param client Cliente de Supabase para realizar la consulta
  * @returns Datos del perfil del usuario con todas sus relaciones
  */
+
 export async function getUserProfile(userId: string, client: SupabaseClient) {
   if (!userId) {
     throw new Error("ID de usuario requerido para obtener perfil");
@@ -14,8 +15,7 @@ export async function getUserProfile(userId: string, client: SupabaseClient) {
 
   const { data, error } = await client
     .from("users")
-    .select(
-      `
+    .select(`
       id,
       full_name,
       avatar_url,
@@ -41,8 +41,7 @@ export async function getUserProfile(userId: string, client: SupabaseClient) {
         id,
         achievement_id
       ) 
-    `
-    )
+    `)
     .eq("id", userId)
     .single();
 
@@ -50,10 +49,42 @@ export async function getUserProfile(userId: string, client: SupabaseClient) {
     throw new Error(
       `Error obteniendo perfil: ${error?.message || "No se encontró el perfil"}`
     );
-
   }
 
-  return data ;
+  //Normalizar
+
+  const preferencesArray = data.user_profile_preferences as any[];
+  const normalizedPreferences = Array.isArray(preferencesArray) && preferencesArray.length > 0
+    ? preferencesArray[0]
+    : {
+      profile_public: false,
+      allow_email: false,
+      allow_whatsapp: false,
+    };
+
+  // Normalizar user_reputation
+  const reputationArray = data.user_reputation as any[];
+  const normalizedReputation = Array.isArray(reputationArray) && reputationArray.length > 0
+    ? reputationArray[0]
+    : {
+      id: 0,
+      score: 0,
+    };
+  // Normalizar preguntas y respuestas
+  const questionsCount = Array.isArray(data.questions) ? data.questions[0]?.count ?? 0 : 0;
+  const commentsCount = Array.isArray(data.question_comments) ? data.question_comments[0]?.count ?? 0 : 0;
+
+
+
+  return {
+    ...data,
+    user_profile_preferences: normalizedPreferences,
+    user_reputation: normalizedReputation,
+    questions: questionsCount,
+    question_comments: commentsCount,
+  };
+
+
 }
 
 /**
@@ -101,7 +132,8 @@ export function buildUserContextObject({
     questions: userProfile?.questions ?? 0,
     question_comments: userProfile?.question_comments ?? 0,
     user_reputation: {
-      score: userProfile.user_reputation[0]?.score || 0,
+      id: userProfile.user_reputation.id || "",
+      score: userProfile.user_reputation.score || 0,
     },
     user_achievements:
       userProfile.user_achievements?.map((achievement) => ({

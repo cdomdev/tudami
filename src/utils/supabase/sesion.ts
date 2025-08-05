@@ -12,16 +12,16 @@ export async function getServerUser() {
     sessionToken
   );
 
-  if (userError || !userData?.user) return null;  
+  if (userError || !userData?.user) return null;
   const { id, email, user_metadata, app_metadata } = userData.user;
   const full_name = user_metadata?.full_name || user_metadata?.name || "";
   const avatar_url = user_metadata?.picture || user_metadata.avatar_url || "";
   const provider = app_metadata?.provider || "email";
 
   try {
-    
-    const userProfile = await getUserProfile(id, supabase);   
-    
+
+    const userProfile = await getUserProfile(id, supabase);
+
     return buildUserContextObject({
       id,
       email,
