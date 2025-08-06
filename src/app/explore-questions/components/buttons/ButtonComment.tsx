@@ -48,7 +48,7 @@ export function ButtonComment({
 
     // 3. Si el autor no es el mismo usuario, crear notificación
 
-    if (questionOwnerId && questionOwnerId === user.id) {
+    if (questionOwnerId && questionOwnerId !== user.id) {
       const notificationPayload = {
         user_id: questionOwnerId,
         actor_id: user.id,
@@ -63,6 +63,8 @@ export function ButtonComment({
       const res = await createNotification(notificationPayload);
 
       console.log("datos de la respuesta de la notificacion --->", res);
+
+
       if (!res) {
         console.error("Error creando notificación");
       }
@@ -105,7 +107,7 @@ export function ButtonComment({
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={3}
-            className="w-full resize-none rounded-md border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 transition text-xs md:text-sm lg:text-base"
+            className="w-full resize-none rounded-md border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 transition text-xs md:text-sm lg:text-sm"
           />
           <div className="flex gap-2 justify-end mt-3">
             <Button

@@ -31,6 +31,8 @@ export async function createNotification({ actor_id, content, entity_id, entity_
     body: JSON.stringify(bodyNotification),
   });
 
+  console.log("datos de la notificacion --->", response);
+
   if (!response.ok) {
     throw new Error("Error creating notification");
   }

@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 
-
-
 interface dataNotification {
   user_id: string;
   actor_id: string;
@@ -16,7 +14,16 @@ interface dataNotification {
 
 export async function POST(request: Request) {
   try {
-    const { user_id, actor_id, type, entity_id, entity_type, content, url, read } = await request.json();
+    const {
+      user_id,
+      actor_id,
+      type,
+      entity_id,
+      entity_type,
+      content,
+      url,
+      read,
+    } = await request.json();
 
     if (!user_id || !content) {
       return NextResponse.json(
@@ -29,7 +36,11 @@ export async function POST(request: Request) {
       user_id,
       actor_id,
       type,
-      entity_id, entity_type, content, url, read,
+      entity_id,
+      entity_type,
+      content,
+      url,
+      read,
     };
 
     const data = await createNotification(payloadData);
@@ -44,7 +55,16 @@ export async function POST(request: Request) {
   }
 }
 
-export async function createNotification({ user_id, actor_id, type, entity_id, entity_type, content, url, read }: dataNotification) {
+export async function createNotification({
+  user_id,
+  actor_id,
+  type,
+  entity_id,
+  entity_type,
+  content,
+  url,
+  read,
+}: dataNotification) {
   const supabase = await supabaseServerClient();
   const notificationData = {
     user_id,
@@ -58,7 +78,9 @@ export async function createNotification({ user_id, actor_id, type, entity_id, e
   };
   const { data, error } = await supabase
     .from("notifications")
-    .insert([notificationData]);
+    .insert([notificationData])
+    .select()
+    .single();
 
   if (error) {
     console.error("Error creating notification:", error);
@@ -66,4 +88,4 @@ export async function createNotification({ user_id, actor_id, type, entity_id, e
   }
 
   return data;
-};
+}

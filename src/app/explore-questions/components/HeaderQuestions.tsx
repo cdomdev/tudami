@@ -12,7 +12,7 @@ export function Header() {
         <div className="max-w-6xl px-4 mx-auto mb-4">
           {/* Título y descripción */}
           <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold mb-4 text-slate-800 dark:text-slate-100">
+            <h1 className="text-2xl md:text-3xl font-bold mb-4 text-slate-800 dark:text-slate-100">
               Explorar Preguntas y Ofertas
             </h1>
             <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">

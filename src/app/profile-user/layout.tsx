@@ -12,8 +12,6 @@ export default function LayoutProfile({
 }) {
   const { user } = useSession();
 
-
-
   return (
     <section
       className="grid grid-cols-1 md:grid-cols-6 gap-2 p-4 max-w-6xl mx-auto mt-20 md:mt-24"
@@ -32,7 +30,13 @@ export default function LayoutProfile({
         >
           Opciones
         </h2>
-        <MapItems id={user?.id} full_name={user?.full_name} className="rounded-md" />
+        <nav aria-label="Navegación de perfil">
+          <MapItems
+            id={user?.id}
+            full_name={user?.full_name}
+            className="rounded-md"
+          />
+        </nav>
       </aside>
 
       {/* Contenido principal */}
@@ -68,15 +72,31 @@ export default function LayoutProfile({
             </p>
           </div>
         </header>
-        <MapItems id={user?.id} full_name={user?.full_name} className="border bg-custom-card rounded-sm md:hidden" />
+        <nav
+          aria-label="Navegación de perfil"
+          className="md:hidden overflow-x-auto"
+        >
+          <MapItems
+            id={user?.id}
+            full_name={user?.full_name}
+            className="border bg-custom-card rounded-sm md:hidden overflow-x-auto"
+          />
+        </nav>
         {children}
       </main>
     </section>
   );
 }
 
-
-function MapItems({ id, full_name, className, isBw }: { id?: string, full_name?: string, className: string, isBw?: boolean }) {
+function MapItems({
+  id,
+  full_name,
+  className,
+}: {
+  id?: string;
+  full_name?: string;
+  className: string;
+}) {
   const itemsSide = [
     {
       name: "Inicio",
@@ -93,22 +113,21 @@ function MapItems({ id, full_name, className, isBw }: { id?: string, full_name?:
       href: `/profile-user/save?user_id=${id}`,
       icon: Bookmark,
     },
+  
   ];
   return (
-    <nav aria-label="Navegación de perfil" >
-      <ul className="flex gap-2 sm:my-3 md:my-0 rounded-xs shadow-sm md:flex-col">
-        {itemsSide.map((item, i) => (
-          <li key={i} aria-label={item.name}>
-            <Link
-              href={item.href}
-              className={`${className} flex items-center gap-3 px-3 py-2  transition-colors hover:bg-accent-foreground/10 dark:cusbg-custom-card text-accent-foreground`}
-            >
-              <item.icon className="size-5 text-primary" />
-              <span className="text-sm font-medium">{item.name}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  )
+    <ul className="flex gap-2 my-3 md:my-0 rounded-xs shadow-sm md:flex-col ">
+      {itemsSide.map((item, i) => (
+        <li key={i} aria-label={item.name}>
+          <Link
+            href={item.href}
+            className={`${className} flex items-center gap-3 px-3 py-2  transition-colors hover:bg-accent-foreground/10 dark:cusbg-custom-card text-accent-foreground`}
+          >
+            <item.icon className="size-5 text-primary" />
+            <span className="text-sm font-medium">{item.name}</span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
 }

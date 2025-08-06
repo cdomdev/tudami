@@ -76,7 +76,7 @@ export function Notifications() {
               <Wrapper
                 key={n.id}
                 href={n.url || ""}
-                className="block px-4 py-2 text-sm text-accent-foreground hover:bg-accent rounded-sm"
+                className="block px-4 py-2 text-sm text-accent-foreground hover:bg-accent cursor-pointer no-underline"
               >
                 {n.content}
               </Wrapper>
