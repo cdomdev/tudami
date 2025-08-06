@@ -27,6 +27,7 @@ export default function Home() {
     },
   ];
 
+  console.log(user)
   const progresoReputacion = obtenerProgresoReputacion(score);
   const achievementsObtained = getAchievementByuser(achievements);
 
