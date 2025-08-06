@@ -7,7 +7,8 @@ import { useSession } from "@/context/context.sesion";
 import { supabase } from "@/utils/supabase/supabaseClient";
 import { MessageCircle } from "lucide-react";
 import { toast } from "sonner";
-
+import { createNotification } from "@/lib/notifications";
+import nPayload from "@/content/notitications/notications-entity.json"
 export function ButtonComment({
   question_id,
   onCommentChange,
@@ -46,24 +47,24 @@ export function ButtonComment({
     const questionOwnerId = questionData?.user_id;
 
     // 3. Si el autor no es el mismo usuario, crear notificación
-    if (questionOwnerId && questionOwnerId !== user.id) {
+
+    if (questionOwnerId && questionOwnerId === user.id) {
       const notificationPayload = {
         user_id: questionOwnerId,
         actor_id: user.id,
-        type: "comment_received",
+        type: nPayload[1].type,
         entity_id: commentData.id,
-        entity_type: "question_comment",
+        entity_type: nPayload[1].entity_type,
         content: `${user.full_name || "Alguien"} comentó en tu pregunta.`,
-        url: `/explore-questions/questions?query=my`,
+        url: `/explore-questions/questions?query=redirect&redirect_id_question=${question_id}&aprovel=${user.approval_token}`,
         read: false,
       };
 
-      const { error: notificationError } = await supabase
-        .from("notifications")
-        .insert([notificationPayload]);
+      const res = await createNotification(notificationPayload);
 
-      if (notificationError) {
-        console.error("Error creando notificación:", notificationError);
+      console.log("datos de la respuesta de la notificacion --->", res);
+      if (!res) {
+        console.error("Error creando notificación");
       }
     }
 
@@ -104,7 +105,7 @@ export function ButtonComment({
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={3}
-            className="w-full resize-none rounded-md border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 transition"
+            className="w-full resize-none rounded-md border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 transition text-xs md:text-sm lg:text-base"
           />
           <div className="flex gap-2 justify-end mt-3">
             <Button
