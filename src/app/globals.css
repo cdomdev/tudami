@@ -165,6 +165,7 @@
   overflow-x: hidden;
 }
 
+/* 1 */
 .continer-scrollbar-explore-questions::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -184,6 +185,7 @@
   background: rgb(182, 177, 177);
 }
 
+/* 2 */
 
 .dialog-content-scrollbar::-webkit-scrollbar {
   width: 10px;
@@ -197,6 +199,29 @@
 }
 
 .dialog-content-scrollbar::-webkit-scrollbar-track {
+  background: #302f2f;
+  border-radius: 0px 10px 10px 0px;
+}
+
+.popoveer-content::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* 3 */
+
+.content-list-aside-view-profile::-webkit-scrollbar {
+  width: 1px;
+  height: 1px;
+}
+
+.content-list-aside-view-profile::-webkit-scrollbar-thumb {
+  background: #9e9d9d;
+  border-radius: 0px 10px 10px 0px;
+  height: 10px;
+}
+
+.content-list-aside-view-profile::-webkit-scrollbar-track {
   background: #302f2f;
   border-radius: 0px 10px 10px 0px;
 }
