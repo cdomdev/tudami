@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
-
+import { useSession } from "@/context/context.sesion"
 export function MovilNav({
   openMenu,
   scrolled,
@@ -13,6 +13,7 @@ export function MovilNav({
   setOpenMenu: (open: boolean) => void;
 }) {
   const router = useRouter();
+  const { user } = useSession();
 
   function handleNavigate(href: string) {
     setOpenMenu(false);
@@ -21,9 +22,10 @@ export function MovilNav({
 
   const routes = [
     { href: "/", label: "Inicio" },
-    { href: "/ofertas", label: "Ofertas" },
-    { href: "/preguntas", label: "Preguntas" },
-    { href: "/perfil", label: "Perfil" },
+    { href: "/explore-questions", label: "Ver preguntas" },
+    { href: "/create-questions", label: "Crear una pregunta" },
+    { href: "/explore-oferts", label: "Crear una oferta" },
+    { href: `/profile-user?id=${user?.approval_token}`, label: "Perfil" },
   ];
 
   return (
@@ -31,7 +33,7 @@ export function MovilNav({
       className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out
           ${openMenu ? "max-h-80 py-3 opacity-100" : "max-h-0 opacity-0"}
           ${scrolled ? " backdrop-blur-none" : "backdrop-blur-sm shadow-none"}
-          w-full text-black dark:text-white flex flex-col items-center space-y-4 text-lg font-medium`}
+          w-full text-black dark:text-slate-100 flex flex-col items-center space-y-2 text-lg font-medium`}
     >
       {routes.map((route) => (
         <Button
@@ -45,3 +47,4 @@ export function MovilNav({
     </div>
   );
 }
+
