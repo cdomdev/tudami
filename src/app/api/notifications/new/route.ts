@@ -1,18 +1,38 @@
 import { NextResponse } from "next/server";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 
+
+
+interface dataNotification {
+  user_id: string;
+  actor_id: string;
+  type: string;
+  entity_id: string;
+  entity_type: string;
+  content: string;
+  url?: string;
+  read: boolean;
+}
+
 export async function POST(request: Request) {
   try {
-    const { user_id, message } = await request.json();
+    const { user_id, actor_id, type, entity_id, entity_type, content, url, read } = await request.json();
 
-    if (!user_id || !message) {
+    if (!user_id || !content) {
       return NextResponse.json(
         { error: "user_id and message are required" },
         { status: 400 }
       );
     }
 
-    const data = await createNotification({ user_id, message });
+    const payloadData = {
+      user_id,
+      actor_id,
+      type,
+      entity_id, entity_type, content, url, read,
+    };
+
+    const data = await createNotification(payloadData);
 
     return NextResponse.json(data);
   } catch (error) {
@@ -24,11 +44,18 @@ export async function POST(request: Request) {
   }
 }
 
-export const createNotification = async (notificationData: {
-  user_id: string;
-  message: string;
-}) => {
+export async function createNotification({ user_id, actor_id, type, entity_id, entity_type, content, url, read }: dataNotification) {
   const supabase = await supabaseServerClient();
+  const notificationData = {
+    user_id,
+    actor_id,
+    type,
+    entity_id,
+    entity_type,
+    content,
+    url,
+    read,
+  };
   const { data, error } = await supabase
     .from("notifications")
     .insert([notificationData]);
