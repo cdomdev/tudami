@@ -33,7 +33,7 @@ export function InfoUser() {
   }
 
   return (
-    <div className="space-y-4 mt-3 grid grid-cols-2">
+    <div className="space-y-4 gap-30  mt-3 grid grid-cols-2">
       <div>
         <div>
           <Label className="text-sm text-muted-foreground">Nombre:</Label>
@@ -44,7 +44,7 @@ export function InfoUser() {
 
         <div>
           <Label className="text-sm text-muted-foreground">Correo:</Label>
-          <p className="text-base font-medium text-accent-foreground">
+          <p className="text-base font-medium text-accent-foreground text-balance">
             {user?.email || "No disponible"}
           </p>
         </div>

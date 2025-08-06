@@ -63,14 +63,14 @@ export function FrequentlyQuestions() {
             <AccordionItem
               key={item.value}
               value={item.value}
-              className="bg-accent dark:bg-custom-card rounded-lg shadow-sm mb-3 px-4 "
+              className="bg-accent dark:bg-custom-card rounded-lg shadow-sm mb-3 px-4 pb-2 "
             >
               <AccordionTrigger className="md:text-lg cursor-pointer  ">
                 {item.title}
               </AccordionTrigger>
               <AccordionContent className="flex flex-col text-pretty md:text-base  dark:bg-card rounded-md px-4 py-2 ">
                 {item.content.map((text, index) => (
-                  <p key={index} className="text-black text-base text-pretty">{text}</p>
+                  <p key={index} className="text-black dark:text-muted-foreground text-base text-pretty">{text}</p>
                 ))}
               </AccordionContent>
             </AccordionItem>

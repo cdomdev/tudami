@@ -9,7 +9,7 @@ import { UserSchema } from "@/schemas";
 import { HeaderProfile } from "../components/HeaderProfile";
 import { WhatSappIcon } from "@/components/icons/WhatSappIcon";
 import { Button } from "@/components/ui/button";
-import { Clipboard, Mail } from "lucide-react";
+import { Clipboard, Mail, MoveLeft, MoveRight } from "lucide-react";
 import Link from "next/link";
 import { handleWhatsAppContact, handleCopyEmailContact, handleEmailContact } from "../lib/contact"
 
@@ -70,6 +70,8 @@ export default function LayoutClient({
     if (!dataProfile) return;
     handleEmailContact(dataProfile);
   };
+
+ 
 
   const notContactAvailable = !dataProfile.phone && !dataProfile.email;
 
@@ -152,13 +154,18 @@ export default function LayoutClient({
         </div>
       </section>
       <section className="mt-3 grid grid-cols-1 gap-x-10 md:flex px-6 py-4 gap-6">
-        <aside className="min-w-28 ">
-          <ul className="flex md:flex-col ">
+        <aside className="min-w-28">
+          <span className="md:hidden mx-auto w-full gap-x-2 items-center inline-flex justify-center mb-3">
+            <MoveLeft className="size-4 text-slate-800 dark:text-slate-300" />
+            <p className="text-center text-sm text-slate-500 dark:text-slate-400"> Arrastra para ver las opciones</p>
+            <MoveRight className="size-4 text-slate-800 dark:text-slate-300" />
+          </span>
+          <ul className="content-list-aside-view-profile flex overflow-x-auto gap-x-2  md:overflow-x-hidden md:flex-col ">
             {listItems.map((item) => (
-              <li key={item.name} className="">
+              <li key={item.name} className="mb-2 lg:mb-0">
                 <Link
                   href={item.href}
-                  className="block px-4 py-1 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 rounded-md"
+                  className="block border  md:border-none px-4 py-1 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 rounded-md"
                 >
                   {item.name}
                 </Link>

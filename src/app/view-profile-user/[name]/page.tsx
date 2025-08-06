@@ -38,7 +38,7 @@ export default function ViewProfileUserPage() {
 
   const achievementsObtained = getAchievementByuser(achievements);
 
-
+  
   if (loading) {
     <SkeletonActividadUsuario />;
   }
