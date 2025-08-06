@@ -38,11 +38,11 @@ export default function PreferenciasTema() {
         role="region"
         aria-labelledby="opciones-tema-title"
       >
-        <h2 id="opciones-tema-title" className="md:text-xl font-normal mb-3">
+        <h2 id="opciones-tema-title" className="text-xl font-normal mb-3">
           Preferencias de tema
         </h2>
 
-        <div className="grid place-content-center grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-t border-b py-4 border-gray-200 dark:border-gray-700 mx-auto">
+        <div className="grid space-y-4 place-content-center grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-t border-b py-4 border-gray-200 dark:border-gray-700 mx-auto">
           <ButtonLight />
           <ButtonDark />
           <ButtonSystem />
@@ -56,7 +56,7 @@ export default function PreferenciasTema() {
       >
         <h3
           id="preferencias-contacto-title"
-          className="md:text-xl border-b font-normal mb-3"
+          className="text-xl border-b font-normal mb-3"
         >
           Preferencias de contacto
         </h3>
