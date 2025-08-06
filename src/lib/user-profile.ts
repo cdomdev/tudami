@@ -53,14 +53,16 @@ export async function getUserProfile(userId: string, client: SupabaseClient) {
 
   //Normalizar
 
-  const preferencesArray = data.user_profile_preferences as any[];
-  const normalizedPreferences = Array.isArray(preferencesArray) && preferencesArray.length > 0
-    ? preferencesArray[0]
+  const normalizedPreferences =
+  typeof data.user_profile_preferences === "object" &&
+  !Array.isArray(data.user_profile_preferences)
+    ? data.user_profile_preferences
     : {
-      profile_public: false,
-      allow_email: false,
-      allow_whatsapp: false,
-    };
+        profile_public: true,
+        allow_email: false,
+        allow_whatsapp: false,
+      };
+
 
   // Normalizar user_reputation
   const reputationArray = data.user_reputation as any[];
@@ -125,19 +127,25 @@ export function buildUserContextObject({
     department: userProfile?.department || "",
     country: userProfile?.country || "Colombia",
     created_at: userProfile.created_at,
+    questions: userProfile?.questions ?? 0,
+    question_comments: userProfile?.question_comments ?? 0,
+
+    // preferencias del usuario
     user_profile_preferences: {
       profile_public:
-        userProfile?.user_profile_preferences.profile_public ?? false,
+        userProfile?.user_profile_preferences.profile_public ?? true,
       allow_email: userProfile?.user_profile_preferences?.allow_email ?? false,
       allow_whatsapp:
         userProfile?.user_profile_preferences?.allow_whatsapp ?? false,
     },
-    questions: userProfile?.questions ?? 0,
-    question_comments: userProfile?.question_comments ?? 0,
+
+    // datos de reputacion
     user_reputation: {
       id: userProfile.user_reputation.id || "",
       score: userProfile.user_reputation.score || 0,
     },
+
+    // logros
     user_achievements:
       userProfile.user_achievements?.map((achievement) => ({
         id: achievement.id || "",

@@ -23,6 +23,7 @@ export async function getServerUser() {
 
     const userProfile = await getUserProfile(id, supabase);
 
+
     return buildUserContextObject({
       id,
       email,
