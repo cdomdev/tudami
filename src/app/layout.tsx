@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { getServerUser } from "@/utils/supabase/sesion";
 import { UserSchema } from "@/schemas/schema.user";
 import { SessionGuard } from "@/components/SessionGuard";
+import { LikeEventProvider } from "@/context/like-events.context";
 
 const balooFont = Baloo_2({
   variable: "--font-baloo",
@@ -73,13 +74,15 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SessionHydrator user={user as UserSchema | null} />
-          <SessionGuard>
-            <NavBar />
-            <main className="w-screen min-h-dvh ">{children}</main>
-            <Toaster position="top-center" theme="system" />
-            <Footer />
-          </SessionGuard>
+          <LikeEventProvider>
+            <SessionHydrator user={user as UserSchema | null} />
+            <SessionGuard>
+              <NavBar />
+              <main className="w-screen min-h-dvh ">{children}</main>
+              <Toaster position="top-center" theme="system" />
+              <Footer />
+            </SessionGuard>
+          </LikeEventProvider>
         </ThemeProvider>
       </body>
     </html>
