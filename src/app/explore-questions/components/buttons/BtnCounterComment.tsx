@@ -1,7 +1,6 @@
 import { MessageCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react"
-import { supabase } from "@/utils/supabase/supabaseClient";
+import { useCommentsChannel } from "@/hooks/use-comments-channel";
 import {
   Dialog,
   DialogContent,
@@ -14,34 +13,8 @@ import { BodyListComment } from "../BodyListComment";
 import { DialogClose } from "@radix-ui/react-dialog";
 
 
-export  function BtnCounterComment({ question_id, count, setCount }: { question_id: number, count: number, setCount: (val: number) => void }) {
-  useEffect(() => {
-    const channel = supabase
-      .channel(`question-comments-${question_id}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "question_comments",
-          filter: `question_id=eq.${question_id}`,
-        },
-        async () => {
-          const { count } = await supabase
-            .from("question_comments")
-            .select("*", { count: "exact", head: true })
-            .eq("question_id", question_id);
-
-          setCount(count ?? 0);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [question_id, setCount]);
-
+export function BtnCounterComment({ question_id }: { question_id: number }) {
+  const count = useCommentsChannel(question_id);
   return (
     <>
       <Dialog>
