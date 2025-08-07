@@ -43,6 +43,7 @@ export async function POST(request: Request) {
       read,
     };
 
+
     const data = await createNotification(payloadData);
 
     return NextResponse.json(data);
@@ -86,6 +87,8 @@ export async function createNotification({
     console.error("Error creating notification:", error);
     return null;
   }
+
+  console.log("Notification created:[ROUTE RES]", data);
 
   return data;
 }
