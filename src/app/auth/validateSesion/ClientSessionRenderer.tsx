@@ -5,7 +5,8 @@ import { useSession } from "@/context/context.sesion";
 import { Button } from "@/components/ui/button";
 
 export function ClientSessionRenderer() {
-  const { isLoggedIn, isLoading } = useSession();
+  const isLoggedIn = useSession((state) => state.isLoggedIn);
+  const isLoading = useSession((state) => state.isLoading);
 
   if (isLoading) {
     return (
@@ -17,7 +18,6 @@ export function ClientSessionRenderer() {
           className="relative h-8 w-8 p-0  border-none cursor-pointer"
         >
           <Bell className="h-4 w-4" />
-
         </Button>
         {/* Avatar */}
         <div className="h-10 w-10 rounded-full bg-gray-300 dark:bg-gray-700 animate-pulse" />
