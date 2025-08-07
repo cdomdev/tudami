@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCommentBy } from "../lib/listComment";
+import { getCommentBy } from "../lib/comment";
 import Image from "next/image";
 import { formatTimestamp } from "@/utils/formatDate";
 import { SchemaComment } from "@/schemas";
@@ -28,11 +28,13 @@ export function BodyListComment({ question_id }: { question_id: number }) {
   return (
     <div className="flex flex-col space-y-3 ">
       {loading ? (
-        <p className="text-center text-black dark:text-background">
+        <p className="text-center text-black dark:text-white">
           Cargando respuesta
         </p>
       ) : comments.length === 0 ? (
-        <p className="text-center text-sm md:text-base ">Esta pregunta no tiene respuestas aún.</p>
+        <p className="text-center text-sm md:text-base ">
+          Esta pregunta no tiene respuestas aún.
+        </p>
       ) : (
         comments.map((com, i) => (
           <div

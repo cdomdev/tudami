@@ -4,11 +4,11 @@ import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/context/context.sesion";
-import { supabase } from "@/utils/supabase/supabaseClient";
 import { MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { createNotification } from "@/lib/notifications";
-import nPayload from "@/content/notitications/notications-entity.json"
+import nPayload from "@/content/notitications/notications-entity.json";
+import { createComment } from "../../lib/comment";
 export function ButtonComment({
   question_id,
   onCommentChange,
@@ -25,67 +25,41 @@ export function ButtonComment({
     if (!user || !content.trim()) return;
     setLoading(true);
 
-    const { data: commentData, error } = await supabase
-      .from("question_comments")
-      .insert({
-        text: content.trim(),
-        question_id,
-        user_id: user.id,
-      })
-      .select()
-      .single();
+    try {
+      const data = await createComment(content, question_id, user.id);
+      const { commentData, questionData, error, count } = data;
+      const questionOwnerId = questionData?.user_id;
 
-    /**
-     * obtener autor de la pregunta para emitir la notificacion */
+      // 3. Si el autor no es el mismo usuario, crear notificación
+      if (questionOwnerId && questionOwnerId !== user.id) {
+        const notificationPayload = {
+          user_id: questionOwnerId,
+          actor_id: user.id,
+          type: nPayload[1].type,
+          entity_id: commentData.id,
+          entity_type: nPayload[1].entity_type,
+          content: `${user.full_name || "Alguien"} comentó en tu pregunta.`,
+          url: `/explore-questions/questions?query=redirect&redirect_id_question=${question_id}&aprovel=${user.approval_token}`,
+          read: false,
+        };
 
-    const { data: questionData } = await supabase
-      .from("questions")
-      .select("user_id")
-      .eq("id", question_id)
-      .single();
-
-    const questionOwnerId = questionData?.user_id;
-
-    // 3. Si el autor no es el mismo usuario, crear notificación
-
-    if (questionOwnerId && questionOwnerId !== user.id) {
-      const notificationPayload = {
-        user_id: questionOwnerId,
-        actor_id: user.id,
-        type: nPayload[1].type,
-        entity_id: commentData.id,
-        entity_type: nPayload[1].entity_type,
-        content: `${user.full_name || "Alguien"} comentó en tu pregunta.`,
-        url: `/explore-questions/questions?query=redirect&redirect_id_question=${question_id}&aprovel=${user.approval_token}`,
-        read: false,
-      };
-
-      const res = await createNotification(notificationPayload);
-
-      console.log("datos de la respuesta de la notificacion --->", res);
-
-
-      if (!res) {
-        console.error("Error creando notificación");
+        await createNotification(notificationPayload);
       }
+
+      if (!error || !data) {
+        setContent("");
+        setOpen(false);
+        setLoading(false);
+      }
+
+      onCommentChange?.(count ?? 0);
+      toast.success("Comentario enviado");
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Error creating comment:", error);
+      setLoading(false);
     }
-
-    if (!error) {
-      setContent("");
-      setOpen(false);
-    }
-
-    // validar cantidad de comnetarios para emitir el evento
-
-    const { count } = await supabase
-      .from("question_comments")
-      .select("*", { count: "exact", head: true })
-      .eq("question_id", question_id);
-
-    onCommentChange?.(count ?? 0);
-    toast.success("Comentario enviado");
-
-    setLoading(false);
   };
 
   return (
