@@ -1,7 +1,6 @@
 "use client";
 
 import { useSession } from "@/context/context.sesion";
-import { useState, useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,43 +10,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Bell } from "lucide-react";
-import { getNotifications } from "@/lib/notifications";
 import Link from "next/link";
+import { useRealtimeNotifications } from "@/hooks/use-realtime-notifications";
 
-interface Notification {
-  id: string;
-  user_id: string;
-  actor_id: string;
-  type: string;
-  entity_id: string;
-  entity_type: string;
-  content: string;
-  read: boolean;
-  url: string;
-  created_at: string;
-}
 
 export function Notifications() {
   const { user } = useSession();
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-
-  useEffect(() => {
-    async function fetchNotifications() {
-      if (!user?.id) return;
-      const data = await getNotifications(user.id);
-      if (data) {
-        setNotifications(data);
-      }
-    };
-    fetchNotifications();
-  }, [])
-
-
-
+  const { notifications, loading, error } = useRealtimeNotifications(
+    user?.id || null
+  );
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger asChild >
+      <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
           size="icon"
@@ -64,14 +39,21 @@ export function Notifications() {
       >
         <DropdownMenuLabel>Notificaciones</DropdownMenuLabel>
         <DropdownMenuSeparator className="mb-0" />
-        {notifications.length === 0 ? (
+        {loading ? (
+          <p className="px-4 py-2 text-sm text-muted-foreground">
+            Cargando notificaciones...
+          </p>
+        ) : error ? (
+          <p className="px-4 py-2 text-sm text-red-500">
+            Error al cargar notificaciones
+          </p>
+        ) : notifications.length === 0 ? (
           <p className="px-4 py-2 text-sm text-muted-foreground">
             No tienes notificaciones.
           </p>
         ) : (
           notifications.map((n) => {
             const Wrapper = n.url ? Link : "div";
-
             return (
               <Wrapper
                 key={n.id}
@@ -83,7 +65,6 @@ export function Notifications() {
             );
           })
         )}
-
       </DropdownMenuContent>
     </DropdownMenu>
   );
