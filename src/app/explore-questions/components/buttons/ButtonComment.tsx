@@ -11,10 +11,8 @@ import nPayload from "@/content/notitications/notications-entity.json";
 import { createComment } from "../../lib/comment";
 export function ButtonComment({
   question_id,
-  onCommentChange,
 }: {
   question_id: number;
-  onCommentChange?: (count: number) => void;
 }) {
   const { user } = useSession();
   const [open, setOpen] = useState(false);
@@ -27,7 +25,7 @@ export function ButtonComment({
 
     try {
       const data = await createComment(content, question_id, user.id);
-      const { commentData, questionData, error, count } = data;
+      const { commentData, questionData, error } = data;
       const questionOwnerId = questionData?.user_id;
 
       // 3. Si el autor no es el mismo usuario, crear notificación
@@ -52,7 +50,7 @@ export function ButtonComment({
         setLoading(false);
       }
 
-      onCommentChange?.(count ?? 0);
+      // El realtime se encarga automáticamente de actualizar el contador
       toast.success("Comentario enviado");
 
       setLoading(false);

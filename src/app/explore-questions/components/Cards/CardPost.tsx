@@ -10,17 +10,12 @@ import { useSession } from "@/context/context.sesion";
 
 export function CardPost({
   content,
-  question_comments,
   created_at,
   id,
-  question_likes,
   question_tags,
   users,
   title,
 }: SchemaPost) {
-  const likeCount = question_likes ? question_likes.length : 0;
-  const commentCount = question_comments ? question_comments.length : 0;
-
   const { user: dataUserSesion } = useSession();
 
   const approvalToken = dataUserSesion?.approval_token || "";
@@ -95,11 +90,7 @@ export function CardPost({
       )}
 
       {/* Acciones botones y contadores de los preguntas */}
-      <FooterCardPost
-        question_id={id}
-        likes={likeCount}
-        comments={commentCount}
-      />
+      <FooterCardPost question_id={id} />
     </article>
   );
 }

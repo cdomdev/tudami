@@ -1,6 +1,31 @@
-import { supabase } from "@/utils/supabase/supabaseClient";
+import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
+import { SupabaseClient } from "@supabase/supabase-js";
+export async function POST(request: Request) {
+  const url = new URL(request.url);
+  const questionId = url.searchParams.get("question_id");
+  const userId = url.searchParams.get("user_id");
+  if (!questionId || !userId) {
+    return new Response("Missing question_id or user_id", { status: 400 });
+  }
+  console.log("Received request to toggle like: [API]", questionId, userId);
+  const supabase = await supabaseServerClient();
+  const { liked, error } = await toggleLike(
+    Number(questionId),
+    userId,
+    supabase
+  );
+  if (error) {
+    return new Response("Error al emitir like", { status: 500 });
+  }
 
-export async function toggleLike(questionId: number, user_id: string) {
+  return new Response(JSON.stringify({ liked }), { status: 200 });
+}
+
+export async function toggleLike(
+  questionId: number,
+  user_id: string,
+  supabase: SupabaseClient
+) {
   try {
     const { data: existingLike, error: selectError } = await supabase
       .from("question_likes")
@@ -46,14 +71,3 @@ export async function toggleLike(questionId: number, user_id: string) {
     return { liked: false, error };
   }
 }
-
-export const checkIfLiked = async (questionId: number, user_id: string) => {
-  const { data: existingLike } = await supabase
-    .from("question_likes")
-    .select("id")
-    .eq("question_id", questionId)
-    .eq("user_id", user_id)
-    .maybeSingle();
-
-  return !!existingLike;
-};

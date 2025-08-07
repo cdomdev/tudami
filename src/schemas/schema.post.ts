@@ -30,8 +30,8 @@ export const SchemaPostSchema = z.object({
   created_at: z.coerce.date(),
   users: User,
   question_tags: z.array(QuestionTagSchema),
-  question_likes: z.array(QuestionSchema),
-  question_comments: z.array(QuestionSchema),
+  question_likes: z.array(QuestionSchema).optional(),
+  question_comments: z.array(QuestionSchema).optional(),
 });
 
 export type SchemaPost = z.infer<typeof SchemaPostSchema>;
