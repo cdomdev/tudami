@@ -24,7 +24,7 @@ export function Characteristics() {
       title: "Ofertas de ayuda",
       description:
         "Solicita acompañamiento personalizado por parte de otros usuarios.",
-      href: "/view-offers",
+      href: "/offers",
     },
     {
       title: "Respuestas entre aprendices",
@@ -36,7 +36,7 @@ export function Characteristics() {
       title: "Ahorra tiempo",
       description:
         "Accede rápidamente a soluciones compartidas por la comunidad.",
-      href: "/recursos",
+      href: "/resources",
     },
   ];
 
