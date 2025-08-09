@@ -12,7 +12,7 @@ export async function GET(request: Request) {
         { status: 400 }
       );
     }
-    
+
     const data = await getNotifications(userId);
 
     return NextResponse.json(data);
@@ -27,10 +27,12 @@ export async function GET(request: Request) {
 
 export const getNotifications = async (userId: string) => {
   const supabase = await supabaseServerClient();
+
   const { data, error } = await supabase
     .from("notifications")
     .select("*")
     .eq("user_id", userId)
+    .is("read", false) 
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -38,5 +40,5 @@ export const getNotifications = async (userId: string) => {
     return [];
   }
 
-  return data;
+  return data || [];
 };

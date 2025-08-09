@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/utils/supabase/supabaseClient";
-
+import { getNotifications } from '@/lib/notifications'
 interface Notification {
   id: string;
   user_id: string;
@@ -26,17 +26,13 @@ export function useRealtimeNotifications(userId: string | null) {
     setError(null);
 
     const loadNotifications = async () => {
-      const { data, error } = await supabase
-        .from("notifications")
-        .select("*")
-        .eq("user_id", userId)
-        .order("created_at", { ascending: false });
-
-      if (!error && data) {
-        setNotifications(data);
-      } else if (error) {
-        setError(error.message);
+      const data = await getNotifications(userId)
+      if (data.error) {
+        setError(data.error)
+        return
       }
+      setNotifications(data)
+
       setLoading(false);
     };
 

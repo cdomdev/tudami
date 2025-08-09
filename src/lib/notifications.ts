@@ -59,18 +59,20 @@ export async function getNotifications(userId: string) {
   return data;
 }
 
-export async function markNotificationAsRead(notificationId: string) {
-  const url = `/api/notifications/mark?notificationId=${notificationId}`;
+export async function markNotificationAsRead(id: number) {
+  const url = `/api/notifications/mark?id=${id}`;
   const response = await fetch(url, {
-    method: "POST",
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
   });
 
   if (!response.ok) {
+    const errorData = await response.json();
+    console.error("Error data:", errorData);
     throw new Error("Error marking notification as read");
   }
-  const data = await response.json();
-  return data;
+
+  return response.json();
 }

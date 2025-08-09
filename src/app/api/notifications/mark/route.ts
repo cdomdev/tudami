@@ -1,28 +1,31 @@
 import { NextResponse } from "next/server";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 
-export async function POST(request: Request) {
+export async function PUT(request: Request) {
   try {
     const urlParams = new URL(request.url).searchParams;
-    const notificationId = urlParams.get("notificationId");
+    const id = urlParams.get("id");
 
-    if (!notificationId) {
+    if (!id) {
       return NextResponse.json(
-        { error: "notificationId is required" },
+        { error: "id is required" },
         { status: 400 }
       );
     }
 
-    const data = await markNotificationAsRead(notificationId);
+    const { error } = await updateNotificationAsRead(Number(id));
 
-    if (!data) {
+    if (error) {
       return NextResponse.json(
         { error: "Error marking notification as read" },
         { status: 500 }
       );
     }
-    
-    return NextResponse.json({ message: "Notificacion marcada como leída" }, { status: 201 });
+
+    return NextResponse.json(
+      { message: "Notification marked as read" },
+      { status: 201 }
+    );
   } catch (error) {
     console.error("Error processing request:", error);
     return NextResponse.json(
@@ -32,19 +35,12 @@ export async function POST(request: Request) {
   }
 }
 
-export const markNotificationAsRead = async (notificationId: string) => {
+export const updateNotificationAsRead = async (id: number) => {
   const supabase = await supabaseServerClient();
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("notifications")
     .update({ read: true })
-    .eq("id", notificationId);
+    .eq("id", id);
 
-  if (error) {
-    console.error("Error marking notification as read:", error);
-    return null;
-  }
-
-  return data;
+  return { error };
 };
-
-

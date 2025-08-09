@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Bell } from "lucide-react";
 import Link from "next/link";
 import { useRealtimeNotifications } from "@/hooks/use-realtime-notifications";
+import { formatTimestamp } from "@/utils/formatDate"
+import { markNotificationAsRead } from "../lib/notifications"
 
 
 export function Notifications() {
@@ -19,6 +21,10 @@ export function Notifications() {
   const { notifications, loading, error } = useRealtimeNotifications(
     user?.id || null
   );
+
+  async function markNotitifacion(id: string) {
+    await markNotificationAsRead(Number(id))
+  }
 
   return (
     <DropdownMenu modal={false}>
@@ -58,9 +64,11 @@ export function Notifications() {
               <Wrapper
                 key={n.id}
                 href={n.url || ""}
-                className="block px-4 py-2 text-sm text-accent-foreground hover:bg-accent cursor-pointer no-underline"
+                className="flex flex-col px-4 py-2 text-sm text-accent-foreground hover:bg-accent cursor-pointer no-underline"
+                onClick={() => markNotitifacion(n.id)}
               >
                 {n.content}
+                <span className="text-xs text-gray-200">Hace {formatTimestamp(n.created_at)}</span>
               </Wrapper>
             );
           })
