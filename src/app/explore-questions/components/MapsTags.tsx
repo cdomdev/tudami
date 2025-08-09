@@ -13,7 +13,7 @@ export function MapsTags() {
   }, []);
 
   return (
-    <article className="hidden lg:flex overflow-hidden flex-wrap justify-center gap-3">
+    <article className="hidden lg:flex overflow-hidden flex-wrap justify-center py-2 gap-3">
       {randomTags.map((tag) => (
         <CardTags
           key={tag.id}

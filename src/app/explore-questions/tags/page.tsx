@@ -1,14 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Count } from "../components/CountQuestions";
 import { SchemaPost } from "@/schemas";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getQuestionsByTagApi } from "../lib/getQuestions";
-import { SkeletonCard } from "../components/SkeletonPost";
 import { CardPost } from "../components/Cards/CardPost";
 import { Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Main, SkeletonCard } from "@/components";
 
 export default function PageTags() {
   const [loading, setLoading] = useState(false);
@@ -17,6 +16,8 @@ export default function PageTags() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const tag = searchParams.get("slug") || "";
+  const page = parseInt(searchParams.get("page") || "1", 10);
+  const pageSize = 10;
 
   function clearTag() {
     router.push("/explore-questions");
@@ -38,9 +39,9 @@ export default function PageTags() {
 
   return (
     <>
-      <section className="flex gap-x-20">
-        <Count count={total} />
-        <div className="flex gap-x-2 ">
+
+      <Main basePath="/explore-questions" count={questions.length} page={page} total={total} pageSize={pageSize} searchParams={searchParams}>
+        <div className="flex gap-x-2 justify-end self-end">
           <p className=" text-base text-foreground">
             Preguntas relacionadas con:
           </p>
@@ -52,8 +53,6 @@ export default function PageTags() {
             {tag}
           </span>
         </div>
-      </section>
-      <section className="py-2 mb-8 space-y-6">
         {loading ? (
           <SkeletonCard />
         ) : questions.length === 0 ? (
@@ -77,7 +76,7 @@ export default function PageTags() {
             <CardPost key={question.id} {...question} />
           ))
         )}
-      </section>
+      </Main>
     </>
   );
 }

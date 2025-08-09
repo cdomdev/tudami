@@ -6,7 +6,7 @@ import { SchemaComment } from "@/schemas";
 // import { Button } from "@/components/ui/button"
 // import { Textarea } from "@/components/ui/textarea"
 
-export function BodyListComment({ question_id }: { question_id: number }) {
+export function BodyComments({ question_id }: { question_id: number }) {
   const [comments, setComments] = useState<SchemaComment[]>([]);
   const [loading, setLoading] = useState(true);
   // const [open, setOpen] = useState(false);

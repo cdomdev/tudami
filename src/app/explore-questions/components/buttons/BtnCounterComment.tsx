@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { BodyListComment } from "../BodyListComment";
+import { BodyComments } from "../BodyComments";
 import { DialogClose } from "@radix-ui/react-dialog";
 
 
@@ -47,7 +47,7 @@ export function BtnCounterComment({ question_id }: { question_id: number }) {
             </div>
 
           </DialogHeader>
-          <BodyListComment question_id={question_id} />
+          <BodyComments question_id={question_id} />
         </DialogContent>
       </Dialog>
     </>

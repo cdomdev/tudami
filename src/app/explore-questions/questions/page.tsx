@@ -9,10 +9,8 @@ import {
   getQuestionsByIdApi,
 } from "../lib/getQuestions";
 import { SchemaPost } from "@/schemas";
-import { SkeletonCard } from "../components/SkeletonPost";
 import { CardPost } from "../components/Cards/CardPost";
-import { Count } from "../components/CountQuestions";
-import { Pagination } from "@/components/pagination";
+import { Main, SkeletonCard } from "@/components";
 
 export default function QuestionPage({ }: { params: { query: string } }) {
   const [questions, setQuestions] = useState<SchemaPost[]>([]);
@@ -25,6 +23,7 @@ export default function QuestionPage({ }: { params: { query: string } }) {
 
   const pageSize = 10;
   const page = parseInt(searchParams.get("page") || "1", 10);
+  const dataCount = questions.length;
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -57,25 +56,16 @@ export default function QuestionPage({ }: { params: { query: string } }) {
     fetchQuestions();
   }, [page, search, query, id]);
 
+
   return (
-    <>
-      <Count count={questions.length} />
-      <section className="py-2 mb-8 space-y-6">
-        {loading ? (
-          <SkeletonCard />
-        ) : questions.length === 0 ? (
-          <p className="text-center">No hay preguntas.</p>
-        ) : (
-          questions.map((post, i) => <CardPost key={post.id || i} {...post} />)
-        )}
-      </section>
-      <Pagination
-        currentPage={page}
-        totalItems={total}
-        pageSize={pageSize}
-        basePath="/explore-questions"
-        searchParams={searchParams}
-      />
-    </>
+    <Main basePath="/explore-questions" count={dataCount} page={page} total={total} pageSize={pageSize} searchParams={searchParams}>
+      {loading ? (
+        <SkeletonCard mockNumber={5} />
+      ) : questions.length === 0 ? (
+        <p className="text-center">No hay preguntas.</p>
+      ) : (
+        questions.map((post, i) => <CardPost key={post.id || i} {...post} />)
+      )}
+    </Main>
   );
 }
