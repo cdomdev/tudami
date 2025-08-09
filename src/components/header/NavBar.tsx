@@ -47,7 +47,7 @@ export function NavBar() {
           : "bg-transparent shadow-none backdrop-blur-0"
         }`}
     >
-      <div className="flex items-center justify-between py-3 max-w-6xl mx-auto">
+      <div className="flex items-center justify-between py-3 md:px-4 lg:px-0 max-w-6xl mx-auto">
         <div className="flex items-center">
           <Link
             href="/"
