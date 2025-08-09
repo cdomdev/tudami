@@ -29,11 +29,11 @@ export default function PageTags() {
       if (data) {
         setQuestions(data);
         setTotal(data.length);
+        setLoading(false);
       }
     }
 
     fetchQuestions();
-    setLoading(false);
   }, [tag]);
 
   return (
@@ -59,7 +59,7 @@ export default function PageTags() {
         ) : questions.length === 0 ? (
           <div className="flex flex-col p-10">
             <p className="text-center text-accent-foreground block rounded-md">
-              Algo salio mal. No se encontraron preguntas relacionadas al tema
+              No se encontraron preguntas relacionadas al tema
               seleccionado.
             </p>
             <strong className="text-center text-lg mb-5 bg-gradient-to-bl from-indigo-500 to-sky-300 text-transparent bg-clip-text">

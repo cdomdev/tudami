@@ -1,10 +1,20 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Tags from "@/content/tags/data-tags.json";
 import { CardTags } from "./Cards/CardTags";
 
 export function MapsTags() {
+  const [randomTags, setRandomTags] = useState<typeof Tags>([]);
+
+  useEffect(() => {
+    const shuffled = [...Tags].sort(() => Math.random() - 0.5).slice(0, 10);
+    setRandomTags(shuffled);
+  }, []);
+
   return (
-    <article className="flex flex-wrap justify-center gap-3 ">
-      {Tags.slice(0, 10).map((tag) => (
+    <article className="hidden lg:flex overflow-hidden flex-wrap justify-center gap-3">
+      {randomTags.map((tag) => (
         <CardTags
           key={tag.id}
           color={tag.color}
