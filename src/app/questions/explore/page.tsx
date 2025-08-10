@@ -4,8 +4,8 @@ import { CardPost } from "./components/Cards/CardPost";
 import { useSearchParams } from "next/navigation";
 import { fetchGeneralQuestionsApi } from "./lib/getQuestions";
 import { NoContent } from "./components/NoContent";
-import { SchemaPost } from "../../schemas/schema.post";
-import { Main, SkeletonCard } from "@/components"
+import { SchemaPost } from "@/schemas";
+import { Main, SkeletonCard } from "@/components";
 
 export default function ExploreQuestionsPage() {
   const searchParams = useSearchParams();
@@ -26,9 +26,15 @@ export default function ExploreQuestionsPage() {
       .finally(() => setLoading(false));
   }, [page, pageSize, search]);
 
-
   return (
-    <Main basePath="/explore-questions" count={questions.length} page={page} total={total} pageSize={pageSize} searchParams={searchParams}>
+    <Main
+      basePath="/questions/explore"
+      count={questions.length}
+      page={page}
+      total={total}
+      pageSize={pageSize}
+      searchParams={searchParams}
+    >
       {loading ? (
         <SkeletonCard mockNumber={5} />
       ) : questions.length === 0 ? (
@@ -37,6 +43,5 @@ export default function ExploreQuestionsPage() {
         questions.map((post) => <CardPost key={post.id} {...post} />)
       )}
     </Main>
-
   );
 }

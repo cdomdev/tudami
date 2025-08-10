@@ -15,8 +15,8 @@ import {
 } from "@/lib/tiptap-utils"
 
 // --- UI Primitives ---
-import type { ButtonProps } from "@/app/create-questions/components/tiptap-ui-primitive/button"
-import { Button } from "@/app/create-questions/components/tiptap-ui-primitive/button"
+import type { ButtonProps } from "@/app/questions/create/components/tiptap-ui-primitive/button"
+import { Button } from "@/app/questions/create/components/tiptap-ui-primitive/button"
 
 // --- Styles ---
 import "@/components/tiptap-ui/color-highlight-button/color-highlight-button.scss"

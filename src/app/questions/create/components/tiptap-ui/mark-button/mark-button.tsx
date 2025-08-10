@@ -7,20 +7,20 @@ import { isNodeSelection, type Editor } from "@tiptap/react"
 import { useTiptapEditor } from "@/hooks/use-tiptap-editor"
 
 // --- Icons ---
-import { BoldIcon } from "@/app/create-questions/components/tiptap-icons/bold-icon"
-import { Code2Icon } from "@/app/create-questions/components/tiptap-icons/code2-icon"
-import { ItalicIcon } from "@/app/create-questions/components/tiptap-icons/italic-icon"
-import { StrikeIcon } from "@/app/create-questions/components/tiptap-icons/strike-icon"
-import { SubscriptIcon } from "@/app/create-questions/components/tiptap-icons/subscript-icon"
-import { SuperscriptIcon } from "@/app/create-questions/components/tiptap-icons/superscript-icon"
-import { UnderlineIcon } from "@/app/create-questions/components/tiptap-icons/underline-icon"
+import { BoldIcon } from "@/app/questions/create/components/tiptap-icons/bold-icon"
+import { Code2Icon } from "@/app/questions/create/components/tiptap-icons/code2-icon"
+import { ItalicIcon } from "@/app/questions/create/components/tiptap-icons/italic-icon"
+import { StrikeIcon } from "@/app/questions/create/components/tiptap-icons/strike-icon"
+import { SubscriptIcon } from "@/app/questions/create/components/tiptap-icons/subscript-icon"
+import { SuperscriptIcon } from "@/app/questions/create/components/tiptap-icons/superscript-icon"
+import { UnderlineIcon } from "@/app/questions/create/components/tiptap-icons/underline-icon"
 
 // --- Lib ---
 import { isMarkInSchema } from "@/lib/tiptap-utils"
 
 // --- UI Primitives ---
-import type { ButtonProps } from "@/app/create-questions/components/tiptap-ui-primitive/button"
-import { Button } from "@/app/create-questions/components/tiptap-ui-primitive/button"
+import type { ButtonProps } from "@/app/questions/create/components/tiptap-ui-primitive/button"
+import { Button } from "@/app/questions/create/components/tiptap-ui-primitive/button"
 
 export type Mark =
   | "bold"

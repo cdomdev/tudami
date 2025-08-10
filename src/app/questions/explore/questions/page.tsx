@@ -12,7 +12,7 @@ import { SchemaPost } from "@/schemas";
 import { CardPost } from "../components/Cards/CardPost";
 import { Main, SkeletonCard } from "@/components";
 
-export default function QuestionPage({ }: { params: { query: string } }) {
+export default function QuestionPage({}: { params: { query: string } }) {
   const [questions, setQuestions] = useState<SchemaPost[]>([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
@@ -56,9 +56,15 @@ export default function QuestionPage({ }: { params: { query: string } }) {
     fetchQuestions();
   }, [page, search, query, id]);
 
-
   return (
-    <Main basePath="/explore-questions" count={dataCount} page={page} total={total} pageSize={pageSize} searchParams={searchParams}>
+    <Main
+      basePath="/questions/explore"
+      count={dataCount}
+      page={page}
+      total={total}
+      pageSize={pageSize}
+      searchParams={searchParams}
+    >
       {loading ? (
         <SkeletonCard mockNumber={5} />
       ) : questions.length === 0 ? (

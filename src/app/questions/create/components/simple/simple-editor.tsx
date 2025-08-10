@@ -18,16 +18,21 @@ import {
   Toolbar,
   ToolbarGroup,
   ToolbarSeparator,
-} from "@/app/create-questions/components/tiptap-ui-primitive/toolbar";
-import { MarkButton } from "@/app/create-questions/components/tiptap-ui/mark-button";
-import { TextAlignButton } from "@/app/create-questions/components/tiptap-ui/text-align-button";
-import { UndoRedoButton } from "@/app/create-questions/components/tiptap-ui/undo-redo-button";
+} from "@/app/questions/create/components/tiptap-ui-primitive/toolbar";
+import { MarkButton } from "@/app/questions/create/components/tiptap-ui/mark-button";
+import { TextAlignButton } from "@/app/questions/create/components/tiptap-ui/text-align-button";
+import { UndoRedoButton } from "@/app/questions/create/components/tiptap-ui/undo-redo-button";
+
 // import { LinkPopover } from "@/app/create-questions/components/tiptap-ui/link-popover";
 // import { ListDropdownMenu } from "@/app/create-questions/components/tiptap-ui/list-dropdown-menu";
 // import { BlockQuoteButton } from "@/app/create-questions/components/tiptap-ui/blockquote-button";
 // import { CodeBlockButton } from "@/app/create-questions/components/tiptap-ui/code-block-button";
 
-export function SimpleEditor({ onChange }: { onChange?: (html: string) => void }) {
+export function SimpleEditor({
+  onChange,
+}: {
+  onChange?: (html: string) => void;
+}) {
   const editor = useEditor({
     editorProps: {
       attributes: {

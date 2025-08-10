@@ -7,8 +7,8 @@ import { isNodeSelection, type Editor } from "@tiptap/react"
 import { useTiptapEditor } from "@/hooks/use-tiptap-editor"
 
 // --- Icons ---
-import { ChevronDownIcon } from "@/app/create-questions/components/tiptap-icons/chevron-down-icon"
-import { HeadingIcon } from "@/app/create-questions/components/tiptap-icons/heading-icon"
+import { ChevronDownIcon } from "@/app/questions/create/components/tiptap-icons/chevron-down-icon"
+import { HeadingIcon } from "@/app/questions/create/components/tiptap-icons/heading-icon"
 
 // --- Lib ---
 import { isNodeInSchema } from "@/lib/tiptap-utils"
@@ -19,18 +19,18 @@ import {
   headingIcons,
   type Level,
   getFormattedHeadingName,
-} from "@/app/create-questions/components/tiptap-ui/heading-button/heading-button"
+} from "@/app/questions/create/components/tiptap-ui/heading-button/heading-button"
 
 // --- UI Primitives ---
-import type { ButtonProps } from "@/app/create-questions/components/tiptap-ui-primitive/button"
-import { Button } from "@/app/create-questions/components/tiptap-ui-primitive/button"
+import type { ButtonProps } from "@/app/questions/create/components/tiptap-ui-primitive/button"
+import { Button } from "@/app/questions/create/components/tiptap-ui-primitive/button"
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuGroup,
-} from "@/app/create-questions/components/tiptap-ui-primitive/dropdown-menu"
+} from "@/app/questions/create/components/tiptap-ui-primitive/dropdown-menu"
 
 export interface HeadingDropdownMenuProps extends Omit<ButtonProps, "type"> {
   editor?: Editor | null

@@ -22,9 +22,9 @@ export function MovilNav({
 
   const routes = [
     { href: "/", label: "Inicio" },
-    { href: "/explore-questions", label: "Ver preguntas" },
-    { href: "/create-questions", label: "Crear una pregunta" },
-    { href: "/explore-oferts", label: "Crear una oferta" },
+    { href: "/questions/explore", label: "Ver preguntas" },
+    { href: "/questions/create", label: "Crear una pregunta" },
+    { href: "/offers/explore", label: "Crear una oferta" },
     { href: `/profile-user?id=${user?.approval_token}`, label: "Perfil" },
   ];
 

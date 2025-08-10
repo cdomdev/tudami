@@ -18,11 +18,11 @@ export function Hero() {
   const textoRef = useRef<HTMLSpanElement>(null);
   const [index, setIndex] = useState(0);
   const router = useRouter();
-  const {  user } = useSession();
-  
+  const { user } = useSession();
+
   const handleClickBtnQuestions = () => {
     if (user) {
-      router.push("/create-questions");
+      router.push("/questions/create");
     } else {
       router.push("/auth/login");
     }
@@ -30,9 +30,9 @@ export function Hero() {
 
   const handleClickBtnExplore = () => {
     if (user) {
-      router.push("/explore-questions");
+      router.push("/questions/explore");
     } else {
-      router.push("/auth/login")
+      router.push("/auth/login");
     }
   };
   useEffect(() => {

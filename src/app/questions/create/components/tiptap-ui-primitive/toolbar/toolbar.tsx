@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Separator } from "@/app/create-questions/components/tiptap-ui-primitive/separator"
+import { Separator } from "@/app/questions/create/components/tiptap-ui-primitive/separator"
 import "./toolbar.scss"
 
 type BaseProps = React.HTMLAttributes<HTMLDivElement>

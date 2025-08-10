@@ -9,8 +9,7 @@ import { useSession } from "@/context/context.sesion";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 export function Characteristics() {
-
-  const router = useRouter()
+  const router = useRouter();
   const { user } = useSession();
 
   const items = [
@@ -18,19 +17,19 @@ export function Characteristics() {
       title: "Explora dudas",
       description:
         "Encuentra respuestas públicas a preguntas frecuentes de otros aprendices.",
-      href: "/explore-questions",
+      href: "/questions/explore",
     },
     {
       title: "Ofertas de ayuda",
       description:
         "Solicita acompañamiento personalizado por parte de otros usuarios.",
-      href: "/offers",
+      href: "/offers/create",
     },
     {
       title: "Respuestas entre aprendices",
       description:
         "Recibe orientación directa de personas que ya pasaron por lo mismo.",
-      href: "/create-questions",
+      href: "/questions/create",
     },
     {
       title: "Ahorra tiempo",
@@ -41,7 +40,7 @@ export function Characteristics() {
   ];
 
   const handleNavigation = () => {
-    router.push("/auth/login")
+    router.push("/auth/login");
   };
 
   return (
@@ -50,7 +49,11 @@ export function Characteristics() {
         Características
       </NavigationMenuTrigger>
       <NavigationMenuContent>
-        <ul className={`grid w-[600px] gap-2 p-4 ${user ? "md:grid-cols-2" : "md:grid-cols-1"}`}>
+        <ul
+          className={`grid w-[600px] gap-2 p-4 ${
+            user ? "md:grid-cols-2" : "md:grid-cols-1"
+          }`}
+        >
           {user ? (
             items.map((item) => (
               <ListItem key={item.title} href={item.href} title={item.title}>

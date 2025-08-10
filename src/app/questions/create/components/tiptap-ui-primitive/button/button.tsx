@@ -5,7 +5,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/app/create-questions/components/tiptap-ui-primitive/tooltip"
+} from "@/app/questions/create/components/tiptap-ui-primitive/tooltip"
 
 import "./button-colors.scss"
 import "./button-group.scss"

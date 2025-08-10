@@ -6,15 +6,13 @@ import Image from "next/image";
 import { useSession } from "@/context/context.sesion";
 import { useRouter } from "next/navigation";
 
-
 export function HowIsWorks() {
-
-  const { user, } = useSession();
+  const { user } = useSession();
   const router = useRouter();
   const items = [
     {
       paso: 1,
-      link: "/explore-questions",
+      link: "/questions/explore",
       title: "Navega por preguntas reales de otros aprendices",
       descrition: "Tal vez ya alguien preguntó lo mismo que tú.",
       comment: [
@@ -26,7 +24,7 @@ export function HowIsWorks() {
     },
     {
       paso: 2,
-      link: "/create-questions",
+      link: "/questions/create",
       title: "¿No encontraste lo que buscabas? Comparte tu duda.",
       descrition: "Solo escribe lo que necesitas y listo.",
       comment: [
@@ -38,7 +36,7 @@ export function HowIsWorks() {
     },
     {
       paso: 3,
-      link: "/explore-questions",
+      link: "/questions/explore",
       title: "Otros personas responderán con ideas o consejos.",
       descrition: "Tú decides cuál respuesta te sirvió más.",
       comment: [" Aquí todos aprendemos con la experiencia de otros."],
@@ -48,9 +46,9 @@ export function HowIsWorks() {
 
   const handleClickBtnExplore = () => {
     if (user) {
-      router.push("/create-questions");
+      router.push("/questions/create");
     } else {
-      router.push("/auth/login")
+      router.push("/auth/login");
     }
   };
   return (
@@ -63,7 +61,7 @@ export function HowIsWorks() {
       </p>
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 my-10 max-w-6xl mx-auto ">
         {items.map((item, index) => (
-          <li key={item.paso || index} >
+          <li key={item.paso || index}>
             <CardHowItWorks
               key={item.paso || index}
               description={item.descrition}

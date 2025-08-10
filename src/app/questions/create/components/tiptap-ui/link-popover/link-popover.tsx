@@ -7,23 +7,23 @@ import { isNodeSelection, type Editor } from "@tiptap/react"
 import { useTiptapEditor } from "@/hooks/use-tiptap-editor"
 
 // --- Icons ---
-import { CornerDownLeftIcon } from "@/app/create-questions/components/tiptap-icons/corner-down-left-icon"
-import { ExternalLinkIcon } from "@/app/create-questions/components/tiptap-icons/external-link-icon"
-import { LinkIcon } from "@/app/create-questions/components/tiptap-icons/link-icon"
-import { TrashIcon } from "@/app/create-questions/components/tiptap-icons/trash-icon"
+import { CornerDownLeftIcon } from "@/app/questions/create/components/tiptap-icons/corner-down-left-icon"
+import { ExternalLinkIcon } from "@/app/questions/create/components/tiptap-icons/external-link-icon"
+import { LinkIcon } from "@/app/questions/create/components/tiptap-icons/link-icon"
+import { TrashIcon } from "@/app/questions/create/components/tiptap-icons/trash-icon"
 
 // --- Lib ---
 import { isMarkInSchema } from "@/lib/tiptap-utils"
 
 // --- UI Primitives ---
-import type { ButtonProps } from "@/app/create-questions/components/tiptap-ui-primitive/button"
-import { Button } from "@/app/create-questions/components/tiptap-ui-primitive/button"
+import type { ButtonProps } from "@/app/questions/create/components/tiptap-ui-primitive/button"
+import { Button } from "@/app/questions/create/components/tiptap-ui-primitive/button"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/app/create-questions/components/tiptap-ui-primitive/popover"
-import { Separator } from "@/app/create-questions/components/tiptap-ui-primitive/separator"
+} from "@/app/questions/create/components/tiptap-ui-primitive/popover"
+import { Separator } from "@/app/questions/create/components/tiptap-ui-primitive/separator"
 
 // --- Styles ---
 import "./link-popover.scss"
