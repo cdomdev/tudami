@@ -15,7 +15,7 @@ export function ExploresQuestionsByTagsLayout() {
   };
   const handleTabChange = (value: string) => {
     if (value === "all") {
-      router.push("/explore-questions");
+      router.push("/questions/explore");
     } else {
       navigateWithParam("query", value);
     }
@@ -31,7 +31,7 @@ export function ExploresQuestionsByTagsLayout() {
     if (key === "page") {
       params.set("page", "1");
     }
-    router.push(`/explore-questions/questions?${params.toString()}`, {
+    router.push(`/questions/explore/questions?${params.toString()}`, {
       scroll: false,
     });
   };

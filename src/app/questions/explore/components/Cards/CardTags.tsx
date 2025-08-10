@@ -11,7 +11,7 @@ export interface Tags {
 export function CardTags({ name, id, slug, color }: Tags) {
   return (
     <Link
-      href={`/explore-questions/tags?slug=${slug}`}
+      href={`/questions/explore/tags?slug=${slug}`}
       key={id}
       className={`inline-flex items-center rounded-full  px-4 py-1 text-sm font-medium shadow-sm transition-transform hover:scale-105 hover:opacity-90 dark:text-white bg-white/10 `}
       style={{ border: `solid 1px ${color}` }}

@@ -40,7 +40,7 @@ export default function PageTags() {
   return (
     <>
       <Main
-        basePath="/explore-questions"
+        basePath="/questions/explore"
         count={questions.length}
         page={page}
         total={total}
