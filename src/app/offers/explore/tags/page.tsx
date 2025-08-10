@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { SchemaPost } from "@/schemas";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CardPost } from "@/app/explore-questions/components/Cards/CardPost";
-import { Plus, X } from "lucide-react";
+import { CardPost } from "@/app/questions/explore/components/Cards/CardPost";
+import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Main, SkeletonCard } from "@/components";
@@ -19,7 +19,7 @@ export default function PageTags() {
     const pageSize = 10;
 
     function clearTag() {
-        router.push("/offers");
+        router.push("/offers/explore");
     }
 
     //   useEffect(() => {
@@ -39,23 +39,22 @@ export default function PageTags() {
     return (
         <>
 
-            <Main basePath="/explore-questions" count={questions.length} page={page} total={total} pageSize={pageSize} searchParams={searchParams}>
-
+            <Main basePath="/offers/explore" count={questions.length} page={page} total={total} pageSize={pageSize} searchParams={searchParams}>
                 {loading ? (
                     <SkeletonCard />
                 ) : questions.length === 0 ? (
                     <div className="flex flex-col p-10">
                         <p className="text-center text-accent-foreground block rounded-md">
-                            No se encontraron preguntas relacionadas al tema
+                            No se encontraron ofertas relacionadas al tema
                             seleccionado.
                         </p>
                         <strong className="text-center text-lg mb-5 bg-gradient-to-bl from-indigo-500 to-sky-300 text-transparent bg-clip-text">
-                            ¡Sé el primero en preguntar!
+                            ¡Sé el primero en ofrecer!
                         </strong>
                         <Button asChild className="mx-auto group w-fit">
-                            <Link href="/create-questions" className="flex items-center">
+                            <Link href="/offers/create" className="flex items-center">
                                 <Plus className="mr-2 h-4 w-4 group-hover:rotate-90 transition-transform" />
-                                Nueva pregunta
+                                Nueva oferta
                             </Link>
                         </Button>
                     </div>

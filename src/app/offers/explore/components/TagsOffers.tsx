@@ -14,7 +14,7 @@ export function ExploresOffers() {
     };
     const handleTabChange = (value: string) => {
         if (value === "all") {
-            router.push("/offers");
+            router.push("/offers/explore");
         } else {
             navigateWithParam("query", value);
         }
@@ -30,7 +30,7 @@ export function ExploresOffers() {
         if (key === "page") {
             params.set("page", "1");
         }
-        router.push(`/offers/tags?${params.toString()}`, {
+        router.push(`/offers/explore/tags?${params.toString()}`, {
             scroll: false,
         });
     };
