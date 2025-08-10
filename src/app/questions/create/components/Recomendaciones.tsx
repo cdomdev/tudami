@@ -1,9 +1,9 @@
 export function Recomendaciones() {
   return (
     <>
-      <h3 className="font-medium text-sm md:text-base mb-2  ">
+      <h2 className="font-medium text-sm md:text-base mb-2  ">
         Cómo hacer una buena pregunta
-      </h3>
+      </h2>
       <div className="border mb-3 dark:border-gray-50"></div>
       <ul className="list-disc pl-5 space-y-3 text-sm text-muted-foreground leading-relaxed">
         <li>

@@ -8,7 +8,7 @@ export async function fetchGeneralQuestionsApi(
   pageSize = 10,
   search?: string
 ) {
-  const url = `/api/explore-questions/general-questions?page=${page}&pageSize=${pageSize}${
+  const url = `/api/questions/explore/general-questions?page=${page}&pageSize=${pageSize}${
     search ? `&search=${search}` : ""
   }`;
 
@@ -34,7 +34,7 @@ export async function getPopularQuestionsApi(
   pageSize = 10,
   search?: string
 ) {
-  const url = `/api/explore-questions/popular-questions?page=${page}&pageSize=${pageSize}${
+  const url = `/api/questions/explore/popular-questions?page=${page}&pageSize=${pageSize}${
     search ? `&search=${search}` : ""
   }`;
 
@@ -60,7 +60,7 @@ export async function getUnansweredQuestionsApi(
   pageSize = 10,
   search?: string
 ) {
-  const url = `/api/explore-questions/unanswer-questions?page=${page}&pageSize=${pageSize}${
+  const url = `/api/questions/explore/unanswer-questions?page=${page}&pageSize=${pageSize}${
     search ? `&search=${search}` : ""
   }`;
   const res = await fetch(url, {
@@ -83,7 +83,7 @@ export async function getMyQuestionsApi(
   pageSize = 10,
   search?: string
 ) {
-  const url = `/api/explore-questions/my-questions?page=${page}&pageSize=${pageSize}${
+  const url = `/api/questions/explore/my-questions?page=${page}&pageSize=${pageSize}${
     search ? `&search=${search}` : ""
   }`;
 
@@ -110,7 +110,7 @@ export async function getQuestionsByIdApi(
   search?: string,
   id?: string
 ) {
-  const url = `/api/explore-questions/question-by-id?id=${id}&page=${page}&pageSize=${pageSize}${
+  const url = `/api/questions/explore/question-by-id?id=${id}&page=${page}&pageSize=${pageSize}${
     search ? `&search=${search}` : ""
   }`;
   const res = await fetch(url, {
@@ -139,7 +139,7 @@ export async function getQuestionsByTagApi(
   pageSize = 10,
   search?: string
 ) {
-  const url = `/api/explore-questions/questions-by-tag?slug=${tagSlug}&page=${page}&pageSize=${pageSize}${
+  const url = `/api/questions/explore/questions-by-tag?slug=${tagSlug}&page=${page}&pageSize=${pageSize}${
     search ? `&search=${search}` : ""
   }`;
 

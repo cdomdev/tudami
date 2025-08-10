@@ -4,7 +4,7 @@ export async function createQuestionApi(
   content: string,
   tags: string[] = []
 ) {
-  const url = "/api/create-questions/new";
+  const url = "/api/questions/create/new";
   const response = await fetch(url, {
     method: "POST",
     headers: {

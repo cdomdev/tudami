@@ -4,7 +4,7 @@ export async function createComment(
   question_id: number,
   user_id: string
 ) {
-  const urlReques = "/api/explore-questions/comment/new";
+  const urlReques = "/api/questions/explore/comment/new";
   try {
     const res = await fetch(urlReques, {
       method: "POST",
@@ -31,7 +31,7 @@ export async function createComment(
 
 export async function getCommentBy(question_id: number) {
   try {
-    const urlReques = `/api/explore-questions/comment/get?question_id=${question_id}`;
+    const urlReques = `/api/questions/explore/comment/get?question_id=${question_id}`;
     const res = await fetch(urlReques, {
       method: "GET",
     });

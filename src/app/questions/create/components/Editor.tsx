@@ -56,7 +56,7 @@ export default function Editor() {
       }
 
       toast.success("¡Pregunta publicada con éxito!");
-      router.push(`/create-questions/status?text=pregunta-creada-con-exito`);
+      router.push(`/questions/create/status?res=pregunta-creada-con-exito`);
 
       setTitle("");
       setContent("");

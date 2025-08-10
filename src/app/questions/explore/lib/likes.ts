@@ -2,7 +2,7 @@ import { supabase } from "@/utils/supabase/supabaseClient";
 
 export async function toggleLike(questionId: number, user_id: string) {
   try {
-    const urlRequest = `/api/explore-questions/emit-like?question_id=${questionId}&user_id=${user_id}`;
+    const urlRequest = `/api/questions/explore/emit-like?question_id=${questionId}&user_id=${user_id}`;
     const res = await fetch(urlRequest, {
       method: "POST",
       headers: {
