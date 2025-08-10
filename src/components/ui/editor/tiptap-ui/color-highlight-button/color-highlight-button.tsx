@@ -15,12 +15,10 @@ import {
 } from "@/lib/tiptap-utils"
 
 // --- UI Primitives ---
-import type { ButtonProps } from "@/components/ui/editor/tiptap-ui-primitive/button"
-import { Button } from "@/components/ui/editor/tiptap-ui-primitive/button"
+import  { type ButtonProps, Button } from "../../tiptap-ui-primitive/button"
 
 // --- Styles ---
-import "@/components/tiptap-ui/color-highlight-button/color-highlight-button.scss"
-
+import "../../tiptap-ui/color-highlight-button/color-highlight-button.scss"
 export const HIGHLIGHT_COLORS = [
   {
     label: "Default background",

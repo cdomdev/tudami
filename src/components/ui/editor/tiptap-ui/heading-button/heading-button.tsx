@@ -7,19 +7,19 @@ import { isNodeSelection, type Editor } from "@tiptap/react";
 import { useTiptapEditor } from "@/hooks/use-tiptap-editor";
 
 // --- Icons ---
-import { HeadingOneIcon } from "@/components/ui/editor/tiptap-icons/heading-one-icon";
-import { HeadingTwoIcon } from "@/components/ui/editor/tiptap-icons/heading-two-icon";
-import { HeadingThreeIcon } from "@/components/ui/editor/tiptap-icons/heading-three-icon";
-import { HeadingFourIcon } from "@/components/ui/editor/tiptap-icons/heading-four-icon";
-import { HeadingFiveIcon } from "@/components/ui/editor/tiptap-icons/heading-five-icon";
-import { HeadingSixIcon } from "@/components/ui/editor/tiptap-icons/heading-six-icon";
+import { HeadingOneIcon } from "../../tiptap-icons/heading-one-icon";
+import { HeadingTwoIcon } from "../../tiptap-icons/heading-two-icon";
+import { HeadingThreeIcon } from "../../tiptap-icons/heading-three-icon";
+import { HeadingFourIcon } from "../../tiptap-icons/heading-four-icon";
+import { HeadingFiveIcon } from "../../tiptap-icons/heading-five-icon";
+import { HeadingSixIcon } from "../../tiptap-icons/heading-six-icon";
 
 // --- Lib ---
 import { isNodeInSchema } from "@/lib/tiptap-utils";
 
 // --- UI Primitives ---
-import type { ButtonProps } from "@/components/ui/editor/tiptap-ui-primitive/button";
-import { Button } from "@/components/ui/editor/tiptap-ui-primitive/button";
+import type { ButtonProps } from "../../tiptap-ui-primitive/button";
+import { Button } from "../../tiptap-ui-primitive/button";
 
 export type Level = 1 | 2 | 3 | 4 | 5 | 6;
 

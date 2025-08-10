@@ -7,12 +7,12 @@ import { type Editor } from "@tiptap/react";
 import { useTiptapEditor } from "@/hooks/use-tiptap-editor";
 
 // --- Icons ---
-import { Redo2Icon } from "@/components/ui/editor/tiptap-icons/redo2-icon";
-import { Undo2Icon } from "@/components/ui/editor/tiptap-icons/undo2-icon";
+import { Redo2Icon } from "../../tiptap-icons/redo2-icon";
+import { Undo2Icon } from "../../tiptap-icons/undo2-icon";
 
 // --- UI Primitives ---
-import type { ButtonProps } from "@/components/ui/editor/tiptap-ui-primitive/button";
-import { Button } from "@/components/ui/editor/tiptap-ui-primitive/button";
+import type { ButtonProps } from "../../tiptap-ui-primitive/button";
+import { Button } from "../../tiptap-ui-primitive/button";
 
 export type HistoryAction = "undo" | "redo";
 

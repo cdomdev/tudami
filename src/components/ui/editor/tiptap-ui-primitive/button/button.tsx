@@ -4,9 +4,8 @@ import * as React from "react"
 import {
   Tooltip,
   TooltipContent,
-  TooltipTrigger,
-} from "@/app/questions/create/components/tiptap-ui-primitive/tooltip"
-
+  TooltipTrigger
+} from "../tooltip/tooltip"
 import "./button-colors.scss"
 import "./button-group.scss"
 import "./button.scss"

@@ -18,15 +18,15 @@ import {
   Toolbar,
   ToolbarGroup,
   ToolbarSeparator,
-} from "@/components/ui/editor/tiptap-ui-primitive/toolbar";
-import { MarkButton } from "@/components/ui/editor/tiptap-ui/mark-button";
-import { TextAlignButton } from "@/components/ui/editor/tiptap-ui/text-align-button";
-import { UndoRedoButton } from "@/components/ui/editor/tiptap-ui/undo-redo-button";
+} from "../tiptap-ui-primitive/toolbar";
+import { MarkButton } from "../tiptap-ui/mark-button";
+import { TextAlignButton } from "../tiptap-ui/text-align-button";
+import { UndoRedoButton } from "../tiptap-ui/undo-redo-button";
 
-// import { LinkPopover } from "@/components/ui/editor/tiptap-ui/link-popover";
-// import { ListDropdownMenu } from "@/components/ui/editor/tiptap-ui/list-dropdown-menu";
-// import { BlockQuoteButton } from "@/components/ui/editor/tiptap-ui/blockquote-button";
-// import { CodeBlockButton } from "@/components/ui/editor/tiptap-ui/code-block-button";
+// import { LinkPopover } from "../tiptap-ui/link-popover";
+// import { ListDropdownMenu } from "../tiptap-ui/list-dropdown-menu";
+// import { BlockQuoteButton } from "../tiptap-ui/blockquote-button";
+// import { CodeBlockButton } from "../tiptap-ui/code-block-button";
 
 export function SimpleEditor({
   onChange,

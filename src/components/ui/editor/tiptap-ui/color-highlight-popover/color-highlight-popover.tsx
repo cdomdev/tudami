@@ -8,20 +8,20 @@ import { useMenuNavigation } from "@/hooks/use-menu-navigation";
 import { useTiptapEditor } from "@/hooks/use-tiptap-editor";
 
 // --- Icons ---
-import { BanIcon } from "@/components/ui/editor/tiptap-icons/ban-icon";
-import { HighlighterIcon } from "@/components/ui/editor/tiptap-icons/highlighter-icon";
+import { BanIcon } from "../../tiptap-icons/ban-icon";
+import { HighlighterIcon } from "../../tiptap-icons/highlighter-icon";
 
 // --- Lib ---
 import { isMarkInSchema } from "@/lib/tiptap-utils";
 
 // --- UI Primitives ---
-import type { ButtonProps } from "@/components/ui/editor/tiptap-ui-primitive/button";
-import { Button } from "@/components/ui/editor/tiptap-ui-primitive/button";
+import type { ButtonProps } from "../../tiptap-ui-primitive/button";
+import { Button } from "../../tiptap-ui-primitive/button";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@/components/ui/editor/tiptap-ui-primitive/popover";
+} from "../../tiptap-ui-primitive/popover";
 import { Separator } from "@/components/ui/editor/tiptap-ui-primitive/separator";
 
 // --- Tiptap UI ---

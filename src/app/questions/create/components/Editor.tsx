@@ -1,8 +1,8 @@
 "use client";
 
-import { SimpleEditor } from "./simple/simple-editor";
+import { SimpleEditor } from "@/components/ui/editor/simple/simple-editor";
 import { useState } from "react";
-import {  Question } from "@/schemas";
+import { Question } from "@/schemas";
 import { toast } from "sonner";
 import { useSession } from "@/context/context.sesion";
 import { createQuestionApi } from "../lib/createQuestions";

@@ -7,14 +7,14 @@ import { type Editor, type ChainedCommands } from "@tiptap/react"
 import { useTiptapEditor } from "@/hooks/use-tiptap-editor"
 
 // --- Icons ---
-import { AlignCenterIcon } from "@/components/ui/editor/tiptap-icons/align-center-icon"
-import { AlignJustifyIcon } from "@/components/ui/editor/tiptap-icons/align-justify-icon"
-import { AlignLeftIcon } from "@/components/ui/editor/tiptap-icons/align-left-icon"
-import { AlignRightIcon } from "@/components/ui/editor/tiptap-icons/align-right-icon"
+import { AlignCenterIcon } from "../../tiptap-icons/align-center-icon"
+import { AlignJustifyIcon } from "../../tiptap-icons/align-justify-icon"
+import { AlignLeftIcon } from "../../tiptap-icons/align-left-icon"
+import { AlignRightIcon } from "../../tiptap-icons/align-right-icon"
 
 // --- UI Primitives ---
-import type { ButtonProps } from "@/components/ui/editor/tiptap-ui-primitive/button"
-import { Button } from "@/components/ui/editor/tiptap-ui-primitive/button"
+import type { ButtonProps } from "../../tiptap-ui-primitive/button"
+import { Button } from "../../tiptap-ui-primitive/button"
 
 export type TextAlign = "left" | "center" | "right" | "justify"
 

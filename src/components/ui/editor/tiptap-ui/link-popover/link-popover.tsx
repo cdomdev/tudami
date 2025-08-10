@@ -7,23 +7,23 @@ import { isNodeSelection, type Editor } from "@tiptap/react"
 import { useTiptapEditor } from "@/hooks/use-tiptap-editor"
 
 // --- Icons ---
-import { CornerDownLeftIcon } from "@/components/ui/editor/tiptap-icons/corner-down-left-icon"
-import { ExternalLinkIcon } from "@/components/ui/editor/tiptap-icons/external-link-icon"
-import { LinkIcon } from "@/components/ui/editor/tiptap-icons/link-icon"
-import { TrashIcon } from "@/components/ui/editor/tiptap-icons/trash-icon"
+import { CornerDownLeftIcon } from "../../tiptap-icons/corner-down-left-icon"
+import { ExternalLinkIcon } from "../../tiptap-icons/external-link-icon"
+import { LinkIcon } from "../../tiptap-icons/link-icon"
+import { TrashIcon } from "../../tiptap-icons/trash-icon"
 
 // --- Lib ---
 import { isMarkInSchema } from "@/lib/tiptap-utils"
 
 // --- UI Primitives ---
-import type { ButtonProps } from "@/components/ui/editor/tiptap-ui-primitive/button"
-import { Button } from "@/components/ui/editor/tiptap-ui-primitive/button"
+import type { ButtonProps } from "../../tiptap-ui-primitive/button"
+import { Button } from "../../tiptap-ui-primitive/button"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/editor/tiptap-ui-primitive/popover"
-import { Separator } from "@/components/ui/editor/tiptap-ui-primitive/separator"
+} from "../../tiptap-ui-primitive/popover"
+import { Separator } from "../../tiptap-ui-primitive/separator"
 
 // --- Styles ---
 import "./link-popover.scss"

@@ -7,16 +7,16 @@ import { isNodeSelection, type Editor } from "@tiptap/react"
 import { useTiptapEditor } from "@/hooks/use-tiptap-editor"
 
 // --- Icons ---
-import { ListIcon } from "@/components/ui/editor/tiptap-icons/list-icon"
-import { ListOrderedIcon } from "@/components/ui/editor/tiptap-icons/list-ordered-icon"
-import { ListTodoIcon } from "@/components/ui/editor/tiptap-icons/list-todo-icon"
+import { ListIcon } from "../../tiptap-icons/list-icon"
+import { ListOrderedIcon } from "../../tiptap-icons/list-ordered-icon"
+import { ListTodoIcon } from "../../tiptap-icons/list-todo-icon"
 
 // --- Lib ---
 import { isNodeInSchema } from "@/lib/tiptap-utils"
 
 // --- UI Primitives ---
-import type { ButtonProps } from "@/components/ui/editor/tiptap-ui-primitive/button"
-import { Button } from "@/components/ui/editor/tiptap-ui-primitive/button"
+import type { ButtonProps } from "../../tiptap-ui-primitive/button"
+import { Button } from "../../tiptap-ui-primitive/button"
 
 export type ListType = "bulletList" | "orderedList" | "taskList"
 
