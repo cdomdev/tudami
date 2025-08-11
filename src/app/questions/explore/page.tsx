@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { CardPost } from "./components/Cards/CardPost";
 import { useSearchParams } from "next/navigation";
 import { fetchGeneralQuestionsApi } from "./lib/getQuestions";
-import { NoContent } from "./components/NoContent";
+import { NoContent } from "../../../components/NoContent";
 import { SchemaPost } from "@/schemas";
 import { Main, SkeletonCard } from "@/components";
 
@@ -38,7 +38,7 @@ export default function ExploreQuestionsPage() {
       {loading ? (
         <SkeletonCard mockNumber={5} />
       ) : questions.length === 0 ? (
-        <NoContent />
+        <NoContent text="No hay preguntas disponibles" url="/questions/explore" url_redirect="/" text_btn="Crear pregunta"/>
       ) : (
         questions.map((post) => <CardPost key={post.id} {...post} />)
       )}

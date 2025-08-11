@@ -5,7 +5,7 @@ import { formatTimestamp } from "@/utils/formatDate";
 import { SchemaPost } from "@/schemas";
 import { FooterCardPost } from "./FooterCardPost";
 import { ButtonSavePost } from "../buttons/ButtonSavePost";
-import { ButtonShare } from "../buttons/ButtonShare";
+import { ButtonShare } from "../../../../../components/ui/ButtonShare";
 import { useSession } from "@/context/context.sesion";
 
 export function CardPost({

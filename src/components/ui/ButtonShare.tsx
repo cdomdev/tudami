@@ -48,7 +48,7 @@ export function ButtonShare({ title, text, url }: ShareButtonProps) {
             <span className="sr-only">Compartir pregunta</span>
           </Button>
         </TooltipTrigger>
-        <TooltipContent>Compartir pregunta</TooltipContent>
+        <TooltipContent>{title}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

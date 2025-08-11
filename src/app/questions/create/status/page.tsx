@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description:
     "Tu pregunta ha sido publicada y está disponible para la comunidad.",
 };
+
 export default function SuccessPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-dvh px-4 text-center relative overflow-hidden">
@@ -28,18 +29,18 @@ export default function SuccessPage() {
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-md z-20">
-        <Link href="/explore-questions/questions?query=my" className="w-full">
+        <Link href="/questions/explore/questions?query=my" className="w-full">
           <Button
             variant="default"
             size="lg"
             className="w-full group flex items-center gap-2 shadow-md hover:shadow-lg transition-all cursor-pointer"
           >
             <Eye className="w-5 h-5 group-hover:animate-pulse" />
-            <span>Ver mi pregunta</span>
+            <span>Ver mis preguntas</span>
           </Button>
         </Link>
 
-        <Link href="/create-questions" className="w-full">
+        <Link href="/questions/create" className="w-full">
           <Button
             variant="outline"
             size="lg"

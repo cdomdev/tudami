@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { UserCircle } from "lucide-react";
 import { formatTimestamp } from "@/utils/formatDate";
-import { SchemaQuestionsSaveds } from "../../../../schemas/schema.questions_saveds";
-import { ButtonSavePost } from "@/app/explore-questions/components/buttons/ButtonSavePost";
-import { ButtonShare } from "@/app/explore-questions/components/buttons/ButtonShare";
+import { SchemaQuestionsSaveds } from "@/schemas/schema.questions_saveds";
+import { ButtonSavePost } from "@/app/questions/explore/components/buttons/ButtonSavePost";
+import { ButtonShare } from "@/components/ui/ButtonShare";
 import Link from "next/link";
 import { useSession } from "@/context/context.sesion";
 
