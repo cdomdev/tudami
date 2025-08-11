@@ -54,7 +54,7 @@ export function ExploresOffers() {
                         value="popular"
                         className="cursor-pointer hover:bg-gray-50 duration-300 text-xs"
                     >
-                        De pago
+                        Populares
                     </TabsTrigger>
                     <TabsTrigger
                         value="unanswered"

@@ -12,11 +12,10 @@ export async function addOffer(title: string, content: string) {
     throw new Error("Error al crear la pregunta");
   }
 
-  const { data, datainsignia } = await response.json();
+  const { data } = await response.json();
 
   return {
     success: true,
     data,
-    datainsignia,
   };
 }

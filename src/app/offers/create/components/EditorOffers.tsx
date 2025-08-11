@@ -2,7 +2,7 @@
 
 import { SimpleEditor } from "@/components/ui/editor/simple/simple-editor";
 import { useState } from "react";
-import { Question } from "@/schemas";
+import { Offers } from "@/schemas";
 import { toast } from "sonner";
 import { useSession } from "@/context/context.sesion";
 import { addOffer } from "../lib/createOffers";
@@ -26,27 +26,28 @@ export function EditorOffers() {
     }
 
     setLoading(true);
-    const result = Question.safeParse({ title, content });
+    const result = Offers.safeParse({ title, content });
 
+    
     if (!result.success) {
       setLoading(false);
       toast.error(
         `Error en el formulario: ${result.error.errors
           .map((e) => e.message)
           .join(", ")}`
-      );
-      return;
-    }
-
-    try {
-      const res = await addOffer(result.data.title, result.data.content);
-
+        );
+        return;
+      }
+      
+      try {
+        const res = await addOffer(result.data.title, result.data.content);
+        console.log("datos de la oferta --->", res)
       if (!res || !res.success) {
         throw new Error("Error al crear la oferta");
       }
 
       toast.success("¡Oferta publicada con éxito!");
-      router.push(`/questions/create/status?res=pregunta-creada-con-exito`);
+      router.push(`/Offerss/create/status?res=pregunta-creada-con-exito`);
 
       setTitle("");
       setContent("");

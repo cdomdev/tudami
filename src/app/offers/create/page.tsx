@@ -3,14 +3,14 @@ import { Recommendations } from "./components/Recommendations";
 import { EditorOffers } from "./components/EditorOffers";
 
 export const metadata: Metadata = {
-  title: "Crear un nueva oferta",
+  title: "Crear una nueva oferta",
   description: "Página para crear nuevas ofertas en Tudami",
 };
 
 export default function offerPage() {
   return (
     <>
-      <h1 className="relative md:-left-1/4 mb-2 mt-24 md:mt-30 text-center font-medium  text-2xl md:text-3xl text-primary">
+      <h1 className="max-w-6xl mx-auto mb-2 mt-24 md:mt-30 text-left pl-10 font-medium text-2xl md:text-3xl text-primary">
         Crea tu próxima oferta
       </h1>
       <section className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-6 gap-4 px-2">
