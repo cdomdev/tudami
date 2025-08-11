@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowLeft, Eye, Plus } from "lucide-react";
-import { Confetti } from "../components/Confetti";
+import { Confetti } from "@/components/Confetti";
 
 export const metadata: Metadata = {
   title: "Pregunta enviada con éxito",

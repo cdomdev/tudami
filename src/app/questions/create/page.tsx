@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function QuestionsPage() {
   return (
     <>
-      <h1 className="relative md:-left-1/4 mb-2 mt-24 md:mt-30 text-center font-medium  text-2xl md:text-3xl text-primary">
+      <h1 className="max-w-6xl mx-auto mb-2 mt-24 md:mt-30 text-left pl-10 font-medium text-2xl md:text-3xl text-primary">
         ¿En qué necesitas ayuda?
       </h1>
       <section className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-6 gap-4 px-2">
