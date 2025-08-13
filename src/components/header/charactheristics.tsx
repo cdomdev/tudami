@@ -32,10 +32,10 @@ export function Characteristics() {
       href: "/questions/create",
     },
     {
-      title: "Ahorra tiempo",
+      title: "Monetiza tu tiempo",
       description:
-        "Accede rápidamente a soluciones compartidas por la comunidad.",
-      href: "/resources",
+        "Accede a ofertas reales para monetizar tus habilidades.",
+      href: "/offers/explore",
     },
   ];
 
