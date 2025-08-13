@@ -47,7 +47,7 @@ export function EditorOffers() {
       }
 
       toast.success("¡Oferta publicada con éxito!");
-      router.push(`/Offerss/create/status?res=pregunta-creada-con-exito`);
+      router.push(`/offers/create/status?res=pregunta-creada-con-exito`);
 
       setTitle("");
       setContent("");
