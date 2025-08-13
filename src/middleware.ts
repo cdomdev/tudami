@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { createClient } from "@supabase/supabase-js"; 
+import { createClient } from "@supabase/supabase-js";
 
 export async function middleware(req: NextRequest) {
   const accessToken = req.cookies.get("sb-access-token")?.value;
@@ -30,10 +30,10 @@ export async function middleware(req: NextRequest) {
       // En lugar de renovar aquí, redirigimos a una ruta especial
       const url = req.nextUrl.clone();
       const originalPath = req.nextUrl.pathname;
-      
+
       url.pathname = "/auth/validateSesion";
       url.search = `?redirectTo=${encodeURIComponent(originalPath)}`;
-      
+
       return NextResponse.redirect(url);
     }
 
@@ -57,10 +57,14 @@ function redirectToLogin(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/create-questions",
-    "/create-questions/:path*",
-    "/explore-questions",
-    "/explore-questions/:path*",
+    "/questions/create",
+    "/questions/create/:path*",
+    "/questions/explore",
+    "/questions/explore/:path*",
+    "/offers/create",
+    "/offers/create/:path*",
+    "/offers/explore",
+    "/offers/explore/:path*",
     "/profile-user",
     "/profile-user/:path*",
     "/view-profile-user",
