@@ -7,7 +7,6 @@ export async function POST(request: Request) {
   if (!questionId || !userId) {
     return new Response("Missing question_id or user_id", { status: 400 });
   }
-  console.log("Received request to toggle like: [API]", questionId, userId);
   const supabase = await supabaseServerClient();
   const { liked, error } = await toggleLike(
     Number(questionId),

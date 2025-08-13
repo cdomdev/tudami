@@ -24,7 +24,8 @@ export async function fetchGeneralQuestions(
   let query = supabase
     .from("view_all_questions")
     .select("*", { count: "exact" })
-    .range(from, to);
+    .range(from, to)
+    .order("created_at", { ascending: false });
 
   if (search) {
     query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);

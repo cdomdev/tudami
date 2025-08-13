@@ -7,9 +7,10 @@ export async function GET(request: Request) {
   const page = Number(searchParams.get("page")) || 1;
   const pageSize = Number(searchParams.get("pageSize")) || 10;
   const supabase = await supabaseServerClient();
+  const user_id = searchParams.get("user_id") || "";
 
   try {
-    const offers = await getOffers(page, pageSize, supabase);
+    const offers = await getUnansweredOffers(page, pageSize, supabase, user_id);
     return NextResponse.json(offers);
   } catch (error) {
     console.log(error);
@@ -20,43 +21,41 @@ export async function GET(request: Request) {
   }
 }
 
-export async function getOffers(
-  page = 1,
-  pageSize = 10,
-  supabase: SupabaseClient
+async function getUnansweredOffers(
+  page: number,
+  pageSize: number,
+  supabase: SupabaseClient,
+  user_id: string
 ) {
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
-
-  const query = supabase
+  const { data, error } = await supabase
     .from("offers")
     .select(
-      `*, users:user_id (
-        id,
-        full_name,
-        avatar_url,
-        email,
-        phone,
-        bio,
-        country,
-        city,
-        department,
-        created_at),
-        offers_applications(count)`
+      `*, 
+     users:user_id (
+       id,
+       full_name,
+       avatar_url,
+       email,
+       phone,
+       bio,
+       country,
+       city,
+       department,
+       created_at
+     ),
+     offers_applications(count)`
     )
-    .range(from, to).order("created_at", { ascending: false });
-  const { data, count, error } = await query;
-
-  // normalizacion para el contador
-  const offers = data?.map((offer) => ({
-    ...offer,
-    offers_applications: offer.offers_applications[0].count,
-  }));
+    .eq("user_id", user_id)
+    .is("offers_applications", null) 
+    .range(from, to)
+    .order("created_at", { ascending: false });
 
   if (error) {
-    console.error("Error on funtion helper getOffers:", error);
+    console.error("Error fetching my offers:", error);
     throw new Error(error.message);
   }
 
-  return { offers: offers ?? [], count: count };
+  return data;
 }
