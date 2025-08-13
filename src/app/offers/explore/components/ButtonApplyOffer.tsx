@@ -1,99 +1,79 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { SquareMousePointer, ClipboardCheck } from "lucide-react";
 import { useSession } from "@/context/context.sesion";
-import { supabase } from "@/utils/supabase/supabaseClient";
 import { toast } from "sonner";
 import { applyOffer, deleteApplyOffer, toggleApply } from "../lib/applyOffer";
+import { useApplyOfferEventsStore } from "@/context/applyOffer.context";
 
 export function ButtonApplyOffer({
-    offer_id,
-    user_id,
+  offer_id,
+  user_id,
 }: {
-    offer_id: number;
-    user_id: string;
+  offer_id: number;
+  user_id: string;
 }) {
-    const [hasApply, setHasApply] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const { user } = useSession();
+  const [hasApply, setHasApply] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const { user } = useSession();
+  const { emitApplyOfferEvent } = useApplyOfferEventsStore();
 
-    // Comprobación inicial
-    useEffect(() => {
-        toggleApply(offer_id, user_id)
-            .then(setHasApply)
-            .finally(() => setLoading(false));
-    }, [offer_id, user_id]);
+  // Comprobación inicial
+  useEffect(() => {
+    if (!user) return;
+    toggleApply(offer_id, user.id)
+      .then(setHasApply)
+      .finally(() => setLoading(false));
+  }, [offer_id, user]);
 
-    // Suscripción en tiempo real
-    useEffect(() => {
-        if (!user) return;
-        const channel = supabase
-            .channel(`apply-offers-${offer_id}`)
-            .on(
-                "postgres_changes",
-                { event: "*", schema: "public", table: "offers_applications" },
-                async () => {
-                    const updated = await toggleApply(offer_id, user.id);
-                    setHasApply(updated);
-                }
-            )
-            .subscribe();
+  async function handleClick() {
+    if (!user) return toast.error("Debes iniciar sesión para aplicar.");
+    if (user.id === user_id)
+      return toast.error("No puedes aplicar a tus propias ofertas.");
 
-        return () => {
-            supabase.removeChannel(channel);
-        };
-    }, [user, offer_id]);
+    const actionToEmit = hasApply ? "withdraw" : "apply";
+    emitApplyOfferEvent(offer_id, actionToEmit, user.id); // 🔹 Actualización inmediata en UI
+    setHasApply(!hasApply);
 
-    // Acción del botón
-    async function handleClick() {
-        if (!user) return toast.error("Debes iniciar sesión para aplicar.");
-        // if (user_id === user.id)
-        //   return toast.error("¡No puedes aplicar a tu propia oferta!");
-
-        setLoading(true);
-
-        if (hasApply) {
-            // Eliminar aplicación
-            const { success } = await deleteApplyOffer(offer_id, user.id);
-            if (success) {
-                toast.success("Has eliminado tu aplicación.");
-                setHasApply(false);
-            } else {
-                toast.error("No se pudo eliminar tu aplicación.");
-            }
-        } else {
-            // Aplicar a la oferta
-            const { success } = await applyOffer(offer_id, user.id);
-            if (success) {
-                toast.success("¡Has aplicado a la oferta!");
-                setHasApply(true);
-            } else {
-                toast.error("No se pudo aplicar a la oferta.");
-            }
-        }
-
-        setLoading(false);
+    let success = false;
+    if (hasApply) {
+      const res = await deleteApplyOffer(offer_id, user.id);
+      success = res.success;
+    } else {
+      const res = await applyOffer(offer_id, user.id);
+      success = res.success;
     }
 
-    const textBtn = hasApply ? "Aplicaste a esta oferta" : "Aplicar a la oferta";
-    const isApply = hasApply
-        ? "bg-green-500 text-white hover:bg-green-600"
-        : "";
-    const icon = hasApply ? (
-        <ClipboardCheck className="w-4 h-4" />
-    ) : (
-        <SquareMousePointer className="w-4 h-4" />
-    );
+    // Si falla, revertimos
+    if (!success) {
+      setHasApply(hasApply);
+      emitApplyOfferEvent(offer_id, hasApply ? "apply" : "withdraw", user.id);
+      toast.error("Ocurrió un error, intenta nuevamente.");
+    } else {
+      toast.success(
+        hasApply ? "Has eliminado tu aplicación." : "¡Has aplicado a la oferta!"
+      );
+    }
+  }
 
-    return (
-        <Button
-            onClick={handleClick}
-            className={`flex items-center gap-1 ${isApply}`}
-            disabled={loading}
-        >
-            {icon} {textBtn}
-        </Button>
-    );
+  const textBtn = hasApply ? "Aplicaste a esta oferta" : "Aplicar a la oferta";
+  const isApply = hasApply ? "bg-green-500 text-white hover:bg-green-600" : "";
+  const buttonTextLoading = hasApply ? "Eliminando..." : "Aplicando...";
+
+  const icon = hasApply ? (
+    <ClipboardCheck className="w-4 h-4" />
+  ) : (
+    <SquareMousePointer className="w-4 h-4" />
+  );
+
+  return (
+    <Button
+      onClick={handleClick}
+      className={`flex items-center gap-1 cursor-pointer ${isApply}`}
+      disabled={loading}
+    >
+      {icon} {loading ? buttonTextLoading : textBtn}
+    </Button>
+  );
 }

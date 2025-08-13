@@ -1,26 +1,38 @@
+import { supabase } from "@/utils/supabase/supabaseClient";
 export async function applyOffer(offer_id: number, user_id: string) {
-    const path = `/api/offers/explore/apply?offer_id=${offer_id}&user_id=${user_id}`;
-    const res = await fetch(path, { method: "POST" });
+  const path = `/api/offers/explore/apply?offer_id=${offer_id}&user_id=${user_id}`;
+  const res = await fetch(path, { method: "POST" });
 
-    if (!res.ok) throw new Error("Error on apply offer");
+  if (!res.ok) throw new Error("Error on apply offer");
 
-    return await res.json();
+  return await res.json();
 }
 
 export async function deleteApplyOffer(offer_id: number, user_id: string) {
-    const path = `/api/offers/explore/delete?offer_id=${offer_id}&user_id=${user_id}`;
-    const res = await fetch(path, { method: "DELETE" });
+  const path = `/api/offers/explore/delete?offer_id=${offer_id}&user_id=${user_id}`;
+  const res = await fetch(path, { method: "DELETE" });
 
-    if (!res.ok) throw new Error("Error on delete apply");
+  if (!res.ok) throw new Error("Error on delete apply");
 
-    return await res.json();
+  return { success: true };
 }
 
-export async function toggleApply(offer_id: number, user_id: string) {
-    const path = `/api/offers/explore/toggle?offer_id=${offer_id}&user_id=${user_id}`;
-    const res = await fetch(path, { method: "POST" });
+export const toggleApply = async (offer_id: number, user_id: string) => {
+  const { data } = await supabase
+    .from("offers_applications")
+    .select("id")
+    .eq("offer_id", offer_id)
+    .eq("user_id", user_id)
+    .maybeSingle();
+  return !!data;
+};
 
-    if (!res.ok) throw new Error("Error on toggle apply");
+// export async function toggleApply(offer_id: number, user_id: string) {
+//   const path = `/api/offers/explore/toggle?offer_id=${offer_id}&user_id=${user_id}`;
+//   const res = await fetch(path, { method: "POST" });
 
-    return await res.json();
-}
+//   console.log("Toggle apply response:", res);
+//   if (!res.ok) throw new Error("Error on toggle apply");
+
+//   return { success: true };
+// }

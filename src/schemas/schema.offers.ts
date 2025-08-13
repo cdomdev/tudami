@@ -8,7 +8,7 @@ export const SchemaResOffers = z.object({
     details: z.string(),
     status: z.string(),
     users: User,
-    offers_aplication: z.number(),
+    offers_aplication: z.number().min(0).default(0),
     created_at: z.coerce.date(),
 });
 
