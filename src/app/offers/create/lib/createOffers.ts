@@ -1,4 +1,8 @@
 export async function addOffer(title: string, content: string) {
+  if (!title || !content) {
+    throw new Error("Faltan datos para procesar la solicitud");
+  }
+
   const url = "/api/offers/create/new";
   const response = await fetch(url, {
     method: "POST",

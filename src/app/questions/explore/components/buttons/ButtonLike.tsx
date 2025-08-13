@@ -8,11 +8,11 @@ import { toggleLike, checkIfLiked } from "../../lib/likeQuestions";
 import { useSession } from "@/context/context.sesion";
 import { createNotification } from "@/lib/notifications";
 import nPayload from "@/content/notitications/notications-entity.json";
-import { useLikeEvents } from "@/context/like-events.context";
+import { useLikeEventsStore } from "@/context/likeEventsContext";
 
 export function ButtonLike({ question_id }: { question_id: number }) {
   const { user } = useSession();
-  const { emitLikeEvent } = useLikeEvents();
+  const { emitLikeEvent } = useLikeEventsStore();
   const [hasLiked, setHasLiked] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -27,7 +27,7 @@ export function ButtonLike({ question_id }: { question_id: number }) {
     checkLike();
   }, [user, question_id]);
 
-  const handleLike = async () => {
+  async function handleLike() {
     if (!user) return;
 
     const actionToEmit = hasLiked ? "remove" : "add";
@@ -68,11 +68,8 @@ export function ButtonLike({ question_id }: { question_id: number }) {
           read: false,
         };
 
-        const res = await createNotification(notificationPayload);
+        await createNotification(notificationPayload);
 
-        if (!res) {
-          console.error("Error creando notificación");
-        }
       }
     }
   };
@@ -83,16 +80,14 @@ export function ButtonLike({ question_id }: { question_id: number }) {
         disabled={loading}
         variant={"ghost"}
         onClick={handleLike}
-        className={`transition-colors duration-200 cursor-pointer  p-1 ${
-          hasLiked
-            ? "bg-transparent text-blue-600 hover:text-blue-600 dark:hover:bg-transparent dark:bg-transparent "
-            : "text-black dark:text-white hover:bg-gray-200 dark:hover:text-blue-600"
-        }`}
+        className={`transition-colors duration-200 cursor-pointer  p-1 ${hasLiked
+          ? "bg-transparent text-blue-600 hover:text-blue-600 dark:hover:bg-transparent dark:bg-transparent "
+          : "text-black dark:text-white hover:bg-gray-200 dark:hover:text-blue-600"
+          }`}
       >
         <ThumbsUp
-          className={`w-5 h-5 ${
-            hasLiked ? "fill-blue-600 hover:text-white" : "fill-none"
-          }`}
+          className={`w-5 h-5 ${hasLiked ? "fill-blue-600 hover:text-white" : "fill-none"
+            }`}
         />
         <span className="sr-only">{hasLiked ? "Quitar like" : "Dar like"}</span>
       </Button>

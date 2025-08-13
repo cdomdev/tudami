@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ExploresOffers } from "./components/TagsOffers";
 
 export const metadata: Metadata = {
-  title: "Explorar preguntas",
+  title: "Explorar ofertas",
   description:
     "Explora preguntas de la comunidad, encuentra respuestas y comparte conocimiento.",
 };

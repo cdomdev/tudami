@@ -1,10 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/utils/supabase/supabaseClient";
-import { useLikeEvents } from "@/context/like-events.context";
+import { useLikeEventsStore } from "@/context/likeEventsContext";
 
 export function useLikesChannelHybrid(question_id: number) {
   const [count, setCount] = useState<number>(0);
-  const { onLikeEvent } = useLikeEvents();
+  const { onLikeEvent } = useLikeEventsStore();
 
   const refetchCount = useCallback(async () => {
     try {

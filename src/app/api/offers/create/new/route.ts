@@ -15,13 +15,12 @@ type CreateOffers = {
 };
 
 export async function POST(request: Request) {
+    const supabase = await supabaseServerClient();
+    const { title, content } = await request.json();
+    if (!title || !content) {
+        return NextResponse.json({ error: "Faltan datos para procesar la solicitud" }, { status: 400 });
+    }
     try {
-        const supabase = await supabaseServerClient();
-        const { title, content } = await request.json();
-        if (!title || !content) {
-            return NextResponse.json({ error: "Faltan datos para procesar la solicitud" }, { status: 400 });
-        }
-
         const res = await createOffer(title, content, supabase)
         return NextResponse.json(res);
     } catch (error) {

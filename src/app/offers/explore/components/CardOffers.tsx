@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import Link from "next/link";
 import { UserCircle, CircleDollarSign, Users } from "lucide-react";
@@ -14,7 +15,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-import { ButtonApplytOffer } from "./ButtonApplyOffer";
+import { ButtonApplyOffer } from "./ButtonApplyOffer";
+import { CounterOffers } from "./CounterOffers";
 
 export function CardPostOffers({
   details,
@@ -22,10 +24,10 @@ export function CardPostOffers({
   id,
   users,
   title,
-  offers_aplication
 }: SchemaOffers) {
   const { user: dataUserSesion } = useSession();
   const approvalToken = dataUserSesion?.approval_token || "";
+
   return (
     <article
       key={id}
@@ -86,14 +88,8 @@ export function CardPostOffers({
         />
       </div>
       <div className="flex w-full  justify-between items-center">
-        <div className="flex items-center flex-col">
-          <span className="flex items-center gap-1">
-            <Users className="w-5 h-5" />
-            {offers_aplication || 0}
-          </span>
-          <p className="text-[10px]">Aplicaciones</p>
-        </div>
-        <ButtonApplytOffer user_id={users.id} />
+        <CounterOffers offer_id={id} />
+        <ButtonApplyOffer user_id={users.id} offer_id={id} />
       </div>
     </article>
   );

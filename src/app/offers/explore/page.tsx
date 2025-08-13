@@ -12,19 +12,18 @@ export default function PageOferts() {
     const [loading, setLoading] = useState(true);
     const [offers, setOffers] = useState<SchemaOffers[]>([]);
     const [total, setTotal] = useState(0);
-    const search = searchParams.get("search") || undefined;
     const page = parseInt(searchParams.get("page") || "1", 10);
     const pageSize = 10;
 
     useEffect(() => {
         setLoading(true);
-        getAllOffers(page, pageSize,)
+        getAllOffers(page, pageSize)
             .then((res) => {
                 setOffers(res.offers);
                 setTotal(res.count);
             })
             .finally(() => setLoading(false));
-    }, [page, pageSize, search]);
+    }, [page]);
 
 
     return (
@@ -34,7 +33,7 @@ export default function PageOferts() {
             ) : offers.length === 0 ? (
                 <NoContent text="No hay ofertas disponibles" url="/explore-offers" url_redirect="/" text_btn="Crear oferta" />
             ) : (
-                offers.map((post) => <CardPostOffers key={post.id} {...post}  />)
+                offers.map((post) => <CardPostOffers key={post.id} {...post} />)
             )}
         </Main>
     )
