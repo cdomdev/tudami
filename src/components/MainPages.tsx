@@ -1,4 +1,4 @@
-import { Count } from "@/components/CountQuestions";
+import { Count } from "@/components/CountMainPages";
 import { Pagination } from "@/components/pagination";
 import { ReadonlyURLSearchParams } from "next/navigation";
 
@@ -10,6 +10,7 @@ interface MainPageProp {
   pageSize: number;
   searchParams: ReadonlyURLSearchParams;
   basePath: string;
+  counttext?: string
 }
 export function Main({
   children,
@@ -19,10 +20,11 @@ export function Main({
   pageSize,
   searchParams,
   basePath,
+  counttext
 }: MainPageProp) {
   return (
     <>
-      <Count count={count} />
+      <Count count={count} counttext={counttext} />
       <section className="py-2 mb-8 space-y-6">{children}</section>
       <Pagination
         currentPage={page}

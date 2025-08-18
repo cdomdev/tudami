@@ -33,7 +33,7 @@ export function ButtonApplyOffer({
       return toast.error("No puedes aplicar a tus propias ofertas.");
 
     const actionToEmit = hasApply ? "withdraw" : "apply";
-    emitApplyOfferEvent(offer_id, actionToEmit, user.id); // 🔹 Actualización inmediata en UI
+    emitApplyOfferEvent(offer_id, actionToEmit, user.id); 
     setHasApply(!hasApply);
 
     let success = false;
@@ -45,14 +45,13 @@ export function ButtonApplyOffer({
       success = res.success;
     }
 
-    // Si falla, revertimos
     if (!success) {
       setHasApply(hasApply);
       emitApplyOfferEvent(offer_id, hasApply ? "apply" : "withdraw", user.id);
       toast.error("Ocurrió un error, intenta nuevamente.");
     } else {
       toast.success(
-        hasApply ? "Has eliminado tu aplicación." : "¡Has aplicado a la oferta!"
+        hasApply ? "Has eliminado tu aplicación de la oferta." : "¡Has aplicado a la oferta!"
       );
     }
   }
