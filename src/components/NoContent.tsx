@@ -2,7 +2,17 @@ import { Button } from "@/components/ui/button";
 import { Plus, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
-export function NoContent({ url, url_redirect, text, text_btn }: { url: string, url_redirect: string, text: string, text_btn: string }) {
+export function NoContent({
+  url,
+  url_redirect,
+  text,
+  text_btn,
+}: {
+  url: string;
+  url_redirect: string;
+  text: string;
+  text_btn: string;
+}) {
   return (
     <div className="text-center flex flex-col p-6 rounded-md space-y-6">
       <p className="text-muted-foreground">{text}</p>

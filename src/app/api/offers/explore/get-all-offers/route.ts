@@ -29,34 +29,16 @@ export async function getOffers(
   const to = from + pageSize - 1;
 
   const query = supabase
-    .from("offers")
-    .select(
-      `*, users:user_id (
-        id,
-        full_name,
-        avatar_url,
-        email,
-        phone,
-        bio,
-        country,
-        city,
-        department,
-        created_at),
-        offers_applications(count)`
-    )
-    .range(from, to).order("created_at", { ascending: false });
-  const { data, count, error } = await query;
-
-  // normalizacion para el contador
-  const offers = data?.map((offer) => ({
-    ...offer,
-    offers_applications: offer.offers_applications[0].count,
-  }));
+    .from("view_all_offers")
+    .select(`*`)
+    .range(from, to)
+    .order("created_at", { ascending: false });
+  const { data, error } = await query;
 
   if (error) {
     console.error("Error on funtion helper getOffers:", error);
     throw new Error(error.message);
   }
 
-  return { offers: offers ?? [], count: count };
+  return data ?? [];
 }

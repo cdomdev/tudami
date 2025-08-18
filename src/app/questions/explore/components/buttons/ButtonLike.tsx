@@ -16,7 +16,6 @@ export function ButtonLike({ question_id }: { question_id: number }) {
   const [hasLiked, setHasLiked] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Inicial: comprobar si el usuario ya dio like
   useEffect(() => {
     if (!user) return;
     checkIfLiked(question_id, user.id).then((liked) => {
@@ -25,10 +24,8 @@ export function ButtonLike({ question_id }: { question_id: number }) {
     });
   }, [user, question_id]);
 
-  // 🔹 Escuchar eventos de like desde cualquier parte o pestaña
   useLikeEvent((event) => {
     if (event.question_id === question_id && user) {
-      // Solo actualizamos si no es el mismo usuario que lo disparó (opcional)
       if (event.timestamp !== undefined) {
         setHasLiked(event.action === "add");
       }
@@ -43,23 +40,19 @@ export function ButtonLike({ question_id }: { question_id: number }) {
     emitLikeEvent(question_id, actionToEmit);
     setHasLiked(!hasLiked);
 
-    // Persistimos en la base de datos
     const { liked, error } = await toggleLike(question_id, user.id);
 
     if (error) {
-      // Revertimos si hubo error
       setHasLiked(hasLiked);
       emitLikeEvent(question_id, hasLiked ? "add" : "remove");
       return;
     }
 
-    // Ajuste si el backend devuelve un estado distinto al esperado
     if (liked !== !hasLiked) {
       setHasLiked(liked);
       emitLikeEvent(question_id, liked ? "add" : "remove");
     }
 
-    // Crear notificación si corresponde
     if (liked) {
       const { data: questionData } = await supabase
         .from("questions")

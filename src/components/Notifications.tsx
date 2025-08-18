@@ -12,9 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Bell } from "lucide-react";
 import Link from "next/link";
 import { useRealtimeNotifications } from "@/hooks/use-realtime-notifications";
-import { formatTimestamp } from "@/utils/formatDate"
-import { markNotificationAsRead } from "../lib/notifications"
-
+import { formatTimestamp } from "@/utils/formatDate";
+import { markNotificationAsRead } from "../lib/notifications";
 
 export function Notifications() {
   const { user } = useSession();
@@ -23,7 +22,7 @@ export function Notifications() {
   );
 
   async function markNotitifacion(id: string) {
-    await markNotificationAsRead(Number(id))
+    await markNotificationAsRead(Number(id));
   }
 
   return (
@@ -68,7 +67,9 @@ export function Notifications() {
                 onClick={() => markNotitifacion(n.id)}
               >
                 {n.content}
-                <span className="text-xs text-gray-200">Hace {formatTimestamp(n.created_at)}</span>
+                <span className="text-xs text-gray-200">
+                  Hace {formatTimestamp(n.created_at)}
+                </span>
               </Wrapper>
             );
           })

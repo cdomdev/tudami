@@ -3,7 +3,9 @@ import { cookies } from "next/headers";
 import { generateApprovalToken } from "@/app/api/auth/utils/generateTokenAprov";
 import { supabaseAuth } from "@/utils/supabase/supabaseClient";
 import { SupabaseClient } from "@supabase/supabase-js";
-import { getUserProfile, buildUserContextObject } from "@/lib/user-profile";
+import { getUserProfile, 
+  // buildUserContextObject
+ } from "@/lib/user-profile";
 
 /**
  * Ruta principal de autenticación - Maneja todo el flujo de inicio de sesión
@@ -41,27 +43,27 @@ export async function POST(request: NextRequest) {
     }
 
     // 3. Extraer datos del usuario autenticado
-    const { id, email, user_metadata, app_metadata } = authUser;
-    const full_name = user_metadata?.full_name || user_metadata?.name || "";
-    const avatar_url =
-      user_metadata?.picture || user_metadata?.avatar_url || "";
-    const provider = app_metadata?.provider || "email";
+    const { id } = authUser;
+    // const full_name = user_metadata?.full_name || user_metadata?.name || "";
+    // const avatar_url =
+    //   user_metadata?.picture || user_metadata?.avatar_url || "";
+    // const provider = app_metadata?.provider || "email";
 
     // 4. Generar token de aprobación
     const approvalToken = generateApprovalToken(id);
 
     // 5. Insertar/actualizar usuario en la base de datos
-    let upsertedUser;
+    // let upsertedUser;
     try {
-      upsertedUser = await upsertUserProfile({
-        id,
-        email,
-        full_name,
-        avatar_url,
-        provider,
-        approvalToken,
-        supabase,
-      });
+      // upsertedUser = await upsertUserProfile({
+      //   id,
+      //   email,
+      //   full_name,
+      //   avatar_url,
+      //   provider,
+      //   approvalToken,
+      //   supabase,
+      // });
     } catch (error) {
       console.error("[AUTH] Error al insertar usuario:", error);
       return NextResponse.json(
@@ -86,9 +88,9 @@ export async function POST(request: NextRequest) {
     }
 
     //obtener datos del usuario para retornar
-    let data
+    let data;
     try {
-      data = await getUserProfile(id, supabase)
+      data = await getUserProfile(id, supabase);
     } catch (error) {
       console.error("Error al obtener perfil del usuario:", error);
       return NextResponse.json(
@@ -109,9 +111,6 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-
-
-
 }
 
 /**
@@ -144,43 +143,43 @@ async function validateAccessToken(
  * @returns Usuario actualizado
  * @throws Error si hay un problema al actualizar el usuario
  */
-async function upsertUserProfile({
-  id,
-  email,
-  full_name,
-  avatar_url,
-  provider,
-  approvalToken,
-  supabase,
-}: {
-  id: string;
-  email: string | undefined;
-  full_name: string;
-  avatar_url: string;
-  provider: string;
-  approvalToken: string;
-  supabase: SupabaseClient;
-}) {
-  const { error, data } = await supabase
-    .from("users")
-    .upsert({
-      id,
-      email,
-      full_name,
-      avatar_url,
-      provider,
-      country: "Colombia",
-      approval_token: approvalToken,
-    })
-    .select()
-    .single();
+// async function upsertUserProfile({
+//   id,
+//   email,
+//   full_name,
+//   avatar_url,
+//   provider,
+//   approvalToken,
+//   supabase,
+// }: {
+//   id: string;
+//   email: string | undefined;
+//   full_name: string;
+//   avatar_url: string;
+//   provider: string;
+//   approvalToken: string;
+//   supabase: SupabaseClient;
+// }) {
+//   const { error, data } = await supabase
+//     .from("users")
+//     .upsert({
+//       id,
+//       email,
+//       full_name,
+//       avatar_url,
+//       provider,
+//       country: "Colombia",
+//       approval_token: approvalToken,
+//     })
+//     .select()
+//     .single();
 
-  if (error) {
-    throw new Error(`Error al actualizar perfil de usuario: ${error.message}`);
-  }
+//   if (error) {
+//     throw new Error(`Error al actualizar perfil de usuario: ${error.message}`);
+//   }
 
-  return data;
-}
+//   return data;
+// }
 
 /**
  * Configura las cookies de autenticación en el navegador

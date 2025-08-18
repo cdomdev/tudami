@@ -1,7 +1,4 @@
-// CardPostOffers.tsx
 "use client";
-// import { useState, useEffect } from "react";
-// import { supabase } from "@/utils/supabase/supabaseClient";
 import { useSession } from "@/context/context.sesion";
 import { CounterOffers } from "./CounterOffers";
 import { ButtonApplyOffer } from "./ButtonApplyOffer";
@@ -29,19 +26,23 @@ export function CardPostOffers({
   const { user } = useSession();
   const approvalToken = user?.approval_token || "";
 
+  const displayName = users?.full_name ?? "Anónimo";
+  const profileHref = users
+    ? `/view-profile-user/${encodeURIComponent(displayName)}?u_view_profile_p=${
+        users.id
+      }&aprov=${approvalToken}`
+    : "#";
+
   return (
     <article className="bg-card border border-border rounded-sm p-5 shadow-sm">
       {/* HEADER */}
       <div className="flex items-start justify-between mb-3">
-        <Link
-          href={`/view-profile-user/${users.full_name}?u_view_profile_p=${users.id}&aprov=${approvalToken}`}
-          className="flex items-center gap-3"
-        >
+        <Link href={profileHref} className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center overflow-hidden">
-            {users.avatar_url ? (
+            {users && users.avatar_url ? (
               <Image
                 src={users.avatar_url}
-                alt={users.full_name}
+                alt={displayName}
                 width={40}
                 height={40}
                 priority

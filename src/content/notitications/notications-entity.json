@@ -10,5 +10,11 @@
         "title": "comment",
         "type": "comment_received",
         "entity_type": "question_comment"
+    },
+    {
+        "id": 2,
+        "title": "offers",
+        "type": "application_received",
+        "entity_type": "offers_application"
     }
 ]

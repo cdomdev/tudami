@@ -87,8 +87,5 @@ export async function createNotification({
     console.error("Error creating notification:", error);
     return null;
   }
-
-  console.log("Notification created:[ROUTE RES]", data);
-
   return data;
 }

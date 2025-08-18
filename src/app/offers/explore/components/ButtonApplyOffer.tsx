@@ -6,7 +6,9 @@ import { useSession } from "@/context/context.sesion";
 import { toast } from "sonner";
 import { applyOffer, deleteApplyOffer, toggleApply } from "../lib/applyOffer";
 import { useApplyOfferEventsStore } from "@/context/applyOffer.context";
-
+import { supabase } from "@/utils/supabase/supabaseClient";
+import { createNotification } from "@/lib/notifications";
+import nPayload from "@/content/notitications/notications-entity.json";
 export function ButtonApplyOffer({
   offer_id,
   user_id,
@@ -33,7 +35,7 @@ export function ButtonApplyOffer({
       return toast.error("No puedes aplicar a tus propias ofertas.");
 
     const actionToEmit = hasApply ? "withdraw" : "apply";
-    emitApplyOfferEvent(offer_id, actionToEmit, user.id); 
+    emitApplyOfferEvent(offer_id, actionToEmit, user.id);
     setHasApply(!hasApply);
 
     let success = false;
@@ -43,6 +45,7 @@ export function ButtonApplyOffer({
     } else {
       const res = await applyOffer(offer_id, user.id);
       success = res.success;
+      await emitNotification(offer_id);
     }
 
     if (!success) {
@@ -51,8 +54,33 @@ export function ButtonApplyOffer({
       toast.error("Ocurrió un error, intenta nuevamente.");
     } else {
       toast.success(
-        hasApply ? "Has eliminado tu aplicación de la oferta." : "¡Has aplicado a la oferta!"
+        hasApply
+          ? "Has eliminado tu aplicación de la oferta."
+          : "¡Has aplicado a la oferta!"
       );
+    }
+  }
+
+  async function emitNotification(offer_id: number) {
+    const { data } = await supabase
+      .from("offers")
+      .select("user_id")
+      .eq("id", offer_id)
+      .single();
+
+    const offerOwnerId = data?.user_id;
+
+    if (offerOwnerId && offerOwnerId !== user?.id) {
+      await createNotification({
+        user_id: offerOwnerId,
+        actor_id: user?.id || "user",
+        type: nPayload[2].type,
+        entity_id: offer_id.toString(),
+        entity_type: nPayload[2].entity_type,
+        content: `${user?.full_name || "A alguien"} Aplico a tu oferta`,
+        url: `/offers/explore/offers?query=redirect&redirect_id_offer=${offer_id}&aprovel=${user?.approval_token}`,
+        read: false,
+      });
     }
   }
 

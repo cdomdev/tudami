@@ -7,10 +7,9 @@ export async function GET(request: Request) {
   const page = Number(searchParams.get("page")) || 1;
   const pageSize = Number(searchParams.get("pageSize")) || 10;
   const supabase = await supabaseServerClient();
-  const user_id = searchParams.get("user_id") || "";
 
   try {
-    const offers = await getMyOffers(page, pageSize, supabase, user_id);
+    const offers = await getMyOffers(page, pageSize, supabase);
     return NextResponse.json(offers);
   } catch (error) {
     console.log(error);
@@ -24,29 +23,17 @@ export async function GET(request: Request) {
 async function getMyOffers(
   page: number,
   pageSize: number,
-  supabase: SupabaseClient,
-  user_id: string
+  supabase: SupabaseClient
 ) {
+  const user_id = (await supabase.auth.getUser()).data?.user?.id;
+  if (!user_id) return [];
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
   const { data, error } = await supabase
-    .from("offers")
-    .select(
-      `*, users:user_id (
-        id,
-        full_name,
-        avatar_url,
-        email,
-        phone,
-        bio,
-        country,
-        city,
-        department,
-        created_at),
-        offers_applications(count)`
-    )
-    .eq("user_id", user_id)
+    .from("view_all_offers")
+    .select(`*`)
+    .eq("users->>id", user_id)
     .range(from, to)
     .order("created_at", { ascending: false });
 
@@ -55,5 +42,5 @@ async function getMyOffers(
     throw new Error(error.message);
   }
 
-  return data;
+  return data ?? [];
 }
