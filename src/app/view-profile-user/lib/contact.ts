@@ -22,10 +22,10 @@ export function handleWhatsAppContact(dataProfile: UserSchema) {
  * @returns
  */
 
-export async function handleCopyEmailContact(dataProfile: UserSchema) {
-  if (!dataProfile.email) return;
+export async function handleCopyEmailContact(email: string ) {
+  if (!email) return;
   try {
-    await navigator.clipboard.writeText(dataProfile.email);
+    await navigator.clipboard.writeText(email);
     toast.success("Correo copiado al portapapeles");
   } catch (error) {
     console.error("Error al copiar:", error);
@@ -38,12 +38,12 @@ export async function handleCopyEmailContact(dataProfile: UserSchema) {
  * @param dataProfile
  * @returns
  */
-export function handleEmailContact(dataProfile: UserSchema) {
-  if (!dataProfile.email) return;
+export function handleEmailContact(email: string, full_name: string) {
+  if (!email) return;
   const subject = encodeURIComponent("Contacto desde Tudami");
   const body = encodeURIComponent(
-    `Hola ${dataProfile.full_name},\n\nVi tu perfil en Tudami y me gustaría contactarte.\n\nSaludos.`
+    `Hola ${full_name},\n\nVi tu perfil en Tudami y me gustaría contactarte.\n\nSaludos.`
   );
-  const emailUrl = `mailto:${dataProfile.email}?subject=${subject}&body=${body}`;
+  const emailUrl = `mailto:${email}?subject=${subject}&body=${body}`;
   window.location.href = emailUrl;
 }
