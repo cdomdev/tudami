@@ -38,7 +38,7 @@ export default function ExploreQuestionsPage() {
       {loading ? (
         <SkeletonCard mockNumber={5} />
       ) : questions.length === 0 ? (
-        <NoContent text="No hay preguntas disponibles" url="/questions/explore" url_redirect="/" text_btn="Crear pregunta"/>
+        <NoContent text="No hay preguntas disponibles" url="/questions/explore" url_redirect="/questions/explore" text_btn="Crear pregunta"/>
       ) : (
         questions.map((post) => <CardPost key={post.id} {...post} />)
       )}

@@ -12,8 +12,6 @@ export function SearchInput() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-
-
   const handleSearch = () => {
     const trimmed = searchTerm.trim();
     const params = new URLSearchParams(searchParams.toString());

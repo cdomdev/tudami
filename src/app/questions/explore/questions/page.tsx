@@ -11,7 +11,7 @@ import {
 import { SchemaPost } from "@/schemas";
 import { CardPost } from "../components/Cards/CardPost";
 import { Main, SkeletonCard } from "@/components";
-
+import { NoContent } from "@/components";
 export default function QuestionPage({}: { params: { query: string } }) {
   const [questions, setQuestions] = useState<SchemaPost[]>([]);
   const [loading, setLoading] = useState(false);
@@ -68,7 +68,12 @@ export default function QuestionPage({}: { params: { query: string } }) {
       {loading ? (
         <SkeletonCard mockNumber={5} />
       ) : questions.length === 0 ? (
-        <p className="text-center">No hay preguntas.</p>
+        <NoContent
+          text="No hay preguntas disponibles"
+          url="/questions/explore"
+          url_redirect="/questions/explore"
+          text_btn="Crear pregunta"
+        />
       ) : (
         questions.map((post, i) => <CardPost key={post.id || i} {...post} />)
       )}

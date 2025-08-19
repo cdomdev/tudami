@@ -126,8 +126,6 @@ export async function getSavedOffers() {
       throw error;
     }
 
-    console.log("Datos obtenidos:", data);
-
     return data ?? [];
   } catch (error) {
     console.error("Error en getSavedOffers:", error);
