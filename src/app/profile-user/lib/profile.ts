@@ -95,49 +95,65 @@ export async function getUserPreferences(userId: string) {
  *
  */
 
-export async function getSavedQuestions(userId: string) {
+export async function getSavedQuestions() {
   try {
     const { data, error } = await supabase
-      .from("questions_saveds")
-      .select(
-        `
-    id,
-    questions:question_id (
-      id,
-      title,
-      content,
-      created_at,
-      user: user_id (
-        id,
-        full_name,
-        avatar_url
-      ),
-      question_tags (
-        tag:tags (
-          id,
-          name,
-          color
-        )
-      ),
-      question_likes (
-        id
-      ),
-      question_comments (
-        id
-      )
-    )
-  `
-      )
-      .eq("user_id", userId);
+      .from("v_questions_saveds")
+      .select("*");
 
     if (error) {
       console.error("Error obteniendo preguntas guardadas:", error);
       throw error;
     }
 
-    return { data, error: null };
+    return data ?? [];
   } catch (error) {
     console.error("Error en getSavedQuestions:", error);
-    return { data: [], error };
+    return [];
+  }
+}
+
+/**
+ * Obtiene las ofertas guardadas por el usuario
+ *
+ */
+
+export async function getSavedOffers() {
+  try {
+    const { data, error } = await supabase.from("v_offers_saveds").select("*");
+    if (error) {
+      console.error("Error obteniendo ofertas guardadas:", error);
+      throw error;
+    }
+
+    console.log("Datos obtenidos:", data);
+
+    return data ?? [];
+  } catch (error) {
+    console.error("Error en getSavedOffers:", error);
+    return [];
+  }
+}
+
+export async function getListApplications(offerId: string) {
+  if (!offerId) {
+    console.error("No offer ID provided");
+    return [];
+  }
+  try {
+    const { data, error } = await supabase
+      .from("v_offers_applicants")
+      .select("*")
+      .eq("offer_id", offerId);
+
+    if (error) {
+      console.error("Error obteniendo aplicaciones:", error);
+      throw error;
+    }
+
+    return data ?? [];
+  } catch (error) {
+    console.error("Error en getListApplications:", error);
+    return [];
   }
 }

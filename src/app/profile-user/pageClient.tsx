@@ -27,13 +27,11 @@ export default function Home() {
     },
   ];
 
-  console.log(user)
   const progresoReputacion = obtenerProgresoReputacion(score);
   const achievementsObtained = getAchievementByuser(achievements);
 
   return (
     <section className="space-y-5">
-      {/* Estadísticas */}
       <article
         className="p-6 dark:bg-custom-card  rounded-sm shadow-sm"
         role="region"
@@ -54,7 +52,6 @@ export default function Home() {
         </div>
       </article>
 
-      {/* Insignias */}
       <article
         className="p-6  dark:bg-custom-card rounded-sm shadow-sm"
         role="region"

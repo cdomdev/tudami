@@ -18,7 +18,6 @@ export default function LayoutProfile({
       role="region"
       aria-labelledby="profile-section-title"
     >
-      {/* Barra lateral */}
       <aside
         className="md:col-span-1 max-w-xs pr-4 pl-2 pt-6 hidden md:block  rounded-sm shadow-sm dark:bg-custom-card h-56 max-h-80"
         role="navigation"
@@ -39,7 +38,6 @@ export default function LayoutProfile({
         </nav>
       </aside>
 
-      {/* Contenido principal */}
       <main className="md:col-span-5">
         <header
           className="flex mb-2 dark:bg-custom-card p-4 rounded-sm shadow-sm"
@@ -110,13 +108,12 @@ function MapItems({
     },
     {
       name: "Guardados",
-      href: `/profile-user/save?user_id=${id}`,
+      href: `/profile-user/save?page=questions&user_id=${id}`,
       icon: Bookmark,
     },
-  
   ];
   return (
-    <ul className="flex gap-2 my-3 md:my-0 rounded-xs shadow-sm md:flex-col ">
+    <ul className="flex gap-2 my-3 md:my-0 rounded-xs  md:flex-col ">
       {itemsSide.map((item, i) => (
         <li key={i} aria-label={item.name}>
           <Link
