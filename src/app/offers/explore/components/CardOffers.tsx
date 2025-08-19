@@ -22,6 +22,7 @@ export function CardPostOffers({
   id,
   users,
   title,
+  hidden_btn_apply,
 }: SchemaOffers) {
   const { user } = useSession();
   const approvalToken = user?.approval_token || "";
@@ -34,8 +35,9 @@ export function CardPostOffers({
     : "#";
 
   return (
-    <article className="bg-card border border-border rounded-sm p-5 shadow-sm">
-      {/* HEADER */}
+    <article
+      className="bg-card border border-border rounded-sm p-5 shadow-sm"
+    >
       <div className="flex items-start justify-between mb-3">
         <Link href={profileHref} className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center overflow-hidden">
@@ -55,8 +57,10 @@ export function CardPostOffers({
           <div>
             <p className="font-medium">{users?.full_name || "Anónimo"}</p>
             <time className="text-xs text-muted-foreground">
-              Publicado hace {formatTimestamp(created_at.toString())}
-            </time>
+                {created_at
+                  ? `Publicado hace ${formatTimestamp(created_at)}`
+                  : "Fecha desconocida"}
+              </time>
           </div>
           <TooltipProvider>
             <Tooltip delayDuration={150}>
@@ -83,8 +87,12 @@ export function CardPostOffers({
       </div>
 
       <div className="flex justify-between items-center">
-        <CounterOffers offer_id={id} />
-        <ButtonApplyOffer user_id={users.id} offer_id={id} />
+        <CounterOffers offer_id={id} hidden={hidden_btn_apply} />
+        <ButtonApplyOffer
+          user_id={users?.id}
+          offer_id={id}
+          hidden_btn_apply={hidden_btn_apply}
+        />
       </div>
     </article>
   );

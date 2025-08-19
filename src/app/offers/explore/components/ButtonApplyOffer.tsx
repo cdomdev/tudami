@@ -12,9 +12,12 @@ import nPayload from "@/content/notitications/notications-entity.json";
 export function ButtonApplyOffer({
   offer_id,
   user_id,
+  hidden_btn_apply
 }: {
+  className?: string;
   offer_id: number;
   user_id: string;
+  hidden_btn_apply: boolean;
 }) {
   const [hasApply, setHasApply] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -97,7 +100,7 @@ export function ButtonApplyOffer({
   return (
     <Button
       onClick={handleClick}
-      className={`flex items-center gap-1 cursor-pointer ${isApply}`}
+      className={`${hidden_btn_apply ? "hidden" : "flex"}  items-center gap-1 cursor-pointer ${isApply}`}
       disabled={loading}
     >
       {icon} {loading ? buttonTextLoading : textBtn}
