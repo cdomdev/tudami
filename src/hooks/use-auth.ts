@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useSession } from "@/context/context.sesion";
-import { Session } from "@/schemas"
 import { supabase } from "@/utils/supabase/supabaseClient";
 // Tiempo antes de la expiración para refrescar el token (5 minutos)
 const REFRESH_MARGIN = 5 * 60;
@@ -149,25 +148,7 @@ export function useAuth() {
           const data = await response.json();
           if (data.success && data.user) {
             // Actualizar el usuario en el contexto con la información actualizada
-            const sessionUser: Session = {
-              id: data.user.id,
-              email: data.user.email,
-              full_name: data.user.user_metadata?.full_name || data.user.email,
-              avatar_url: data.user.user_metadata?.avatar_url,
-              provider: data.user.app_metadata?.provider,
-              approval_token: data.user.user_metadata?.approval_token || "",
-              created_at: data.user.created_at,
-              profile_public: data.user.user_metadata?.profile_public,
-              allow_email: data.user.user_metadata?.allow_email,
-              allow_whatsapp: data.user.user_metadata?.allow_whatsapp,
-              phone: data.user.user_metadata?.phone,
-              bio: data.user.user_metadata?.bio,
-              country: data.user.user_metadata?.country,
-              city: data.user.user_metadata?.city,
-              department: data.user.user_metadata?.department,
-            };
-
-            setUser(sessionUser);
+            setUser(data.user);
           }
 
           return data.success;
@@ -229,10 +210,8 @@ export function useAuth() {
   useEffect(() => {
     if (!isLoggedIn) return;
 
-    // Función que verifica si realmente necesitamos refrescar
     const checkIfRefreshNeeded = async () => {
       try {
-        // Obtenemos la sesión actual desde Supabase (esto utiliza el localStorage)
         const { data } = await supabase.auth.getSession();
         if (!data?.session) return false;
 
@@ -248,7 +227,7 @@ export function useAuth() {
 
         return true;
       } catch (error) {
-        // console.error("Error al verificar si necesita refresco:", error);
+        console.error("Error al verificar si necesita refresco:", error);
         return false;
       }
     };
