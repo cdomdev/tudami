@@ -123,7 +123,6 @@ export function useAuth() {
             // Si el token de refresco ya fue utilizado o expiró, redirigimos al login
             if (
               errorData.code === "SESSION_EXPIRED" ||
-              response.status === 401 ||
               (errorData.details && errorData.details.includes("Already Used"))
             ) {
               // Limpiamos las cookies en el navegador para mayor seguridad

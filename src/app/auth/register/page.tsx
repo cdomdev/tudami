@@ -1,16 +1,16 @@
 import { Metadata } from "next";
-import { FormLogin } from "../components/Form";
-import { ProvidersAuth } from "../components/Providers";
 import Link from "next/link";
+import { FormRegister } from "../components/FormRegister";
+import { ProvidersAuth } from "../components/Providers";
 
 export const metadata: Metadata = {
-  title: "Iniciar sesión",
+  title: "Registro en Tudami",
   description:
     "Accede a Tudami para resolver tus dudas, compartir conocimientos y conectar con otros aprendices. Comparte, aprende y crece con la comunidad.",
   openGraph: {
-    title: "Inicia sesión en Tudami",
+    title: "Registro en Tudami",
     description:
-      "Conéctate con la comunidad de aprendices. Inicia sesión y participa activamente resolviendo y compartiendo conocimientos.",
+      "Conéctate con la comunidad de aprendices. Regístrate y participa activamente resolviendo y compartiendo conocimientos.",
     url: "https://tudami.com/auth/login",
     siteName: "Tudami",
     images: [
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Inicia sesión en Tudami",
+    title: "Registro en Tudami",
     description:
       "Explora preguntas, responde inquietudes y ayuda a otros. Accede ahora a Tudami.",
     creator: "@tudami",
@@ -34,12 +34,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AuthPage() {
+export default function RegisterPage() {
   return (
     <div className="py-3 grid place-content max-w-sm ">
       <div className="text-center mb-6">
         <h1 className="text-2xl font-semibold text-slate-800 dark:text-white">
-          Inicia sesión en Tudami
+          Registrate en Tudami
         </h1>
 
         <p className="text-md text-muted-foreground mt-2">
@@ -55,7 +55,7 @@ export default function AuthPage() {
           <span className="font-bold">o</span>
           <div className="border-1 w-full border-gray-300"></div>
         </div>
-        <FormLogin />
+        <FormRegister />
         <span className="text-muted-foreground text-sm text-center">
           Al continuar, aceptas los{" "}
           <Link
