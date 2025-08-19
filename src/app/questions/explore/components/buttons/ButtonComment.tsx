@@ -37,7 +37,7 @@ export function ButtonComment({
           entity_id: commentData.id,
           entity_type: nPayload[1].entity_type,
           content: `${user.full_name || "Alguien"} comentó en tu pregunta.`,
-          url: `/explore-questions/questions?query=redirect&redirect_id_question=${question_id}&aprovel=${user.approval_token}`,
+          url: `/questions/explore/questions?query=redirect&redirect_id_question=${question_id}&aprovel=${user.approval_token}`,
           read: false,
         };
 

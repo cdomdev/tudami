@@ -70,7 +70,7 @@ export function ButtonLike({ question_id }: { question_id: number }) {
           entity_id: question_id.toString(),
           entity_type: nPayload[0].entity_type,
           content: `${user.full_name || "A alguien"} le gustó tu publicación`,
-          url: `/explore-questions/questions?query=redirect&redirect_id_question=${question_id}&aprovel=${user.approval_token}`,
+          url: `/questions/explore/questions?query=redirect&redirect_id_question=${question_id}&aprovel=${user.approval_token}`,
           read: false,
         });
       }
