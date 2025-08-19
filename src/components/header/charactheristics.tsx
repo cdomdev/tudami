@@ -32,9 +32,9 @@ export function Characteristics() {
       href: "/questions/create",
     },
     {
-      title: "Monetiza tu tiempo",
+      title: "Aprende y gana ayudando",
       description:
-        "Accede a ofertas reales para monetizar tus habilidades.",
+        "Explora ofertas donde tu apoyo y habilidades fortalecen la experiencia de otros.",
       href: "/offers/explore",
     },
   ];
