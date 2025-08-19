@@ -10,7 +10,8 @@ export const SchemaResOffers = z.object({
     payment: z.boolean().default(true),
     users: User,
     offers_aplication: z.number().min(0).default(0),
-    created_at: z.coerce.date(),
+    created_at: z.string(),
+    hidden_btn_apply: z.boolean().default(false)
 });
 
 export type SchemaOffers = z.infer<typeof SchemaResOffers>;

@@ -27,7 +27,7 @@ export const SchemaPostSchema = z.object({
   title: z.string(),
   content: z.string(),
   status: z.string(),
-  created_at: z.coerce.date(),
+  created_at: z.string(),
   users: User,
   question_tags: z.array(QuestionTagSchema),
   question_likes: z.array(QuestionSchema).optional(),
