@@ -2,7 +2,7 @@
 "use client"
 export default function ResourcesPage() {
     return (
-        <section className="pt-30 px-10 pb-10 w-full bg-gradient-to-r from-pink-200 via-purple-100 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <section className="pt-24 px-10 pb-10 w-full bg-gradient-to-r from-pink-200 via-purple-100 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
             <div className="mx-auto flex flex-col mb-3">
                 <h1 className="text-3xl font-bold text-center text-slate-800 dark:text-slate-100">
                     Recursos que potencian tu aprendizaje
