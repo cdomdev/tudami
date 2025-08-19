@@ -5,7 +5,7 @@ export function SkeletonCard({mockNumber = 5}: {mockNumber?: number}) {
             {mockCards.map((_, index) => (
                 <div
                     key={index}
-                    className="bg-card border border-border rounded-xl p-5 shadow-sm animate-pulse space-y-4"
+                    className="bg-card border border-border rounded-xl p-5 shadow-sm animate-pulse space-y-5"
                 >
                     {/* Header (avatar + nombre) */}
                     <div className="flex items-center gap-3">

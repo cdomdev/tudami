@@ -67,9 +67,9 @@ export function Notifications() {
                 onClick={() => markNotitifacion(n.id)}
               >
                 {n.content}
-                <span className="text-xs text-gray-200">
+                <time className="text-xs text-gray-600 dark:text-gray-200">
                   Hace {formatTimestamp(n.created_at)}
-                </span>
+                </time>
               </Wrapper>
             );
           })
