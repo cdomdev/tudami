@@ -3,9 +3,10 @@ import { cookies } from "next/headers";
 import { generateApprovalToken } from "@/app/api/auth/utils/generateTokenAprov";
 import { supabaseAuth } from "@/utils/supabase/supabaseClient";
 import { SupabaseClient } from "@supabase/supabase-js";
-import { getUserProfile, 
+import {
+  getUserProfile,
   // buildUserContextObject
- } from "@/lib/user-profile";
+} from "@/lib/user-profile";
 
 /**
  * Ruta principal de autenticación - Maneja todo el flujo de inicio de sesión
@@ -55,15 +56,16 @@ export async function POST(request: NextRequest) {
     // 5. Insertar/actualizar usuario en la base de datos
     // let upsertedUser;
     try {
-      // upsertedUser = await upsertUserProfile({
-      //   id,
-      //   email,
-      //   full_name,
-      //   avatar_url,
-      //   provider,
-      //   approvalToken,
-      //   supabase,
-      // });
+      await upsertUserProfile({
+        id,
+        email: authUser.email,
+        full_name: authUser.user_metadata?.full_name || "",
+        avatar_url: authUser.user_metadata?.avatar_url || "",
+        provider: authUser.app_metadata?.provider || "email",
+        password: "randomPassword123",
+        approvalToken,
+        supabase,
+      });
     } catch (error) {
       console.error("[AUTH] Error al insertar usuario:", error);
       return NextResponse.json(
@@ -143,43 +145,46 @@ async function validateAccessToken(
  * @returns Usuario actualizado
  * @throws Error si hay un problema al actualizar el usuario
  */
-// async function upsertUserProfile({
-//   id,
-//   email,
-//   full_name,
-//   avatar_url,
-//   provider,
-//   approvalToken,
-//   supabase,
-// }: {
-//   id: string;
-//   email: string | undefined;
-//   full_name: string;
-//   avatar_url: string;
-//   provider: string;
-//   approvalToken: string;
-//   supabase: SupabaseClient;
-// }) {
-//   const { error, data } = await supabase
-//     .from("users")
-//     .upsert({
-//       id,
-//       email,
-//       full_name,
-//       avatar_url,
-//       provider,
-//       country: "Colombia",
-//       approval_token: approvalToken,
-//     })
-//     .select()
-//     .single();
+async function upsertUserProfile({
+  id,
+  email,
+  full_name,
+  avatar_url,
+  provider,
+  approvalToken,
+  supabase,
+  password,
+}: {
+  id: string;
+  email: string | undefined;
+  full_name: string;
+  avatar_url: string;
+  provider: string;
+  approvalToken: string;
+  supabase: SupabaseClient;
+  password: string;
+}) {
+  const { error, data } = await supabase
+    .from("users")
+    .upsert({
+      id,
+      email,
+      full_name,
+      avatar_url,
+      provider,
+      password,
+      country: "Colombia",
+      approval_token: approvalToken,
+    })
+    .select()
+    .single();
 
-//   if (error) {
-//     throw new Error(`Error al actualizar perfil de usuario: ${error.message}`);
-//   }
+  if (error) {
+    throw new Error(`Error al actualizar perfil de usuario: ${error.message}`);
+  }
 
-//   return data;
-// }
+  return data;
+}
 
 /**
  * Configura las cookies de autenticación en el navegador
