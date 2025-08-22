@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { Spinner } from "@/components";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import Link from "next/link";
+import { registerUser } from "../lib/auth";
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Debe ser un correo válido." }),
@@ -28,7 +29,7 @@ const FormSchema = z.object({
 
 export function FormRegister() {
   const [showPassword, setShowPassword] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -38,8 +39,18 @@ export function FormRegister() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log("Form data:", data);
+    setIsLoading(true);
+    const res = await registerUser({
+      full_name: data.name,
+      email: data.email,
+      password: data.password,
+    });
+    console.log("Response[REGISTER CLIENT] --->:", res);
+    // if (!res) {
+    //   setIsLoading(false);
+    // }
   }
 
   return (
@@ -103,7 +114,14 @@ export function FormRegister() {
         />
 
         <Button type="submit" className="w-full">
-          Registrarme
+          {isLoading ? (
+            <>
+              <Spinner className="w-5 h-5" />
+              <span>Registrando...</span>
+            </>
+          ) : (
+            "Registrarme"
+          )}
         </Button>
       </form>
 
