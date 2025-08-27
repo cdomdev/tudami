@@ -16,7 +16,7 @@ export function NoContent({
   return (
     <div className="text-center flex flex-col p-6 rounded-md space-y-6">
       <p className="text-muted-foreground">{text}</p>
-      <Button asChild className="group sm:ml-auto w-2/6 mx-auto">
+      <Button asChild className="group sm:ml-auto md:w-2/6 mx-auto">
         <Link href={url}>
           <Plus className="mr-2 h-4 w-4 group-hover:rotate-90 transition-transform" />
           {text_btn}

@@ -12,7 +12,7 @@ import {
 import Image from "next/image";
 import { AlignJustify, X } from "lucide-react";
 import { ClientSessionRenderer } from "@/app/auth/validateSesion/ClientSessionRenderer";
-import { ModeToggle } from "@/components/ToggleTheme";
+// import { ModeToggle } from "@/components/ToggleTheme";
 import { Characteristics } from "./charactheristics";
 import { MovilNav } from "./MovilNav";
 
@@ -43,9 +43,10 @@ export function NavBar() {
     <nav
       className={`fixed top-0 w-screen left-0 right-0 z-50 transition-all duration-300 ease-in-out px-3 md:px-0
         ${showNav ? "opacity-100" : "opacity-0"}
-        ${scrolled
-          ? "bg-white/10 backdrop-blur-md shadow-md"
-          : "bg-transparent shadow-none backdrop-blur-0"
+        ${
+          scrolled
+            ? "bg-white/10 backdrop-blur-md shadow-md"
+            : "bg-transparent shadow-none backdrop-blur-0"
         }`}
     >
       <div className="flex items-center justify-between py-3 md:px-4 lg:px-0 max-w-6xl mx-auto">
@@ -86,7 +87,7 @@ export function NavBar() {
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <ModeToggle />
+            {/* <ModeToggle /> */}
           </NavigationMenuList>
         </NavigationMenu>
 

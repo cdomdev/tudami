@@ -47,7 +47,7 @@ export default function LayoutProfile({
             src={user?.avatar_url || "/default-avatar.png"}
             alt={`Avatar de ${user?.full_name}`}
             width={120}
-            className="rounded-sm mr-4"
+            className="rounded-sm mr-4 object-contain"
             height={120}
           />
           <div className="flex flex-col justify-center">

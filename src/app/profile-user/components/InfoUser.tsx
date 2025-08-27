@@ -33,7 +33,7 @@ export function InfoUser() {
   }
 
   return (
-    <div className="space-y-4 gap-30  mt-3 grid grid-cols-2">
+    <div className="space-y-4 gap-36  mt-3 grid grid-cols-2">
       <div>
         <div>
           <Label className="text-sm text-muted-foreground">Nombre:</Label>

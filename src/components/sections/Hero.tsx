@@ -99,7 +99,7 @@ export function Hero() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-6">
         <ButtonGsap
-          text="Hacer preguntas"
+          text="Hacer una pregunta"
           flairColor="bg-indigo-500"
           className="text-base sm:text-lg cursor-pointer w-full font-bold border border-white px-6 py-4 rounded-md bg-black text-white"
           onclick={handleClickBtnQuestions}

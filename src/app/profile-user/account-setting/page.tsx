@@ -42,7 +42,7 @@ export default function PreferenciasTema() {
           Preferencias de tema
         </h2>
 
-        <div className="grid space-y-4 place-content-center grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-t border-b py-4 border-gray-200 dark:border-gray-700 mx-auto">
+        <div className="grid space-y-4 place-content-center  sm:grid-cols-2 lg:grid-cols-3 border-t border-b py-4 border-gray-200 dark:border-gray-700 mx-auto">
           <ButtonLight />
           <ButtonDark />
           <ButtonSystem />
