@@ -65,7 +65,7 @@ export async function getUserProfile(userId: string, client: SupabaseClient) {
 
 
   // Normalizar user_reputation
-  const reputationArray = data.user_reputation as any[];
+  const reputationArray = data.user_reputation;
   const normalizedReputation = Array.isArray(reputationArray) && reputationArray.length > 0
     ? reputationArray[0]
     : {
