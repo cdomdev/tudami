@@ -24,11 +24,11 @@ export const CardHowItWorks: FC<CardProps> = ({
 }) => {
 
   const router = useRouter()
-  const { user, openModal } = useSession()
+  const { user } = useSession()
 
   function handleBtnRedirect() {
     if (!user) {
-      openModal()
+      router.push("/auth/login")
     } else {
       router.push(`${link}`)
     }
