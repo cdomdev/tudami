@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function createNotification({
+ async function createNotification({
   user_id,
   actor_id,
   type,

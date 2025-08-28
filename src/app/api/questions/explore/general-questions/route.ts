@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
 }
 
 
-export async function fetchGeneralQuestions(
+async function fetchGeneralQuestions(
   page = 1,
   pageSize = 10,
   search?: string

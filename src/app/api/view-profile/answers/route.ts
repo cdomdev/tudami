@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const userId = url.searchParams.get("id");
   const approval = url.searchParams.get("u_view_profile_p");
-
-  console.log("Fetching answers for user ID:", userId, "with approval:", approval);
 
   const supabase = await supabaseServerClient();
   try {
@@ -16,18 +15,15 @@ export async function GET(req: NextRequest) {
         { status: 400 }
       );
     }
-    const { data, error } = await supabase
-      .from("question_comments")
-      .select("*")
-      .eq("user_id", userId);
-    if (error) {
-      console.error("Error fetching questions comments:", error);
+    const data = await dataComment(supabase, userId);
+
+    if (!data) {
       return NextResponse.json(
-        { error: "Error fetching questions comments" },
-        { status: 500 }
+        { error: "Error en helper que obtiene datos" },
+        { status: 404 }
       );
     }
-    console.log("Data fetched successfully: API --->", data);
+
     return NextResponse.json({
       success: true,
       data: data || [],
@@ -39,4 +35,16 @@ export async function GET(req: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+async function dataComment(supabase: SupabaseClient, userId: string) {
+  const { data, error } = await supabase
+    .from("question_comments")
+    .select("*")
+    .eq("user_id", userId);
+  if (error) {
+    throw new Error("Error feching data for questions comennts");
+  }
+
+  return data;
 }

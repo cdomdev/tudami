@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json(questions);
 }
 
-export async function getPopularQuestions(
+ async function getPopularQuestions(
   page = 1,
   pageSize = 10,
   search?: string

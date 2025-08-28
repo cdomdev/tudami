@@ -19,11 +19,11 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export const checkIfApply = async (
+async function checkIfApply (
   offer_id: number,
   user_id: string,
   supabase: SupabaseClient
-) => {
+){
   const { data } = await supabase
     .from("offers_applications")
     .select("id")

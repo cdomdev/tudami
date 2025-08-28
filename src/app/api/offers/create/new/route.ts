@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
  */
 
 
-export async function createOffer(
+async function createOffer(
     title: string,
     content: string,
     supabaseClient: SupabaseClient

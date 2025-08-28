@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function getOffers(
+async function getOffers(
   page = 1,
   pageSize = 10,
   supabase: SupabaseClient

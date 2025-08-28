@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json(questions);
 }
 
-export async function getQuestionsByTag(
+async function getQuestionsByTag(
   tagSlug: string,
   page = 1,
   pageSize = 10,

@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json(comments);
 }
 
-export async function getCommentBy(
+async function getCommentBy(
   question_id: number,
   supabase: SupabaseClient
 ) {

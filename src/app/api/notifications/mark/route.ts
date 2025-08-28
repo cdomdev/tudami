@@ -35,7 +35,7 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-export const updateNotificationAsRead = async (id: number) => {
+async function updateNotificationAsRead (id: number){
   const supabase = await supabaseServerClient();
   const { error } = await supabase
     .from("notifications")

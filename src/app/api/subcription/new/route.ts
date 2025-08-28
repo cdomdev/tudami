@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function subscribe(email: string) {
+async function subscribe(email: string) {
   const supabase = await supabaseServerClient();
   const { data, error } = await supabase
     .from("newsletter_subscribers")

@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json(question);
 }
 
-export async function getOffersById(page = 1, pageSize = 10, id?: string) {
+async function getOffersById(page = 1, pageSize = 10, id?: string) {
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
   const supabase = await supabaseServerClient();

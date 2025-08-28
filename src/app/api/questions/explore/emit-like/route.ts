@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
   return new Response(JSON.stringify({ liked }), { status: 200 });
 }
 
-export async function toggleLike(
+async function toggleLike(
   questionId: number,
   user_id: string,
   supabase: SupabaseClient

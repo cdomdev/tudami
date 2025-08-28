@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json(questions);
 }
 
-export async function getMyQuestionsApi(
+async function getMyQuestionsApi(
   page = 1,
   pageSize = 10,
   search?: string

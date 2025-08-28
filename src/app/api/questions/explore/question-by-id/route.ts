@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json(question);
 }
 
-export async function getQuestionsById(
+ async function getQuestionsById(
   page = 1,
   pageSize = 10,
   search?: string,

@@ -25,14 +25,14 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export const getNotifications = async (userId: string) => {
+async function getNotifications(userId: string) {
   const supabase = await supabaseServerClient();
 
   const { data, error } = await supabase
     .from("notifications")
     .select("*")
     .eq("user_id", userId)
-    .is("read", false) 
+    .is("read", false)
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -41,4 +41,4 @@ export const getNotifications = async (userId: string) => {
   }
 
   return data || [];
-};
+}
