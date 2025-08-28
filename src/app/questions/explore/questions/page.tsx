@@ -12,7 +12,9 @@ import { SchemaPost } from "@/schemas";
 import { CardPost } from "../components/Cards/CardPost";
 import { Main, SkeletonCard } from "@/components";
 import { NoContent } from "@/components";
-export default function QuestionPage({}: { params: { query: string } }) {
+
+
+export default function QuestionPage() {
   const [questions, setQuestions] = useState<SchemaPost[]>([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
