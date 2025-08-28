@@ -62,13 +62,13 @@ export default function LayoutClient({
 
   async function handleCopy() {
     if (!dataProfile) return;
-    handleCopyEmailContact(dataProfile);
+    handleCopyEmailContact(dataProfile.email);
   };
 
   // send email
   function handleEmail() {
     if (!dataProfile) return;
-    handleEmailContact(dataProfile);
+    handleEmailContact(dataProfile.email, dataProfile.full_name);
   };
 
  
