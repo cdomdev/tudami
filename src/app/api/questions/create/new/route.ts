@@ -35,7 +35,7 @@ type CreateQuestionResult = {
   error?: string;
 };
 
-export async function createQuestion(
+async function createQuestion(
   title: string,
   content: string,
   tags: string[] = [],
