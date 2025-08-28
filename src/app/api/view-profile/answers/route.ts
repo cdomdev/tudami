@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const userId = url.searchParams.get("id");
   const approval = url.searchParams.get("u_view_profile_p");

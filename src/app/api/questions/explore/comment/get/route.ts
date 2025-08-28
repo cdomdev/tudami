@@ -1,14 +1,14 @@
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
-import { NextResponse } from "next/dist/server/web/spec-extension/response";
 import { SupabaseClient } from "@supabase/supabase-js";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const question_id = url.searchParams.get("question_id");
   const supabase = await supabaseServerClient();
 
   if (!question_id) {
-    return new Response("Missing question_id", { status: 400 });
+    return NextResponse.json("Missing question_id", { status: 400 });
   }
 
   const { comments } = await getCommentBy(Number(question_id), supabase);

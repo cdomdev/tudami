@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 import { SupabaseClient} from "@supabase/supabase-js";
 import { generateApprovalToken } from "../utils/generateTokenAprov";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const { full_name, email, password } = await request.json();
   if (!email || !password) {
     return NextResponse.json(

@@ -1,11 +1,12 @@
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 import { SupabaseClient } from "@supabase/supabase-js";
-export async function POST(request: Request) {
+import { NextRequest, NextResponse } from "next/server";
+export async function POST(request: NextRequest) {
   const url = new URL(request.url);
   const questionId = url.searchParams.get("question_id");
   const userId = url.searchParams.get("user_id");
   if (!questionId || !userId) {
-    return new Response("Missing question_id or user_id", { status: 400 });
+    return NextResponse.json("Missing question_id or user_id", { status: 400 });
   }
   const supabase = await supabaseServerClient();
   const { liked, error } = await toggleLike(

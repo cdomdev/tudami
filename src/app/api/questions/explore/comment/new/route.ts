@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 import { SupabaseClient } from "@supabase/supabase-js";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const { text, question_id, user_id } = await request.json();
   const supabase = await supabaseServerClient();
   const data = await createComment({

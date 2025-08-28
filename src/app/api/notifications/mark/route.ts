@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 
-export async function PUT(request: Request) {
+export async function PUT(request: NextRequest) {
   try {
     const urlParams = new URL(request.url).searchParams;
     const id = urlParams.get("id");

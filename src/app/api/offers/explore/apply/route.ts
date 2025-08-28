@@ -1,8 +1,8 @@
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 import { SupabaseClient } from "@supabase/supabase-js";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const offer_id = searchParams.get("offer_id");
   const user_id = searchParams.get("user_id");

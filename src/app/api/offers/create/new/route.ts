@@ -1,5 +1,5 @@
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { SupabaseClient } from "@supabase/supabase-js";
 
 
@@ -14,7 +14,7 @@ type CreateOffers = {
     error?: string;
 };
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     const supabase = await supabaseServerClient();
     const { title, content } = await request.json();
     if (!title || !content) {
