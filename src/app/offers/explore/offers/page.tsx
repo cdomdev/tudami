@@ -12,7 +12,7 @@ import { SchemaOffers } from "@/schemas";
 import { CardPostOffers } from "../components/CardOffers";
 import { Main, NoContent, SkeletonCard } from "@/components";
 
-export default function OffersPage({}: { params: { query: string } }) {
+export default function OffersPage() {
   const [offers, setOffers] = useState<SchemaOffers[]>([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
