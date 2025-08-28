@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import tags from "@/content/tags/data-tags.json";
 import { MultiSelect } from "./multi-select";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components";
 
 export default function Editor() {
   const [content, setContent] = useState("");
@@ -70,6 +71,7 @@ export default function Editor() {
     }
   }
 
+  const textLoadin = loading ? "Enviando pregunta" : "Enviar mi pregunta";
   return (
     <>
       <div className="p-6">
@@ -105,9 +107,10 @@ export default function Editor() {
         <Button
           variant={"default"}
           onClick={handleSubmit}
+          disabled={loading}
           className="mt-3 px-4   duration-200 rounded-md cursor-pointer font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? "Enviando pregunta..." : "Publicar mi pregunta"}
+          {loading && <Spinner className="w-5 h-5" />} {textLoadin}
         </Button>
       </div>
     </>

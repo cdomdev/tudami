@@ -45,24 +45,26 @@ export async function POST(request: NextRequest) {
 
     // 3. Extraer datos del usuario autenticado
     const { id } = authUser;
-    // const full_name = user_metadata?.full_name || user_metadata?.name || "";
-    // const avatar_url =
-    //   user_metadata?.picture || user_metadata?.avatar_url || "";
-    // const provider = app_metadata?.provider || "email";
+    console.log('ver como viene el nombre del usuario en el provider --->', authUser)
+    const full_name = authUser.user_metadata?.full_name || authUser.user_metadata?.user_name || "";
+    const avatar_url =
+      authUser.user_metadata?.picture || authUser.user_metadata?.avatar_url || "";
+    const provider = authUser.app_metadata?.provider || "";
 
     // 4. Generar token de aprobación
     const approvalToken = generateApprovalToken(id);
 
-    // 5. Insertar/actualizar usuario en la base de datos
-    // let upsertedUser;
+    
+    const password = Math.floor(Math.random() * 5) 
+    
     try {
       await upsertUserProfile({
         id,
         email: authUser.email,
-        full_name: authUser.user_metadata?.full_name || "",
-        avatar_url: authUser.user_metadata?.avatar_url || "",
-        provider: authUser.app_metadata?.provider || "email",
-        password: "randomPassword123",
+        full_name: full_name || "",
+        avatar_url: avatar_url,
+        provider: provider,
+        password: password.toString(),
         approvalToken,
         supabase,
       });

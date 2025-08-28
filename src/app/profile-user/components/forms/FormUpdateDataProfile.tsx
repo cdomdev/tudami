@@ -7,6 +7,7 @@ import { z } from "zod";
 import { memo, useCallback, useEffect, useState } from "react";
 import locationsData from "@/content/locations/locations.json";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components";
 import {
   Form,
   FormControl,
@@ -20,10 +21,20 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useSession } from "@/context/context.sesion";
 import { updateProfile } from "../../lib/profile";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const FormSchema = z.object({
+  full_name: z
+    .string()
+    .min(2, "El nombre debe tener al menos un caracteres")
+    .max(15, "El nombre no puede exeder los 15 cartacteres")
+    .optional(),
   department: z
     .string()
     .min(2, "El departamento debe tener al menos 2 caracteres")
@@ -50,10 +61,7 @@ const FormSchema = z.object({
 });
 
 export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
-  const { user, updateUserData } =
-    useSession();
-
-
+  const { user, updateUserData } = useSession();
 
   // Estado para las ciudades filtradas
   const [filteredCities, setFilteredCities] = useState<string[]>([]);
@@ -61,6 +69,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+      full_name: user?.full_name ? String(user.full_name) : "",
       department: user?.department ? String(user.department) : "",
       city: user?.city ? String(user.city) : "",
       phone: user?.phone ? String(user.phone) : "",
@@ -69,30 +78,34 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
   });
 
   // Función para actualizar ciudades cuando cambia el departamento
-  const handleDepartmentChange = useCallback((departmentName: string) => {
+  const handleDepartmentChange = useCallback(
+    (departmentName: string) => {
+      const selectedDepartment = locationsData.find(
+        (location) => location.departamento === departmentName
+      );
 
-    const selectedDepartment = locationsData.find(
-      (location) => location.departamento === departmentName
-    );
+      if (selectedDepartment) {
+        setFilteredCities(selectedDepartment.ciudades);
+      } else {
+        setFilteredCities([]);
+      }
 
-    if (selectedDepartment) {
-      setFilteredCities(selectedDepartment.ciudades);
-    } else {
-      setFilteredCities([]);
-    }
+      const currentCity = form.getValues("city");
+      if (
+        currentCity &&
+        selectedDepartment &&
+        !selectedDepartment.ciudades.includes(currentCity)
+      ) {
+        form.setValue("city", "");
+      }
+    },
+    [form]
+  );
 
-    // Solo limpiar la ciudad seleccionada si no está entre las opciones válidas
-    const currentCity = form.getValues("city");
-    if (currentCity && selectedDepartment && !selectedDepartment.ciudades.includes(currentCity)) {
-      form.setValue("city", "");
-    }
-  }, [form]);
-
-  // Actualizar valores del formulario cuando cambie el usuario
   useEffect(() => {
     if (user) {
-
       const formData = {
+        full_name: user.full_name ? String(user.full_name) : "",
         phone: user.phone ? String(user.phone) : "",
         bio: user.bio ? String(user.bio) : "",
         city: user.city ? String(user.city) : "",
@@ -116,15 +129,14 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
       }
 
       try {
-        // Asegurar que todos los valores sean strings
         const formattedData = {
-          phone: data.phone ? Number(data.phone) :undefined ,
+          full_name: data.full_name ? String(data.full_name) : "",
+          phone: data.phone ? Number(data.phone) : undefined,
           bio: data.bio ? String(data.bio) : "",
           department: data.department ? String(data.department) : "",
           city: data.city ? String(data.city) : "",
         };
 
-        // Actualizar en la base de datos
         const { error } = await updateProfile(user.id, formattedData);
 
         if (error) {
@@ -132,9 +144,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
           return;
         }
 
-        // Actualizar el contexto
         updateUserData(formattedData);
-
 
         toast.success("Datos personales guardados correctamente");
       } catch (error) {
@@ -142,8 +152,12 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
         toast.error("Error al guardar los datos personales");
       }
     },
-    [user?.id,  updateUserData]
+    [user?.id, updateUserData]
   );
+
+  const textLoading = form.formState.isSubmitting
+    ? "Actualizando"
+    : "Actualizar datos";
 
   return (
     <Form {...form}>
@@ -168,6 +182,46 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
             role="group"
             aria-labelledby="personal-data-heading"
           >
+            {/* personalizar nombre */}
+            <FormField
+              control={form.control}
+              name="full_name"
+              render={({ field, fieldState }) => (
+                <FormItem className="space-y-2">
+                  <FormLabel
+                    htmlFor="full_name-input"
+                    className="text-sm font-medium"
+                  >
+                    Nombre
+                  </FormLabel>
+                  <FormDescription className="text-sm text-muted-foreground">
+                    Por defecto usamos el nombre dado por tu proveedor, pero
+                    eres libre de persolizarlo en este campo.
+                  </FormDescription>
+                  <FormControl>
+                    <Input
+                      id="phone-input"
+                      type="tel"
+                      placeholder="Ej: +57 123 456 7890"
+                      {...field}
+                      className="w-full bg-white/70 text-black dark:text-muted-foreground"
+                      aria-describedby={
+                        fieldState.error ? "phone-error" : "phone-description"
+                      }
+                      aria-invalid={!!fieldState.error}
+                    />
+                  </FormControl>
+                  {fieldState.error && (
+                    <FormMessage
+                      id="phone-error"
+                      className="text-sm text-destructive"
+                    >
+                      {fieldState.error.message}
+                    </FormMessage>
+                  )}
+                </FormItem>
+              )}
+            />
             {/* Número de teléfono */}
             <FormField
               control={form.control}
@@ -209,6 +263,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
                 </FormItem>
               )}
             />
+
             {/* Departamento */}
             <FormField
               control={form.control}
@@ -279,7 +334,9 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
                     <Select
                       value={field.value}
                       onValueChange={field.onChange}
-                      disabled={!form.watch("department") || filteredCities.length === 0}
+                      disabled={
+                        !form.watch("department") || filteredCities.length === 0
+                      }
                     >
                       <SelectTrigger className="bg-white/70 text-black dark:text-muted-foreground">
                         <SelectValue
@@ -367,7 +424,8 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
           className="w-full sm:w-auto"
           disabled={form.formState.isSubmitting}
         >
-          {form.formState.isSubmitting ? "Guardando..." : "Guardar datos"}
+          {form.formState.isSubmitting && <Spinner className="w-5 h-5" />}
+          {textLoading}
         </Button>
       </form>
     </Form>

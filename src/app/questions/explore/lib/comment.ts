@@ -1,4 +1,5 @@
 import { supabase } from "@/utils/supabase/supabaseClient";
+
 export async function createComment(
   text: string,
   question_id: number,

@@ -9,11 +9,7 @@ import { toast } from "sonner";
 import { createNotification } from "@/lib/notifications";
 import nPayload from "@/content/notitications/notications-entity.json";
 import { createComment } from "../../lib/comment";
-export function ButtonComment({
-  question_id,
-}: {
-  question_id: number;
-}) {
+export function ButtonComment({ question_id }: { question_id: number }) {
   const { user } = useSession();
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState("");
@@ -50,23 +46,25 @@ export function ButtonComment({
         setLoading(false);
       }
 
-      // El realtime se encarga automáticamente de actualizar el contador
       toast.success("Comentario enviado");
 
       setLoading(false);
     } catch (error) {
       console.error("Error creating comment:", error);
       setLoading(false);
+      toast.error(
+        "Error: Algo salio mal al comentar la pregunta, por favor intentalo mas tarde o intenta validar tu sesion"
+      );
     }
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-y-hidden">
       <Button
         variant="ghost"
         onClick={() => setOpen(!open)}
-        size="sm"
-        className="text-sm text-primary hover:bg-transparent flex items-center gap-1 cursor-pointer"
+        size="default"
+        className="text-sm text-primary  hover:bg-transparent flex items-center gap-1 cursor-pointer dark:hover:bg-transparent"
       >
         <MessageCircle className="size-4" />
         Comentar
@@ -79,7 +77,7 @@ export function ButtonComment({
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={3}
-            className="w-full resize-none rounded-md border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 transition text-xs md:text-sm lg:text-sm"
+            className="w-full resize-none rounded-md  bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-0 dark:right-0 transition text-xs md:text-sm lg:text-sm"
           />
           <div className="flex gap-2 justify-end mt-3">
             <Button

@@ -1,5 +1,17 @@
 import { supabase } from "@/utils/supabase/supabaseClient";
 
+type Providers = "google" | "github";
+
+export async function loginWithProvider(provider: Providers) {
+  const HOST = process.env.NEXT_PUBLIC_HOST_CALLBACK;
+  await supabase.auth.signInWithOAuth({
+    provider,
+    options: {
+      redirectTo: `${HOST}/auth/callback`,
+    },
+  });
+}
+
 export async function registerUser({
   //   full_name,
   email,

@@ -34,8 +34,6 @@ export function ButtonLike({ question_id }: { question_id: number }) {
 
   async function handleLike() {
     if (!user) return;
-
-    // Emitimos evento optimista
     const actionToEmit = hasLiked ? "remove" : "add";
     emitLikeEvent(question_id, actionToEmit);
     setHasLiked(!hasLiked);
@@ -82,15 +80,15 @@ export function ButtonLike({ question_id }: { question_id: number }) {
       disabled={loading}
       variant="ghost"
       onClick={handleLike}
-      className={`transition-colors duration-200 p-1 ${
+      className={`transition-colors duration-200 hover:bg-transparent cursor-pointer px-1 ${
         hasLiked
-          ? "bg-transparent text-blue-600 hover:text-blue-600 dark:hover:bg-transparent"
-          : "text-black dark:text-white hover:bg-gray-200 dark:hover:text-blue-600"
+          ? "bg-transparent text-blue-600 hover:text-blue-600 "
+          : "text-black dark:text-white  dark:hover:text-blue-600 "
       }`}
     >
       <ThumbsUp
         className={`w-5 h-5 ${
-          hasLiked ? "fill-blue-600 hover:text-white" : "fill-none"
+          hasLiked ? "fill-blue-600 hover:text-white " : "fill-none "
         }`}
       />
       <span className="sr-only">

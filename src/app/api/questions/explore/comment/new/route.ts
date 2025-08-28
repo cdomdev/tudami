@@ -39,8 +39,8 @@ async function createComment({
     .single();
 
   if (error) {
-    console.error("Error creating comment:", error);
-    return null;
+    console.error("Error creating comment:", error.code);
+    return error.code;
   }
   /**
    * obtener autor de la pregunta para emitir la notificacion */

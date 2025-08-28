@@ -47,10 +47,8 @@ export default function AuthCallback() {
 
         const { user } = await response.json();
 
-        // 3. Establecer usuario en el contexto
         setUser(user);
 
-        // 4. Redireccionar al destino original o home
         const redirect = params.get("redirectTo") || "/";
         router.replace(redirect);
       } catch (error) {

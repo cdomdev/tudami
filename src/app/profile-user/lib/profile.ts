@@ -2,6 +2,7 @@ import { supabase } from "@/utils/supabase/supabaseClient";
 
 export interface UserPreferences {
   user_id: string;
+  full_name: string;
   profile_public?: boolean;
   allow_email?: boolean;
   allow_whatsapp?: boolean;
@@ -23,6 +24,7 @@ export async function updateProfile(
     const { data, error } = await supabase
       .from("users")
       .update({
+        full_name: preferences.full_name,
         phone: preferences.phone,
         bio: preferences.bio,
         city: preferences.city,

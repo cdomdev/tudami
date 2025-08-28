@@ -3,21 +3,20 @@ import { BtnCounterLikes } from "../buttons/BtnCounterLikes";
 import { BtnCounterComment } from "../buttons/BtnCounterComment";
 import { ButtonComment } from "../buttons/ButtonComment";
 
-export function FooterCardPost({
-  question_id,
-}: {
-  question_id: number;
-}) {
-
+export function FooterCardPost({ question_id }: { question_id: number }) {
   return (
     <>
       <BtnCounterLikes question_id={question_id} />
       <BtnCounterComment question_id={question_id} />
 
-      <div className="flex  justify-between items-center pt-3 border-t border-border">
-        <div className="flex gap-2 w-full">
-          <ButtonLike question_id={question_id} />
-          <ButtonComment question_id={question_id} />
+      <div className="border-t pt-2">
+        <div className="flex items-center gap-2">
+          <div className="shrink-0 self-start">
+            <ButtonLike question_id={question_id} />
+          </div>
+          <div className="flex-1">
+            <ButtonComment question_id={question_id} />
+          </div>
         </div>
       </div>
     </>

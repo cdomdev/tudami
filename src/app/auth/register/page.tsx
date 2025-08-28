@@ -43,7 +43,7 @@ export default function RegisterPage() {
         </h1>
 
         <p className="text-md text-muted-foreground mt-2">
-          Elige un proveedor para iniciar sesión y empezar a compartir,
+          Elige un proveedor para registrarte y empezar a compartir,
           preguntar o ayudar en la comunidad.
         </p>
       </div>

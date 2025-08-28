@@ -64,7 +64,6 @@ export function FormPrefenceContact() {
         allow_whatsapp: data.allow_whatsapp,
       });
 
-      console.log("data en la funcion de update profile preference ---[FORM]", resUp);
 
       if (error) {
         toast.error("Error al guardar las preferencias");
@@ -74,9 +73,9 @@ export function FormPrefenceContact() {
 
       // Actualizar el contexto
       updateUserPreferencesContext({
-        profile_public: data.public_profile,
-        allow_email: data.allow_email,
-        allow_whatsapp: data.allow_whatsapp,
+        profile_public: resUp.public_profile,
+        allow_email: resUp.allow_email,
+        allow_whatsapp: resUp.allow_whatsapp,
       });
 
       toast.success("Preferencias guardadas correctamente");
@@ -108,7 +107,7 @@ export function FormPrefenceContact() {
                     <FormLabel>Perfil público</FormLabel>
                     <FormDescription>
                       Permite que otros vean tu perfil - por defecto su perfil
-                      esta marcado como público.
+                      esta marcado como público. <strong>puedes cambiarlo eso cuando quieras</strong>
                     </FormDescription>
                   </div>
                   <FormControl>

@@ -73,7 +73,10 @@ export default function LayoutClient({
 
  
 
-  const notContactAvailable = !dataProfile.phone && !dataProfile.email;
+  const isAvaibleEmail = dataProfile.user_profile_preferences.allow_email && dataProfile.email 
+  const isAvaibleWs = dataProfile.user_profile_preferences.allow_whatsapp && dataProfile.phone
+  const notContactAvailable = !isAvaibleEmail && !isAvaibleWs ;
+
 
   const listItems = [
     { name: "Resumen", href: `/view-profile-user/${dataProfile.full_name}?u_view_profile_p=${userId}&aprov=${approval}` },
@@ -98,7 +101,7 @@ export default function LayoutClient({
           <h2 className="text-xl font-semibold text-slate-800 dark:text-white">
             Biografía de{" "}
             <span className="text-slate-800 dark:text-white">
-              {dataProfile.full_name}
+              {dataProfile.full_name || "anonino"}
             </span>
           </h2>
           <p className="text-sm text-slate-600 dark:text-slate-400">{dataProfile.bio}</p>
@@ -107,13 +110,13 @@ export default function LayoutClient({
           </h2>
 
           <p className="text-sm text-slate-600 dark:text-slate-400">
-            {notContactAvailable
-              ? "Este usuario no ha proporcionado información de contacto."
+            {notContactAvailable 
+              ? "Este usuario no ha proporcionado información de contacto o no pérmite que se le contacte por este medio."
               : "Este usuario permite que te comuniques a través de los siguientes medios disponibles:"}
           </p>
 
           <div className="flex flex-col gap-3 ">
-            {dataProfile.phone && (
+            {isAvaibleWs &&  (
               <button
                 onClick={handleWs}
                 className="inline-flex cursor-pointer transition duration-200 items-center gap-2 w-50 justify-center bg-green-500 hover:bg-green-600 text-white text-xs font-medium py-2 px-3 rounded-md"
@@ -123,7 +126,7 @@ export default function LayoutClient({
               </button>
             )}
 
-            {dataProfile.email && (
+            {isAvaibleEmail && (
               <div className="flex flex-col items-start ">
                 <div className="flex items-center gap-2">
                   <Button

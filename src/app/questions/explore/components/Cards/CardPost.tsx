@@ -28,7 +28,7 @@ export function CardPost({
       {/* Cabecera del autor */}
       <div className="flex items-start justify-between mb-3">
         <Link
-          href={`/view-profile-user/${users.full_name}?u_view_profile_p=${users.id}&aprov=${approvalToken}`}
+          href={`/view-profile-user/${users.full_name || "anonimo"}?u_view_profile_p=${users.id}&aprov=${approvalToken}`}
           className="flex items-center gap-3"
         >
           <div className="flex items-center gap-3">
@@ -74,7 +74,7 @@ export function CardPost({
         <div className="flex flex-wrap gap-2 my-4">
           {question_tags.map((questionTag) => (
             <Link
-              href={`/explore-questions/tags?slug=${questionTag.tag.slug}`}
+              href={`/questions/explore/tags?slug=${questionTag.tag.slug}`}
               key={questionTag.tag.id}
             >
               <span

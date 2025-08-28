@@ -30,17 +30,6 @@ export default function ExploreQuestionsLayout({
               mismo!
             </p>
           </div>
-
-          <div className="flex flex-col md:flex-row md:items-center gap-4 mb-2">
-            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto justify-center">
-              <Button asChild className="w-full sm:w-auto group">
-                <Link href="/offers/create" className="flex items-center">
-                  <Plus className="mr-2 h-4 w-4 group-hover:rotate-90 transition-transform" />
-                  Publicar oferta
-                </Link>
-              </Button>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -60,7 +49,7 @@ export default function ExploreQuestionsLayout({
     flex flex-col space-y-3 mt-2
     lg:col-span-2
     lg:px-0
-    max-h-[calc(100vh-2rem)] overflow-x-hidden
+    max-h-[calc(100vh-2rem)] overflow-x-hidden overflow-y-hidden
   "
             aria-label="Explorar preguntas por etiquetas"
           >
@@ -69,6 +58,18 @@ export default function ExploreQuestionsLayout({
             </h2>
             <div className="hidden lg:block border-t p-0 border-dashed dark:bg-gray-400 dark:border-dashed" />
             <ExploresOffers />
+
+            <div className="my-2">
+              <h3 className="hidden lg:block pt-5 mb-5 text-base lg:text-lg font-normal text-slate-700 dark:text-slate-200 ">
+                Crea tus ofertas
+              </h3>
+              <Button asChild className="w-full sm:w-auto group">
+                <Link href="/offers/create" className="flex items-center">
+                  <Plus className="mr-2 h-4 w-4 group-hover:rotate-90 transition-transform" />
+                  Crear una nueva oferta
+                </Link>
+              </Button>
+            </div>
           </aside>
         </div>
       </div>
