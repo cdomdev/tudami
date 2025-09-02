@@ -5,7 +5,6 @@ import { supabaseAuth } from "@/utils/supabase/supabaseClient";
 import { SupabaseClient } from "@supabase/supabase-js";
 import {
   getUserProfile,
-  // buildUserContextObject
 } from "@/lib/user-profile";
 
 /**
@@ -45,7 +44,6 @@ export async function POST(request: NextRequest) {
 
     // 3. Extraer datos del usuario autenticado
     const { id } = authUser;
-    console.log('ver como viene el nombre del usuario en el provider --->', authUser)
     const full_name = authUser.user_metadata?.full_name || authUser.user_metadata?.user_name || "";
     const avatar_url =
       authUser.user_metadata?.picture || authUser.user_metadata?.avatar_url || "";
@@ -54,9 +52,7 @@ export async function POST(request: NextRequest) {
     // 4. Generar token de aprobación
     const approvalToken = generateApprovalToken(id);
 
-    
-    const password = Math.floor(Math.random() * 5) 
-    
+      
     try {
       await upsertUserProfile({
         id,
@@ -64,7 +60,6 @@ export async function POST(request: NextRequest) {
         full_name: full_name || "",
         avatar_url: avatar_url,
         provider: provider,
-        password: password.toString(),
         approvalToken,
         supabase,
       });
@@ -155,7 +150,6 @@ async function upsertUserProfile({
   provider,
   approvalToken,
   supabase,
-  password,
 }: {
   id: string;
   email: string | undefined;
@@ -164,7 +158,6 @@ async function upsertUserProfile({
   provider: string;
   approvalToken: string;
   supabase: SupabaseClient;
-  password: string;
 }) {
   const { error, data } = await supabase
     .from("users")
@@ -174,7 +167,6 @@ async function upsertUserProfile({
       full_name,
       avatar_url,
       provider,
-      password,
       country: "Colombia",
       approval_token: approvalToken,
     })

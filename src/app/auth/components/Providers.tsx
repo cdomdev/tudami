@@ -13,7 +13,6 @@ export function ProvidersAuth() {
 
   const loginWith = async (provider: "google" | "github") => {
     try {
-      console.log("providers seleccionado --->", provider)
       setLoadingProvider(provider);
       await loginWithProvider(provider);
     } catch (error) {

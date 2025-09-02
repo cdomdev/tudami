@@ -18,7 +18,7 @@ import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import Link from "next/link";
 import { registerUser } from "../lib/auth";
-
+import { toast } from "sonner";
 const FormSchema = z.object({
   email: z.string().email({ message: "Debe ser un correo válido." }),
   name: z.string().min(2).max(100),
@@ -40,17 +40,30 @@ export function FormRegister() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("Form data:", data);
     setIsLoading(true);
-    const res = await registerUser({
-      full_name: data.name,
-      email: data.email,
-      password: data.password,
-    });
-    console.log("Response[REGISTER CLIENT] --->:", res);
-    // if (!res) {
-    //   setIsLoading(false);
-    // }
+    try {
+
+      const res = await registerUser({
+        full_name: data.name,
+        email: data.email,
+        password: data.password,
+      });
+
+      toast.success(res.data.message);
+      setIsLoading(false)
+
+      form.reset({
+        name: "",
+        email: "",
+        password: "",
+      })
+      
+
+    } catch (err: any) {
+      console.log("Error:", err);
+      setIsLoading(false);
+      toast.error(`Error: ${err.message}`)
+    }
   }
 
   return (
@@ -97,6 +110,7 @@ export function FormRegister() {
                   />
                   <button
                     type="button"
+                    disabled={isLoading}
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-2 text-sm text-gray-500"
                   >

@@ -1,20 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
-import { SupabaseClient} from "@supabase/supabase-js";
-import { generateApprovalToken } from "../utils/generateTokenAprov";
+import { SupabaseClient } from "@supabase/supabase-js";
+
+import { supabaseAuth } from "@/utils/supabase/supabaseClient";
 
 export async function POST(request: NextRequest) {
-  const { full_name, email, password } = await request.json();
-  if (!email || !password) {
+  const { full_name, email, access_token } = await request.json();
+  if (!email || !full_name) {
     return NextResponse.json(
-      { error: "Email and password are required" },
+      { error: "Email and full_name are required" },
       { status: 400 }
     );
   }
 
-  const supabase = await supabaseServerClient();
+  const supabase = await supabaseAuth(access_token)
+
   try {
-    const res = await registerUser(full_name, email, password, supabase);
+    const res = await updateProfile(supabase, full_name);
+
     return NextResponse.json(res);
   } catch (error) {
     console.error("Registration error:", error);
@@ -25,41 +27,33 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function registerUser(
-  full_name: string,
-  email: string,
-  password: string,
-  supabase: SupabaseClient
-) {
-  const { data, error } = await supabase.auth.signUp({ email, password });
-
-  if (error) throw new Error(error.message);
-
-  const userId = data.user?.id;
-  if (!userId) throw new Error("No se pudo obtener el ID del usuario");
-
-  const dataProfile = await updateProfile(userId, full_name, supabase);
-
-  return dataProfile;
+async function getDataProfileUser(supabase: SupabaseClient) {
+  return await supabase.auth.getUser()
 }
 
+// function que guarad datos en la tabla del perfil del usuario
 async function updateProfile(
-  userId: string,
-  full_name: string,
-  supabase: SupabaseClient
+  supabase: SupabaseClient, full_name: string
 ) {
-  const approvalToken = generateApprovalToken(userId);
-  const { data, error } = await supabase
+  const dataUser = await getDataProfileUser(supabase)
+
+  const { data: dataProfile } = dataUser
+  const id = dataProfile.user?.id || ""
+  const email = dataProfile.user?.email
+
+
+  const { error } = await supabase
     .from("users")
-    .upsert([{ full_name, token_aprov: approvalToken }])
+    .upsert([{ full_name, email, country: "Colombia", }])
     .select("id")
     .single();
   if (error) {
     throw new Error(error.message);
   }
-  await definePreference(data.id, supabase);
 
-  return data;
+  await definePreference(id, supabase);
+
+  return { success: true, message: "Registro exitoso, ya puedes iniciar sesion" }
 }
 
 async function definePreference(user_id: string, supabase: SupabaseClient) {

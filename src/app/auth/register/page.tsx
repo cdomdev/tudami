@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import Link from "next/link";
 import { FormRegister } from "../components/FormRegister";
 import { ProvidersAuth } from "../components/Providers";
+import { FooterForm } from "../components/FooterForm";
 
 export const metadata: Metadata = {
   title: "Registro en Tudami",
@@ -56,23 +56,7 @@ export default function RegisterPage() {
           <div className="border-1 w-full border-gray-300"></div>
         </div>
         <FormRegister />
-        <span className="text-muted-foreground text-sm text-center">
-          Al continuar, aceptas los{" "}
-          <Link
-            href="/terms"
-            className="underline underline-offset-2 hover:text-primary"
-          >
-            Términos de servicio
-          </Link>{" "}
-          y{" "}
-          <Link
-            href="/privacy"
-            className="underline underline-offset-2 hover:text-primary"
-          >
-            Política de privacidad
-          </Link>{" "}
-          de Tudami.
-        </span>
+        <FooterForm />
       </div>
     </div>
   );

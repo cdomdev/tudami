@@ -13,7 +13,7 @@ export async function loginWithProvider(provider: Providers) {
 }
 
 export async function registerUser({
-  //   full_name,
+  full_name,
   email,
   password,
 }: {
@@ -22,27 +22,54 @@ export async function registerUser({
   password: string;
 }) {
   if (!email || !password) {
-    throw new Error("Email and password are required");
+    throw new Error("Faltan datos para proceder con el registro");
   }
-  const { data } = await supabase.auth.signUp({ email, password });
-  console.log("Supabase response:", data);
 
-  //   const res = await fetch("/api/auth/register", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       full_name,
-  //       email,
-  //       password,
-  //     }),
-  //   });
+  const { data: dataAuth, error } = await supabase.auth.signUp({ email, password });
 
-  //   console.log("Response[REGISTER]:", res);
-  //   if (!res.ok) {
-  //     throw new Error("Failed to register user");
-  //   }
-  //   const data = await res.json();
-  //   return data;
+  if (error?.code === "user_already_exists") throw new Error("El correo ingresado ya se encuentra registrado");
+
+  const response = await fetch("/api/auth/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      full_name,
+      email,
+      access_token: dataAuth.session?.access_token,
+    }),
+  });
+
+
+  if (!response.ok) {
+    throw new Error("No pudimos completar el registro, intente nuevamente");
+  }
+  const data = await response.json();
+  return { data, success: true };
+}
+
+export async function loginWithPassword(email: string, password: string) {
+  if (!email || !password) throw new Error("Faltan datos para proceder con el inicio de sesion")
+
+  const { data: dataAuth } = await supabase.auth.signInWithPassword({ email, password })
+  const response = await fetch("/api/auth/loginWithPassword", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      password,
+      access_token: dataAuth.session?.access_token 
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("No pudimos completar el registro, intente nuevamente");
+  }
+
+  const data = await response.json();
+  return { data, success: true };
+
 }

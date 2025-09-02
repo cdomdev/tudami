@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { FormLogin } from "../components/Form";
 import { ProvidersAuth } from "../components/Providers";
-import Link from "next/link";
+import { FooterForm } from "../components/FooterForm";
 
 export const metadata: Metadata = {
   title: "Iniciar sesión",
@@ -56,23 +56,7 @@ export default function AuthPage() {
           <div className="border-1 w-full border-gray-300"></div>
         </div>
         <FormLogin />
-        <span className="text-muted-foreground text-sm text-center">
-          Al continuar, aceptas los{" "}
-          <Link
-            href="/terms"
-            className="underline underline-offset-2 hover:text-primary"
-          >
-            Términos de servicio
-          </Link>{" "}
-          y{" "}
-          <Link
-            href="/privacy"
-            className="underline underline-offset-2 hover:text-primary"
-          >
-            Política de privacidad
-          </Link>{" "}
-          de Tudami.
-        </span>
+        <FooterForm />
       </div>
     </div>
   );

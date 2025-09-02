@@ -17,12 +17,13 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import Link from "next/link";
+import { loginWithPassword } from "../lib/auth";
 
 const FormSchema = z.object({
-  email: z.string().email({ message: "Debe ser un correo válido." }),
+  email: z.string().email({ message: "Esta campo no puede quedar vacio" }),
   password: z
     .string()
-    .min(6, { message: "La contraseña debe tener al menos 6 caracteres." }),
+    .min(1, { message: "Este camo no puede quedar vacio" }),
 });
 
 export function FormLogin() {
@@ -36,8 +37,14 @@ export function FormLogin() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data);
+    try {
+      const res = await loginWithPassword(data.email, data.password);
+      console.log(res)
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
