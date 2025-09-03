@@ -18,17 +18,21 @@ import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import Link from "next/link";
 import { loginWithPassword } from "../lib/auth";
-
+import { Spinner } from "@/components";
+import { toast } from "sonner";
+import { useSession } from "@/context/context.sesion";
+import { useRouter, useSearchParams } from "next/navigation";
 const FormSchema = z.object({
   email: z.string().email({ message: "Esta campo no puede quedar vacio" }),
-  password: z
-    .string()
-    .min(1, { message: "Este camo no puede quedar vacio" }),
+  password: z.string().min(1, { message: "Este camo no puede quedar vacio" }),
 });
 
 export function FormLogin() {
   const [showPassword, setShowPassword] = useState(false);
-
+  const [isLoading, setIsloading] = useState<boolean>(false);
+  const router = useRouter();
+  const params = useSearchParams();
+  const { setUser } = useSession();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -38,12 +42,20 @@ export function FormLogin() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+    setIsloading(true);
     try {
       const res = await loginWithPassword(data.email, data.password);
-      console.log(res)
+      console.log("Res de la funcion para el contexto de usuario --->", res)
+      setUser(res);
+      const redirect = params.get("redirectTo") || "/";
+      router.replace(redirect);
+      setIsloading(false);
     } catch (error) {
-      console.log(error);
+      console.error("Error login:", error);
+      toast.error(
+        "Error: Algo salio mal al iniciar la sesion, intenta nuevamente"
+      );
+      setIsloading(false);
     }
   }
 
@@ -94,8 +106,9 @@ export function FormLogin() {
           )}
         />
 
-        <Button type="submit" className="w-full">
-          Iniciar sesión
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading && <Spinner className="w-5 h-5" />}
+          {isLoading ? "Iniciando sesion..." : "Iniciar sesión"}
         </Button>
       </form>
 

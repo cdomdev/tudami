@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SupabaseClient } from "@supabase/supabase-js";
-
+// import { createAvatar } from "@dicebear/core";
+// import { thumbs } from "@dicebear/collection";
+// import sharp from "sharp";
 import { supabaseAuth } from "@/utils/supabase/supabaseClient";
 
 export async function POST(request: NextRequest) {
@@ -12,7 +14,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const supabase = await supabaseAuth(access_token)
+  const supabase = await supabaseAuth(access_token);
 
   try {
     const res = await updateProfile(supabase, full_name);
@@ -28,23 +30,24 @@ export async function POST(request: NextRequest) {
 }
 
 async function getDataProfileUser(supabase: SupabaseClient) {
-  return await supabase.auth.getUser()
+  return await supabase.auth.getUser();
 }
 
 // function que guarad datos en la tabla del perfil del usuario
-async function updateProfile(
-  supabase: SupabaseClient, full_name: string
-) {
-  const dataUser = await getDataProfileUser(supabase)
+async function updateProfile(supabase: SupabaseClient, full_name: string) {
+  const dataUser = await getDataProfileUser(supabase);
 
-  const { data: dataProfile } = dataUser
-  const id = dataProfile.user?.id || ""
-  const email = dataProfile.user?.email
+  const { data: dataProfile } = dataUser;
+  const id = dataProfile.user?.id || "";
+  const email = dataProfile.user?.email;
+  // const seed = dataProfile.user?.id || "";
+  // const avatar_url = await generateAndSaveAvatarDefault(seed, supabase);
 
+  // console.log("avatar defualt para perfil en el registro --->", avatar_url);
 
   const { error } = await supabase
     .from("users")
-    .upsert([{ full_name, email, country: "Colombia", }])
+    .upsert([{ full_name,  email, country: "Colombia" }])
     .select("id")
     .single();
   if (error) {
@@ -53,7 +56,10 @@ async function updateProfile(
 
   await definePreference(id, supabase);
 
-  return { success: true, message: "Registro exitoso, ya puedes iniciar sesion" }
+  return {
+    success: true,
+    message: "Registro exitoso, ya puedes iniciar sesion",
+  };
 }
 
 async function definePreference(user_id: string, supabase: SupabaseClient) {
@@ -76,3 +82,30 @@ async function definePreference(user_id: string, supabase: SupabaseClient) {
     }
   }
 }
+
+// async function generateAndSaveAvatarDefault(
+//   seed: string,
+//   supabase: SupabaseClient
+// ) {
+//   // 1. Generar SVG
+//   const avatar = createAvatar(thumbs, { seed, size: 128 });
+//   const svg = avatar.toString();
+
+//   // 2. Convertir SVG -> WebP con sharp (en backend)
+//   const webpBuffer = await sharp(Buffer.from(svg)).webp().toBuffer();
+
+//   // 3. Subir a Supabase
+//   const { error } = await supabase.storage
+//     .from("avatars")
+//     .upload(`default/${seed}.webp`, webpBuffer, {
+//       contentType: "image/webp",
+//       upsert: true,
+//     });
+
+//   if (error) {
+//     throw new Error(`Error al guardar avatar: ${error.message}`);
+//   }
+
+//   // Devolver URL relativa en bucket
+//   return `default/${seed}.webp`;
+// }

@@ -12,6 +12,16 @@ export async function loginWithProvider(provider: Providers) {
   });
 }
 
+export async function loginCallback(accessToken: string, refreshToken: string) {
+  return await fetch("/api/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ accessToken, refreshToken }),
+  });
+}
+
 export async function registerUser({
   full_name,
   email,
@@ -25,9 +35,13 @@ export async function registerUser({
     throw new Error("Faltan datos para proceder con el registro");
   }
 
-  const { data: dataAuth, error } = await supabase.auth.signUp({ email, password });
+  const { data: dataAuth, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
 
-  if (error?.code === "user_already_exists") throw new Error("El correo ingresado ya se encuentra registrado");
+  if (error?.code === "user_already_exists")
+    throw new Error("El correo ingresado ya se encuentra registrado");
 
   const response = await fetch("/api/auth/register", {
     method: "POST",
@@ -41,7 +55,6 @@ export async function registerUser({
     }),
   });
 
-
   if (!response.ok) {
     throw new Error("No pudimos completar el registro, intente nuevamente");
   }
@@ -50,9 +63,13 @@ export async function registerUser({
 }
 
 export async function loginWithPassword(email: string, password: string) {
-  if (!email || !password) throw new Error("Faltan datos para proceder con el inicio de sesion")
+  if (!email || !password)
+    throw new Error("Faltan datos para proceder con el inicio de sesion");
 
-  const { data: dataAuth } = await supabase.auth.signInWithPassword({ email, password })
+  const { data: dataAuth } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
   const response = await fetch("/api/auth/loginWithPassword", {
     method: "POST",
     headers: {
@@ -61,15 +78,16 @@ export async function loginWithPassword(email: string, password: string) {
     body: JSON.stringify({
       email,
       password,
-      access_token: dataAuth.session?.access_token 
+      access_token: dataAuth.session?.access_token,
     }),
   });
 
   if (!response.ok) {
-    throw new Error("No pudimos completar el registro, intente nuevamente");
+    throw new Error("No se pudo procesar la solicitud, intente nuevamente");
   }
 
   const data = await response.json();
-  return { data, success: true };
+  const user = data.data;
 
+  return user;
 }

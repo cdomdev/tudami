@@ -13,6 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
@@ -30,6 +31,9 @@ const FormSchema = z.object({
 export function FormRegister() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const params = useSearchParams();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -42,7 +46,6 @@ export function FormRegister() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
     try {
-
       const res = await registerUser({
         full_name: data.name,
         email: data.email,
@@ -50,19 +53,19 @@ export function FormRegister() {
       });
 
       toast.success(res.data.message);
-      setIsLoading(false)
+      setIsLoading(false);
 
       form.reset({
         name: "",
         email: "",
         password: "",
-      })
-      
-
-    } catch (err: any) {
-      console.log("Error:", err);
+      });
+      const redirect = params.get("redirectTo") || "login/";
+      router.replace(redirect);
+    } catch (err: unknown) {
       setIsLoading(false);
-      toast.error(`Error: ${err.message}`)
+      const message = (err as Error).message ?? "Error inesperado";
+      toast.error(`Error: ${message}`);
     }
   }
 
@@ -127,7 +130,7 @@ export function FormRegister() {
           )}
         />
 
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full cursor-pointer" disabled={isLoading}>
           {isLoading ? (
             <>
               <Spinner className="w-5 h-5" />

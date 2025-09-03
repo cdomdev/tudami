@@ -17,15 +17,17 @@ export default function Home() {
   const itemsActivity = [
     {
       title: "Preguntas hechas",
-      count: user?.questions,
+      count: user?.questions ?? 0,
       icon: "i-heroicons-question-mark-circle-solid",
     },
     {
       title: "Respuestas dadas",
-      count: user?.question_comments,
+      count: user?.question_comments ?? 0,
       icon: "i-heroicons-chat-bubble-left-right-solid",
     },
   ];
+
+  console.log(itemsActivity)
 
   const progresoReputacion = obtenerProgresoReputacion(score);
   const achievementsObtained = getAchievementByuser(achievements);

@@ -6,6 +6,7 @@ import { supabase } from "@/utils/supabase/supabaseClient";
 import { useSession } from "@/context/context.sesion";
 import { Spinner } from "@/components/Spiner";
 import { toast } from "sonner";
+import { loginCallback } from "../lib/auth";
 
 export default function AuthCallback() {
   const router = useRouter();
@@ -29,13 +30,7 @@ export default function AuthCallback() {
         const refreshToken = session.refresh_token;
 
         // 2. Llamar a la nueva API de autenticación unificada
-        const response = await fetch("/api/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ accessToken, refreshToken }),
-        });
+        const response = await loginCallback(accessToken, refreshToken);
 
         if (!response.ok) {
           toast.error("Error de autenticación. Por favor, inténtalo de nuevo.");
@@ -50,6 +45,7 @@ export default function AuthCallback() {
         setUser(user);
 
         const redirect = params.get("redirectTo") || "/";
+        
         router.replace(redirect);
       } catch (error) {
         console.error("Error inesperado en autenticación:", error);

@@ -11,6 +11,7 @@ export default function LayoutProfile({
   children: React.ReactNode;
 }) {
   const { user } = useSession();
+  console.log(user)
 
   return (
     <section
@@ -44,7 +45,7 @@ export default function LayoutProfile({
           role="banner"
         >
           <Image
-            src={user?.avatar_url || "/default-avatar.png"}
+            src={user?.avatar_url || "/avatar_default.png"}
             alt={`Avatar de ${user?.full_name}`}
             width={120}
             className="rounded-sm mr-4 object-contain"
