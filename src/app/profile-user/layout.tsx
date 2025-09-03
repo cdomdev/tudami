@@ -11,7 +11,6 @@ export default function LayoutProfile({
   children: React.ReactNode;
 }) {
   const { user } = useSession();
-  console.log(user)
 
   return (
     <section

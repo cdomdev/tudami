@@ -15,6 +15,8 @@ const nextConfig: NextConfig = {
       "cdn.pixabay.com",
       "www.gravatar.com",
       "pbs.twimg.com",
+      "iyyeielwbsaybnczamix.supabase.co",
+      "api.dicebear.com"
     ],
   }
 };

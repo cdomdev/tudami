@@ -28,6 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import EditorAvatar from "../playGroundAvatar/EditorAvatar";
 
 const FormSchema = z.object({
   full_name: z
@@ -58,6 +59,7 @@ const FormSchema = z.object({
     .string()
     .max(500, "La biografía no puede exceder 500 caracteres")
     .optional(),
+  avatarSeed: z.string().min(2).max(100).optional(),
 });
 
 export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
@@ -74,6 +76,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
       city: user?.city ? String(user.city) : "",
       phone: user?.phone ? String(user.phone) : "",
       bio: user?.bio ? String(user.bio) : "",
+      avatarSeed: user?.avatar_url ? String(user.avatar_url) : "",
     },
   });
 
@@ -110,6 +113,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
         bio: user.bio ? String(user.bio) : "",
         city: user.city ? String(user.city) : "",
         department: user.department ? String(user.department) : "",
+        
       };
 
       form.reset(formData);
@@ -128,6 +132,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
         return;
       }
 
+    
       try {
         const formattedData = {
           full_name: data.full_name ? String(data.full_name) : "",
@@ -135,7 +140,10 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
           bio: data.bio ? String(data.bio) : "",
           department: data.department ? String(data.department) : "",
           city: data.city ? String(data.city) : "",
+          avatarSeed: data.avatarSeed ? String(data.avatarSeed) : "",
         };
+
+        console.log("datos a actualizar --->", formattedData);
 
         const { error } = await updateProfile(user.id, formattedData);
 
@@ -172,16 +180,31 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
             Datos personales
           </h2>
           <p className="text-sm text-muted-foreground mb-4">
-            En esta sección puedes modificar datos adicionales que no son
-            proporcionados por tu proveedor de autenticación (Google, etc.).
-            Esta información ayudará a otros usuarios a conocerte mejor y
-            contactarte.
+            En esta sección puedes modificar datos personales. Esta información
+            ayudará a otros usuarios a conocerte mejor y contactarte.
           </p>
           <div
             className="space-y-4"
             role="group"
             aria-labelledby="personal-data-heading"
           >
+            <FormField
+              control={form.control}
+              name="avatarSeed"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Avatar</FormLabel>
+                  <FormControl>
+                    <EditorAvatar
+                      value={field.value} 
+                      onChange={field.onChange} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             {/* personalizar nombre */}
             <FormField
               control={form.control}
@@ -200,13 +223,15 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
                   </FormDescription>
                   <FormControl>
                     <Input
-                      id="phone-input"
-                      type="tel"
-                      placeholder="Ej: +57 123 456 7890"
+                      id="full_name-input"
+                      type="text"
+                      placeholder="Ej: Juan Pérez"
                       {...field}
                       className="w-full bg-white/70 text-black dark:text-muted-foreground"
                       aria-describedby={
-                        fieldState.error ? "phone-error" : "phone-description"
+                        fieldState.error
+                          ? "full_name-error"
+                          : "full_name-description"
                       }
                       aria-invalid={!!fieldState.error}
                     />

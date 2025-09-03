@@ -45,16 +45,16 @@ export function FormLogin() {
     setIsloading(true);
     try {
       const res = await loginWithPassword(data.email, data.password);
-      console.log("Res de la funcion para el contexto de usuario --->", res)
       setUser(res);
       const redirect = params.get("redirectTo") || "/";
       router.replace(redirect);
-      setIsloading(false);
     } catch (error) {
       console.error("Error login:", error);
       toast.error(
         "Error: Algo salio mal al iniciar la sesion, intenta nuevamente"
       );
+    }
+    finally{
       setIsloading(false);
     }
   }
@@ -106,7 +106,7 @@ export function FormLogin() {
           )}
         />
 
-        <Button type="submit" className="w-full" disabled={isLoading}>
+        <Button type="submit" className="w-full cursor-pointer" disabled={isLoading}>
           {isLoading && <Spinner className="w-5 h-5" />}
           {isLoading ? "Iniciando sesion..." : "Iniciar sesión"}
         </Button>

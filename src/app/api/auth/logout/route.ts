@@ -45,8 +45,6 @@ export async function POST() {
       });
     });
 
-    console.log("[AUTH] Cookies de sesión limpiadas");
-
     return NextResponse.json({
       success: true,
       message: "Sesión cerrada exitosamente",

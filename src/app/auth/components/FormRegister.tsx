@@ -53,7 +53,6 @@ export function FormRegister() {
       });
 
       toast.success(res.data.message);
-      setIsLoading(false);
 
       form.reset({
         name: "",
@@ -63,9 +62,11 @@ export function FormRegister() {
       const redirect = params.get("redirectTo") || "login/";
       router.replace(redirect);
     } catch (err: unknown) {
-      setIsLoading(false);
       const message = (err as Error).message ?? "Error inesperado";
       toast.error(`Error: ${message}`);
+    }
+    finally{
+      setIsLoading(false);
     }
   }
 

@@ -3,13 +3,17 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Spinner } from "@/components/Spiner";
+import { useSession } from "@/context/context.sesion";
 
 export default function ValidateSessionPage() {
-  const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
+  const [status, setStatus] = useState<"loading" | "success" | "error">(
+    "loading"
+  );
   const [errorMessage, setErrorMessage] = useState<string>("");
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirectTo") || "/";
+  const { setUser } = useSession();
 
   useEffect(() => {
     const validateSession = async () => {
@@ -27,12 +31,17 @@ export default function ValidateSessionPage() {
           const data = await response.json();
           setStatus("error");
           setErrorMessage(data.error || "Error al validar la sesión");
-          
+
+          // alimentar el contexto con el usuario
+
+          setUser(data.user);
           // Redirigir al login después de un breve retraso
           setTimeout(() => {
-            router.replace(`/auth/login?redirectTo=${encodeURIComponent(redirectTo)}`);
+            router.replace(
+              `/auth/login?redirectTo=${encodeURIComponent(redirectTo)}`
+            );
           }, 2000);
-          
+
           return;
         }
 
@@ -43,16 +52,18 @@ export default function ValidateSessionPage() {
         console.error("Error al validar la sesión:", error);
         setStatus("error");
         setErrorMessage("Error desconocido al validar la sesión");
-        
+
         // Redirigir al login después de un breve retraso
         setTimeout(() => {
-          router.replace(`/auth/login?redirectTo=${encodeURIComponent(redirectTo)}`);
+          router.replace(
+            `/auth/login?redirectTo=${encodeURIComponent(redirectTo)}`
+          );
         }, 2000);
       }
     };
 
     validateSession();
-  }, [redirectTo, router]);
+  }, [redirectTo, router, setUser]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
@@ -62,14 +73,14 @@ export default function ValidateSessionPage() {
           <p className="mt-4 text-center">Validando tu sesión...</p>
         </>
       )}
-      
+
       {status === "error" && (
         <div className="text-center">
           <p className="text-red-500 mb-2">Error: {errorMessage}</p>
           <p>Redirigiendo al inicio de sesión...</p>
         </div>
       )}
-      
+
       {status === "success" && (
         <div className="text-center">
           <p className="text-green-500 mb-2">Sesión validada correctamente</p>

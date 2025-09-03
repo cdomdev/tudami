@@ -26,7 +26,7 @@ import { UndoRedoButton } from "../tiptap-ui/undo-redo-button";
 // import { LinkPopover } from "../tiptap-ui/link-popover";
 // import { ListDropdownMenu } from "../tiptap-ui/list-dropdown-menu";
 // import { BlockQuoteButton } from "../tiptap-ui/blockquote-button";
-// import { CodeBlockButton } from "../tiptap-ui/code-block-button";
+import { CodeBlockButton } from "../tiptap-ui/code-block-button";
 
 export function SimpleEditor({
   onChange,
@@ -95,8 +95,10 @@ export function SimpleEditor({
             // "orderedList",
             "taskList"]} />
           <BlockQuoteButton />
+          </ToolbarGroup> */}
+          <ToolbarGroup>
           <CodeBlockButton />
-        </ToolbarGroup> */}
+          </ToolbarGroup>
 
         <ToolbarSeparator />
 
