@@ -22,6 +22,7 @@ import { Spinner } from "@/components";
 import { toast } from "sonner";
 import { useSession } from "@/context/context.sesion";
 import { useRouter, useSearchParams } from "next/navigation";
+
 const FormSchema = z.object({
   email: z.string().email({ message: "Esta campo no puede quedar vacio" }),
   password: z.string().min(1, { message: "Este camo no puede quedar vacio" }),
