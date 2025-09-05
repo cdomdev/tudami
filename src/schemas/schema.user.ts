@@ -16,6 +16,7 @@ export const UserProfilePreferencesSchema = z.object({
   allow_whatsapp: z.boolean(),
   profile_public: z.boolean(),
 });
+
 export type UserProfilePreferences = z.infer<
   typeof UserProfilePreferencesSchema
 >;

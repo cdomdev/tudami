@@ -19,7 +19,7 @@ import { updateUserPreferences } from "../../lib/profile";
 import { Spinner } from "@/components/Spiner";
 
 const FormSchema = z.object({
-  public_profile: z.boolean().optional(),
+  profile_public: z.boolean().optional(),
   allow_email: z.boolean(),
   allow_whatsapp: z.boolean(),
 });
@@ -32,7 +32,7 @@ export function FormPrefenceContact() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      public_profile: user?.user_profile_preferences.profile_public ?? true,
+      profile_public: user?.user_profile_preferences.profile_public ?? true,
       allow_email: user?.user_profile_preferences.allow_email ?? false,
       allow_whatsapp: user?.user_profile_preferences.allow_whatsapp ?? false,
     },
@@ -42,14 +42,14 @@ export function FormPrefenceContact() {
   useEffect(() => {
     if (user) {
       form.reset({
-        public_profile: user.user_profile_preferences.profile_public ?? false,
+        profile_public: user.user_profile_preferences.profile_public ?? false,
         allow_email: user.user_profile_preferences.allow_email ?? false,
         allow_whatsapp: user.user_profile_preferences.allow_whatsapp ?? false,
       });
     }
   }, [user, form]);
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(dataForm: z.infer<typeof FormSchema>) {
     setLoading(true);
     if (!user?.id) {
       toast.error("No se pudo identificar el usuario");
@@ -58,31 +58,29 @@ export function FormPrefenceContact() {
 
     try {
       // Actualizar en la base de datos
-      const { error, data:resUp } = await updateUserPreferences(user.id, {
-        profile_public: data.public_profile,
-        allow_email: data.allow_email,
-        allow_whatsapp: data.allow_whatsapp,
+      const { error, data } = await updateUserPreferences(user.id, {
+        profile_public: dataForm.profile_public,
+        allow_email: dataForm.allow_email,
+        allow_whatsapp: dataForm.allow_whatsapp,
       });
-
 
       if (error) {
         toast.error("Error al guardar las preferencias");
-        setLoading(false);
         return;
       }
 
       // Actualizar el contexto
       updateUserPreferencesContext({
-        profile_public: resUp.public_profile,
-        allow_email: resUp.allow_email,
-        allow_whatsapp: resUp.allow_whatsapp,
+        profile_public: data.profile_public,
+        allow_email: data.allow_email,
+        allow_whatsapp: data.allow_whatsapp,
       });
 
       toast.success("Preferencias guardadas correctamente");
-      setLoading(false);
     } catch (error) {
       console.error("Error al actualizar preferencias:", error);
       toast.error("Error al guardar las preferencias");
+    } finally {
       setLoading(false);
     }
   }
@@ -100,14 +98,15 @@ export function FormPrefenceContact() {
             {/* Perfil público */}
             <FormField
               control={form.control}
-              name="public_profile"
+              name="profile_public"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                   <div className="space-y-0.5">
                     <FormLabel>Perfil público</FormLabel>
                     <FormDescription>
                       Permite que otros vean tu perfil - por defecto su perfil
-                      esta marcado como público. <strong>puedes cambiarlo eso cuando quieras</strong>
+                      esta marcado como público.{" "}
+                      <strong>puedes cambiarlo eso cuando quieras</strong>
                     </FormDescription>
                   </div>
                   <FormControl>
@@ -170,7 +169,7 @@ export function FormPrefenceContact() {
           </div>
         </div>
 
-        <Button type="submit" disabled={loading}>
+        <Button type="submit" disabled={loading} className="cursor-pointer">
           {loading ? (
             <>
               <Spinner className="w-4 h-4" />

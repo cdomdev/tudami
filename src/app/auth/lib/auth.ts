@@ -66,10 +66,15 @@ export async function loginWithPassword(email: string, password: string) {
   if (!email || !password)
     throw new Error("Faltan datos para proceder con el inicio de sesion");
 
-  const { data: dataAuth } = await supabase.auth.signInWithPassword({
+  const { data: dataAuth, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
+
+  if (error && error?.code === "invalid_credentials")
+    throw new Error("Los datos ingresados no son correctos, intente nuevamente");
+  
+
   const response = await fetch("/api/auth/loginWithPassword", {
     method: "POST",
     headers: {
@@ -82,11 +87,12 @@ export async function loginWithPassword(email: string, password: string) {
     }),
   });
 
-  
   if (!response.ok) {
-    throw new Error("Los datos ingresados no son correctos, intente nuevamente");
+    throw new Error(
+      "Los datos ingresados no son correctos, intente nuevamente"
+    );
   }
-  
+
   const data = await response.json();
   const user = data.data;
 

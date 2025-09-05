@@ -33,6 +33,7 @@ export function FormLogin() {
   const router = useRouter();
   const params = useSearchParams();
   const { setUser } = useSession();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -51,10 +52,9 @@ export function FormLogin() {
     } catch (error) {
       console.error("Error login:", error);
       toast.error(
-        "Error: Algo salio mal al iniciar la sesion, intenta nuevamente"
+        `Error: ${error instanceof Error ? error.message : "Error desconocido"}`
       );
-    }
-    finally{
+    } finally {
       setIsloading(false);
     }
   }
@@ -106,7 +106,11 @@ export function FormLogin() {
           )}
         />
 
-        <Button type="submit" className="w-full cursor-pointer" disabled={isLoading}>
+        <Button
+          type="submit"
+          className="w-full cursor-pointer"
+          disabled={isLoading}
+        >
           {isLoading && <Spinner className="w-5 h-5" />}
           {isLoading ? "Iniciando sesion..." : "Iniciar sesión"}
         </Button>

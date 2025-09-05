@@ -64,7 +64,7 @@ export default function PreferenciasTema() {
         <FormPrefenceContact />
       </article>
       <article
-        className="p-6 dark:bg-custom-card  border border-red-500 rounded-sm shadow-sm"
+        className="p-6 dark:bg-custom-card  mb-10 border border-red-500 rounded-sm shadow-sm"
         role="region"
         aria-labelledby="zona-peligro-title"
       >

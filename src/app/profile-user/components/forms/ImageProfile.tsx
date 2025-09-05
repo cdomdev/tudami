@@ -1,18 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
-import { useController } from "react-hook-form";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { Control, useController } from "react-hook-form";
 import Image from "next/image";
+import { z } from "zod";
+import { FormSchema } from "@/schemas";
 import { Button } from "@/components/ui/button";
 
-export function ImageProfile({
-  control,
-  avatar_url,
-}: {
-  control: any;
+interface FormSchemaType {
   avatar_url?: string;
-}) {
+  control: Control<z.infer<typeof FormSchema>>;
+}
+
+export function ImageProfile({ avatar_url, control }: FormSchemaType) {
   const { field, fieldState } = useController({
     name: "avatarFile",
     control,

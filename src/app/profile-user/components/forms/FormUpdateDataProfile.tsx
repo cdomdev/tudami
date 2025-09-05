@@ -8,36 +8,20 @@ import { memo, useCallback, useEffect, useState } from "react";
 import locationsData from "@/content/locations/locations.json";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components";
-import { FormSchema } from "@/schemas"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { FormSchema } from "@/schemas";
+import { Form } from "@/components/ui/form";
 import { useSession } from "@/context/context.sesion";
 import { updateProfile, uploadImage } from "../../lib/profile";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-// import { ImageProfile } from "../imageProfile/ImageProfile";
-
-
+import { ImageProfile } from "./ImageProfile";
+import { FormFieldName } from "./FormFieldName";
+import { FormFieldMovil } from "./FormFieldMovil";
+import { FormFieldLocation } from "./FormFieldLocation";
+import { FormFieldBio } from "./FormFieldBio";
 
 export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
   const { user, updateUserData } = useSession();
   const [filteredCities, setFilteredCities] = useState<string[]>([]);
 
-  
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -46,7 +30,8 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
       city: user?.city ? String(user.city) : "",
       phone: user?.phone ? String(user.phone) : "",
       bio: user?.bio ? String(user.bio) : "",
-      avatarFile: user?.avatar_url ? String(user.avatar_url) : "",
+      avatarFile: undefined,
+      avatar_url: user?.avatar_url ? String(user.avatar_url) : "",
     },
   });
 
@@ -83,7 +68,8 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
         bio: user.bio ? String(user.bio) : "",
         city: user.city ? String(user.city) : "",
         department: user.department ? String(user.department) : "",
-
+        avatarFile: undefined,
+        avatar_url: user.avatar_url ? String(user.avatar_url) : "",
       };
 
       form.reset(formData);
@@ -102,10 +88,8 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
         return;
       }
 
-
       try {
         let avatarUrl = user?.avatar_url;
-
         if (data.avatarFile instanceof File) {
           const res = await uploadImage(data.avatarFile, user.id);
           avatarUrl = res?.url;
@@ -117,7 +101,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
           bio: data.bio ?? "",
           department: data.department ?? "",
           city: data.city ?? "",
-          avatar_url: avatarUrl,
+          avatar_url: avatarUrl ?? "",
         };
 
         const { error } = await updateProfile(user.id, formattedData);
@@ -135,7 +119,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
         toast.error("Error al guardar los datos personales");
       }
     },
-    [user?.id, updateUserData]
+    [user?.id, updateUserData, user?.avatar_url]
   );
 
   const textLoading = form.formState.isSubmitting
@@ -165,250 +149,34 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
           >
             {/* image profile */}
 
-            {/* <ImageProfile avatar_url={user?.avatar_url} control={form.control} /> */}
+            <ImageProfile
+              avatar_url={user?.avatar_url}
+              control={form.control}
+            />
 
             {/* personalizar nombre */}
-            <FormField
-              control={form.control}
-              name="full_name"
-              render={({ field, fieldState }) => (
-                <FormItem className="space-y-2">
-                  <FormLabel
-                    htmlFor="full_name-input"
-                    className="text-sm font-medium"
-                  >
-                    Nombre
-                  </FormLabel>
-                  <FormDescription className="text-sm text-muted-foreground">
-                    Por defecto usamos el nombre dado por tu proveedor, pero
-                    eres libre de persolizarlo en este campo.
-                  </FormDescription>
-                  <FormControl>
-                    <Input
-                      id="full_name-input"
-                      type="text"
-                      placeholder="Ej: Juan Pérez"
-                      {...field}
-                      className="w-full bg-white/70 text-black dark:text-muted-foreground"
-                      aria-describedby={
-                        fieldState.error
-                          ? "full_name-error"
-                          : "full_name-description"
-                      }
-                      aria-invalid={!!fieldState.error}
-                    />
-                  </FormControl>
-                  {fieldState.error && (
-                    <FormMessage
-                      id="phone-error"
-                      className="text-sm text-destructive"
-                    >
-                      {fieldState.error.message}
-                    </FormMessage>
-                  )}
-                </FormItem>
-              )}
-            />
+
+            <FormFieldName control={form.control} />
+
             {/* Número de teléfono */}
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field, fieldState }) => (
-                <FormItem className="space-y-2">
-                  <FormLabel
-                    htmlFor="phone-input"
-                    className="text-sm font-medium"
-                  >
-                    Número de teléfono
-                  </FormLabel>
-                  <FormDescription className="text-sm text-muted-foreground">
-                    Agregar tu número facilita que otros usuarios puedan
-                    contactarte directamente para colaboraciones, intercambio de
-                    conocimientos o oportunidades profesionales.
-                  </FormDescription>
-                  <FormControl>
-                    <Input
-                      id="phone-input"
-                      type="tel"
-                      placeholder="Ej: +57 123 456 7890"
-                      {...field}
-                      className="w-full bg-white/70 text-black dark:text-muted-foreground"
-                      aria-describedby={
-                        fieldState.error ? "phone-error" : "phone-description"
-                      }
-                      aria-invalid={!!fieldState.error}
-                    />
-                  </FormControl>
-                  {fieldState.error && (
-                    <FormMessage
-                      id="phone-error"
-                      className="text-sm text-destructive"
-                    >
-                      {fieldState.error.message}
-                    </FormMessage>
-                  )}
-                </FormItem>
-              )}
-            />
+            <FormFieldMovil control={form.control} />
 
             {/* Departamento */}
-            <FormField
+            <FormFieldLocation
               control={form.control}
-              name="department"
-              render={({ field, fieldState }) => (
-                <FormItem className="space-y-2">
-                  <FormLabel
-                    htmlFor="department-input"
-                    className="text-sm font-medium"
-                  >
-                    Departamento
-                  </FormLabel>
-                  <FormDescription className="text-sm text-muted-foreground">
-                    Agregar tu departamento facilita que otros usuarios puedan
-                    conocerte mejor y encontrar personas en tu área geográfica.
-                  </FormDescription>
-                  <FormControl>
-                    <Select
-                      value={field.value}
-                      onValueChange={(value) => {
-                        field.onChange(value);
-                        handleDepartmentChange(value);
-                      }}
-                    >
-                      <SelectTrigger className="bg-white/70 text-black dark:text-muted-foreground">
-                        <SelectValue placeholder="Selecciona un departamento" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {locationsData.map((location) => (
-                          <SelectItem
-                            key={location.id}
-                            value={location.departamento}
-                          >
-                            {location.departamento}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  {fieldState.error && (
-                    <FormMessage
-                      id="department-error"
-                      className="text-sm text-destructive"
-                    >
-                      {fieldState.error.message}
-                    </FormMessage>
-                  )}
-                </FormItem>
-              )}
-            />
-
-            {/* Ciudad */}
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field, fieldState }) => (
-                <FormItem className="space-y-2">
-                  <FormLabel
-                    htmlFor="city-input"
-                    className="text-sm font-medium"
-                  >
-                    Ciudad
-                  </FormLabel>
-                  <FormDescription className="text-sm text-muted-foreground">
-                    Especifica tu ciudad para una mejor ubicación geográfica.
-                  </FormDescription>
-                  <FormControl>
-                    <Select
-                      value={field.value}
-                      onValueChange={field.onChange}
-                      disabled={
-                        !form.watch("department") || filteredCities.length === 0
-                      }
-                    >
-                      <SelectTrigger className="bg-white/70 text-black dark:text-muted-foreground">
-                        <SelectValue
-                          placeholder={
-                            !form.watch("department")
-                              ? "Primero selecciona un departamento"
-                              : "Selecciona una ciudad"
-                          }
-                        />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {filteredCities.map((city) => (
-                          <SelectItem key={city} value={city}>
-                            {city}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  {fieldState.error && (
-                    <FormMessage
-                      id="city-error"
-                      className="text-sm text-destructive"
-                    >
-                      {fieldState.error.message}
-                    </FormMessage>
-                  )}
-                </FormItem>
-              )}
+              filteredCities={filteredCities}
+              setFilteredCities={setFilteredCities}
+              form={form}
             />
 
             {/* Biografía del usuario */}
-            <FormField
-              control={form.control}
-              name="bio"
-              render={({ field, fieldState }) => (
-                <FormItem className="space-y-2">
-                  <FormLabel
-                    htmlFor="bio-input"
-                    className="text-sm font-medium"
-                  >
-                    Biografía
-                  </FormLabel>
-                  <FormDescription className="text-sm text-muted-foreground">
-                    Una breve descripción sobre ti ayuda a otros usuarios a
-                    conocer tus intereses y experiencia. Máximo 50 caracteres.
-                  </FormDescription>
-                  <FormControl>
-                    <div className="relative">
-                      <Textarea
-                        id="bio-input"
-                        placeholder="Desarrollador apasionado por la tecnología..."
-                        {...field}
-                        rows={3}
-                        maxLength={50}
-                        className="w-full resize-none bg-white/70 text-black dark:text-muted-foreground"
-                        aria-describedby={
-                          fieldState.error
-                            ? "biografia-error"
-                            : "biografia-description"
-                        }
-                        aria-invalid={!!fieldState.error}
-                      />
-                      <div className="absolute bottom-2 right-2 text-xs text-black dark:text-muted-foreground">
-                        {field.value?.length || 0}/50
-                      </div>
-                    </div>
-                  </FormControl>
-                  {fieldState.error && (
-                    <FormMessage
-                      id="bio-error"
-                      className="text-sm text-destructive"
-                    >
-                      {fieldState.error.message}
-                    </FormMessage>
-                  )}
-                </FormItem>
-              )}
-            />
+            <FormFieldBio control={form.control} />
           </div>
         </div>
 
         <Button
           type="submit"
-          className="w-full sm:w-auto"
+          className="w-full sm:w-auto cursor-pointer"
           disabled={form.formState.isSubmitting}
         >
           {form.formState.isSubmitting && <Spinner className="w-5 h-5" />}

@@ -10,8 +10,8 @@ export interface UserPreferences {
   bio?: string;
   city?: string;
   department?: string;
+  avatar_url?: string;
 }
-
 
 // subir imagen
 
@@ -30,7 +30,9 @@ export async function uploadImage(file: File, userId: string) {
 
     if (!res.ok) {
       console.error("Error en API upload:", data);
-      throw new Error(data?.error || `Error al subir la nueva imagen de perfil`);
+      throw new Error(
+        data?.error || `Error al subir la nueva imagen de perfil`
+      );
     }
 
     return data;
@@ -39,7 +41,6 @@ export async function uploadImage(file: File, userId: string) {
     return null;
   }
 }
-
 
 /**
  * Actualiza las preferencias del usuario en la base de datos
@@ -50,7 +51,6 @@ export async function updateProfile(
   preferences: Partial<Omit<UserPreferences, "id">>
 ) {
   try {
-
     const { data, error } = await supabase
       .from("users")
       .update({
@@ -59,6 +59,7 @@ export async function updateProfile(
         bio: preferences.bio,
         city: preferences.city,
         department: preferences.department,
+        avatar_url: preferences.avatar_url,
       })
       .eq("id", userId)
       .select()
@@ -80,18 +81,12 @@ export async function updateUserPreferences(
   preferences: Partial<Omit<UserPreferences, "user_id">>
 ) {
   try {
-    const { data, error } = await supabase
+    return await supabase
       .from("user_profile_preferences")
       .update(preferences)
       .eq("user_id", userId)
       .select()
       .single();
-    if (error) {
-      console.error("Error actualizando preferencias:", error.message);
-      throw error;
-    }
-
-    return data ?? null;
   } catch (error) {
     console.error("Error en updateUserPreferences:", error);
     return { data: null, error };
@@ -104,11 +99,11 @@ export async function updateUserPreferences(
 export async function getUserPreferences(userId: string) {
   try {
     const data = await fetch(`/api/user/get-preferences?user_id=${userId}`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-    })
+    });
 
     const dataJson = await data.json();
 
@@ -127,13 +122,13 @@ export async function getUserPreferences(userId: string) {
 // ✅
 export async function getSavedQuestions() {
   try {
-    const url = `/api/user/get-save-questions`
+    const url = `/api/user/get-save-questions`;
     const data = await fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-    })
+    });
 
     const dataJson = await data.json();
 
@@ -153,13 +148,13 @@ export async function getSavedQuestions() {
 
 export async function getSavedOffers() {
   try {
-    const url = `/api/user/get-offers-saved`
+    const url = `/api/user/get-offers-saved`;
     const data = await fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-    })
+    });
 
     const dataJson = await data.json();
 
@@ -173,8 +168,8 @@ export async function getSavedOffers() {
 // ✅
 /**
  * obtener listado de aplicacaiones a ofertas
- * @param offerId 
- * @returns 
+ * @param offerId
+ * @returns
  */
 export async function getListApplications(offerId: string) {
   if (!offerId) {
@@ -182,13 +177,13 @@ export async function getListApplications(offerId: string) {
     return [];
   }
   try {
-    const url = `/api/user/get-offers-application?=offer_id=${offerId}`
+    const url = `/api/user/get-offers-application?=offer_id=${offerId}`;
     const data = await fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-    })
+    });
 
     const dataJson = await data.json();
 
