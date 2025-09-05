@@ -1,6 +1,7 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { generateApprovalToken } from "../../utils/generateTokenAprov";
 import { cookies } from "next/headers";
+import { getDataUser } from "@/app/api/user/helpers/helper.user";
 
 export async function InitSesion(
   email: string,
@@ -17,9 +18,9 @@ export async function InitSesion(
   const accessToken = data.session?.access_token || "";
   const refreshToken = data.session?.refresh_token || "";
 
-  if (error) {
+  if (!data || error) {
     throw new Error(
-      "No se pudo proceder con el inicio de sesion, intentalo nuevamente"
+      "Los datos ingresados no son correctos, intente nuevamente"
     );
   }
 
@@ -29,7 +30,7 @@ export async function InitSesion(
 
   //   identificador de usuario
   const userId = data.user.id;
-  const user = await getDataForContext(supabase, userId);
+  const user = await getDataUser(userId, supabase);
   return user;
 }
 
@@ -69,75 +70,3 @@ async function setupAuthCookies(
   });
 }
 
-export async function getDataForContext(supabase: SupabaseClient, id: string) {
-  const { data } = await supabase
-    .from("users")
-    .select(
-      `
-      id,
-      full_name,
-      avatar_url,
-      email,
-      phone,
-      bio,
-      country,
-      city,
-      department,
-      created_at,
-      user_profile_preferences (
-        profile_public,
-        allow_email,
-        allow_whatsapp
-      ),
-      questions(count),
-      question_comments(count),
-      user_reputation (
-        id,
-        score
-      ),
-      user_achievements(
-        id,
-        achievement_id
-      ) 
-    `
-    )
-    .eq("id", id)
-    .single();
-
-  //Normalizar
-
-  const normalizedPreferences =
-    typeof data?.user_profile_preferences === "object" &&
-    !Array.isArray(data.user_profile_preferences)
-      ? data.user_profile_preferences
-      : {
-          profile_public: true,
-          allow_email: false,
-          allow_whatsapp: false,
-        };
-
-  // Normalizar user_reputation
-  const reputationArray = data?.user_reputation;
-  const normalizedReputation =
-    Array.isArray(reputationArray) && reputationArray.length > 0
-      ? reputationArray[0]
-      : {
-          id: 0,
-          score: 0,
-        };
-  // Normalizar preguntas y respuestas
-  const questionsCount = Array.isArray(data?.questions)
-    ? data.questions[0]?.count ?? 0
-    : 0;
-  const commentsCount = Array.isArray(data?.question_comments)
-    ? data?.question_comments[0]?.count ?? 0
-    : 0;
-
-  return {
-    ...data,
-    user_profile_preferences: normalizedPreferences,
-    user_reputation: normalizedReputation,
-    questions: questionsCount,
-    question_comments: commentsCount,
-  };
-}

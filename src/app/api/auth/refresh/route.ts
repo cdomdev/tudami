@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 import { generateApprovalToken } from "../utils/generateTokenAprov";
 import { setCookiesRefresh } from "./helpers/helper.refresh";
-import { getDataForContext } from "../loginWithPassword/helpers/helper.loginPss";
+import { getDataUser } from "../../user/helpers/helper.user";
 
 const CONCURRENCY_LOCK_TIMEOUT = 30000;
 let refreshInProgress = false;
@@ -116,12 +116,12 @@ export async function POST() {
     const refreshTokenNew = data.session.refresh_token;
 
     await setCookiesRefresh(accessToken, refreshTokenNew, approvalToken);
-    
+
     refreshInProgress = false;
-    
+
     // obtener y nomalizar usuario para el contexto  
 
-    const user = await getDataForContext(supabase, data.session.user.id);
+    const user = await getDataUser(data.session.user.id, supabase);
 
     return NextResponse.json({
       success: true,

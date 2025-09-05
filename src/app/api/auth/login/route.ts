@@ -7,7 +7,7 @@ import {
   setupAuthCookies,
   ensureUserPreferences,
 } from "./helpers/helper.authPro";
-import { getUserProfile } from "@/lib/user-profile";
+import { getDataUser } from "@/app/api/user/helpers/helper.user";
 
 /**
  * Ruta principal de autenticación - Maneja todo el flujo de inicio de sesión
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
     //obtener datos del usuario para retornar
     let data;
     try {
-      data = await getUserProfile(id, supabase);
+      data = await getDataUser(id, supabase);
     } catch (error) {
       console.error("Error al obtener perfil del usuario:", error);
       return NextResponse.json(

@@ -1,17 +1,17 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import { createAvatar } from "@dicebear/core";
-import { adventurer} from "@dicebear/collection";
-import sharp from "sharp";
+import { createAvatarDefault } from "@/app/api/user/helpers/helper.user";
+import { saveAvatarStorage } from "@/app/api/storage/storage";
 
 async function getDataProfileUser(supabase: SupabaseClient) {
   return await supabase.auth.getUser();
 }
 
-// function que guarad datos en la tabla del perfil del usuario
+// function que guardar datos en la tabla del perfil del usuario
 export async function updateProfile(
   supabase: SupabaseClient,
   full_name: string
 ) {
+
   const dataUser = await getDataProfileUser(supabase);
 
   const { data: dataProfile } = dataUser;
@@ -61,29 +61,15 @@ async function definePreference(user_id: string, supabase: SupabaseClient) {
 export async function generateAndSaveAvatarDefault(
   seed: string,
   supabase: SupabaseClient
-) {
-  const avatar = createAvatar(adventurer, { seed, size: 128 });
-  const svg = avatar.toString();
+): Promise<string> {
+  // 1. Crear el avatar como Buffer
+  const webpBuffer = await createAvatarDefault(seed)
 
-  const webpBuffer = await sharp(Buffer.from(svg)).webp().toBuffer();
+  // 2. Convertir Buffer 
+  const uint8Array = new Uint8Array(webpBuffer)
 
-  const path = `default/${seed}.webp`;
-  const { error: uploadError } = await supabase.storage
-    .from("avatars")
-    .upload(path, webpBuffer, {
-      contentType: "image/webp",
-      upsert: true,
-    });
+  // 3. Guardar en storage
+  const avatarUrl = await saveAvatarStorage(supabase, seed, uint8Array)
 
-  if (uploadError) {
-    throw new Error(`Error al guardar avatar: ${uploadError.message}`);
-  }
-
-  const { data } = supabase.storage.from("avatars").getPublicUrl(path);
-
-  if (!data || !data.publicUrl) {
-    throw new Error("No se pudo obtener la URL pública del avatar");
-  }
-
-  return data.publicUrl;
+  return avatarUrl
 }
