@@ -82,10 +82,11 @@ export async function loginWithPassword(email: string, password: string) {
     }),
   });
 
+  
   if (!response.ok) {
-    throw new Error("No se pudo procesar la solicitud, intente nuevamente");
+    throw new Error("Los datos ingresados no son correctos, intente nuevamente");
   }
-
+  
   const data = await response.json();
   const user = data.data;
 
