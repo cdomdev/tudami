@@ -8,6 +8,7 @@ import { memo, useCallback, useEffect, useState } from "react";
 import locationsData from "@/content/locations/locations.json";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components";
+import { FormSchema } from "@/schemas"
 import {
   Form,
   FormControl,
@@ -20,7 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useSession } from "@/context/context.sesion";
-import { updateProfile } from "../../lib/profile";
+import { updateProfile, uploadImage } from "../../lib/profile";
 import {
   Select,
   SelectContent,
@@ -28,46 +29,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import EditorAvatar from "../playGroundAvatar/EditorAvatar";
+// import { ImageProfile } from "../imageProfile/ImageProfile";
 
-const FormSchema = z.object({
-  full_name: z
-    .string()
-    .min(2, "El nombre debe tener al menos un caracteres")
-    .max(15, "El nombre no puede exeder los 15 cartacteres")
-    .optional(),
-  department: z
-    .string()
-    .min(2, "El departamento debe tener al menos 2 caracteres")
-    .max(100, "El departamento no puede exceder 100 caracteres"),
-  city: z
-    .string()
-    .min(2, "La ciudad debe tener al menos 2 caracteres")
-    .max(100, "La ciudad no puede exceder 100 caracteres"),
-  phone: z
-    .string()
-    .refine((val) => {
-      if (!val || val.trim() === "") return true;
-      return val.length >= 10 && val.length <= 15;
-    }, "El número debe tener entre 10 y 15 dígitos")
-    .refine((val) => {
-      if (!val || val.trim() === "") return true;
-      return /^[\d\s\+\-\(\)]+$/.test(val);
-    }, "Formato de número inválido")
-    .optional(),
-  bio: z
-    .string()
-    .max(500, "La biografía no puede exceder 500 caracteres")
-    .optional(),
-  avatarSeed: z.string().min(2).max(100).optional(),
-});
+
 
 export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
   const { user, updateUserData } = useSession();
-
-  // Estado para las ciudades filtradas
   const [filteredCities, setFilteredCities] = useState<string[]>([]);
 
+  
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -76,7 +46,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
       city: user?.city ? String(user.city) : "",
       phone: user?.phone ? String(user.phone) : "",
       bio: user?.bio ? String(user.bio) : "",
-      avatarSeed: user?.avatar_url ? String(user.avatar_url) : "",
+      avatarFile: user?.avatar_url ? String(user.avatar_url) : "",
     },
   });
 
@@ -113,7 +83,7 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
         bio: user.bio ? String(user.bio) : "",
         city: user.city ? String(user.city) : "",
         department: user.department ? String(user.department) : "",
-        
+
       };
 
       form.reset(formData);
@@ -132,18 +102,23 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
         return;
       }
 
-    
-      try {
-        const formattedData = {
-          full_name: data.full_name ? String(data.full_name) : "",
-          phone: data.phone ? Number(data.phone) : undefined,
-          bio: data.bio ? String(data.bio) : "",
-          department: data.department ? String(data.department) : "",
-          city: data.city ? String(data.city) : "",
-          avatarSeed: data.avatarSeed ? String(data.avatarSeed) : "",
-        };
 
-        console.log("datos a actualizar --->", formattedData);
+      try {
+        let avatarUrl = user?.avatar_url;
+
+        if (data.avatarFile instanceof File) {
+          const res = await uploadImage(data.avatarFile, user.id);
+          avatarUrl = res?.url;
+        }
+
+        const formattedData = {
+          full_name: data.full_name ?? "",
+          phone: data.phone ? Number(data.phone) : undefined,
+          bio: data.bio ?? "",
+          department: data.department ?? "",
+          city: data.city ?? "",
+          avatar_url: avatarUrl,
+        };
 
         const { error } = await updateProfile(user.id, formattedData);
 
@@ -188,22 +163,9 @@ export const FormUpdateDataProfile = memo(function FormUpdateDataProfile() {
             role="group"
             aria-labelledby="personal-data-heading"
           >
-            <FormField
-              control={form.control}
-              name="avatarSeed"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Avatar</FormLabel>
-                  <FormControl>
-                    <EditorAvatar
-                      value={field.value} 
-                      onChange={field.onChange} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {/* image profile */}
+
+            {/* <ImageProfile avatar_url={user?.avatar_url} control={form.control} /> */}
 
             {/* personalizar nombre */}
             <FormField

@@ -46,7 +46,7 @@ export default function PageOferts() {
       ) : offers.length === 0 ? (
         <NoContent
           text="No hay ofertas disponibles"
-          url="/explore-offers"
+          url="/offers/create"
           url_redirect="/"
           text_btn="Crear oferta"
         />

@@ -8,6 +8,9 @@ import { ButtonSavePost } from "../buttons/ButtonSavePost";
 import { ButtonShare } from "../../../../../components/ui/ButtonShare";
 import { useSession } from "@/context/context.sesion";
 
+
+
+
 export function CardPost({
   content,
   created_at,
@@ -64,10 +67,11 @@ export function CardPost({
       <div className="mb-4">
         <h2 className="text-lg md:text-xl font-semibold mb-2">{title}</h2>
         <div
-          className="text-black dark:text-foreground text-pretty text-sm md:text-md "
+          className="prose dark:prose-invert max-w-none text-sm md:text-md"
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </div>
+
 
       {/* Etiquetas */}
       {question_tags && question_tags.length > 0 && (

@@ -6,3 +6,4 @@ export type { SchemaQuestionsSaveds } from './schema.saveds'
 export type {SchemaProfileResponse} from './schema.view_profile'
 export type {SchemaOffers} from './schema.offers'
 export type {OfferApplication, OfferApplicationsResponse} from './schema.application_res'
+export {FormSchema} from "./schema.formProfile"

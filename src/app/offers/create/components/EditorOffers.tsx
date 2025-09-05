@@ -41,7 +41,6 @@ export function EditorOffers() {
       
       try {
         const res = await addOffer(result.data.title, result.data.content);
-        console.log("datos de la oferta --->", res)
       if (!res || !res.success) {
         throw new Error("Error al crear la oferta");
       }

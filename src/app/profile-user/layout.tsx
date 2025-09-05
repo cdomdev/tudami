@@ -55,11 +55,11 @@ export default function LayoutProfile({
               <span className="text-lg bg-gradient-to-r from-indigo-500 to-sky-400 text-transparent bg-clip-text">
                 Bienvenido
               </span>
-              {user?.full_name}
+              {user?.full_name || "Anonimo"}
             </h1>
             <p className="text-xs md:text-sm text-accent-foreground">
               {user?.bio ||
-                "¡Cuéntanos sobre ti! Puedes agregar una biografía en la sección de configuración de tu perfil."}
+                "¡Cuéntanos sobre ti! Puedes agregar una biografía en la sección de cuanta."}
               <Link
                 href={`/profile-user/account-setting/edit?id=${user?.id}`}
                 className="text-blue-500 pl-3 hover:underline"

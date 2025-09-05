@@ -10,7 +10,7 @@ import { CardAchievement } from "@/components/ui/Cards/CardAchievements";
 
 export default function Home() {
   const { user } = useSession();
-
+  
   const score = user?.user_reputation.score ?? 0;
   const achievements = user?.user_achievements ?? [];
 
@@ -26,8 +26,6 @@ export default function Home() {
       icon: "i-heroicons-chat-bubble-left-right-solid",
     },
   ];
-
-  console.log(itemsActivity)
 
   const progresoReputacion = obtenerProgresoReputacion(score);
   const achievementsObtained = getAchievementByuser(achievements);

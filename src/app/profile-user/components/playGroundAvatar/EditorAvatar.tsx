@@ -3,6 +3,7 @@
 import { createAvatar } from "@dicebear/core";
 import { adventurer } from "@dicebear/collection";
 import Image from "next/image";
+import { RefreshCcw } from "lucide-react";
 
 function getRandomSeed() {
   return Math.random().toString(36).substring(2, 10);
@@ -50,9 +51,10 @@ export default function EditorAvatar({
       <button
         type="button"
         onClick={handleGenerate}
-        className="px-3 py-1 bg-green-600 text-white rounded shadow hover:bg-green-700 transition cursor-pointer"
+        className="px-3 py-1 bg-green-600 gap-2 flex items-center text-white rounded shadow hover:bg-green-700 transition cursor-pointer"
       >
         Generar Avatar
+        <RefreshCcw className="w-4 h-4"/>
       </button>
     </div>
   );

@@ -32,7 +32,7 @@ export function FormPrefenceContact() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      public_profile: user?.user_profile_preferences.profile_public ?? false,
+      public_profile: user?.user_profile_preferences.profile_public ?? true,
       allow_email: user?.user_profile_preferences.allow_email ?? false,
       allow_whatsapp: user?.user_profile_preferences.allow_whatsapp ?? false,
     },

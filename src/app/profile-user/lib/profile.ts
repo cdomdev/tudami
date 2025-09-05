@@ -12,6 +12,35 @@ export interface UserPreferences {
   department?: string;
 }
 
+
+// subir imagen
+
+export async function uploadImage(file: File, userId: string) {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("userId", userId);
+
+  try {
+    const res = await fetch("/api/user/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json().catch(() => null);
+
+    if (!res.ok) {
+      console.error("Error en API upload:", data);
+      throw new Error(data?.error || `Error al subir la nueva imagen de perfil`);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error en uploadImage:", error);
+    return null;
+  }
+}
+
+
 /**
  * Actualiza las preferencias del usuario en la base de datos
  */
@@ -21,6 +50,7 @@ export async function updateProfile(
   preferences: Partial<Omit<UserPreferences, "id">>
 ) {
   try {
+
     const { data, error } = await supabase
       .from("users")
       .update({
@@ -61,7 +91,7 @@ export async function updateUserPreferences(
       throw error;
     }
 
-    return { data, error: null };
+    return data ?? null;
   } catch (error) {
     console.error("Error en updateUserPreferences:", error);
     return { data: null, error };
@@ -73,19 +103,16 @@ export async function updateUserPreferences(
  */
 export async function getUserPreferences(userId: string) {
   try {
-    const { data, error } = await supabase
-      .from("user_profile_preferences")
-      .select("*")
-      .eq("user_id", userId)
-      .single();
+    const data = await fetch(`/api/user/get-preferences?user_id=${userId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
 
-    // PGRST116 = no rows found
-    if (error && error.code !== "PGRST116") {
-      console.error("Error obteniendo preferencias:", error);
-      throw error;
-    }
+    const dataJson = await data.json();
 
-    return { data, error: null };
+    return dataJson.data ?? [];
   } catch (error) {
     console.error("Error en getUserPreferences:", error);
     return { data: null, error };
@@ -97,18 +124,20 @@ export async function getUserPreferences(userId: string) {
  *
  */
 
+// ✅
 export async function getSavedQuestions() {
   try {
-    const { data, error } = await supabase
-      .from("v_questions_saveds")
-      .select("*");
+    const url = `/api/user/get-save-questions`
+    const data = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
 
-    if (error) {
-      console.error("Error obteniendo preguntas guardadas:", error);
-      throw error;
-    }
+    const dataJson = await data.json();
 
-    return data ?? [];
+    return dataJson.data ?? [];
   } catch (error) {
     console.error("Error en getSavedQuestions:", error);
     return [];
@@ -120,38 +149,50 @@ export async function getSavedQuestions() {
  *
  */
 
+// ✅
+
 export async function getSavedOffers() {
   try {
-    const { data, error } = await supabase.from("v_offers_saveds").select("*");
-    if (error) {
-      console.error("Error obteniendo ofertas guardadas:", error);
-      throw error;
-    }
+    const url = `/api/user/get-offers-saved`
+    const data = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
 
-    return data ?? [];
+    const dataJson = await data.json();
+
+    return dataJson.data ?? [];
   } catch (error) {
     console.error("Error en getSavedOffers:", error);
     return [];
   }
 }
 
+// ✅
+/**
+ * obtener listado de aplicacaiones a ofertas
+ * @param offerId 
+ * @returns 
+ */
 export async function getListApplications(offerId: string) {
   if (!offerId) {
     console.error("No offer ID provided");
     return [];
   }
   try {
-    const { data, error } = await supabase
-      .from("v_offers_applicants")
-      .select("*")
-      .eq("offer_id", offerId);
+    const url = `/api/user/get-offers-application?=offer_id=${offerId}`
+    const data = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
 
-    if (error) {
-      console.error("Error obteniendo aplicaciones:", error);
-      throw error;
-    }
+    const dataJson = await data.json();
 
-    return data ?? [];
+    return dataJson.data ?? [];
   } catch (error) {
     console.error("Error en getListApplications:", error);
     return [];
