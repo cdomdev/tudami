@@ -99,3 +99,6 @@ export async function loginWithPassword(email: string, password: string) {
   return user;
 }
 
+export async function sendCodeForgotPassword(email: string) {
+  console.log(email)
+}

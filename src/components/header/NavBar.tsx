@@ -23,6 +23,7 @@ export function NavBar() {
   const isLoginPage = route === "/auth/login";
   const isCallbackPage = route === "/auth/callback";
   const isRegisterPage = route === "/auth/register";
+  const isForgotPage = route === "/auth/forgot-password";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,7 +36,7 @@ export function NavBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrolled]);
 
-  if (isLoginPage || isCallbackPage || isRegisterPage) {
+  if (isLoginPage || isCallbackPage || isRegisterPage || isForgotPage) {
     return null;
   }
   return (

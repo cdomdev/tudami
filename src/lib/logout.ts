@@ -14,7 +14,6 @@ export async function logout() {
     // cerrar sesion en supabase
     await supabase.auth.signOut();
 
-
   } catch (error) {
     console.error("Error al cerrar sesión:", error);
   }

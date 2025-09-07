@@ -47,7 +47,6 @@ export function FormLogin() {
     setIsloading(true);
     try {
       const res = await loginWithPassword(data.email, data.password);
-      console.log("response login:",  res)
       setUser(res);
       const redirect = params.get("redirectTo") || "/";
       router.replace(redirect);
@@ -82,7 +81,14 @@ export function FormLogin() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Contraseña</FormLabel>
+              <div className="flex flex-1 items-center justify-between">
+                <FormLabel>
+                  Contraseña
+                </FormLabel>
+                <FormLabel>
+                  <Link href="/auth/forgot-password">¿Olvidado tu contraseña?</Link>
+                </FormLabel>
+              </div>
               <FormControl>
                 <div className="relative">
                   <Input
@@ -101,12 +107,14 @@ export function FormLogin() {
                       <EyeClosed className="w-5 h-5 cursor-pointer" />
                     )}
                   </button>
+
                 </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
 
         <Button
           type="submit"
