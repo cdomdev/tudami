@@ -51,7 +51,7 @@ export default function AuthCallback() {
     };
 
     handleAuth();
-  }, [router, params]);
+  }, [router, params, setUser]);
 
   return (
     <div className="min-h-screen grid place-content-center text-center">

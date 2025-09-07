@@ -1,7 +1,7 @@
 
 "use client"
 
-import { CardResources } from "./components/CardResources";
+// import { CardResources } from "./components/CardResources";
 
 const itemsCard = [
     {
