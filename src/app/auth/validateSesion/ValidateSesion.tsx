@@ -1,5 +1,5 @@
-import { ClientSessionRenderer } from "../../../components/sesion/ViewOptionAuth";
+import { ViewOptionAuth } from "../../../components/sesion/ViewOptionAuth";
 
 export default async function ValidateSession() {
-  return <ClientSessionRenderer  />;
+  return <ViewOptionAuth  />;
 }
