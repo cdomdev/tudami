@@ -82,7 +82,7 @@ export default function LayoutRecourses({
                         (cat) => (
                             <span
                                 key={cat}
-                                className="px-4 py-2 bg-gray-200 rounded-full text-black cursor-pointer hover:bg-gray-300 text-sm font-medium"
+                                className="px-4 py-2 bg-gray-200 rounded-full text-black cursor-pointer hover:bg-gray-300  md:text-sm font-medium"
                             >
                                 {cat}
                             </span>

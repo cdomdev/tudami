@@ -1,6 +1,8 @@
 
 "use client"
 
+import { CardResources } from "./components/CardResources";
+
 const itemsCard = [
     {
         title: "Recursos web",
@@ -83,6 +85,7 @@ export default function ResourcesPage() {
                     ))}
 
                 </div>
+                {/* <CardResources /> */}
             </div>
 
         </>

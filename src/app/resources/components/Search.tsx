@@ -25,7 +25,7 @@ export function SearchInput() {
         router.push(`${pathname}?${params.toString()}`);
     };
     return (
-        <div className="relative flex flex-1 max-w-xl mx-auto">
+        <div className="relative flex flex-1 max-w-sm md:max-w-xl mx-auto">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
                 aria-label="Buscar recursos"
