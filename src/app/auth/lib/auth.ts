@@ -73,7 +73,7 @@ export async function loginWithPassword(email: string, password: string) {
 
   if (error && error?.code === "invalid_credentials")
     throw new Error("Los datos ingresados no son correctos, intente nuevamente");
-  
+
 
   const response = await fetch("/api/auth/loginWithPassword", {
     method: "POST",
@@ -98,3 +98,4 @@ export async function loginWithPassword(email: string, password: string) {
 
   return user;
 }
+

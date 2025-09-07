@@ -21,11 +21,9 @@ export function Profile() {
   const { user, clearUser } = useSession();
   const router = useRouter();
   const handleLogout = async () => {
-    const res = await logout();
-    console.log(res);
+    await logout();
     clearUser();
     router.push("/");
-    
   };
 
   return (

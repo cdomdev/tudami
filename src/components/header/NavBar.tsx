@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import Image from "next/image";
 import { AlignJustify, X } from "lucide-react";
-import { ClientSessionRenderer } from "@/app/auth/validateSesion/ClientSessionRenderer";
+import { ViewOptionAuth } from "@/components/sesion/ViewOptionAuth";
 import { Characteristics } from "./charactheristics";
 import { MovilNav } from "./MovilNav";
 
@@ -42,10 +42,9 @@ export function NavBar() {
     <nav
       className={`fixed top-0 w-screen left-0 right-0 z-50 transition-all duration-300 ease-in-out px-3 md:px-0
         ${showNav ? "opacity-100" : "opacity-0"}
-        ${
-          scrolled
-            ? "bg-white/10 backdrop-blur-md shadow-md"
-            : "bg-transparent shadow-none backdrop-blur-0"
+        ${scrolled
+          ? "bg-white/10 backdrop-blur-md shadow-md"
+          : "bg-transparent shadow-none backdrop-blur-0"
         }`}
     >
       <div className="flex items-center justify-between py-3 md:px-4 lg:px-0 max-w-6xl mx-auto">
@@ -79,10 +78,10 @@ export function NavBar() {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
-                  href="/docs"
+                  href="/news"
                   className="bg-transparent hover:dark:bg-gray-50/5 text-sm md:text-base px-3"
                 >
-                  Blog
+                  Noticias
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -90,7 +89,7 @@ export function NavBar() {
         </NavigationMenu>
 
         <div className="flex md:gap-3 items-center justify-center">
-          <ClientSessionRenderer />
+          <ViewOptionAuth />
           <button
             onClick={() => setOpenMenu(!openMenu)}
             className="md:hidden  text-black dark:text-white relative pl-6"

@@ -3,12 +3,12 @@ import { Baloo_2 } from "next/font/google";
 import "@/app/globals.css";
 import { NavBar } from "@/components/header/NavBar";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SessionHydrator } from "@/app/auth/callback/SessionHydrator";
+import { SessionHydrator } from "@/components/sesion/SessionHydrator";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
-import { getServerUser } from "@/utils/supabase/sesion";
+import { getServerUser } from "@/lib/sesion";
 import { UserSchema } from "@/schemas/schema.user";
-import { SessionGuard } from "@/components/SessionGuard";
+import { SessionGuard } from "@/components/sesion/SessionGuard";
 
 const balooFont = Baloo_2({
   variable: "--font-baloo",
@@ -60,6 +60,7 @@ export default async function RootLayout({
 }>) {
 
   const user = await getServerUser()
+  
   return (
     <html
       lang="es"

@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "Perfil de usuario",
-  description: "Visualiza y edita tu perfil de usuario en Tudami.",
+  title: "Validando sesion",
+  description: "Valida la sesion del usuario con el provider externo.",
 };
 
 export default function LayoutAuth({

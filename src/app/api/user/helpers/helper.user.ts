@@ -1,6 +1,3 @@
-import { createAvatar } from "@dicebear/core"
-import { adventurer } from "@dicebear/collection"
-import sharp from "sharp"
 import { SupabaseClient } from "@supabase/supabase-js"
 
 
@@ -16,12 +13,6 @@ export interface UserPreferences {
   department?: string;
 }
 
-export async function createAvatarDefault(seed: string): Promise<Buffer> {
-  const avatar = createAvatar(adventurer, { seed, size: 128 })
-  const svg = avatar.toString()
-  const webpBuffer = await sharp(Buffer.from(svg)).webp().toBuffer()
-  return webpBuffer
-}
 
 
 // funcion para obtener y noramlizar datos del usuario

@@ -10,12 +10,11 @@ export async function logout() {
       console.error("Error al cerrar sesión en el servidor");
       return;
     }
-    
+
     const data = await res.json();
     // cerrar sesion en supabase
     await supabase.auth.signOut();
 
-    return data;
   } catch (error) {
     console.error("Error al cerrar sesión:", error);
   }

@@ -6,10 +6,11 @@ import { supabase } from "@/utils/supabase/supabaseClient";
 import { Spinner } from "@/components/Spiner";
 import { toast } from "sonner";
 import { loginCallback } from "../lib/auth";
-
+import { useSession } from "@/context/context.sesion";
 export default function AuthCallback() {
   const router = useRouter();
   const params = useSearchParams();
+  const { setUser } = useSession()
 
   useEffect(() => {
     const handleAuth = async () => {
@@ -26,18 +27,22 @@ export default function AuthCallback() {
         const accessToken = session.access_token;
         const refreshToken = session.refresh_token;
 
-        const response = await loginCallback(accessToken, refreshToken);
+        const res = await loginCallback(accessToken, refreshToken);
 
-        if (!response.ok) {
+        if (!res.ok) {
           toast.error("Error de autenticación. Por favor, inténtalo de nuevo.");
-          const errorData = await response.json();
+          const errorData = await res.json();
           console.error("Error en autenticación:", errorData.error);
           router.replace("/auth/login/?error=auth_server_failed");
           return;
         }
 
+        // extraer y setear usuario en el contexto
+        const dataRes = await res.json()
+        const { user } = dataRes
+        setUser(user)
+
         const redirect = params.get("redirectTo") || "/";
-        
         router.replace(redirect);
       } catch (error) {
         console.error("Error inesperado en autenticación:", error);

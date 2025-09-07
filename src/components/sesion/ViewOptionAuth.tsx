@@ -4,9 +4,9 @@ import { Bell, User } from "lucide-react";
 import { useSession } from "@/context/context.sesion";
 import { Button } from "@/components/ui/button";
 
-export function ClientSessionRenderer() {
-  const isLoggedIn = useSession((state) => state.isLoggedIn);
-  const isLoading = useSession((state) => state.isLoading);
+
+export function ViewOptionAuth() {
+  const { user, isLoading } = useSession()
 
   if (isLoading) {
     return (
@@ -22,12 +22,14 @@ export function ClientSessionRenderer() {
         {/* Avatar */}
         <div className="h-10 w-10 rounded-full bg-gray-300 dark:bg-gray-700 animate-pulse" />
       </div>
-    );
+    )
   }
 
-  return isLoggedIn ? (
-    <Profile />
-  ) : (
+  if (user) {
+    return <Profile />
+  }
+
+  return (
     <Link href="/auth/login" className="flex items-center">
       <Button
         variant="ghost"
@@ -40,5 +42,6 @@ export function ClientSessionRenderer() {
         <span className="hidden md:flex font-semibold">Iniciar sesión</span>
       </Button>
     </Link>
-  );
+  )
 }
+

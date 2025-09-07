@@ -1,6 +1,8 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import { createAvatarDefault } from "@/app/api/user/helpers/helper.user";
 import { saveAvatarStorage } from "@/app/api/storage/storage";
+import { createAvatar } from "@dicebear/core"
+import { adventurer } from "@dicebear/collection"
+import sharp from "sharp";
 
 async function getDataProfileUser(supabase: SupabaseClient) {
   return await supabase.auth.getUser();
@@ -16,8 +18,8 @@ export async function updateProfile(
 
   const { data: dataProfile } = dataUser;
   const id = dataProfile.user?.id || "";
-  const email = dataProfile.user?.email;
-  const seed = dataProfile.user?.id || "";
+  const email = dataProfile.user?.email || "";
+  const seed = dataProfile.user?.id + email || "";
   const avatar_url = await generateAndSaveAvatarDefault(seed, supabase);
 
   const { error } = await supabase
@@ -58,6 +60,7 @@ async function definePreference(user_id: string, supabase: SupabaseClient) {
   }
 }
 
+
 export async function generateAndSaveAvatarDefault(
   seed: string,
   supabase: SupabaseClient
@@ -72,4 +75,12 @@ export async function generateAndSaveAvatarDefault(
   const avatarUrl = await saveAvatarStorage(supabase, seed, uint8Array)
 
   return avatarUrl
+}
+
+
+export async function createAvatarDefault(seed: string): Promise<Buffer> {
+  const avatar = createAvatar(adventurer, { seed, size: 128 })
+  const svg = avatar.toString()
+  const webpBuffer = await sharp(Buffer.from(svg)).webp().toBuffer()
+  return webpBuffer
 }

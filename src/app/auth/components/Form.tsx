@@ -47,6 +47,7 @@ export function FormLogin() {
     setIsloading(true);
     try {
       const res = await loginWithPassword(data.email, data.password);
+      console.log("response login:",  res)
       setUser(res);
       const redirect = params.get("redirectTo") || "/";
       router.replace(redirect);
