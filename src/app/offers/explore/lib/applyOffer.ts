@@ -1,4 +1,5 @@
 import { supabase } from "@/utils/supabase/supabaseClient";
+
 export async function applyOffer(offer_id: number, user_id: string) {
   const path = `/api/offers/explore/apply?offer_id=${offer_id}&user_id=${user_id}`;
   const res = await fetch(path, { method: "POST" });

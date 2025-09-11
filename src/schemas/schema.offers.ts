@@ -11,7 +11,10 @@ export const SchemaResOffers = z.object({
     users: User,
     offers_aplication: z.number().min(0).default(0),
     created_at: z.string(),
-    hidden_btn_apply: z.boolean().default(false)
+    hidden_btn_apply: z.boolean().default(false),
+    hidden_btn_counter: z.boolean().default(false),
+    text_btn_counter: z.string().default("Candidatos"),
+    isHref_btn_counter: z.boolean().default(false),
 });
 
 export type SchemaOffers = z.infer<typeof SchemaResOffers>;

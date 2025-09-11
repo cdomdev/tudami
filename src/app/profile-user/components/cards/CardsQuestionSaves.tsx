@@ -13,7 +13,6 @@ export function CardsQuestionSaves({
   created_at,
   content,
   title,
-  question_tags,
 }: SchemaPost) {
   const { user } = useSession();
 
@@ -63,19 +62,7 @@ export function CardsQuestionSaves({
         />
       </div>
 
-      {question_tags && question_tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 my-4">
-          {question_tags.map((questionTag) => (
-            <span
-              key={questionTag.tag.id}
-              className={`text-xs px-2.5 py-0.5 rounded-full  dark:text-gray-50 font-normal`}
-              style={{ border: `1px solid ${questionTag.tag.color}` }}
-            >
-              {questionTag.tag.name}
-            </span>
-          ))}
-        </div>
-      )}
+      
     </article>
   );
 }

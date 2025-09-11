@@ -3,7 +3,7 @@
 import { useSession } from "@/context/context.sesion";
 import Image from "next/image";
 import Link from "next/link";
-import { House, Settings, Bookmark, Edit } from "lucide-react";
+import { House, Settings, Bookmark, Edit, FileUser } from "lucide-react";
 
 export default function LayoutProfile({
   children,
@@ -19,7 +19,7 @@ export default function LayoutProfile({
       aria-labelledby="profile-section-title"
     >
       <aside
-        className="md:col-span-1 max-w-xs pr-4 pl-2 pt-6 hidden md:block  rounded-sm shadow-sm dark:bg-custom-card h-56 max-h-80"
+        className="md:col-span-1 max-w-xs pr-4 pl-2 pt-6 hidden md:block  rounded-sm shadow-sm dark:bg-custom-card h-64 max-h-80"
         role="navigation"
         aria-label="Opciones de perfil"
       >
@@ -110,6 +110,11 @@ function MapItems({
       name: "Guardados",
       href: `/profile-user/save?page=questions&user_id=${id}`,
       icon: Bookmark,
+    },
+    {
+      name: "Ofertas",
+      href: `/profile-user/offers?user_id=${id}`,
+      icon: FileUser,
     },
   ];
   return (

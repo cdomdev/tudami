@@ -54,7 +54,11 @@ export async function POST() {
 
     // Incluso si hay error, intentamos limpiar las cookies
     const cookieStore = await cookies();
-    const cookiesToClear = ["sb-access-token", "approval_token"];
+    const cookiesToClear = [
+      "sb-access-token",
+      "approval_token",
+      "sb-refresh-token",
+    ];
 
     cookiesToClear.forEach((cookieName) => {
       cookieStore.set(cookieName, "", {

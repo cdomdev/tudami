@@ -177,7 +177,7 @@ export async function getListApplications(offerId: string) {
     return [];
   }
   try {
-    const url = `/api/user/get-offers-application?=offer_id=${offerId}`;
+    const url = `/api/user/get-offer-application?offer_id=${offerId}`;
     const data = await fetch(url, {
       method: "GET",
       headers: {
@@ -190,6 +190,27 @@ export async function getListApplications(offerId: string) {
     return dataJson.data ?? [];
   } catch (error) {
     console.error("Error en getListApplications:", error);
+    return [];
+  }
+}
+
+// obtener el listado de ofertas publicadas por un usuario
+
+export async function getOffersByUser(userId: string) {
+  try {
+    const url = `/api/user/get-offers?user_id=${userId}`;
+    const data = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const dataJson = await data.json();
+
+    return dataJson.data ?? [];
+  } catch (error) {
+    console.error("Error en getOffersByUser:", error);
     return [];
   }
 }

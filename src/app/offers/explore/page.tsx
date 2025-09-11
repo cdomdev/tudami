@@ -20,7 +20,6 @@ export default function PageOferts() {
     async function fetchOffers() {
       await getAllOffers(page, pageSize)
         .then((res) => {
-          console.log("Offers fetched:", res);
           setOffers(res);
           setTotal(res.length);
         })
@@ -28,8 +27,6 @@ export default function PageOferts() {
     }
     fetchOffers();
   }, [page]);
-
-  console.log(offers)
 
   return (
     <Main

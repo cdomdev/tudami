@@ -75,7 +75,7 @@ export default function OffersPage() {
           text_btn="Crear nueva oferta"
         />
       ) : (
-        offers.map((post, i) => <CardPostOffers key={post.id || i} {...post} />)
+        offers.map((post, i) => <CardPostOffers key={post.id || i} {...post}  />)
       )}
     </Main>
   );

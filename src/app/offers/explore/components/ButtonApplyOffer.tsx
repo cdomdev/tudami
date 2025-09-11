@@ -81,7 +81,7 @@ export function ButtonApplyOffer({
         entity_id: offer_id.toString(),
         entity_type: nPayload[2].entity_type,
         content: `${user?.full_name || "A alguien"} Aplico a tu oferta`,
-        url: `/offers/explore/offers?query=redirect&redirect_id_offer=${offer_id}&aprovel=${user?.approval_token}`,
+        url: `/profile-user/offers?page=list_aplications&offer_id=${offer_id}&user_id=${offerOwnerId}`,
         read: false,
       });
     }

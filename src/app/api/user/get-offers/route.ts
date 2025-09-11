@@ -1,23 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getListApplicationsHelper } from "../helpers/helper.user";
+import { getOffersHelper } from "../helpers/helper.user";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 
 export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
-    const offer_id = searchParams.get("offer_id") || "";
-    const supabase = await supabaseServerClient()   
+    const userId = searchParams.get("user_id") || "";
+    const supabase = await supabaseServerClient()
     try {
-        
-        const { data, error } = await getListApplicationsHelper(offer_id,  supabase)
-        
-        console.log("funcion helper de las aplicaicones a una oferta", data)
-        console.log("Errores de la funcion helper de las aplicaicones a una oferta", error)
+        const { data, error } = await getOffersHelper(userId, supabase)
         if (error) {
             return NextResponse.json({
                 error: "Error obteniendo aplicaciones"
             }, { status: 500 })
         }
-
         return NextResponse.json({
             success: true,
             data

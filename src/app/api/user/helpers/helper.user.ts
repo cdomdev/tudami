@@ -1,3 +1,4 @@
+import { supabase } from "@/utils/supabase/supabaseClient";
 import { SupabaseClient } from "@supabase/supabase-js"
 
 
@@ -104,7 +105,6 @@ export async function getListApplicationsHelper(offerId: string, supabase: Supab
     .from("v_offers_applicants")
     .select("*")
     .eq("offer_id", offerId);
-
 }
 
 
@@ -140,4 +140,15 @@ export async function getUserPreferencesHelper(userId: string, supabase: Supabas
     .eq("user_id", userId)
     .single();
 
+}
+
+/**
+ * Obtenere las ofertas de un usuario
+ * @param userId 
+ * @param supabase 
+ * @returns 
+ */
+
+export async function getOffersHelper(userId: string, supabase: SupabaseClient) {
+  return await supabase.from("offers").select(`*, users(id, full_name, avatar_url)`).eq("user_id", userId)
 }

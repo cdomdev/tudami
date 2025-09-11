@@ -93,7 +93,6 @@ export async function getMyOffersApi(page = 1, pageSize = 10) {
 
   const data = await response.json();
 
-  console.log("Fetched offers --->[API OFFERS CLIENT]:", data);
 
   return data ?? [];
 }

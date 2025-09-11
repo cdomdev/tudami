@@ -132,6 +132,7 @@ export default function SavePage() {
                     key={`${o.id}-${o.created_at} || ${index}`}
                     {...o}
                     hidden_btn_apply={true}
+                    hidden_btn_counter={true}
                   />
                 ))}
 
