@@ -2,6 +2,11 @@ import { supabase } from "@/utils/supabase/supabaseClient";
 
 type Providers = "google" | "github";
 
+/**
+ * 
+ * inicio de sesión con proveedor externo
+ * @param provider - 'google' | 'github'
+ */
 export async function loginWithProvider(provider: Providers) {
   const HOST = process.env.NEXT_PUBLIC_HOST || "http://localhost:3000";
   await supabase.auth.signInWithOAuth({
@@ -11,6 +16,13 @@ export async function loginWithProvider(provider: Providers) {
     },
   });
 }
+
+/**
+ * callback para manejo de datos después del inicio de sesión con proveedor externo
+ * @param accessToken 
+ * @param refreshToken 
+ * @returns 
+ */
 
 export async function loginCallback(accessToken: string, refreshToken: string) {
   return await fetch("/api/auth/login", {
@@ -22,6 +34,12 @@ export async function loginCallback(accessToken: string, refreshToken: string) {
   });
 }
 
+/**
+ * 
+ * registro de usuario con email y password
+ * @param param0 - full_name, email, password
+ * @returns 
+ */
 export async function registerUser({
   full_name,
   email,
@@ -62,6 +80,12 @@ export async function registerUser({
   return { data, success: true };
 }
 
+/**
+ * función para iniciar sesión con email y password
+ * @param email 
+ * @param password 
+ * @returns 
+ */
 export async function loginWithPassword(email: string, password: string) {
   if (!email || !password)
     throw new Error("Faltan datos para proceder con el inicio de sesion");
@@ -99,6 +123,30 @@ export async function loginWithPassword(email: string, password: string) {
   return user;
 }
 
+/**
+ * función para enviar código de recuperación de contraseña
+ * @param email 
+ */
 export async function sendCodeForgotPassword(email: string) {
   console.log(email)
+}
+
+/**
+ * función para cerrar sesión
+ */
+
+export async function logout() {
+  try {
+    const res = await fetch("/api/auth/logout", {
+      method: "POST",
+    });
+
+    if (!res.ok) {
+      console.error("Error al cerrar sesión en el servidor");
+      return;
+    }
+
+  } catch (error) {
+    console.error("Error al cerrar sesión:", error);
+  }
 }

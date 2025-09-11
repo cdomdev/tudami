@@ -15,14 +15,25 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Notifications } from "./Notifications";
 import { Button } from "./ui/button";
-import { logout } from "@/lib/logout";
+import { logout } from "@/app/auth/lib/auth";
+import { supabase } from "@/utils/supabase/supabaseClient";
 
 export function Profile() {
   const { user, clearUser } = useSession();
   const router = useRouter();
   const handleLogout = async () => {
-    await logout();
     clearUser();
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
+    try {
+      await supabase.auth.signOut();
+    } catch (error) {
+      console.error("Error al cerrar sesión on client:", error);
+    }
+
     router.push("/");
   };
 
