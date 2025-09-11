@@ -1,12 +1,69 @@
 import Image from "next/image";
-
-export function CardResources() {
-    return (
-        <article className="group relative overflow-hidden rounded-xl border border-line/20 transition hover:contrast-110 before:left-1/2 before:bottom-0 before:-translate-x-1/2 before:w-full before:h-full before:bg-black before:absolute before:translate-y-full hover:before:translate-y-1/2 before:-z-10 before:transition before:duration-200 before:mask-t-from-70% has-focus-visible:outline-none has-focus-visible:ring-2 has-focus-visible:ring-brand-blue/20 has-focus-visible:ring-offset-4 has-focus-visible:ring-offset-white has-focus-visible:contrast-110 has-focus-visible:before:translate-y-1/2 h-full"> <a href="/curso/curso-de-css-grid" data-astro-prefetch="true" className="flex aspect-video flex-col h-full p-2"> <div className="absolute top-2 right-2 opacity-100 transition inline-flex items-center gap-2 flex-wrap group-hover:opacity-0 group-hover:-translate-y-1 group-has-focus-visible:opacity-0 group-has-focus-visible:-translate-y-1">  <span className="rounded-lg bg-line border border-brand-yellow text-brand-yellow grid grid-cols-[auto_1fr]  gap-2 backdrop-blur-xs bg-special-gradient text-xs items-center px-2"> <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"></path>
-        </svg> <span className="py-1">Nuevo</span> </span>    </div> <Image src="/courses/curso-de-css-grid.webp" className="absolute inset-0 -z-20 transform-gpu" alt="Curso de Curso de CSS Grid" width="1920" height="1080" /> <div className="opacity-100 flex transition flex-col gap-2 flex-1">  </div> <div className="flex flex-wrap items-end justify-between mt-8 transition  translate-y-1 opacity-0 duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-has-focus-visible:opacity-100 group-has-focus-visible:translate-y-0"> <h2 className="mt-auto text-shadow-lg text-white leading-snug font-medium text-balance max-w-[28ch] text-sm mb-2 ml-1"> Curso de CSS Grid </h2> <div className="flex flex-wrap items-center justify-between w-full"> <div> <div className="flex items-center gap-4 text-sm text-brand-gray flex-wrap"> <p className="flex items-center gap-1"> <span className="p-1 aspect-square border border-brand-gray/10 bg-line rounded-full flex items-center justify-center w-5 h-5"> <svg width="15" height="18" viewBox="0 0 15 18" fill="none" className="text-brand-gray h-auto ml-0.5 w-1.5" xmlns="http://www.w3.org/2000/svg"> <path d="M1 1V17L14 9L1 1Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </span>
-            Duración: <span>1h 34m</span> </p>  </div> </div> <span className="rounded-[10px] bg-box/20 border border-brand-gray/40 flex items-center gap-1.5 transition md:text-sm  group-hover:scale-105 group-hover:bg-box/80 group-has-focus-visible:scale-105 group-has-focus-visible:bg-box/80 text-xs py-1 px-2"> <svg width="20" height="21" viewBox="0 0 20 21" fill="none" className="w-auto h-3" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_891_428)"> <path d="M5 3.83333V17.1667C4.99996 17.3149 5.03948 17.4605 5.11448 17.5884C5.18949 17.7164 5.29726 17.8219 5.42669 17.8943C5.55611 17.9666 5.70249 18.0031 5.85074 18.0001C5.99898 17.997 6.14371 17.9544 6.27 17.8767L17.1033 11.21C17.2247 11.1354 17.3249 11.031 17.3944 10.9067C17.4639 10.7824 17.5004 10.6424 17.5004 10.5C17.5004 10.3576 17.4639 10.2176 17.3944 10.0933C17.3249 9.96897 17.2247 9.86456 17.1033 9.79L6.27 3.12333C6.14371 3.04564 5.99898 3.00304 5.85074 2.99995C5.70249 2.99685 5.55611 3.03336 5.42669 3.10572C5.29726 3.17807 5.18949 3.28365 5.11448 3.41155C5.03948 3.53946 4.99996 3.68506 5 3.83333Z" fill="currentColor"></path> </g> <defs> <clipPath id="clip0_891_428"> <rect width="20" height="20" fill="currentColor" transform="translate(0 0.5)"></rect> </clipPath> </defs> </svg>
-                Ir al curso
-            </span> </div> </div> </a> </article>
-    )
+import Link from "next/link";
+interface CardResourcesProps {
+  title: string;
+  description: string;
+  url: string;
+  image: string;
+}
+export function CardResources({ title, description, url, image }: CardResourcesProps) {
+  return (
+    <article className="group relative overflow-hidden rounded-xl border border-line/20 transition hover:contrast-110 before:left-1/2 before:bottom-0 before:-translate-x-1/2 before:w-full before:h-full before:bg-black before:absolute before:translate-y-full hover:before:translate-y-1/2 before:-z-10 before:transition before:duration-200 before:mask-t-from-80% has-focus-visible:outline-none has-focus-visible:ring-2 has-focus-visible:ring-brand-blue/20 has-focus-visible:ring-offset-4 has-focus-visible:ring-offset-white has-focus-visible:contrast-110 has-focus-visible:before:translate-y-1/2 h-full">
+      {" "}
+      <Link
+        href={url}
+        className="flex aspect-video flex-col h-full p-2"
+      >
+        {" "}
+        <div className="absolute top-2 right-2 opacity-100 transition inline-flex items-center gap-2 flex-wrap group-hover:opacity-0 group-hover:-translate-y-1 group-has-focus-visible:opacity-0 group-has-focus-visible:-translate-y-1">
+          {" "}
+          <span className="rounded-lg bg-line border border-brand-yellow text-brand-yellow grid grid-cols-[auto_1fr]  gap-2 backdrop-blur-xs bg-special-gradient text-xs items-center px-2">
+            {" "}
+            <svg
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
+              ></path>
+            </svg>{" "}
+            <span className="py-1">Nuevo</span>{" "}
+          </span>{" "}
+        </div>{" "}
+        <Image
+          src={image}
+          className="absolute inset-0 -z-20 transform-gpu"
+          alt={title}
+          width="1920"
+          height="1080"
+        />{" "}
+        <div className="opacity-100 flex transition flex-col gap-2 flex-1">
+          {" "}
+        </div>{" "}
+        <div className="flex flex-wrap items-end justify-between mt-8 transition  translate-y-1 opacity-0 duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-has-focus-visible:opacity-100 group-has-focus-visible:translate-y-0">
+          {" "}
+          <h2 className="mt-auto text-shadow-lg text-white leading-snug font-medium text-balance max-w-[28ch] text-sm mb-2 ml-1">
+            {" "}
+            {title}
+          </h2>{" "}
+          <div className="flex flex-wrap items-center justify-between w-full">
+            {" "}
+            <div>
+              {" "}
+              <div className="flex items-center gap-4 text-sm text-brand-gray flex-wrap">
+                {" "}
+                <p className="flex items-center gap-1">{description}</p>{" "}
+              </div>{" "}
+            </div>{" "}
+           
+          </div>{" "}
+        </div>{" "}
+      </Link>{" "}
+    </article>
+  );
 }

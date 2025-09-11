@@ -1,0 +1,114 @@
+{
+  "cursos": [
+    {
+      "id": "git",
+      "title": "Academia de de midudev - cursos de programación",
+      "description": "Explora una variedad de cursos de programación, desde Git hasta frameworks modernos.",
+      "url": "https://mide.dev/",
+      "image": "/resources/cursos/midu-academy.png",
+      "details": [
+        {
+          "title": "¿Qué es Git?",
+          "content": "Git es un sistema de control de versiones distribuido que te permite llevar un historial de los cambios en tu código y colaborar con otros desarrolladores."
+        }
+      ]
+    },
+    {
+      "id": "nextjs",
+      "title": "Guía de Next.js",
+      "description": "Documentación práctica para empezar con Next.js rápidamente.",
+      "url": "https://nextjs.org/learn",
+      "image": "/images/resources/nextjs.png",
+      "details": [
+        {
+          "title": "¿Qué es Next.js?",
+          "content": "Next.js es un framework de React que permite la renderización del lado del servidor y la generación de sitios estáticos."
+        }
+      ]
+    }
+  ],
+  "herramientas": [
+    {
+      "id": "vscode",
+      "title": "Visual Studio Code",
+      "description": "Editor de código ligero y potente para desarrollo web.",
+      "url": "https://code.visualstudio.com/",
+      "image": "/images/resources/vscode.png",
+      "details": [
+        {
+          "title": "¿Qué es Visual Studio Code?",
+          "content": "Visual Studio Code es un editor de código fuente desarrollado por Microsoft que incluye soporte para depuración, control de versiones y una amplia gama de extensiones."
+        }
+      ]
+    },
+    {
+      "id": "postman",
+      "title": "Postman",
+      "description": "Herramienta para probar y documentar APIs fácilmente.",
+      "url": "https://www.postman.com/",
+      "image": "/images/resources/postman.png",
+      "details": [
+        {
+          "title": "¿Qué es Postman?",
+          "content": "Postman es una plataforma colaborativa para el desarrollo de APIs. Permite a los desarrolladores diseñar, probar y documentar APIs de manera eficiente."
+        }
+      ]
+    }
+  ],
+  "documentacion": [
+    {
+      "id": "mdn",
+      "title": "MDN Web Docs",
+      "description": "Referencia fundamental para HTML, CSS y JavaScript.",
+      "url": "https://developer.mozilla.org/",
+      "image": "/images/resources/mdn.png",
+      "details": [
+        {
+          "title": "¿Qué es MDN Web Docs?",
+          "content": "MDN Web Docs es una plataforma de documentación para desarrolladores web, que ofrece información sobre HTML, CSS y JavaScript."
+        }
+      ]
+    },
+    {
+      "id": "supabase",
+      "title": "Supabase Docs",
+      "description": "Guías y ejemplos para usar la plataforma Supabase.",
+      "url": "https://supabase.com/docs",
+      "image": "/images/resources/supabase.png",
+      "details": [
+        {
+          "title": "¿Qué es Supabase?",
+          "content": "Supabase es una plataforma de código abierto que proporciona una alternativa a Firebase, permitiendo a los desarrolladores construir aplicaciones rápidamente con una base de datos PostgreSQL."
+        }
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "id": "freecodecamp",
+      "title": "FreeCodeCamp",
+      "description": "Cursos completos y gratuitos sobre desarrollo web.",
+      "url": "https://www.youtube.com/c/Freecodecamp",
+      "image": "/images/resources/fcc.png",
+      "details": [
+        {
+          "title": "¿Qué es FreeCodeCamp?",
+          "content": "FreeCodeCamp es una plataforma de aprendizaje en línea que ofrece cursos gratuitos sobre desarrollo web y programación."
+        }
+      ]
+    },
+    {
+      "id": "faztcode",
+      "title": "Fazt Code",
+      "description": "Tutoriales rápidos y claros de tecnologías web.",
+      "url": "https://www.youtube.com/c/FaztCode",
+      "image": "/images/resources/fazt.png",
+      "details": [
+        {
+          "title": "¿Qué es Fazt Code?",
+          "content": "Fazt Code es un canal de YouTube que ofrece tutoriales sobre desarrollo web y tecnologías relacionadas, con un enfoque en la claridad y la concisión."
+        }
+      ]
+    }
+  ]
+}
