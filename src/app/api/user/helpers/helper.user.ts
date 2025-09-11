@@ -1,4 +1,3 @@
-import { supabase } from "@/utils/supabase/supabaseClient";
 import { SupabaseClient } from "@supabase/supabase-js"
 
 
