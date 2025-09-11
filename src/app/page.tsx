@@ -8,11 +8,11 @@ import { FrequentlyQuestions } from "@/components/sections/FrequentlyQuiestions"
 export default function Home() {
   return (
     <>
-      <SectionContainer>
+      <SectionContainer >
         <Hero />
       </SectionContainer>
 
-      <SectionContainer>
+      <SectionContainer className="pt-20">
         <HowIsWorks />
       </SectionContainer>
 

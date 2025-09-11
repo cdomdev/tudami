@@ -97,7 +97,7 @@ export function Hero() {
         </span>
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-6 pt-5">
         <ButtonGsap
           text="Hacer una pregunta"
           flairColor="bg-indigo-500"
