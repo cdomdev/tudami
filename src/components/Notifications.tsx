@@ -63,11 +63,12 @@ export function Notifications() {
               <Wrapper
                 key={n.id}
                 href={n.url || ""}
-                className="flex flex-col px-4 py-2 text-sm text-accent-foreground hover:bg-accent cursor-pointer no-underline"
+                className="flex flex-col whitespace-pre-line px-4 py-2 text-sm 
+                text-accent-foreground hover:bg-accent cursor-pointer no-underline"
                 onClick={() => markNotitifacion(n.id)}
               >
                 {n.content}
-                <time className="text-xs text-gray-600 dark:text-gray-200">
+                <time className="text-xs text-gray-600 dark:text-gray-400 mt-3">
                   Hace {formatTimestamp(n.created_at)}
                 </time>
               </Wrapper>

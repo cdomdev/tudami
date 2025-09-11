@@ -1,20 +1,26 @@
 [
-    {
-        "id": 0,
-        "title": "like",
-        "type": "liked_received",
-        "entity_type": "question_likes"
-    },
-    {
-        "id": 1,
-        "title": "comment",
-        "type": "comment_received",
-        "entity_type": "question_comment"
-    },
-    {
-        "id": 2,
-        "title": "offers",
-        "type": "application_received",
-        "entity_type": "offers_application"
-    }
+  {
+    "id": 0,
+    "title": "like",
+    "type": "liked_received",
+    "entity_type": "question_likes"
+  },
+  {
+    "id": 1,
+    "title": "comment",
+    "type": "comment_received",
+    "entity_type": "question_comment"
+  },
+  {
+    "id": 2,
+    "title": "offers",
+    "type": "application_received",
+    "entity_type": "offers_application"
+  },
+  {
+    "id": 3,
+    "title": "register",
+    "type": "new_user",
+    "entity_type": "new_user"
+  }
 ]

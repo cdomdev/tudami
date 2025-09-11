@@ -1,3 +1,4 @@
+
 interface dataNotification {
   user_id: string;
   actor_id: string;
@@ -20,6 +21,7 @@ export async function createNotification({
   url,
 }: dataNotification) {
   const urlRequest = `/api/notifications/new`;
+  
   const bodyNotification = {
     actor_id,
     content,

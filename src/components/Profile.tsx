@@ -33,7 +33,7 @@ export function Profile() {
     } catch (error) {
       console.error("Error al cerrar sesión on client:", error);
     }
-
+    
     router.push("/");
   };
 

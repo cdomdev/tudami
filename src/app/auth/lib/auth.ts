@@ -1,9 +1,8 @@
 import { supabase } from "@/utils/supabase/supabaseClient";
-
 type Providers = "google" | "github";
 
 /**
- * 
+ *
  * inicio de sesión con proveedor externo
  * @param provider - 'google' | 'github'
  */
@@ -19,9 +18,9 @@ export async function loginWithProvider(provider: Providers) {
 
 /**
  * callback para manejo de datos después del inicio de sesión con proveedor externo
- * @param accessToken 
- * @param refreshToken 
- * @returns 
+ * @param accessToken
+ * @param refreshToken
+ * @returns
  */
 
 export async function loginCallback(accessToken: string, refreshToken: string) {
@@ -35,10 +34,10 @@ export async function loginCallback(accessToken: string, refreshToken: string) {
 }
 
 /**
- * 
+ *
  * registro de usuario con email y password
  * @param param0 - full_name, email, password
- * @returns 
+ * @returns
  */
 export async function registerUser({
   full_name,
@@ -73,6 +72,9 @@ export async function registerUser({
     }),
   });
 
+  // generar notificaion de bienvenida
+
+
   if (!response.ok) {
     throw new Error("No pudimos completar el registro, intente nuevamente");
   }
@@ -82,9 +84,9 @@ export async function registerUser({
 
 /**
  * función para iniciar sesión con email y password
- * @param email 
- * @param password 
- * @returns 
+ * @param email
+ * @param password
+ * @returns
  */
 export async function loginWithPassword(email: string, password: string) {
   if (!email || !password)
@@ -96,8 +98,9 @@ export async function loginWithPassword(email: string, password: string) {
   });
 
   if (error && error?.code === "invalid_credentials")
-    throw new Error("Los datos ingresados no son correctos, intente nuevamente");
-
+    throw new Error(
+      "Los datos ingresados no son correctos, intente nuevamente"
+    );
 
   const response = await fetch("/api/auth/loginWithPassword", {
     method: "POST",
@@ -125,10 +128,10 @@ export async function loginWithPassword(email: string, password: string) {
 
 /**
  * función para enviar código de recuperación de contraseña
- * @param email 
+ * @param email
  */
 export async function sendCodeForgotPassword(email: string) {
-  console.log(email)
+  console.log(email);
 }
 
 /**
@@ -145,7 +148,6 @@ export async function logout() {
       console.error("Error al cerrar sesión en el servidor");
       return;
     }
-
   } catch (error) {
     console.error("Error al cerrar sesión:", error);
   }

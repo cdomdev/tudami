@@ -131,7 +131,7 @@ export function FormLogin() {
           ¿No tienes cuenta?
           <Link
             href="/auth/register"
-            className="font-semibold pl-2 hover:underline"
+            className="font-semibold pl-2 underline"
           >
             Regístrate
           </Link>

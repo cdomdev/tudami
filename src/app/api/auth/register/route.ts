@@ -12,10 +12,8 @@ export async function POST(request: NextRequest) {
   }
 
   const supabase = await supabaseAuth(access_token);
-
   try {
     const res = await updateProfile(supabase, full_name);
-
     return NextResponse.json(res);
   } catch (error) {
     console.error("Registration error:", error);

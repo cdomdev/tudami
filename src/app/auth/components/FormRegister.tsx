@@ -20,6 +20,7 @@ import { Eye, EyeClosed } from "lucide-react";
 import Link from "next/link";
 import { registerUser } from "../lib/auth";
 import { toast } from "sonner";
+
 const FormSchema = z.object({
   email: z.string().email({ message: "Debe ser un correo válido." }),
   name: z.string().min(2).max(100),
@@ -27,6 +28,8 @@ const FormSchema = z.object({
     .string()
     .min(6, { message: "La contraseña debe tener al menos 6 caracteres." }),
 });
+
+const nameNotAllowed = ["admin", "administrator", "root", "superuser", "supervisor", "system", "guest", "user", "test", "null", "undefined", "operator", "manager", "owner", "support", "contact", "info", "webmaster", "security", "administrator1", "admin123", "Tudami", "tudami", "TUDAMI",];
 
 export function FormRegister() {
   const [showPassword, setShowPassword] = useState(false);
@@ -46,6 +49,11 @@ export function FormRegister() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
     try {
+      if(nameNotAllowed.includes(data.name)){
+        toast.error("Este nombre no está permitido, por favor elige otro.");
+        return;
+      }
+
       const res = await registerUser({
         full_name: data.name,
         email: data.email,
@@ -59,6 +67,7 @@ export function FormRegister() {
         email: "",
         password: "",
       });
+
       const redirect = params.get("redirectTo") || "login/";
       router.replace(redirect);
     } catch (err: unknown) {
@@ -148,7 +157,7 @@ export function FormRegister() {
           ¿Ya tienes cuenta?
           <Link
             href="/auth/login"
-            className="font-semibold pl-2 hover:underline"
+            className="font-semibold pl-2 underline"
           >
             Inicia sesión
           </Link>
