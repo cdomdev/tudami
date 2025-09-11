@@ -3,7 +3,7 @@ import { supabase } from "@/utils/supabase/supabaseClient";
 type Providers = "google" | "github";
 
 export async function loginWithProvider(provider: Providers) {
-  const HOST = process.env.NEXT_PUBLIC_HOST_CALLBACK;
+  const HOST = process.env.NEXT_PUBLIC_HOST || "http://localhost:3000";
   await supabase.auth.signInWithOAuth({
     provider,
     options: {
