@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { toast } from "sonner";
+import { useState } from "react";
 const formSchema = z.object({
   email: z
     .string()
@@ -24,6 +25,7 @@ const formSchema = z.object({
 });
 
 export function FormSubcription() {
+  const [loading, setLoading] = useState(false);
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,7 +33,9 @@ export function FormSubcription() {
     },
   });
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { error } = await subscribe(values.email.toLocaleLowerCase());
+    setLoading(true);
+    try {
+      const { error } = await subscribe(values.email.toLocaleLowerCase());
     if (error) {
       if (error.code === "23505") {
         toast.error("Ya estás suscrito a nuestro boletín.");
@@ -44,6 +48,13 @@ export function FormSubcription() {
       toast.success("Te has suscrito correctamente. ¡Gracias!");
       form.reset();
     }
+    } catch (error) {
+      console.error(error);
+    }
+    finally{
+      setLoading(false);
+    }
+    
   }
   return (
     <>
@@ -86,7 +97,7 @@ export function FormSubcription() {
             />
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
               <Button type="submit" className="cursor-pointer">
-                Notificarme cuando haya nuevo contenido
+                {loading ? "Suscribiéndote..." : "Notificarme cuando haya nuevo contenido"}
               </Button>
               <p className="text-xs  text-muted-foreground">
                 Puedes darte de baja en cualquier momento.
