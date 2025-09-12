@@ -122,7 +122,7 @@ export default function LayoutRecourses({
           ))}
         </div>
       </section>
-      <section className="max-w-6xl mx-auto my-10">{children}</section>
+      <section className="max-w-6xl mx-auto my-5">{children}</section>
     </>
   );
 }

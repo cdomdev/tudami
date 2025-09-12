@@ -1,7 +1,14 @@
+"use client";
+
 import Link from "next/dist/client/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export function Footer() {
+  const pathName = usePathname();
+  const isAdminPage = pathName === "/admin";
+
+  if (isAdminPage) return null;
   return (
     <footer className="w-full bg-gradient-to-br from-gray-100 via-white to-gray-200 dark:from-gray-900 dark:via-gray-950 dark:to-[#0d1117] text-gray-700 dark:text-gray-300 py-5">
       <div className="max-w-7xl mx-auto px-6 space-y-6">

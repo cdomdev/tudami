@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { supabase } from "@/utils/supabase/supabaseClient"
+import { supabase } from "@/utils/supabase/supabaseClient";
+import { supabaseServerClient } from "./utils/supabase/supabaseServerClient";
 
 export async function middleware(req: NextRequest) {
   const accessToken = req.cookies.get("sb-access-token")?.value;
@@ -11,11 +12,34 @@ export async function middleware(req: NextRequest) {
   }
 
   try {
+    const { data: userSession, error: sessionError } =
+      await supabase.auth.getUser(accessToken);
 
-    const { data: userSession, error: sessionError } = await supabase.auth.getUser(accessToken);
+    if (sessionError || !userSession?.user) {
+      return redirectToLogin(req);
+    }
 
-    if (userSession?.user && !sessionError) {
-      return NextResponse.next();
+    // vaidar si entre a ruta admin
+
+    const userId = userSession.user?.id;
+    const pathname = req.nextUrl.pathname;
+    if (pathname.startsWith("/admin")) {
+      const supabaseSSC = await supabaseServerClient();
+      const { data: userData, error } = await supabaseSSC
+        .from("v_user_context")
+        .select("role")
+        .eq("id", userId)
+        .single();
+      if (error || !userData) {
+        return NextResponse.redirect("/");
+      }
+      console.log(userData)
+      if (userData.role !== "admin_tudami") {
+        // Podrías redirigir a 403 o home
+        const url = req.nextUrl.clone();
+        url.pathname = "/";
+        return NextResponse.redirect(url);
+      }
     }
 
     if (refreshToken) {
@@ -27,8 +51,7 @@ export async function middleware(req: NextRequest) {
 
       return NextResponse.redirect(url);
     }
-
-    return redirectToLogin(req);
+    return NextResponse.next();
   } catch (error) {
     console.error("Error en middleware:", error);
     return redirectToLogin(req);
@@ -47,6 +70,8 @@ function redirectToLogin(req: NextRequest) {
 
 export const config = {
   matcher: [
+    "/admin",
+    "/admin/:path*",
     "/questions/create",
     "/questions/create/:path*",
     "/questions/explore",

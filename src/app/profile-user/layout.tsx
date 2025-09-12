@@ -3,7 +3,14 @@
 import { useSession } from "@/context/context.sesion";
 import Image from "next/image";
 import Link from "next/link";
-import { House, Settings, Bookmark, Edit, FileUser } from "lucide-react";
+import {
+  House,
+  Settings,
+  Bookmark,
+  Edit,
+  FileUser,
+  UserLock,
+} from "lucide-react";
 
 export default function LayoutProfile({
   children,
@@ -12,6 +19,7 @@ export default function LayoutProfile({
 }) {
   const { user } = useSession();
 
+  console.log(user)
   return (
     <section
       className="grid grid-cols-1 md:grid-cols-6 gap-2 p-4 max-w-6xl mx-auto mt-20 md:mt-24"
@@ -19,7 +27,7 @@ export default function LayoutProfile({
       aria-labelledby="profile-section-title"
     >
       <aside
-        className="md:col-span-1 max-w-xs pr-4 pl-2 pt-6 hidden md:block  rounded-sm shadow-sm dark:bg-custom-card h-64 max-h-80"
+        className="md:col-span-1 max-w-xs pr-4 pl-2 pt-6 hidden md:block  rounded-sm shadow-sm dark:bg-custom-card h-auto max-h-80"
         role="navigation"
         aria-label="Opciones de perfil"
       >
@@ -53,7 +61,8 @@ export default function LayoutProfile({
           <div className="flex flex-col justify-center">
             <h1 className="text-xl md:text-2xl font-bold flex flex-col ">
               <span className="text-lg bg-gradient-to-r from-indigo-500 to-sky-400 text-transparent bg-clip-text">
-                Bienvenido
+                Bienvenido(a)
+                {user?.role === "admin_tudami" && <span>(Admin)</span>}
               </span>
               {user?.full_name || "Anonimo"}
             </h1>
@@ -117,19 +126,33 @@ function MapItems({
       icon: FileUser,
     },
   ];
+  const { user } = useSession();
   return (
-    <ul className="flex gap-2 my-3 md:my-0 rounded-xs  md:flex-col ">
-      {itemsSide.map((item, i) => (
-        <li key={i} aria-label={item.name}>
+    <>
+      <ul className="flex gap-2 my-3 md:my-0 rounded-xs  md:flex-col ">
+        {itemsSide.map((item, i) => (
+          <li key={i} aria-label={item.name}>
+            <Link
+              href={item.href}
+              className={`${className} flex items-center gap-3 px-3 py-2  transition-colors hover:bg-accent-foreground/10 dark:cusbg-custom-card text-accent-foreground`}
+            >
+              <item.icon className="size-5 text-primary" />
+              <span className="text-sm font-medium">{item.name}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <span className="px-3 mt-4 block ">
+        {user?.role === "admin_tudami" && (
           <Link
-            href={item.href}
-            className={`${className} flex items-center gap-3 px-3 py-2  transition-colors hover:bg-accent-foreground/10 dark:cusbg-custom-card text-accent-foreground`}
+            href="/admin"
+            className="text-sm flex gap-3 items-center uppercase"
           >
-            <item.icon className="size-5 text-primary" />
-            <span className="text-sm font-medium">{item.name}</span>
+            <UserLock className="size-5 text-primary" />
+            Admin
           </Link>
-        </li>
-      ))}
-    </ul>
+        )}
+      </span>
+    </>
   );
 }

@@ -46,6 +46,9 @@ export async function upsertUserProfile({
   approvalToken: string;
   supabase: SupabaseClient;
 }) {
+  
+  const rol = await getRoleForNewUser(supabase);
+
   const { error, data } = await supabase
     .from("users")
     .upsert({
@@ -53,6 +56,7 @@ export async function upsertUserProfile({
       email,
       full_name,
       avatar_url,
+      rol_id: rol.id,
       country: "Colombia",
       approval_token: approvalToken,
     })
@@ -116,7 +120,10 @@ export async function setupAuthCookies({
  * @param supabase Cliente de Supabase
  * @throws Error si hay un problema al crear las preferencias
  */
-export async function ensureUserPreferences(userId: string, supabase: SupabaseClient) {
+export async function ensureUserPreferences(
+  userId: string,
+  supabase: SupabaseClient
+) {
   // Verificar si ya existen preferencias
   const { data: existingPreferences } = await supabase
     .from("user_profile_preferences")
@@ -137,4 +144,17 @@ export async function ensureUserPreferences(userId: string, supabase: SupabaseCl
       throw new Error(`Error al crear preferencias: ${error.message}`);
     }
   }
+}
+
+export async function getRoleForNewUser(supabase: SupabaseClient) {
+  const { data, error } = await supabase
+    .from("roles")
+    .select("*")
+    .eq("rol_name", "user")
+    .single();
+  if (error || !data) {
+    throw new Error("Error al obtener el rol predeterminado", { cause: error });
+  }
+
+  return data;
 }

@@ -4,7 +4,7 @@ import { createAvatar } from "@dicebear/core";
 import { adventurer } from "@dicebear/collection";
 import sharp from "sharp";
 import nPayload from "@/content/notitications/notications-entity.json";
-
+import {getRoleForNewUser} from "../../login/helpers/helper.authPro"
 async function getDataProfileUser(supabase: SupabaseClient) {
   return await supabase.auth.getUser();
 }
@@ -21,10 +21,10 @@ export async function updateProfile(
   const email = dataProfile.user?.email || "";
   const seed = dataProfile.user?.id + email || "";
   const avatar_url = await generateAndSaveAvatarDefault(seed, supabase);
-
+  const rol = await getRoleForNewUser(supabase);
   const { error } = await supabase
     .from("users")
-    .upsert([{ full_name, avatar_url, email, country: "Colombia" }])
+    .upsert([{ full_name, avatar_url, email, country: "Colombia", rol_id: rol.id }])
     .select("id")
     .single();
   if (error) {

@@ -2,10 +2,10 @@
   "cursos": [
     {
       "id": "git",
-      "title": "Academia de de midudev - cursos de programación",
+      "title": "Midudev",
       "description": "Explora una variedad de cursos de programación, desde Git hasta frameworks modernos.",
       "url": "https://mide.dev/",
-      "image": "/resources/cursos/midu-academy.png",
+      "image": "/resources/cursos/midu-academy.webp",
       "details": [
         {
           "title": "¿Qué es Git?",

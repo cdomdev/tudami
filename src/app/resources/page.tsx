@@ -48,7 +48,7 @@ export default function ResourcesPage() {
     <div className="min-h-screen p-6 ">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
-          <Link href={`/resources/details/${item.id}`} key={item.id}>
+          <Link href={`/resources/details/${item.id}`} key={item.id} className="flex aspect-video flex-col h-full p-2">
             <CardResources {...item} />
           </Link>
         ))}

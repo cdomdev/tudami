@@ -24,6 +24,7 @@ export function NavBar() {
   const isCallbackPage = route === "/auth/callback";
   const isRegisterPage = route === "/auth/register";
   const isForgotPage = route === "/auth/forgot-password";
+  const isAdminPage = route === "/admin";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,16 +37,23 @@ export function NavBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrolled]);
 
-  if (isLoginPage || isCallbackPage || isRegisterPage || isForgotPage) {
+  if (
+    isLoginPage ||
+    isCallbackPage ||
+    isRegisterPage ||
+    isForgotPage ||
+    isAdminPage
+  ) {
     return null;
   }
   return (
     <nav
       className={`fixed top-0 w-screen left-0 right-0 z-50 transition-all duration-300 ease-in-out px-3 md:px-0
         ${showNav ? "opacity-100" : "opacity-0"}
-        ${scrolled
-          ? "bg-white/10 backdrop-blur-md shadow-md"
-          : "bg-transparent shadow-none backdrop-blur-0"
+        ${
+          scrolled
+            ? "bg-white/10 backdrop-blur-md shadow-md"
+            : "bg-transparent shadow-none backdrop-blur-0"
         }`}
     >
       <div className="flex items-center justify-between py-3 md:px-4 lg:px-0 max-w-6xl mx-auto">

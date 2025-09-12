@@ -1,3 +1,4 @@
+
 import resources from "@/content/resources/resources.json";
 import Image from "next/image";
 import Link from "next/link";
@@ -43,7 +44,7 @@ export default async function ResourceDetailPage({
         alt={resource.title}
         width={1920}
         height={1080}
-        className="mb-6"
+        className="mb-6 rounded-2xl"
       />
       <h1 className="text-3xl font-bold mb-4">{resource.title}</h1>
       <p className="text-gray-700 mb-4">
@@ -59,7 +60,7 @@ export default async function ResourceDetailPage({
       <Link
         href={resource.url}
         target="_blank"
-        className="text-blue-600 font-semibold hover:underline"
+        className="text-blue-600 font-semibold hover:underline "
       >
         Ir al recurso externo →
       </Link>

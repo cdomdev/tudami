@@ -9,7 +9,9 @@ export const UserAchievementSchema = z.object({
   id: z.number(),
   achievement_id: z.string(),
 });
+
 export type UserAchievement = z.infer<typeof UserAchievementSchema>;
+
 
 export const UserProfilePreferencesSchema = z.object({
   allow_email: z.boolean(),
@@ -39,10 +41,11 @@ export const User = z.object({
   country: z.string(),
   city: z.string(),
   department: z.string(),
-  created_at: z.coerce.date(),
-  user_profile_preferences: UserProfilePreferencesSchema,
   questions: z.number(),
+  created_at: z.coerce.date(),
   question_comments: z.number(),
+  role: z.string(),
+  user_profile_preferences: UserProfilePreferencesSchema,
   user_reputation: UserReputationSchema,
   user_achievements: z.array(UserAchievementSchema),
 });

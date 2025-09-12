@@ -22,19 +22,14 @@ export function Profile() {
   const { user, clearUser } = useSession();
   const router = useRouter();
   const handleLogout = async () => {
-    clearUser();
-    try {
-      await logout();
-    } catch (error) {
-      console.error("Error al cerrar sesión:", error);
-    }
     try {
       await supabase.auth.signOut();
+      await logout();
+      clearUser();
+      router.push("/");
     } catch (error) {
-      console.error("Error al cerrar sesión on client:", error);
+      console.error("Error al cerrar sesión", error);
     }
-    
-    router.push("/");
   };
 
   return (

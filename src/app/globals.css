@@ -1,9 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
-
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -45,7 +42,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --shadow-global: var(--shadow);
-  
+
   /* Colores personalizados */
   --color-custom: var(--custom);
   --color-custom-card: var(--custom-card);
@@ -124,9 +121,7 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 
-
 }
-
 
 @layer base {
   * {
@@ -137,7 +132,6 @@
     @apply bg-background text-foreground;
   }
 }
-
 
 /* scroll bar */
 
