@@ -33,9 +33,8 @@ export async function middleware(req: NextRequest) {
       if (error || !userData) {
         return NextResponse.redirect("/");
       }
-      console.log(userData)
+     
       if (userData.role !== "admin_tudami") {
-        // Podrías redirigir a 403 o home
         const url = req.nextUrl.clone();
         url.pathname = "/";
         return NextResponse.redirect(url);
