@@ -2,10 +2,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { supabase } from "@/utils/supabase/supabaseClient";
 import { supabaseServerClient } from "./utils/supabase/supabaseServerClient";
-
 export async function middleware(req: NextRequest) {
   const accessToken = req.cookies.get("sb-access-token")?.value;
-  const refreshToken = req.cookies.get("sb-refresh-token")?.value;
 
   if (!accessToken) {
     return redirectToLogin(req);
@@ -19,10 +17,10 @@ export async function middleware(req: NextRequest) {
       return redirectToLogin(req);
     }
 
-    // vaidar si entre a ruta admin
-
-    const userId = userSession.user?.id;
+    // validar si entra a ruta admin
+    const userId = userSession.user.id;
     const pathname = req.nextUrl.pathname;
+
     if (pathname.startsWith("/admin")) {
       const supabaseSSC = await supabaseServerClient();
       const { data: userData, error } = await supabaseSSC
@@ -30,32 +28,21 @@ export async function middleware(req: NextRequest) {
         .select("role")
         .eq("id", userId)
         .single();
-      if (error || !userData) {
-        return NextResponse.redirect("/");
-      }
-     
-      if (userData.role !== "admin_tudami") {
+
+      if (error || !userData || userData.role !== "admin_tudami") {
         const url = req.nextUrl.clone();
         url.pathname = "/";
         return NextResponse.redirect(url);
       }
     }
 
-    if (refreshToken) {
-      const url = req.nextUrl.clone();
-      const originalPath = req.nextUrl.pathname;
-
-      url.pathname = "/auth/validateSesion";
-      url.search = `?redirectTo=${encodeURIComponent(originalPath)}`;
-
-      return NextResponse.redirect(url);
-    }
     return NextResponse.next();
   } catch (error) {
     console.error("Error en middleware:", error);
     return redirectToLogin(req);
   }
 }
+
 
 function redirectToLogin(req: NextRequest) {
   const url = req.nextUrl.clone();
