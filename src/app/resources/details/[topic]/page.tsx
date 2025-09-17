@@ -38,25 +38,25 @@ export default async function ResourceDetailPage({
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-8">
+    <div className="max-w-3xl mx-auto px-8 pb-20">
       <Image
         src={resource.image}
         alt={resource.title}
         width={1920}
         height={1080}
+        loading="lazy"
         className="mb-6 rounded-2xl"
       />
       <h1 className="text-3xl font-bold mb-4">{resource.title}</h1>
-      <p className="text-gray-700 mb-4">
+      <div className="text-gray-700 mb-4">
         {Array.isArray(resource.details)
           ? resource.details.map((detail) => (
               <div key={detail.title}>
-                <h2 className="font-semibold">{detail.title}</h2>
-                <p>{detail.content}</p>
+                <p className="text-foreground">{detail.content}</p>
               </div>
             ))
           : resource.details || resource.description}
-      </p>
+      </div>
       <Link
         href={resource.url}
         target="_blank"

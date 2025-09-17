@@ -2,6 +2,8 @@ import React from "react";
 
 export default function PageAdmin() {
   return (
-    <h1>pagina principal</h1>
+    <section className="p-10 md:max-w-6xl mx-auto">
+      pagina principal
+    </section>
   );
 }

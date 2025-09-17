@@ -41,6 +41,7 @@ export function CardResources({
         alt={title}
         width="1920"
         height="1080"
+        loading="lazy"
       />{" "}
       <div className="opacity-100 flex transition flex-col gap-2 flex-1"> </div>{" "}
       <div className="flex flex-wrap items-end justify-between mt-8 transition  translate-y-1 opacity-0 duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-has-focus-visible:opacity-100 group-has-focus-visible:translate-y-0">

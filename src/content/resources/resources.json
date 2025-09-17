@@ -1,11 +1,11 @@
 {
   "cursos": [
     {
-      "id": "git",
+      "id": "midu",
       "title": "Midudev",
       "description": "Explora una variedad de cursos de programación, desde Git hasta frameworks modernos.",
       "url": "https://mide.dev/",
-      "image": "/resources/cursos/midu-academy.webp",
+      "image": "/resources/cursos/midu-cursos.webp",
       "details": [
         {
           "title": "¿Qué es Git?",
@@ -14,30 +14,43 @@
       ]
     },
     {
-      "id": "nextjs",
-      "title": "Guía de Next.js",
-      "description": "Documentación práctica para empezar con Next.js rápidamente.",
-      "url": "https://nextjs.org/learn",
-      "image": "/images/resources/nextjs.png",
+      "id": "freecodecamp",
+      "title": "FreeCodeCamp",
+      "description": "Cursos completos y gratuitos sobre desarrollo web.",
+      "url": "https://www.freecodecamp.org/learn/",
+      "image": "/resources/cursos/freecodecamp-cursos.webp",
       "details": [
         {
-          "title": "¿Qué es Next.js?",
-          "content": "Next.js es un framework de React que permite la renderización del lado del servidor y la generación de sitios estáticos."
+          "title": "FreeCodeCamp",
+          "content": "FreeCodeCamp es una plataforma de aprendizaje en línea que ofrece cursos gratuitos sobre desarrollo web y programación."
+        }
+      ]
+    },
+    {
+      "id": "odin",
+      "title": "The Odin Project",
+      "description": "Cursos completos y gratuitos.",
+      "url": "https://www.theodinproject.com/",
+      "image": "/resources/cursos/the-odin-project-cursos.webp",
+      "details": [
+        {
+          "title": "¿Qué es FreeCodeCamp?",
+          "content": "FreeCodeCamp es una plataforma de aprendizaje en línea que ofrece cursos gratuitos sobre desarrollo web y programación."
         }
       ]
     }
   ],
   "herramientas": [
     {
-      "id": "vscode",
-      "title": "Visual Studio Code",
-      "description": "Editor de código ligero y potente para desarrollo web.",
-      "url": "https://code.visualstudio.com/",
-      "image": "/images/resources/vscode.png",
+      "id": "kodekloud",
+      "title": "Kodekloud",
+      "description": "Coleccion de contenedores con diferentes herramientas para que pueda practicas",
+      "url": "https://studio.kodekloud.com/labs",
+      "image": "/resources/tools/kode-tools.webp",
       "details": [
         {
-          "title": "¿Qué es Visual Studio Code?",
-          "content": "Visual Studio Code es un editor de código fuente desarrollado por Microsoft que incluye soporte para depuración, control de versiones y una amplia gama de extensiones."
+          "title": "¿Qué es kodekloud?",
+          "content": "Kodeklod en una herramienta que ofrece multiples servicios para que pueda practicar"
         }
       ]
     },
@@ -61,7 +74,7 @@
       "title": "MDN Web Docs",
       "description": "Referencia fundamental para HTML, CSS y JavaScript.",
       "url": "https://developer.mozilla.org/",
-      "image": "/images/resources/mdn.png",
+      "image": "/resources/documentations/mdn-docs.webp",
       "details": [
         {
           "title": "¿Qué es MDN Web Docs?",
@@ -70,14 +83,27 @@
       ]
     },
     {
-      "id": "supabase",
-      "title": "Supabase Docs",
-      "description": "Guías y ejemplos para usar la plataforma Supabase.",
-      "url": "https://supabase.com/docs",
-      "image": "/images/resources/supabase.png",
+      "id": "freefor",
+      "title": "Free For Devs",
+      "description": "Coleccion de recursos para programadores",
+      "url": "https://free-for.dev/",
+      "image": "/resources/documentations/free-docs.webp",
       "details": [
         {
-          "title": "¿Qué es Supabase?",
+          "title": "¿Qué es Free For Devs?",
+          "content": "Supabase es una plataforma de código abierto que proporciona una alternativa a Firebase, permitiendo a los desarrolladores construir aplicaciones rápidamente con una base de datos PostgreSQL."
+        }
+      ]
+    },
+    {
+      "id": "overapi",
+      "title": "OverApi",
+      "description": "Coleccion de recursos para programadores",
+      "url": "https://overapi.com/",
+      "image": "/resources/documentations/over-docs.webp",
+      "details": [
+        {
+          "title": "¿Qué es OverApi?",
           "content": "Supabase es una plataforma de código abierto que proporciona una alternativa a Firebase, permitiendo a los desarrolladores construir aplicaciones rápidamente con una base de datos PostgreSQL."
         }
       ]

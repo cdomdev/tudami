@@ -86,7 +86,7 @@ export function FormLogin() {
                   Contraseña
                 </FormLabel>
                 <FormLabel>
-                  <Link href="/auth/forgot-password">¿Olvidado tu contraseña?</Link>
+                  <Link href="/auth/forgot-password">¿Olvidaste tu contraseña?</Link>
                 </FormLabel>
               </div>
               <FormControl>

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: {
-    default: "Recursos que potencia tus habilidades",
+    default: "Recursos - Potencia tus habilidades",
     template: "%s | Tudami",
   },
   description:

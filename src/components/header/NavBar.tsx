@@ -24,7 +24,7 @@ export function NavBar() {
   const isCallbackPage = route === "/auth/callback";
   const isRegisterPage = route === "/auth/register";
   const isForgotPage = route === "/auth/forgot-password";
-  const isAdminPage = route === "/admin";
+  const isAdminPage = route === "/admin" || route.startsWith("/admin");
 
   useEffect(() => {
     const handleScroll = () => {
