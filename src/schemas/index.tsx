@@ -7,5 +7,5 @@ export type {SchemaProfileResponse} from './schema.view_profile'
 export type {SchemaOffers} from './schema.offers'
 export type {OfferApplication, OfferApplicationsResponse} from './schema.application_res'
 export {FormSchema} from "./schema.formProfile"
-export {FormSchemaResources} from "./schema.form_resources"
-export type {SchemaResources} from "./schema.form_resources"
+export {FormSchemaResources } from "./schema.form_resources"
+export type {SchemaResources, SchemaResoucesResponse} from "./schema.form_resources"

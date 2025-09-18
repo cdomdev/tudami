@@ -7,7 +7,7 @@ export async function saveResourceHelper(dataResource: SchemaResources, supabase
         slug: dataResource.category.toLowerCase().replaceAll(" ", ""),
         category: dataResource.category,
         url_image: dataResource.image,
-        is_public: true,
+        public: true,
     }
 
     const { data, error } = await supabase.from("resources").insert(formatedResource).select("id").single()
