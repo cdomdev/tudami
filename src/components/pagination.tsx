@@ -23,7 +23,7 @@ export function Pagination({
 }: PaginationProps) {
   const totalPages = Math.ceil(totalItems / pageSize);
 
-  if (totalPages <= 1) return null;
+  // if (totalPages <= 2) return null;
 
   const createPageLink = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());

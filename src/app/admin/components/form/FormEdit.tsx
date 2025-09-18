@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
+import { useSearchParams } from "next/navigation";
 import { UploadImage } from "./UploadImage";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,15 +22,21 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Spinner } from "@/components";
 import { toast } from "sonner";
-import { FormSchemaResources, SchemaResources } from "@/schemas";
-import { saveResource, uploadImage } from "../../lib";
+import {
+  FormSchemaResources,
+  SchemaResoucesResponse,
+  SchemaResources,
+} from "@/schemas";
+import { uploadImage } from "../../lib";
 import { useRouter } from "next/navigation";
+import { listDataResourceBy, updateResource } from "../../lib/resources";
+import { categoriesNames, typeResource } from "./formData";
 
-export function FormNewResounce({
+export function FormEditResounce({
   isAdmin,
   urlRedirect,
 }: {
@@ -38,9 +44,21 @@ export function FormNewResounce({
   urlRedirect?: string;
 }) {
   const [isLoading, setIsloading] = useState<boolean>(false);
+  const [dataResource, setDataResource] = useState<SchemaResoucesResponse>();
 
+  const params = useSearchParams();
+  const slug = params.get("slug") || "";
   const router = useRouter();
   const url = urlRedirect || "";
+
+  console.log(dataResource);
+
+  useEffect(() => {
+    listDataResourceBy(slug).then((res) => {
+      setDataResource(res?.data);
+    });
+  }, [slug]);
+
   const form = useForm<z.infer<typeof FormSchemaResources>>({
     resolver: zodResolver(FormSchemaResources),
     defaultValues: {
@@ -55,45 +73,40 @@ export function FormNewResounce({
     },
   });
 
-  const categoriesNames = [
-    {
-      slug: "cursos",
-      name: "Cursos",
-    },
-    {
-      slug: "documentation",
-      name: "Documentacion",
-    },
-    {
-      slug: "tools",
-      name: "Herramientas",
-    },
-    {
-      slug: "videos",
-      name: "Videos",
-    },
-  ];
-
-  const typeResource = [
-    { value: "paid", name: "De pago" },
-    { value: "free", name: "Gratis" },
-  ];
+  useEffect(() => {
+    if (dataResource) {
+      form.reset({
+        title: dataResource.title,
+        description: dataResource.description,
+        image: dataResource.url_image,
+        category: dataResource.category,
+        detail_title: dataResource.details_resources[0]?.title || "",
+        detail_desciption: dataResource.details_resources[0]?.description || "",
+        url: dataResource.details_resources[0]?.url_resource || "",
+        type: dataResource.type || "",
+      });
+    }
+  }, [dataResource, form]);
 
   async function onSubmit(data: SchemaResources) {
-    console.log(data);
     setIsloading(true);
     try {
-      let imageResource;
-      if (data.image && data.image instanceof File) {
+      let imageResource: string | undefined;
+
+      if (data.image instanceof File) {
         const res = await uploadImage(data.image, data.category.toLowerCase());
         imageResource = res?.url;
+      } else if (typeof data.image === "string" && data.image !== "") {
+        imageResource = data.image;
+      } else {
+        imageResource = "";
       }
 
       // formatear datos para la tabla
       const formattedData = {
         title: data.title,
         description: data.description,
-        image: imageResource ? imageResource : "",
+        image: imageResource ? imageResource : dataResource?.url_image,
         category: data.category,
         url: data.url,
         type: data.type,
@@ -101,8 +114,8 @@ export function FormNewResounce({
         detail_desciption: data.detail_desciption,
       };
 
-      const res = await saveResource(formattedData, isAdmin);
-      if (res) toast.success("Recurso agregado con exito");
+      const res = await updateResource(formattedData, dataResource?.id);
+      if (res) toast.success("Recurso modificado con exito");
 
       form.reset({
         title: "",
@@ -238,7 +251,12 @@ export function FormNewResounce({
           )}
         />
 
-        {isAdmin && <UploadImage control={form.control} />}
+        {isAdmin && (
+          <UploadImage
+            control={form.control}
+            url_image={dataResource?.url_image}
+          />
+        )}
 
         <FormLabel className="font-semibold">
           Agrega algo mas de detalle sobre el nuevo recurso
@@ -284,7 +302,7 @@ export function FormNewResounce({
           disabled={isLoading}
         >
           {isLoading && <Spinner className="w-5 h-5" />}
-          {isLoading ? "Enviando..." : "Enviar"}
+          {isLoading ? "Actulizando..." : "Actualizar"}
         </Button>
       </form>
     </Form>

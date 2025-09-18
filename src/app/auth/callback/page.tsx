@@ -41,9 +41,8 @@ export default function AuthCallback() {
         const dataRes = await res.json()
         const { user } = dataRes
         setUser(user)
-
         const redirect = params.get("redirectTo") || "/";
-        router.replace(redirect);
+        router.push(redirect);
       } catch (error) {
         console.error("Error inesperado en autenticación:", error);
         router.replace("/auth/login/?error=unexpected_error");

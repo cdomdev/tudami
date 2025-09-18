@@ -5,7 +5,7 @@ import { TableReseources } from "../components/TableResources";
 import { ButtonCs } from "../components/ui/Button";
 import { Plus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { listDataResorce } from "../lib/resources";
+import { listDataResource } from "../lib/resources";
 import { SchemaResoucesResponse } from "@/schemas";
 import { TableSkeleton } from "../components/table/TableSkeleton";
 
@@ -18,7 +18,7 @@ export default function PageResourcesAmd() {
 
   useEffect(() => {
     setLoading(true);
-    listDataResorce(page, pageSize)
+    listDataResource(page, pageSize)
       .then((res) => {
         setResponse(res);
       })

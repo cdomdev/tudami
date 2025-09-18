@@ -46,13 +46,14 @@ export async function middleware(req: NextRequest) {
 
 function redirectToLogin(req: NextRequest) {
   const url = req.nextUrl.clone();
-  const originalPath = req.nextUrl.pathname;
+  const originalUrl = req.nextUrl.pathname + req.nextUrl.search;
 
   url.pathname = "/auth/login";
-  url.search = `?redirectTo=${encodeURIComponent(originalPath)}`;
+  url.search = `?redirectTo=${encodeURIComponent(originalUrl)}`;
 
   return NextResponse.redirect(url);
 }
+
 
 export const config = {
   matcher: [
@@ -70,5 +71,6 @@ export const config = {
     "/profile-user/:path*",
     "/view-profile-user",
     "/view-profile-user/:path*",
+    "/resource/new:path*"
   ],
 };

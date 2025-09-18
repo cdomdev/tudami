@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { SectionNavNewResource } from "./components/SectionNavNewResource";
 
 export const metadata: Metadata = {
   title: {
@@ -44,38 +45,37 @@ export default function LayoutRecourses({
 }: {
   children: React.ReactNode;
 }) {
-    
   const itemsHeadNav = [
     {
       title: "Cursos",
-      href: "/resources?page=cursos",
+      href: "/resources?category=cursos",
       icon: "📚",
     },
     {
       title: "Herramientas",
-      href: "/resources?page=herramientas",
+      href: "/resources?category=tools",
       icon: "🛠️",
     },
     {
       title: "Documentación",
-      href: "/resources?page=documentacion",
+      href: "/resources?category=documentation",
       icon: "📄",
     },
     {
       title: "Videos",
-      href: "/resources?page=videos",
+      href: "/resources?category=videos",
       icon: "🎥",
     },
   ];
 
   return (
     <>
-      <section className="pt-24 px-10 pb-10 w-full bg-gradient-to-r from-pink-200 via-purple-100 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <section className="pt-24 md:px-10 pb-10 w-full bg-gradient-to-r from-pink-200 via-purple-100 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <div className="mx-auto flex flex-col mb-3">
-          <h1 className="text-3xl font-bold text-center text-slate-800 dark:text-slate-100">
+          <h1 className="text-xl md:text-3xl font-bold text-center text-slate-800 dark:text-slate-100">
             Recursos que potencian tu aprendizaje
           </h1>
-          <span className="text-center text-lg text-muted-foreground flex items-center justify-center gap-2">
+          <span className="text-center text-base md:text-lg text-muted-foreground flex items-center justify-center gap-2">
             <span className="text-blue-600 dark:text-blue-400 font-semibold">
               Explora
             </span>
@@ -109,20 +109,21 @@ export default function LayoutRecourses({
         </div>
       </section>
       <section className="py-5">
-        <h2 className="text-3xl font-bold text-center mb-6">
+        <h2 className="text-xl md:text-3xl font-bold text-center mb-6  bg-gradient-to-t from-sky-700 dark:from-sky-300 to-red-900 dark:to-red-500 text-transparent bg-clip-text">
           Centro de Recursos
         </h2>
-        <div className="mt-7 flex flex-wrap justify-center gap-3 mb-8">
+        <div className="mt-3 flex gap-3 justify-start lg:justify-center overflow-x-auto no-scrollbar p-2">
           {itemsHeadNav.map((item) => (
-            <Link key={item.title} href={item.href} >
-              <span className="px-4 py-2 bg-gray-200 rounded-full text-black cursor-pointer hover:bg-gray-300  md:text-sm font-medium">
+            <Link key={item.title} href={item.href}>
+              <span className="px-3 py-1.5 bg-gray-200 rounded-full text-black cursor-pointer hover:bg-gray-300 text-xs md:text-sm font-medium whitespace-nowrap">
                 {item.icon} {item.title}
               </span>
             </Link>
           ))}
         </div>
       </section>
-      <section className="max-w-6xl mx-auto my-5">{children}</section>
+      <section className="max-w-6xl mx-auto py-10">{children}</section>
+      <SectionNavNewResource />
     </>
   );
 }

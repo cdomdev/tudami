@@ -8,7 +8,7 @@ export default function PageNewResource() {
                     Agregar un nuevo recurso
                 </h1>
             </div>
-            <FormNewResounce />
+            <FormNewResounce isAdmin={true} />
         </div>
     )
 }

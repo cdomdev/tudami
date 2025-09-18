@@ -48,8 +48,8 @@ export function FormLogin() {
     try {
       const res = await loginWithPassword(data.email, data.password);
       setUser(res);
-      const redirect = params.get("redirectTo") || "/";
-      router.replace(redirect);
+      const redirectTo = params.get("redirectTo") || "/";
+      router.push(redirectTo);
     } catch (error) {
       console.error("Error login:", error);
       toast.error(
@@ -82,11 +82,11 @@ export function FormLogin() {
           render={({ field }) => (
             <FormItem>
               <div className="flex flex-1 items-center justify-between">
+                <FormLabel>Contraseña</FormLabel>
                 <FormLabel>
-                  Contraseña
-                </FormLabel>
-                <FormLabel>
-                  <Link href="/auth/forgot-password">¿Olvidaste tu contraseña?</Link>
+                  <Link href="/auth/forgot-password">
+                    ¿Olvidaste tu contraseña?
+                  </Link>
                 </FormLabel>
               </div>
               <FormControl>
@@ -107,14 +107,12 @@ export function FormLogin() {
                       <EyeClosed className="w-5 h-5 cursor-pointer" />
                     )}
                   </button>
-
                 </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
 
         <Button
           type="submit"
@@ -129,10 +127,7 @@ export function FormLogin() {
       <div className="flex justify-end">
         <span>
           ¿No tienes cuenta?
-          <Link
-            href="/auth/register"
-            className="font-semibold pl-2 underline"
-          >
+          <Link href="/auth/register" className="font-semibold pl-2 underline">
             Regístrate
           </Link>
         </span>

@@ -1,58 +1,81 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import resources from "@/content/resources/resources.json";
+import { useEffect, useState } from "react";
+import { listaAllDataResourceClient } from "./lib/lisDtaResourcesClient";
+import { SchemaResoucesResponse } from "@/schemas";
 import { CardResources } from "./components/CardResources";
+import { SkeletonCard } from "./components/SkeletonCardsResources";
 import Link from "next/link";
-
-interface ResourceItem {
-  id: string;
-  title: string;
-  description: string;
-  url: string;
-  image: string;
-}
-
-const allowedCategories = [
-  "cursos",
-  "herramientas",
-  "documentacion",
-  "videos",
-] as const;
-type Category = (typeof allowedCategories)[number];
-
-const typedResources: Record<Category, ResourceItem[]> = resources;
+import { TabsNav } from "./components/Tabs";
+import { Pagination } from "@/components/pagination";
 
 export default function ResourcesPage() {
+  const [data, setData] = useState<SchemaResoucesResponse[]>([]);
+  const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
-  const page = (searchParams.get("page") as Category) || "cursos";
+  const currentPage = parseInt(searchParams.get("page") || "1", 10);
+  const topic = searchParams.get("category") || "cursos";
+  const type = searchParams.get("type") || undefined;
+  const pageSize = 10;
 
-  const categoria: Category = allowedCategories.includes(page)
-    ? page
-    : "cursos";
+  const totalItems = data.length;
+  useEffect(() => {
+    setLoading(true);
+    async function fetchData() {
+      const { data } = await listaAllDataResourceClient(
+        currentPage,
+        pageSize,
+        topic,
+        type
+      );
+      setData(data || []);
+      setLoading(false);
+    }
+    fetchData();
+  }, [currentPage, topic, type]);
 
-  const items = typedResources[categoria];
+  if (loading) return <SkeletonCard />;
 
-  if (!items.length) {
+  if (!data.length) {
     return (
       <div className="p-8 text-center">
-        <h2 className="text-2xl font-bold">Categoría no encontrada</h2>
-        <p className="text-gray-500 mt-2">
-          Verifica la URL: cursos, herramientas, documentacion o videos.
-        </p>
+        <h2 className="text-2xl font-bold">No hay recursos</h2>
+        <p className="text-gray-500 mt-2">Intenta en otras secciones</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-6 ">
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((item) => (
-          <Link href={`/resources/details/${item.id}`} key={item.id} className="flex aspect-video flex-col h-full p-2">
-            <CardResources {...item} />
-          </Link>
-        ))}
-      </div>
-    </div>
+    <>
+      <aside className="px-7 flex-col md:px-8 inline-flex justify-end overflow-x-hidden">
+        <h3 className="md:text-lg text-foreground font-semibold mb-2">
+          Ver recursos
+        </h3>
+        <TabsNav />
+      </aside>
+
+      <section className="p-6">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {data.map((item) => (
+            <Link
+              href={`/resources/details/${item.slug}`}
+              key={item.id}
+              className="flex aspect-video flex-col h-full p-2"
+            >
+              <CardResources {...item} />
+            </Link>
+          ))}
+        </div>
+       
+        <Pagination
+          basePath="/resources"
+          currentPage={currentPage}
+          pageSize={pageSize}
+          searchParams={searchParams}
+          totalItems={totalItems}
+        />
+      </section>
+    </>
   );
 }
