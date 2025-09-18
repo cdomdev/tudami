@@ -14,7 +14,7 @@ export async function generateStaticParams() {
   }
 
   return (data || []).map((r) => ({
-    topic: r.slug,
+    topic: r.slug as string,
   }));
 }
 
