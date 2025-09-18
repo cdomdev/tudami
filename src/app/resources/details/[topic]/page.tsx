@@ -4,11 +4,6 @@ import Link from "next/link";
 import { MoveLeft, MoveRight } from "lucide-react";
 import { DetailsResource } from "@/schemas/schema.form_resources";
 
-interface PageProps {
-  params: { topic: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
-}
-
 // Preconstruir rutas estáticas
 export async function generateStaticParams(): Promise<{ topic: string }[]> {
   const { data, error } = await supabase.from("resources").select("slug");
@@ -23,8 +18,14 @@ export async function generateStaticParams(): Promise<{ topic: string }[]> {
   }));
 }
 
+type Params = { topic: string };
+
 // Página de detalle
-export default async function ResourceDetailPage({ params }: PageProps) {
+export default async function ResourceDetailPage({
+  params,
+}: {
+  params: Params;
+}) {
   const { topic } = params;
 
   const { data: resource, error } = await supabase
