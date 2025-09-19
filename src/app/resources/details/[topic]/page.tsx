@@ -4,7 +4,6 @@ import Link from "next/link";
 import { MoveLeft, MoveRight } from "lucide-react";
 import { DetailsResource } from "@/schemas/schema.form_resources";
 
-// Preconstruir rutas estáticas
 export async function generateStaticParams() {
   const { data, error } = await supabase.from("resources").select("slug");
 
@@ -18,13 +17,13 @@ export async function generateStaticParams() {
   }));
 }
 
-// Página de detalle
+
 export default async function Page({
   params,
 }: {
-  params: { topic: string };
+  params:{ topic: string };  
 }) {
-  const { topic } = params;
+  const { topic } = params;  
 
   const { data: resource, error } = await supabase
     .from("resources")
@@ -55,7 +54,6 @@ export default async function Page({
         <MoveLeft className="w-4 h-4 group-hover:-translate-x-1" />
         Volver a recursos
       </Link>
-
       <Image
         src={resource.url_image}
         alt={resource.title}
@@ -64,9 +62,7 @@ export default async function Page({
         loading="lazy"
         className="mb-6 rounded-2xl"
       />
-
       <h1 className="text-3xl font-bold mb-4">{resource.title}</h1>
-
       <div className="mb-4">
         {Array.isArray(resource.details_resources)
           ? resource.details_resources.map((detail: DetailsResource) => (
@@ -74,9 +70,6 @@ export default async function Page({
                 <h2 className="text-foreground text-lg mb-1">{detail.title}</h2>
                 <p className="text-base font-normal text-foreground dark:text-gray-400 mb-7">
                   {detail.description}
-                </p>
-                <p className="text-base font-normal text-foreground mb-4">
-                  Visita el recurso externo y fortalece tus habilidades
                 </p>
                 <Link
                   href={detail.url_resource || ""}
