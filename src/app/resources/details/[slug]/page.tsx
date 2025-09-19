@@ -5,20 +5,24 @@ import { MoveLeft, MoveRight } from "lucide-react";
 import { DetailsResource } from "@/schemas/schema.form_resources";
 
 export async function generateStaticParams() {
-  const { data, error } = await supabase.from("resources").select("slug");
+  const { data, error } = await supabase.from("resources").select("*");
 
   if (error) {
     console.error("Error fetching static params:", error);
     return [];
   }
 
-  return (data || []).map((r) => ({
-    slug: r.slug as string,
+  return data.map((r) => ({
+    slug: r.slug,
   }));
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
 
   const { data: resource, error } = await supabase
     .from("resources")
