@@ -4,12 +4,8 @@ import Link from "next/link";
 import { MoveLeft, MoveRight } from "lucide-react";
 import { DetailsResource } from "@/schemas/schema.form_resources";
 
-type PageProps = {
-  params: { topic: string };
-};
-
 // Preconstruir rutas estáticas
-export async function generateStaticParams(): Promise<{ topic: string }[]> {
+export async function generateStaticParams() {
   const { data, error } = await supabase.from("resources").select("slug");
 
   if (error) {
@@ -25,7 +21,9 @@ export async function generateStaticParams(): Promise<{ topic: string }[]> {
 // Página de detalle
 export default async function Page({
   params,
-}: PageProps) {
+}: {
+  params: { topic: string };
+}) {
   const { topic } = params;
 
   const { data: resource, error } = await supabase
@@ -49,7 +47,7 @@ export default async function Page({
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-8 ">
+    <div className="max-w-3xl mx-auto p-8">
       <Link
         href="/resources"
         className="text-foreground mb-4 group flex gap-1 items-center transition-all duration-300 pl-5"
@@ -57,6 +55,7 @@ export default async function Page({
         <MoveLeft className="w-4 h-4 group-hover:-translate-x-1" />
         Volver a recursos
       </Link>
+
       <Image
         src={resource.url_image}
         alt={resource.title}
@@ -65,8 +64,10 @@ export default async function Page({
         loading="lazy"
         className="mb-6 rounded-2xl"
       />
+
       <h1 className="text-3xl font-bold mb-4">{resource.title}</h1>
-      <div className=" mb-4">
+
+      <div className="mb-4">
         {Array.isArray(resource.details_resources)
           ? resource.details_resources.map((detail: DetailsResource) => (
               <div key={detail.title}>
@@ -75,7 +76,7 @@ export default async function Page({
                   {detail.description}
                 </p>
                 <p className="text-base font-normal text-foreground mb-4">
-                  Visita el recurso externo y fortalce tus habilidades
+                  Visita el recurso externo y fortalece tus habilidades
                 </p>
                 <Link
                   href={detail.url_resource || ""}
