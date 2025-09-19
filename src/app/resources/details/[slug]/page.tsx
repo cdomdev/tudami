@@ -13,22 +13,17 @@ export async function generateStaticParams() {
   }
 
   return (data || []).map((r) => ({
-    topic: r.slug as string,
+    slug: r.slug as string,
   }));
 }
 
-
-export default async function Page({
-  params,
-}: {
-  params:{ topic: string };  
-}) {
-  const { topic } = params;  
+export default async function Page({ params }: { params: { slug: string } }) {
+  const { slug } = params;
 
   const { data: resource, error } = await supabase
     .from("resources")
     .select("*, details_resources(*)")
-    .eq("slug", topic)
+    .eq("slug", slug)
     .single();
 
   if (error || !resource) {
