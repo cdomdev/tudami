@@ -65,7 +65,8 @@ async function saveDetaislResources(
   }
 
   return {
-    sucess: true,
+    success: true,
+    status: 200,
     message: "Contenido agregado con exito",
   };
 }
@@ -85,37 +86,31 @@ export async function updateResourceHelper(
     type: dataResource.type,
   };
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("resources")
     .update(formatedResource)
-    .eq("id", id)
-    .select("id")
-    .single();
+    .eq("id", id);
 
-  if (!data || error) {
-    throw new Error("Error al agregar un recuros en ruta api");
+  if (error) {
+    return { error: error, message: "Error al actulizar un recuros" };
   }
 
-  const dataDetail = await updateDetaislResources(
-    dataResource,
-    supabase,
-    data?.id
-  );
+  const dataDetail = await updateDetaislResources(dataResource, supabase, id);
   return dataDetail;
 }
 
 async function updateDetaislResources(
   dataResource: SchemaResources,
   supabase: SupabaseClient,
-  idResource: string
+  idResource: number
 ) {
   const titleDetails = dataResource.detail_title;
   const descriptionDetails = dataResource.detail_desciption;
 
   if (!idResource) {
-    throw new Error(
-      "Se requiere de un identificador de recurso para los datelles"
-    );
+    return {
+      message: "Se requiere de un identificador de recurso para los datelles",
+    };
   }
 
   const formatedDetails = {
@@ -125,17 +120,21 @@ async function updateDetaislResources(
     url_resource: dataResource.url,
   };
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("details_resources")
     .update(formatedDetails)
     .eq("resource_id", idResource);
 
-  if (!data || error) {
-    throw new Error("Error al agregar los datalles de un recuros en ruta api");
+  if (error) {
+    return {
+      Error: error,
+      message: "Se requiere de un identificador de recurso para los datelles",
+    };
   }
 
   return {
-    sucess: true,
+    success: true,
+    status: 201,
     message: "Contenido actulizado con exito",
   };
 }

@@ -45,11 +45,9 @@ export async function updateResource(data: SchemaResources, id?: number) {
   try {
     const url = `/api/admin/resources/put?id=${id}`;
     const res = await query(url, "PUT", data);
-
     if (!res) {
       throw new Error("Error en el proceso de subida de los recursos");
     }
-
     return res;
   } catch (error) {
     console.log("Error en el proceso de subida de los recursos", error);

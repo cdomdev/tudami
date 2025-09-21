@@ -32,26 +32,15 @@ import {
   SchemaResources,
 } from "@/schemas";
 import { uploadImage } from "../../lib";
-import { useRouter } from "next/navigation";
 import { listDataResourceBy, updateResource } from "../../lib/resources";
 import { categoriesNames, typeResource } from "./formData";
 
-export function FormEditResounce({
-  isAdmin,
-  urlRedirect,
-}: {
-  isAdmin: boolean;
-  urlRedirect?: string;
-}) {
+export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
   const [isLoading, setIsloading] = useState<boolean>(false);
   const [dataResource, setDataResource] = useState<SchemaResoucesResponse>();
 
   const params = useSearchParams();
   const slug = params.get("slug") || "";
-  const router = useRouter();
-  const url = urlRedirect || "";
-
-  console.log(dataResource);
 
   useEffect(() => {
     listDataResourceBy(slug).then((res) => {
@@ -91,43 +80,42 @@ export function FormEditResounce({
   async function onSubmit(data: SchemaResources) {
     setIsloading(true);
     try {
-      let imageResource: string | undefined;
-
+      let imageResource = dataResource?.url_image;
       if (data.image instanceof File) {
         const res = await uploadImage(data.image, data.category.toLowerCase());
         imageResource = res?.url;
-      } else if (typeof data.image === "string" && data.image !== "") {
+      } else if (typeof data.image === "string" && data.image.trim() !== "") {
         imageResource = data.image;
-      } else {
-        imageResource = "";
       }
 
-      // formatear datos para la tabla
-      const formattedData = {
-        title: data.title,
-        description: data.description,
-        image: imageResource ? imageResource : dataResource?.url_image,
-        category: data.category,
-        url: data.url,
-        type: data.type,
-        detail_title: data.detail_title,
-        detail_desciption: data.detail_desciption,
+      const formattedData: SchemaResources = {
+        title: data.title ?? dataResource?.title ?? "",
+        description: data.description ?? dataResource?.description ?? "",
+        image: imageResource ?? dataResource?.url_image ?? "",
+        category: data.category ?? dataResource?.category ?? "",
+        url: data.url ?? dataResource?.details_resources[0]?.url_resource ?? "",
+        type: data.type ?? dataResource?.type ?? "",
+        detail_title:
+          data.detail_title ?? dataResource?.details_resources[0]?.title ?? "",
+        detail_desciption:
+          data.detail_desciption ??
+          dataResource?.details_resources[0]?.description ??
+          "",
       };
 
       const res = await updateResource(formattedData, dataResource?.id);
-      if (res) toast.success("Recurso modificado con exito");
-
-      form.reset({
-        title: "",
-        description: "",
-        image: "",
-        category: "",
-        detail_title: "",
-        detail_desciption: "",
-        url: "",
-        type: "",
-      });
-      router.push(url);
+      console.log(res)
+      if (res.status === 201) toast.success("Recurso actulizado con exito");
+      // form.reset({
+      //   title: "",
+      //   description: "",
+      //   image: "",
+      //   category: "",
+      //   detail_title: "",
+      //   detail_desciption: "",
+      //   url: "",
+      //   type: "",
+      // });
     } catch (error) {
       console.error("Error add resourse:", error);
       toast.error(
@@ -139,7 +127,7 @@ export function FormEditResounce({
   }
 
   return (
-    <Form {...form}>
+    <Form key={dataResource?.id} {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
         {/* titulo */}
         <FormField
@@ -302,7 +290,7 @@ export function FormEditResounce({
           disabled={isLoading}
         >
           {isLoading && <Spinner className="w-5 h-5" />}
-          {isLoading ? "Actulizando..." : "Actualizar"}
+          {isLoading ? "Actualizando..." : "Actualizar"}
         </Button>
       </form>
     </Form>
