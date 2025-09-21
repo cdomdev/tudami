@@ -71,6 +71,7 @@ export const config = {
     "/profile-user/:path*",
     "/view-profile-user",
     "/view-profile-user/:path*",
-    "/resource/new:path*"
+    "/resources/new",
+    "/resources/new:path*"
   ],
 };
