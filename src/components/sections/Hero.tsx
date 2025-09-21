@@ -80,7 +80,7 @@ export function Hero() {
           <span className="bg-gradient-to-r from-indigo-500 to-sky-400 text-transparent bg-clip-text">
             yo
           </span>
-          , aprendemos mejor.
+          <span className="hidden" /> aprendemos mejor.
         </h1>
       </div>
       <h2 className="relative flex flex-col md:flex-row justify-center items-center gap-2 text-xl lg:text-4xl  text-muted-foreground mb-12 text-center">

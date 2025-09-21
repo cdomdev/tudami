@@ -1,17 +1,26 @@
 import { supabase } from "@/utils/supabase/supabaseClient";
 type Providers = "google" | "github";
 
+const getURL = () => {
+  let url =
+    process?.env?.NEXT_PUBLIC_SITE_URL ??
+    process?.env?.NEXT_PUBLIC_VERCEL_URL ??
+    "http://localhost:3000";
+  url = url.startsWith("http") ? url : `https://${url}`;
+  url = url.endsWith("/") ? url : `${url}/`;
+  return url;
+};
+
 /**
  *
  * inicio de sesión con proveedor externo
  * @param provider - 'google' | 'github'
  */
 export async function loginWithProvider(provider: Providers) {
-  const HOST = process.env.NEXT_PUBLIC_HOST || "http://localhost:3000";
   await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: `${HOST}/auth/callback`,
+      redirectTo: `${getURL()}/auth/callback`,
     },
   });
 }
@@ -73,7 +82,6 @@ export async function registerUser({
   });
 
   // generar notificaion de bienvenida
-
 
   if (!response.ok) {
     throw new Error("No pudimos completar el registro, intente nuevamente");

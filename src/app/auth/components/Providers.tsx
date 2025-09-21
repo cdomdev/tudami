@@ -4,23 +4,16 @@ import { Spinner } from "@/components";
 import { GoogleIcon } from "@/components/icons/Google";
 import { GitHubIcon } from "@/components/icons/GitgubIcon";
 import { useState } from "react";
-import { supabase } from "@/utils/supabase/supabaseClient"
+import { loginWithProvider } from "../lib/auth";
 
 export function ProvidersAuth() {
   const [loadingProvider, setLoadingProvider] = useState<
     "google" | "github" | null
   >(null);
-  const HOST = process.env.NEXT_PUBLIC_HOST;
   const loginWith = async (provider: "google" | "github") => {
     try {
       setLoadingProvider(provider);
-      await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: `${HOST}/auth/callback`,
-        },
-      });
-      console.log(HOST)
+      await loginWithProvider(provider)
     } catch (error) {
       console.error(`Error al iniciar sesión con ${provider}:`, error);
       setLoadingProvider(null);

@@ -2,8 +2,7 @@
 
 import { SchemaResoucesResponse } from "@/schemas";
 import Image from "next/image";
-import { FileText } from "lucide-react";
-
+import { BookLock, BookOpen } from "lucide-react";
 export function CardResources({
   description,
   title,
@@ -24,6 +23,16 @@ export function CardResources({
         return "/resources/default-generic.webp";
     }
   };
+
+  const iconCard =
+    type === "free" ? (
+      <BookOpen className="w-3 h-3" />
+    ) : (
+      <BookLock className="w-3 h-3" />
+    );
+
+  const textBabge = type === "free" ? "Gratis" : "Pago";
+
   return (
     <article className="group relative overflow-hidden rounded-xl border border-line/20 transition hover:contrast-110 before:left-1/2 before:bottom-0 before:-translate-x-1/2 before:w-full before:h-full before:bg-black before:absolute before:translate-y-full hover:before:translate-y-1/12 before:-z-10 before:transition before:duration-200 before:mask-t-from-80% has-focus-visible:outline-none has-focus-visible:ring-2 has-focus-visible:ring-brand-blue/20 has-focus-visible:ring-offset-4 has-focus-visible:ring-offset-white has-focus-visible:contrast-110 has-focus-visible:before:translate-y-1/2  flex aspect-video flex-col h-full p-2">
       {" "}
@@ -31,10 +40,8 @@ export function CardResources({
         {" "}
         <span className="rounded-lg bg-line border border-amber-200 text-brand-yellow grid grid-cols-[auto_1fr]  gap-2 backdrop-blur-xs bg-special-gradient text-xs text-white dark:text-foreground items-center px-2">
           {" "}
-          <FileText className="w-3 h-4" />
-          <span className="py-1">
-            {type === "free" ? "Gratis" : "Pago"}
-          </span>{" "}
+          {iconCard}
+          <span className="py-1">{textBabge}</span>{" "}
         </span>{" "}
       </div>{" "}
       <Image
@@ -58,7 +65,9 @@ export function CardResources({
             {" "}
             <div className="flex items-center gap-4 text-sm text-brand-gray flex-wrap">
               <p className="line-clamp-3">
-                <span className="align-middle text-white dark:text-foreground">{description}</span>
+                <span className="align-middle text-white dark:text-foreground">
+                  {description}
+                </span>
               </p>
             </div>
           </div>{" "}
