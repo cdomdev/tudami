@@ -5,7 +5,7 @@ import { TableReseources } from "../components/TableResources";
 import { ButtonCs } from "../components/ui/Button";
 import { Plus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { listDataResource } from "../lib/resources";
+import { listDataResource } from "../_lib/resources";
 import { SchemaResoucesResponse } from "@/schemas";
 import { TableSkeleton } from "../components/table/TableSkeleton";
 

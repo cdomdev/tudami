@@ -5,15 +5,18 @@ import { adventurer } from "@dicebear/collection";
 import sharp from "sharp";
 import nPayload from "@/content/notitications/notications-entity.json";
 import {getRoleForNewUser} from "../../login/helpers/helper.authPro"
+
 async function getDataProfileUser(supabase: SupabaseClient) {
   return await supabase.auth.getUser();
 }
 
 // function que guardar datos en la tabla del perfil del usuario
+
 export async function updateProfile(
   supabase: SupabaseClient,
   full_name: string
 ) {
+
   const dataUser = await getDataProfileUser(supabase);
 
   const { data: dataProfile } = dataUser;
@@ -103,7 +106,7 @@ async function generateNotificationWelcome(
     read: false,
   };
 
-  const { data, error } = await supabase
+  const {error } = await supabase
     .from("notifications")
     .insert([notification])
     .select()
@@ -114,5 +117,4 @@ async function generateNotificationWelcome(
     throw new Error("Error creating notification");
   }
 
-  console.log("Notification created:", data);
 }

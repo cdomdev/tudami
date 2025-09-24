@@ -31,8 +31,8 @@ import {
   SchemaResoucesResponse,
   SchemaResources,
 } from "@/schemas";
-import { uploadImage } from "../../lib";
-import { listDataResourceBy, updateResource } from "../../lib/resources";
+import { uploadImage } from "../../_lib";
+import { listDataResourceBy, updateResource } from "../../_lib/resources";
 import { categoriesNames, typeResource } from "./formData";
 
 export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
@@ -106,16 +106,6 @@ export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
       const res = await updateResource(formattedData, dataResource?.id);
       console.log(res)
       if (res.status === 201) toast.success("Recurso actulizado con exito");
-      // form.reset({
-      //   title: "",
-      //   description: "",
-      //   image: "",
-      //   category: "",
-      //   detail_title: "",
-      //   detail_desciption: "",
-      //   url: "",
-      //   type: "",
-      // });
     } catch (error) {
       console.error("Error add resourse:", error);
       toast.error(

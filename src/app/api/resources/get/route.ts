@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 import { listaAllDataResource } from "../helper/listaData";
+
+
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const page = Number(url.searchParams.get("page")) || 1;

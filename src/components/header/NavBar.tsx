@@ -23,7 +23,6 @@ export function NavBar() {
   const isLoginPage = route === "/auth/login";
   const isCallbackPage = route === "/auth/callback";
   const isRegisterPage = route === "/auth/register";
-  const isForgotPage = route === "/auth/forgot-password";
   const isAdminPage = route === "/admin" || route.startsWith("/admin");
 
   useEffect(() => {
@@ -41,7 +40,6 @@ export function NavBar() {
     isLoginPage ||
     isCallbackPage ||
     isRegisterPage ||
-    isForgotPage ||
     isAdminPage
   ) {
     return null;

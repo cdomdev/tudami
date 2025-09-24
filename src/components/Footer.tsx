@@ -10,7 +10,7 @@ export function Footer() {
 
   if (isAdminPage) return null;
   return (
-    <footer className="w-full bg-gradient-to-br from-gray-100 via-white to-gray-200 dark:from-gray-900 dark:via-gray-950 dark:to-[#0d1117] text-gray-700 dark:text-gray-300 py-5">
+    <footer className="w-screen overflow-y-hidden bg-gradient-to-br from-gray-100 via-white to-gray-200 dark:from-gray-900 dark:via-gray-950 dark:to-[#0d1117] text-gray-700 dark:text-gray-300 py-5">
       <div className="max-w-7xl mx-auto px-6 space-y-6">
         <div className="text-center space-y-2">
           <Image

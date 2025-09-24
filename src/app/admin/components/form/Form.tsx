@@ -27,9 +27,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Spinner } from "@/components";
 import { toast } from "sonner";
 import { FormSchemaResources, SchemaResources } from "@/schemas";
-import { saveResource, uploadImage } from "../../lib";
+import { saveResource, uploadImage } from "../../_lib";
 import { useRouter } from "next/navigation";
-
+import { categoriesNames, typeResource } from "./formData";
 export function FormNewResounce({
   isAdmin,
   urlRedirect,
@@ -54,30 +54,6 @@ export function FormNewResounce({
       type: "",
     },
   });
-
-  const categoriesNames = [
-    {
-      slug: "cursos",
-      name: "Cursos",
-    },
-    {
-      slug: "documentation",
-      name: "Documentacion",
-    },
-    {
-      slug: "tools",
-      name: "Herramientas",
-    },
-    {
-      slug: "videos",
-      name: "Videos",
-    },
-  ];
-
-  const typeResource = [
-    { value: "paid", name: "De pago" },
-    { value: "free", name: "Gratis" },
-  ];
 
   async function onSubmit(data: SchemaResources) {
     console.log(data);

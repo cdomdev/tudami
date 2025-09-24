@@ -41,7 +41,7 @@ export default function ForgotPage() {
                 </h1>
 
                 <p className="text-md text-muted-foreground mt-2">
-                    Escribe tu correo electrónico y te enviaremos un código para restablecer la contraseña.
+                    Escribe tu correo electrónico y te enviaremos un enlace para restablecer la contraseña.
                 </p>
             </div>
 

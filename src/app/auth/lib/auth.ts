@@ -110,7 +110,7 @@ export async function loginWithPassword(email: string, password: string) {
       "Los datos ingresados no son correctos, intente nuevamente"
     );
 
-  const response = await fetch("/api/auth/loginWithPassword", {
+  const response = await fetch("/api/auth/login-with-password", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -138,9 +138,32 @@ export async function loginWithPassword(email: string, password: string) {
  * función para enviar código de recuperación de contraseña
  * @param email
  */
-export async function sendCodeForgotPassword(email: string) {
-  console.log(email);
+
+export async function sendRequestForgotPassword(email: string) {
+  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/auth/update-password`;
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: url,
+  });
+
+  if (error) {
+    console.error("Error en resetPasswordForEmail:", error.message);
+    throw new Error(error.message);
+  }
+  return true;
 }
+
+export async function updatePassword(password: string) {
+  try {
+    const { error } = await supabase.auth.updateUser({ password });
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    console.error("Error al cambiar contraseña:", error);
+    throw error;
+  }
+}
+
 
 /**
  * función para cerrar sesión

@@ -21,12 +21,16 @@ import Link from "next/link";
 import { registerUser } from "../lib/auth";
 import { toast } from "sonner";
 
+
 const FormSchema = z.object({
   email: z.string().email({ message: "Debe ser un correo válido." }),
   name: z.string().min(2).max(100),
-  password: z
-    .string()
-    .min(6, { message: "La contraseña debe tener al menos 6 caracteres." }),
+  password: z.string()
+    .min(8, { message: "Debe tener mínimo 8 caracteres" })
+    .regex(/[a-z]/, { message: "Debe incluir una letra minúscula" })
+    .regex(/[A-Z]/, { message: "Debe incluir una letra mayúscula" })
+    .regex(/[0-9]/, { message: "Debe incluir un número" })
+    .regex(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]/, { message: "Debe incluir un carácter especial" }),
 });
 
 const nameNotAllowed = ["admin", "administrator", "root", "superuser", "supervisor", "system", "guest", "user", "test", "null", "undefined", "operator", "manager", "owner", "support", "contact", "info", "webmaster", "security", "administrator1", "admin123", "Tudami", "tudami", "TUDAMI",];

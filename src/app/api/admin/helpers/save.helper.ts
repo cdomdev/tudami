@@ -1,6 +1,13 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { SchemaResources } from "@/schemas";
 
+/**
+ * Guardar recursos en db
+ * @param dataResource 
+ * @param supabase 
+ * @param isAdmin 
+ * @returns 
+ */
 export async function saveResourceHelper(
   dataResource: SchemaResources,
   supabase: SupabaseClient,
@@ -33,6 +40,13 @@ export async function saveResourceHelper(
   return dataDetail;
 }
 
+/**
+ * Guardar detalles de recursos en db
+ * @param dataResource 
+ * @param supabase 
+ * @param idResource 
+ * @returns 
+ */
 async function saveDetaislResources(
   dataResource: SchemaResources,
   supabase: SupabaseClient,
@@ -71,6 +85,15 @@ async function saveDetaislResources(
   };
 }
 
+
+
+/**
+ * Actulizar o modificar recuros en la db
+ * @param dataResource 
+ * @param supabase 
+ * @param id 
+ * @returns 
+ */
 export async function updateResourceHelper(
   dataResource: SchemaResources,
   supabase: SupabaseClient,
@@ -98,7 +121,13 @@ export async function updateResourceHelper(
   const dataDetail = await updateDetaislResources(dataResource, supabase, id);
   return dataDetail;
 }
-
+/**
+ * Actulizar o modificar detalles de los recursos en l db
+ * @param dataResource 
+ * @param supabase 
+ * @param idResource 
+ * @returns 
+ */
 async function updateDetaislResources(
   dataResource: SchemaResources,
   supabase: SupabaseClient,

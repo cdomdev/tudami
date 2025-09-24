@@ -6,7 +6,7 @@ export async function saveAvatarStorage(
   webpData: ArrayBuffer | Uint8Array | Blob
 ): Promise<string> {
   
-  const path = `default/${seed}.webp`
+  const path = `${seed}.webp`
 
   const { error: uploadError } = await supabase.storage
     .from("avatars")
@@ -16,6 +16,7 @@ export async function saveAvatarStorage(
     })
 
   if (uploadError) {
+    console.log(uploadError)
     throw new Error(`Error al guardar avatar: ${uploadError.message}`)
   }
 
