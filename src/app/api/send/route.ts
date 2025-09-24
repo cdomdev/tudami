@@ -1,7 +1,7 @@
 import { PasswordUpdated } from "@/emails/PasswordUpdated";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.NEXT_PUBLIC_API_KEY);
+const resend = new Resend(process.env.NEXT_PUBLIC_API_KEY_RESEND);
 
 export async function POST() {
   try {
