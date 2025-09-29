@@ -2,7 +2,7 @@ import React from "react";
 import { Resend } from "resend";
 import { query } from "./query";
 
-const resend = new Resend(process.env.NEXT_PUBLIC_API_KEY);
+const resend = new Resend(process.env.NEXT_PUBLIC_API_KEY_RESEND);
 
 export async function sendEmail(
   subject: string,
