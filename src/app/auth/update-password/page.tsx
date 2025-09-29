@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 
 export default function UpdatePasswordPage() {
   return (
-    <div className="py-8 grid place-content-center px-4">
+    <div className="py-8 grid place-content-center px-4  mt-20">
       <div className="max-w-sm w-full space-y-6">
         <div className="text-center">
           <h1 className="text-2xl font-semibold text-slate-800 dark:text-white">
