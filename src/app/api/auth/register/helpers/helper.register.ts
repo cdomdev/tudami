@@ -100,8 +100,8 @@ export async function generateNotificationWelcome(
   const notification = {
     user_id: user_id,
     actor_id: user_id,
-    type: nPayload[0].type,
-    entity_id: 1,
+    type: nPayload[3].type,
+    entity_id: nPayload[3].id,
     entity_type: nPayload[3].entity_type,
     content: `Hola ${full_name}, bienvenido a Tudami, un espacio para aprender y crecer.
  \n Estamos emocionados de tenerte con nosotros y esperamos que disfrutes de la experiencia. \n Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos.  \n ¡Feliz aprendizaje!. \n Puedes visitar y personalizar tu perfil haciendo clic sobre este mensaje.`,

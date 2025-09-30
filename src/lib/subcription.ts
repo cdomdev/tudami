@@ -1,5 +1,5 @@
-import { SupabaseClient } from "@supabase/supabase-js";
 import { toast } from "sonner";
+import { supabase } from "@/utils/supabase/supabaseClient";
 
 export async function subscribe(email: string) {
   const url = "api/subcription/new";
@@ -16,20 +16,14 @@ export async function subscribe(email: string) {
   return data;
 }
 
-
 export async function alternativeSubcription(email: string) {
-  const supabase = new SupabaseClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || "",
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
-  );
-
   const { data, error } = await supabase
     .from("newsletter_subscribers")
-    .insert({ email: email });
+    .insert({ email: email, is_active: true });
 
   if (error?.code === "23505") {
     toast.error("Ya estás suscrito a nuestro boletín.");
   }
 
-  return { data };
+  return { data, error };
 }

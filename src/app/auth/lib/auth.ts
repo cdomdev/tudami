@@ -1,6 +1,7 @@
 import { supabase } from "@/utils/supabase/supabaseClient";
-type Providers = "google" | "github";
+import { query } from "@/lib/query";
 
+type Providers = "google" | "github";
 const getURL = () => {
   let url =
     process?.env?.NEXT_PUBLIC_SITE_URL ??
@@ -140,7 +141,7 @@ export async function loginWithPassword(email: string, password: string) {
  */
 
 export async function sendRequestForgotPassword(email: string) {
-  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/auth/update-password`;
+  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/auth/update-password?email=${email}`;
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: url,
   });
@@ -152,18 +153,27 @@ export async function sendRequestForgotPassword(email: string) {
   return true;
 }
 
-export async function updatePassword(password: string) {
+export async function updatePassword(password: string, to: string) {
   try {
     const { error } = await supabase.auth.updateUser({ password });
     if (error) {
       throw error;
     }
+    // send mail
+    await sendMailConfirmUpdatePw(to);
   } catch (error) {
     console.error("Error al cambiar contraseña:", error);
     throw error;
   }
 }
 
+async function sendMailConfirmUpdatePw(to: string) {
+  try {
+    await query(`/api/auth/forgot?email=${to}`, "POST");
+  } catch (err) {
+    console.error("Fallo inesperado al enviar:", err);
+  }
+}
 
 /**
  * función para cerrar sesión

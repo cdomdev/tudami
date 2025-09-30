@@ -64,7 +64,7 @@ export function FormForgot() {
             <FormItem>
               <FormLabel>Correo electrónico</FormLabel>
               <FormControl>
-                <Input placeholder="usuario@ejemplo.com" {...field} />
+                <Input placeholder="usuario@ejemplo.com" {...field} className="bg-white"/>
               </FormControl>
               <FormMessage />
             </FormItem>

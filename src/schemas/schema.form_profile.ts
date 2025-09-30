@@ -4,16 +4,14 @@ export const FormSchema = z.object({
     full_name: z
         .string()
         .min(2, "El nombre debe tener al menos un caracteres")
-        .max(15, "El nombre no puede exeder los 15 cartacteres")
+        .max(20, "El nombre no puede exeder los 20 cartacteres")
         .optional(),
     department: z
         .string()
-        .min(2, "El departamento debe tener al menos 2 caracteres")
-        .max(100, "El departamento no puede exceder 100 caracteres"),
+        .max(100, "El departamento no puede exceder 100 caracteres").optional(),
     city: z
         .string()
-        .min(2, "La ciudad debe tener al menos 2 caracteres")
-        .max(100, "La ciudad no puede exceder 100 caracteres"),
+        .max(100, "La ciudad no puede exceder 100 caracteres").optional(),
     phone: z
         .string()
         .refine((val) => {

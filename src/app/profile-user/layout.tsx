@@ -19,7 +19,6 @@ export default function LayoutProfile({
 }) {
   const { user } = useSession();
 
-  console.log(user)
   return (
     <section
       className="grid grid-cols-1 md:grid-cols-6 gap-2 p-4 max-w-6xl mx-auto mt-20 md:mt-24"
@@ -61,8 +60,8 @@ export default function LayoutProfile({
           <div className="flex flex-col justify-center">
             <h1 className="text-xl md:text-2xl font-bold flex flex-col ">
               <span className="text-lg bg-gradient-to-r from-indigo-500 to-sky-400 text-transparent bg-clip-text">
-                Bienvenido(a)
-                {user?.role === "admin_tudami" && <span>(Admin)</span>}
+                Bienvenido/a
+                {user?.role === "admin_tudami" && <span className="ml-1">(Admin)</span>}
               </span>
               {user?.full_name || "Anonimo"}
             </h1>

@@ -1,4 +1,4 @@
-import { WelcomeTp } from "@/emails/Wellcome";
+import { PasswordUpdated} from "@/emails/PasswordUpdated";
 export default function page() {
-  return <WelcomeTp name="Carlos" />;
+  return <PasswordUpdated email="algo@gmail.com"  />;
 }

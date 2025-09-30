@@ -85,7 +85,7 @@ export function NavBar() {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
-                  href="/news"
+                  href="/news?sort=alls"
                   className="bg-transparent hover:dark:bg-gray-50/5 text-sm md:text-base px-3"
                 >
                   Noticias

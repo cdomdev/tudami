@@ -6,7 +6,6 @@ import { z } from "zod";
 import { Eye, EyeClosed } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
-import { PasswordUpdated } from "@/emails/PasswordUpdated";
 import {
   Form,
   FormControl,
@@ -21,7 +20,6 @@ import { Spinner } from "@/components";
 import { toast } from "sonner";
 import { useSearchParams, useRouter } from "next/navigation";
 import { updatePassword } from "../lib/auth";
-import { sendEmail } from "@/lib/send-mails";
 export const FormSchema = z
   .object({
     password: z
@@ -43,6 +41,7 @@ export function FormUpdate() {
   const router = useRouter();
   const params = useSearchParams();
   const code = params.get("code");
+  const email = params.get("email") || "";
 
   useEffect(() => {
     if (code) {
@@ -64,12 +63,7 @@ export function FormUpdate() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsloading(true);
     try {
-      await updatePassword(data.password);
-      await sendEmail(
-        "Contraseña actualizada",
-        "cdomreyes@gmail.com",
-        <PasswordUpdated userName="Carlos" />
-      );
+      await updatePassword(data.password, email);
       router.push(
         `/auth/update-password/result?success=true&message=${encodeURIComponent(
           "contraseña actualizada con exito"
@@ -104,6 +98,7 @@ export function FormUpdate() {
                   <Input
                     type={showPassword ? "text" : "password"}
                     placeholder="Nueva contraseña"
+                    className="bg-white"
                     {...field}
                   />
                   <button
@@ -137,6 +132,7 @@ export function FormUpdate() {
                     type={showPassword2 ? "text" : "password"}
                     placeholder="Confirmar contraseña"
                     {...field}
+                    className="bg-white"
                   />
                   <button
                     type="button"

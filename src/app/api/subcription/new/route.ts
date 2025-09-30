@@ -1,15 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 
-
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json(); 
+    const { email } = await request.json();
     if (!email) {
-      return NextResponse.json(
-        { error: "Email is required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
     const data = await subscribe(email);
     return NextResponse.json(data);
@@ -26,7 +22,7 @@ async function subscribe(email: string) {
   const supabase = await supabaseServerClient();
   const { data, error } = await supabase
     .from("newsletter_subscribers")
-    .insert({ email: email });
+    .insert({ email: email, is_active: true });
 
   if (error) {
     console.error("Error subscribing to changes:", error);
