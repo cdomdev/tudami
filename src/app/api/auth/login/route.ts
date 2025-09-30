@@ -8,7 +8,7 @@ import {
   ensureUserPreferences,
 } from "./helpers/helper.authPro";
 import { getDataUser } from "@/app/api/user/helpers/helper.user";
-
+import { generateNotificationWelcome, mailWellcome} from "../register/helpers/helper.register";
 /**
  * Ruta principal de autenticación - Maneja todo el flujo de inicio de sesión
  * Incluye: validación de sesión, generación de tokens, guardado en cookies, inicialización de usuario
@@ -26,10 +26,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 1. Inicializar Supabase con el token de acceso
+    //  Inicializar Supabase con el token de acceso
     const supabase = await supabaseAuth(accessToken);
 
-    // 2. Validar el token de acceso y obtener el usuario autenticado
+    //  Validar el token de acceso y obtener el usuario autenticado
     let authUser;
     try {
       const validationResult = await validateAccessToken(accessToken, supabase);
@@ -44,7 +44,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 3. Extraer datos del usuario autenticado
+    //  Extraer datos del usuario autenticado
+
     const { id } = authUser;
     const full_name =
       authUser.user_metadata?.full_name ||
@@ -55,7 +56,38 @@ export async function POST(request: NextRequest) {
       authUser.user_metadata?.avatar_url ||
       "";
 
-    // 4. Generar token de aprobación
+    // validar si el usuario ya esta registrado en db
+    let user = null;
+    try {
+      user = await getDataUser(id, supabase);
+    } catch (error) {
+      // Aquí solo capturas el error de "usuario no encontrado"
+      console.warn(
+        "[AUTH] Usuario no encontrado, procediendo con registro:",
+        error
+      );
+    }
+
+    if (user) {
+      // Si existe, seguimos flujo normal
+      const approvalToken = generateApprovalToken(id);
+
+      await setupAuthCookies({
+        accessToken,
+        refreshToken,
+        approvalToken,
+      });
+
+      return NextResponse.json({
+        success: true,
+        message: "Autenticación exitosa",
+        user,
+      });
+    }
+
+    // -------------------
+    // FLUJO DE REGISTRO
+    // -------------------
     const approvalToken = generateApprovalToken(id);
 
     try {
@@ -75,22 +107,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 6. Configurar cookies de forma segura
+    //  Configurar cookies de forma segura
     await setupAuthCookies({
       accessToken,
       refreshToken,
       approvalToken,
     });
 
-    // 7. Crear preferencias por defecto solo si el usuario no las tiene
+    // Crear preferencias por defecto
     try {
       await ensureUserPreferences(id, supabase);
     } catch (error) {
       console.error("Error al crear preferencias del usuario:", error);
-      // No retornamos error aquí porque las preferencias pueden crearse después
     }
 
-    //obtener datos del usuario para retornar
+    // Obtener datos del usuario recién creado
     let data;
     try {
       data = await getDataUser(id, supabase);
@@ -102,9 +133,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // notificacion de bienvenida
+    await generateNotificationWelcome(id, full_name, supabase);
+
+    const mail = authUser.email || ""
+    // Mail de bienvenida
+    await mailWellcome(mail, full_name);
+
     return NextResponse.json({
       success: true,
-      message: "Autenticación exitosa",
+      message: "Registro exitoso",
       user: data,
     });
   } catch (error) {

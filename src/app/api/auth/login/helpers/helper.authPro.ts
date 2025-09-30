@@ -1,5 +1,7 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
+import { resend } from "@/emails/congif";
+import { PasswordUpdated } from "@/emails/PasswordUpdated";
 
 /**
  * Valida el token de acceso con Supabase y retorna el usuario autenticado
@@ -46,7 +48,6 @@ export async function upsertUserProfile({
   approvalToken: string;
   supabase: SupabaseClient;
 }) {
-  
   const rol = await getRoleForNewUser(supabase);
 
   const { error, data } = await supabase
@@ -157,4 +158,17 @@ export async function getRoleForNewUser(supabase: SupabaseClient) {
   }
 
   return data;
+}
+
+export async function mailWellcome(to: string) {
+  const { data, error } = await resend.emails.send({
+    from: "Tudami <team@info.tudami.com>",
+    to: to,
+    subject: "Bienvenido(a)",
+    react: PasswordUpdated({ userName: "carlos" }),
+  });
+  console.log("data del mail", data);
+  if (error) {
+    return Response.json({ error }, { status: 500 });
+  }
 }

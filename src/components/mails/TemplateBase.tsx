@@ -2,19 +2,19 @@ import { Section, Img, Text, Row, Column, Link } from "@react-email/components";
 
 export function TemplateBase({ children }: { children: React.ReactNode }) {
   return (
-    <Section className="max-w-2xl mx-auto  mt-30">
+    <Section className="max-w-2xl mx-auto  mt-30 dark:bg-white text-black">
       <Section className="my-[40px] px-[32px] py-[40px]">
-        <Row className="">
+        <Row className="mx-6">
           <Column className="flex gap-x-2">
             <Img
               alt="logo tudami"
               height={50}
               width={50}
               className="object-contain"
-              src="https://iyyeielwbsaybnczamix.supabase.co/storage/v1/object/public/files/logo.svg"
+              src="https://iyyeielwbsaybnczamix.supabase.co/storage/v1/object/public/files/tudami/logo.svg"
             />
             <Text
-              className="font-semibold text-[32px] dark:text-white"
+              className="font-semibold text-[32px]"
               style={{ fontSize: "20px" }}
             >
               Tudami

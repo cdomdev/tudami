@@ -5,6 +5,8 @@ import { adventurer } from "@dicebear/collection";
 import sharp from "sharp";
 import nPayload from "@/content/notitications/notications-entity.json";
 import {getRoleForNewUser} from "../../login/helpers/helper.authPro"
+import { resend } from "@/emails/congif";
+import { PasswordUpdated } from "@/emails/PasswordUpdated";
 
 async function getDataProfileUser(supabase: SupabaseClient) {
   return await supabase.auth.getUser();
@@ -36,7 +38,7 @@ export async function updateProfile(
 
   await definePreference(id, supabase);
   await generateNotificationWelcome(id, full_name, supabase);
-
+  await mailWellcome(email, full_name)
   return {
     success: true,
     message: "Registro exitoso, ya puedes iniciar sesion",
@@ -87,7 +89,7 @@ export async function createAvatarDefault(seed: string): Promise<Buffer> {
   return webpBuffer;
 }
 
-async function generateNotificationWelcome(
+export async function generateNotificationWelcome(
   user_id: string,
   full_name: string,
   supabase: SupabaseClient
@@ -101,7 +103,7 @@ async function generateNotificationWelcome(
     entity_id: 1,
     entity_type: nPayload[3].entity_type,
     content: `Hola ${full_name}, bienvenido a Tudami, un espacio para aprender y crecer.
- \n Estamos emocionados de tenerte con nosotros y esperamos que disfrutes de la experiencia. \n Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos. ¡Feliz aprendizaje!. \n Puedes visitar y personalizar tu perfil haciendo clic sobre este mensaje.`,
+ \n Estamos emocionados de tenerte con nosotros y esperamos que disfrutes de la experiencia. \n Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos.  \n ¡Feliz aprendizaje!. \n Puedes visitar y personalizar tu perfil haciendo clic sobre este mensaje.`,
     url: `/profile-user?id=${user_id}`,
     read: false,
   };
@@ -117,4 +119,26 @@ async function generateNotificationWelcome(
     throw new Error("Error creating notification");
   }
 
+}
+
+export async function mailWellcome(to: string, name: string) {
+  try {
+    const { data, error } = await resend.emails.send({
+      from: "Tudami <team@info.tudami.com>", 
+      to,
+      subject: "🎉 Bienvenido(a) a Tudami",
+      react: PasswordUpdated({ userName: name }),
+    });
+
+    if (error) {
+      console.error("Error enviando correo:", error);
+      return Response.json({ error }, { status: 500 });
+    }
+
+    console.log("Correo enviado:", data);
+    return Response.json({ success: true, data });
+  } catch (err) {
+    console.error("Fallo inesperado al enviar:", err);
+    return Response.json({ error: "Error interno de envío" }, { status: 500 });
+  }
 }

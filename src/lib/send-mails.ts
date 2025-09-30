@@ -11,7 +11,7 @@ export async function sendEmail(
 ) {
   try {
     await resend.emails.send({
-      from: "Equipo Tudami <team@info.tudami.com>",
+      from: "Tudami <team@info.tudami.com>",
       to,
       subject,
       react: children,
@@ -25,4 +25,8 @@ export async function sendEmail(
 
 export async function send() {
   await query("/api/send", "POST")
+}
+
+export async function sendMailWellcome(){
+  await query("/api/send/wellcome", "POST")
 }
