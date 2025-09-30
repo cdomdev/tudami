@@ -2,33 +2,37 @@ import { Section, Img, Text, Row, Column, Link } from "@react-email/components";
 
 export function TemplateBase({ children }: { children: React.ReactNode }) {
   return (
-    <Section className="max-w-2xl mx-auto  mt-30">
-      <Section className="my-[40px] px-[32px] py-[40px]">
-        <Row className="">
-          <Column className="flex gap-x-2">
-            <Img
-              alt="logo tudami"
-              height={50}
-              width={50}
-              className="object-contain"
-              src="https://iyyeielwbsaybnczamix.supabase.co/storage/v1/object/public/files/logo.svg"
-            />
-            <Text
-              className="font-semibold text-[32px] dark:text-white"
-              style={{ fontSize: "20px" }}
-            >
-              Tudami
-            </Text>
-          </Column>
+    <Section className="max-w-2xl mx-auto  mt-30" style={{maxWidth: "672px"}}>
+      <Section
+        className="my-[40px] px-[32px] py-[40px] flex gap-x-1"
+      >
+        <Row>
+          <Img
+            alt="logo tudami"
+            height={50}
+            width={50}
+            className="object-contain"
+            src="https://iyyeielwbsaybnczamix.supabase.co/storage/v1/object/public/files/tudami/logo.svg"
+          />
+          <Text
+            className="font-bold text-[32px] dark:text-white"
+            style={{ fontSize: "20px" }}
+          >
+            Tudami
+          </Text>
         </Row>
       </Section>
-      <Section>{children}</Section>
+
+      <Section style={{ margin: "20px" }}>{children}</Section>
 
       <Section className="text-center">
         <table className="w-full">
           <tr className="w-full">
             <td align="center">
-              <Text className="my-[8px] font-semibold text-[16px] leading-tight bg-clip-text text-transparent bg-gradient-to-r from-red-600  to-blue-600">
+              <Text
+                className="my-[8px] font-semibold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-red-600  to-blue-600"
+                style={{ fontSize: "18px" }}
+              >
                 Aprende con otros, comparte con todos.
               </Text>
               <Text className="mt-[4px] mb-0 text-[16px] text-gray-500 leading-[24px]">

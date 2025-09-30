@@ -4,9 +4,9 @@ import { createAvatar } from "@dicebear/core";
 import { adventurer } from "@dicebear/collection";
 import sharp from "sharp";
 import nPayload from "@/content/notitications/notications-entity.json";
-import {getRoleForNewUser} from "../../login/helpers/helper.authPro"
+import { getRoleForNewUser } from "../../login/helpers/helper.authPro";
 import { resend } from "@/emails/congif";
-import { PasswordUpdated } from "@/emails/PasswordUpdated";
+import { WelcomeTp } from "@/emails/Wellcome";
 
 async function getDataProfileUser(supabase: SupabaseClient) {
   return await supabase.auth.getUser();
@@ -18,7 +18,6 @@ export async function updateProfile(
   supabase: SupabaseClient,
   full_name: string
 ) {
-
   const dataUser = await getDataProfileUser(supabase);
 
   const { data: dataProfile } = dataUser;
@@ -29,7 +28,9 @@ export async function updateProfile(
   const rol = await getRoleForNewUser(supabase);
   const { error } = await supabase
     .from("users")
-    .upsert([{ full_name, avatar_url, email, country: "Colombia", rol_id: rol.id }])
+    .upsert([
+      { full_name, avatar_url, email, country: "Colombia", rol_id: rol.id },
+    ])
     .select("id")
     .single();
   if (error) {
@@ -38,7 +39,7 @@ export async function updateProfile(
 
   await definePreference(id, supabase);
   await generateNotificationWelcome(id, full_name, supabase);
-  await mailWellcome(email, full_name)
+  await mailWellcome(email, full_name);
   return {
     success: true,
     message: "Registro exitoso, ya puedes iniciar sesion",
@@ -108,7 +109,7 @@ export async function generateNotificationWelcome(
     read: false,
   };
 
-  const {error } = await supabase
+  const { error } = await supabase
     .from("notifications")
     .insert([notification])
     .select()
@@ -118,16 +119,15 @@ export async function generateNotificationWelcome(
     console.error("Error creating notification:", error);
     throw new Error("Error creating notification");
   }
-
 }
 
 export async function mailWellcome(to: string, name: string) {
   try {
     const { data, error } = await resend.emails.send({
-      from: "Tudami <team@info.tudami.com>", 
-      to,
-      subject: "🎉 Bienvenido(a) a Tudami",
-      react: PasswordUpdated({ userName: name }),
+      from: "Tudami <team@info.tudami.com>",
+      to: to,
+      subject: "Bienvenido/a",
+      react: WelcomeTp({ name: name }),
     });
 
     if (error) {

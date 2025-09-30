@@ -84,7 +84,7 @@ export function FormLogin() {
               <div className="flex flex-1 items-center justify-between">
                 <FormLabel>Contraseña</FormLabel>
                 <FormLabel>
-                  <Link href="/auth/forgot-password">
+                  <Link href="/auth/forgot-password" className="underline">
                     ¿Olvidaste tu contraseña?
                   </Link>
                 </FormLabel>

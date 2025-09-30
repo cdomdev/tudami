@@ -8,7 +8,10 @@ import {
   ensureUserPreferences,
 } from "./helpers/helper.authPro";
 import { getDataUser } from "@/app/api/user/helpers/helper.user";
-import { generateNotificationWelcome, mailWellcome} from "../register/helpers/helper.register";
+import {
+  generateNotificationWelcome,
+  mailWellcome,
+} from "../register/helpers/helper.register";
 /**
  * Ruta principal de autenticación - Maneja todo el flujo de inicio de sesión
  * Incluye: validación de sesión, generación de tokens, guardado en cookies, inicialización de usuario
@@ -136,7 +139,7 @@ export async function POST(request: NextRequest) {
     // notificacion de bienvenida
     await generateNotificationWelcome(id, full_name, supabase);
 
-    const mail = authUser.email || ""
+    const mail = authUser.email || "";
     // Mail de bienvenida
     await mailWellcome(mail, full_name);
 
