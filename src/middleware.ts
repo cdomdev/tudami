@@ -17,7 +17,6 @@ export async function middleware(req: NextRequest) {
       return redirectToLogin(req);
     }
 
-    // validar si entra a ruta admin
     const userId = userSession.user.id;
     const pathname = req.nextUrl.pathname;
 
