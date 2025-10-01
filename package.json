@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "npx tsx src/lib/setTags.ts",
-    "postbuild": "next-sitemap"
+    "postbuild": "ts-node --project tsconfig.json ./node_modules/.bin/next-sitemap"
   },
   "dependencies": {
     "@dicebear/collection": "^9.2.4",
