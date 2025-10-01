@@ -13,12 +13,12 @@ import { useState } from "react";
 import Image from "next/image";
 
 
-interface UploadImageProps<T extends { image?: any }> {
+interface UploadImageProps<T extends { image?: string }> {
   control: Control<T>;
   url_image?: string;
 }
 
-export function UploadImage<T extends { image?: any }>({
+export function UploadImage<T extends { image?: string }>({
   control,
   url_image,
 }: UploadImageProps<T>) {
