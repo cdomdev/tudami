@@ -30,6 +30,7 @@ import { FormSchemaResources, SchemaResources } from "@/schemas";
 import { saveResource, uploadImage } from "../../_lib";
 import { useRouter } from "next/navigation";
 import { categoriesNames, typeResource } from "./formData";
+
 export function FormNewResounce({
   isAdmin,
   urlRedirect,
@@ -56,12 +57,11 @@ export function FormNewResounce({
   });
 
   async function onSubmit(data: SchemaResources) {
-    console.log(data);
     setIsloading(true);
     try {
       let imageResource;
       if (data.image && data.image instanceof File) {
-        const res = await uploadImage(data.image, data.category.toLowerCase());
+        const res = await uploadImage(data.image, data.category.toLowerCase(), "resources");
         imageResource = res?.url;
       }
 
@@ -69,7 +69,7 @@ export function FormNewResounce({
       const formattedData = {
         title: data.title,
         description: data.description,
-        image: imageResource ? imageResource : "",
+        image: imageResource || "",
         category: data.category,
         url: data.url,
         type: data.type,

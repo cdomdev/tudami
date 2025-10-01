@@ -1,4 +1,4 @@
-import { Home, Workflow } from "lucide-react";
+import { Home, Workflow, Newspaper, Users } from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -23,6 +23,16 @@ const items = [
     title: "Recursos",
     url: "/admin/resources",
     icon: Workflow,
+  },
+  {
+    title: "Noticias",
+    url: "/admin/news",
+    icon: Newspaper,
+  },
+  {
+    title: "Usuarios",
+    url: "/admin/users",
+    icon: Users,
   },
 ];
 

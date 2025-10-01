@@ -68,11 +68,11 @@ export function TargetUser() {
 
   if (!user)
     return (
-      <aside className="max-w-60 space-y-4">
-        <p className="dark:text-gray-200 text-balance">
+      <aside className="w-full space-y-4">
+        <p className=" text-xs md:text-sm text-gray-600 dark:text-gray-400 text-pretty">
           Inicia sesion y suscribete al boletin del noticias
         </p>
-        <Link href="/auth/login" >
+        <Link href="/auth/login"  >
           <Button variant={"default"} className="cursor-pointer"><User /> Iniciar sesion</Button>
         </Link>
       </aside>
@@ -90,7 +90,7 @@ export function TargetUser() {
       <h2 className="font-semibold mb-1">
         Hola <strong>{user.full_name}</strong>
       </h2>
-      <p className="text-xs text-gray-400 text-balance mb-6">
+      <p className="text-xs text-gray-600 dark:text-gray-400 text-balance mb-6">
         Aqui encontraras noticias relacionadas a la programación.
       </p>
       {isSubcribe ? (

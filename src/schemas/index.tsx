@@ -15,3 +15,5 @@ export type {
   SchemaResources,
   SchemaResoucesResponse,
 } from "./schema.form_resources";
+export {FormSchemaNews} from "./schema.news"
+export type {SchemaNews} from "./schema.news"

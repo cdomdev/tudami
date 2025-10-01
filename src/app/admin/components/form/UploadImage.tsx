@@ -6,23 +6,26 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { Control, useController } from "react-hook-form";
-import { z } from "zod";
-import { FormSchemaResources } from "@/schemas";
+import { Control, useController, Path } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 
-interface FormSchemaType {
-  control: Control<z.infer<typeof FormSchemaResources>>;
-  url_image?: string
+
+interface UploadImageProps<T extends { image?: any }> {
+  control: Control<T>;
+  url_image?: string;
 }
 
-export function UploadImage({ control, url_image }: FormSchemaType) {
+export function UploadImage<T extends { image?: any }>({
+  control,
+  url_image,
+}: UploadImageProps<T>) {
   const [preview, setPreview] = useState<string | null>(null);
+
   const { field, fieldState } = useController({
-    name: "image",
+    name: "image" as Path<T>,
     control,
   });
 
@@ -35,12 +38,12 @@ export function UploadImage({ control, url_image }: FormSchemaType) {
     }
   }
 
-  const imageSrc = preview || url_image ;
+  const imageSrc = preview || url_image;
 
   return (
     <FormField
       control={control}
-      name="image"
+      name={"image" as Path<T>}
       render={() => (
         <FormItem>
           <FormLabel className="text-sm font-medium">

@@ -1,11 +1,11 @@
 
-export async function uploadImage(file: File, slug: string) {
+export async function uploadImage(file: File, slug: string, dir: string) {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("slug", slug);
 
     try {
-        const res = await fetch(`/api/admin/image/upload`, {
+        const res = await fetch(`/api/admin/image/upload?directory=${dir}`, {
             method: "POST",
             body: formData,
         });

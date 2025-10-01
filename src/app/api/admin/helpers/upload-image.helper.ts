@@ -2,7 +2,8 @@ import { SupabaseClient } from "@supabase/supabase-js";
 export async function uploadImage(
     supabase: SupabaseClient,
     file: File,
-    slug: string
+    slug: string, 
+    directory: string
 ) {
     
     const arrayBuffer = await file.arrayBuffer();
@@ -12,7 +13,7 @@ export async function uploadImage(
     const fileName = `${slug}-${Date.now()}.webp`;
 
     const { error: uploadError } = await supabase.storage
-        .from("resources")
+        .from(directory)
         .upload(fileName, buffer, {
             contentType: "image/webp",
             upsert: true,
