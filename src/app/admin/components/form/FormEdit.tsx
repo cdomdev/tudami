@@ -82,7 +82,7 @@ export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
     try {
       let imageResource = dataResource?.url_image;
       if (data.image instanceof File) {
-        const res = await uploadImage(data.image, data.category.toLowerCase());
+        const res = await uploadImage(data.image, data.category.toLowerCase(), "resources");
         imageResource = res?.url;
       } else if (typeof data.image === "string" && data.image.trim() !== "") {
         imageResource = data.image;
