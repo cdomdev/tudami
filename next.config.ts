@@ -18,6 +18,9 @@ const nextConfig: NextConfig = {
       "iyyeielwbsaybnczamix.supabase.co",
       "api.dicebear.com"
     ],
+  }, 
+  env: {
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
   }
 };
 
