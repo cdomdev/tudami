@@ -21,36 +21,46 @@ export const metadata: Metadata = {
     default: "Tudami",
     template: "%s | Tudami",
   },
-  description: "Aprende con otros. Comparte con todos.",
+  description:
+    "Tudami es una plataforma colaborativa donde aprendices pueden publicar dudas, solicitar tutoría y compartir conocimientos con otros. Aprende preguntando, crece ayudando.",
   metadataBase: new URL("https://tudami.com"),
+
   openGraph: {
-    title: "Tudami",
-    description: "Aprende con otros. Comparte con todos.",
+    title: "Tudami - Plataforma colaborativa de aprendizaje",
+    description:
+      "Tudami conecta a aprendices que necesitan ayuda con quienes desean compartir su conocimiento. Publica dudas, solicita apoyo y participa en una comunidad de aprendizaje.",
     url: "https://tudami.com",
     siteName: "Tudami",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.webp",
         width: 1200,
         height: 630,
-        alt: "Tudami App",
+        alt: "Tudami - Plataforma colaborativa de aprendizaje",
       },
     ],
     locale: "es_CO",
     type: "website",
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Tudami",
-    description: "Aprende con otros. Comparte con todos.",
+    title: "Tudami - Plataforma colaborativa de aprendizaje",
+    description:
+      "Descubre Tudami: un espacio donde aprendices publican dudas, encuentran tutoría y ayudan a otros. Aprende compartiendo, crece enseñando.",
     creator: "@tudami",
-    images: ["/og-image.png"],
+    images: ["/og-image.webp"],
   },
+
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
+
+  alternates: {
+    canonical: "https://tudami.com",
+  }
 };
 
 export default async function RootLayout({
@@ -60,7 +70,7 @@ export default async function RootLayout({
 }>) {
 
   const user = await getServerUser()
-  
+
   return (
     <html
       lang="es"
