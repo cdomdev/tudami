@@ -31,17 +31,10 @@ export function Footer() {
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 text-sm">
             <div className="flex flex-col items-start  text-left">
               <h4 className="text-base font-semibold mb-3 uppercase text-gray-700 dark:text-gray-300">
-                Recursos
+                Comunidad
               </h4>
               <ul className="space-y-2">
-                <li>
-                  <Link
-                    href="/help"
-                    className="hover:text-blue-600 dark:hover:text-sky-400"
-                  >
-                    Centro de ayuda
-                  </Link>
-                </li>
+
                 <li>
                   <Link
                     href="#faq"
@@ -50,36 +43,44 @@ export function Footer() {
                     Preguntas frecuentes
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    href="/about"
+                    className="hover:text-blue-600 dark:hover:text-sky-400"
+                  >
+                    Sobre nosotros
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div className="flex flex-col items-start  text-left">
               <h4 className="text-base font-semibold mb-3 uppercase text-gray-700 dark:text-gray-300">
-                Funcionalidades
+               Participa
               </h4>
               <ul className="space-y-2">
                 <li>
                   <Link
-                    href="/crear-pregunta"
+                    href="/questions/create"
                     className="hover:text-blue-600 dark:hover:text-sky-400"
                   >
-                    Publicar una pregunta
+                    Hacer una pregunta
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/buscar-ayuda"
+                    href="/offers/create"
                     className="hover:text-blue-600 dark:hover:text-sky-400"
                   >
-                    Solicitar tutoría
+                    Publicar una oferta
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/ofertas"
+                    href="/offers/explore"
                     className="hover:text-blue-600 dark:hover:text-sky-400"
                   >
-                    Ver ofertas de ayuda
+                    Ver ofertas
                   </Link>
                 </li>
               </ul>
@@ -87,7 +88,7 @@ export function Footer() {
 
             <div className="flex flex-col items-start  text-left">
               <h4 className="text-base font-semibold mb-3 uppercase text-gray-700 dark:text-gray-300">
-                Legales
+                Politicas
               </h4>
               <ul className="space-y-2">
                 <li>
