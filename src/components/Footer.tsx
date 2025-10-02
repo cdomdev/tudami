@@ -135,7 +135,7 @@ export function Footer() {
                 Instagram
               </a>
               <a href="#" className="hover:text-blue-600 dark:hover:text-white">
-                Twitter
+                X
               </a>
             </div>
           </div>
