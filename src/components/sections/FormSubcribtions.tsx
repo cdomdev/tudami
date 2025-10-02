@@ -83,9 +83,9 @@ export function FormSubcription() {
                   <FormLabel>Tu correo electrónico</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="tunombre@correo.com"
+                      placeholder="usuario@correo.com"
                       {...field}
-                      className="md:w-md "
+                      className="md:w-md text-xs md:text-sm"
                     />
                   </FormControl>
                   <FormDescription>
