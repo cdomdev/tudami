@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: "Tudami",
     images: [
       {
-        url: "/og-image.webp",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Tudami - Plataforma colaborativa de aprendizaje",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     description:
       "Descubre Tudami: un espacio donde aprendices publican dudas, encuentran tutoría y ayudan a otros. Aprende compartiendo, crece enseñando.",
     creator: "@tudami",
-    images: ["/og-image.webp"],
+    images: ["/og-image.png"],
   },
 
   icons: {
