@@ -3,11 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "La pagina no existe",
+  title: { template: "%s | Tudami", default: "Página no encontrada" },
+  description:
+    "La página que buscas no existe o ha sido movida. Regresa al inicio y sigue explorando Tudami.",
 };
 
 export default function NotFound() {
-
   return (
     <div className="flex flex-col items-center justify-center min-h-dvh px-6 py-12 text-center  text-gray-800 dark:text-accent-foreground">
       <span className="hidden dark:inline-block absolute -inset-x-4  size-40 mx-auto rounded-full bg-blue-200/20 blur-3xl z-0" />
@@ -23,8 +24,6 @@ export default function NotFound() {
         <p className="text-gray-600 dark:text-gray-400 mb-10 text-pretty text-sm px-10 md:text-base md:px-0">
           Lo sentimos, la página que buscas no existe o fue movida.
         </p>
-
-
 
         <Link
           href="/"

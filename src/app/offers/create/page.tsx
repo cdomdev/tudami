@@ -3,8 +3,9 @@ import { Recommendations } from "./components/Recommendations";
 import { EditorOffers } from "./components/EditorOffers";
 
 export const metadata: Metadata = {
-  title: "Crear una nueva oferta",
-  description: "Página para crear nuevas ofertas en Tudami",
+  title: { default: "Crear una nueva oferta", template: "%s | Tudami" },
+  description:
+    "Publica una nueva oferta en Tudami y conecta con aprendices interesados en compartir y potenciar sus habilidades.",
 };
 
 export default function offerPage() {

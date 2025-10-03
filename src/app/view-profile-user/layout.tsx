@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Perfil de usuario",
-  description: "Visualiza y edita tu perfil de usuario en Tudami.",
+  title: { default: "Ver perfil de usuario", template: "%s | Tudami" },
+  description:
+    "Explora el perfil de otros aprendices en Tudami. Conoce su experiencia, preguntas, respuestas y forma parte de la comunidad.",
 };
 
 export default function LayoutViewProfileUserSsr({

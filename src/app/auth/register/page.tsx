@@ -4,35 +4,14 @@ import { ProvidersAuth } from "../components/Providers";
 import { FooterForm } from "../components/FooterForm";
 
 export const metadata: Metadata = {
-  title: "Registro en Tudami",
+  title: {
+    default: "Regístrate en Tudami",
+    template: "%s | Tudami",
+  },
   description:
-    "Accede a Tudami para resolver tus dudas, compartir conocimientos y conectar con otros aprendices. Comparte, aprende y crece con la comunidad.",
-  openGraph: {
-    title: "Registro en Tudami",
-    description:
-      "Conéctate con la comunidad de aprendices. Regístrate y participa activamente resolviendo y compartiendo conocimientos.",
-    url: "https://tudami.com/auth/login",
-    siteName: "Tudami",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Tudami App",
-      },
-    ],
-    locale: "es_CO",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Registro en Tudami",
-    description:
-      "Explora preguntas, responde inquietudes y ayuda a otros. Accede ahora a Tudami.",
-    creator: "@tudami",
-    images: ["/og-image.png"],
-  },
+    "Regístrate gratis en Tudami y empieza a resolver dudas, compartir tus conocimientos y conectar con otros aprendices. Únete a la comunidad y potencia tus habilidades.",
 };
+
 
 export default function RegisterPage() {
   return (

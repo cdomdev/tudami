@@ -2,34 +2,9 @@ import { Metadata } from "next";
 import { FormUpdate } from "../components/FormUpdatePss";
 
 export const metadata: Metadata = {
-  title: "Restablecer contraseña",
+  title: { default: "Restablecer contraseña", template: "%s | Tudami" },
   description:
     "Crea una nueva contraseña para recuperar el acceso a tu cuenta en Tudami. Asegúrate de elegir una clave segura que solo tú conozcas.",
-  openGraph: {
-    title: "Restablecer contraseña - Tudami",
-    description:
-      "Crea una nueva contraseña y recupera el acceso a tu cuenta en Tudami.",
-    url: "https://tudami.com/auth/update-password",
-    siteName: "Tudami",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Tudami App",
-      },
-    ],
-    locale: "es_CO",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Restablecer contraseña - Tudami",
-    description:
-      "Crea una nueva contraseña y recupera el acceso a tu cuenta en Tudami.",
-    creator: "@tudami",
-    images: ["/og-image.png"],
-  },
 };
 
 export default function UpdatePasswordPage() {

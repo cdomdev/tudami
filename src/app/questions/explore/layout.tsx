@@ -6,9 +6,12 @@ import { Button } from "@/components/ui/button";
 import { ExploresQuestionsByTagsLayout } from "./components/TapsQuestions";
 
 export const metadata: Metadata = {
-  title: "Explorar preguntas",
+  title: {
+    default: "Explorar preguntas y ofertas",
+    template: "%s | Tudami",
+  },
   description:
-    "Explora preguntas de la comunidad, encuentra respuestas y comparte conocimiento.",
+    "Descubre preguntas de otros aprendices, encuentra respuestas útiles y comparte tu conocimiento con la comunidad en Tudami.",
 };
 
 export default function ExploreQuestionsLayout({

@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/dist/client/components/navigation";
-import {  SchemaProfileResponse} from "@/schemas";
+import { SchemaProfileResponse } from "@/schemas";
 import { useEffect, useState } from "react";
 import { MessageSquare, Reply } from "lucide-react";
 import { getDataProfilePublic } from "../lib/getDataProfile";
@@ -25,7 +25,7 @@ export default function ViewProfileUserPage() {
       }
 
       const res = await getDataProfilePublic({ userId });
-      
+
       if (res.success && res.data) {
         setDataProfile(res.data);
       }
@@ -38,7 +38,6 @@ export default function ViewProfileUserPage() {
 
   const achievementsObtained = getAchievementByuser(achievements);
 
-  
   if (loading) {
     <SkeletonActividadUsuario />;
   }

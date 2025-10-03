@@ -3,8 +3,12 @@ import { Metadata } from "next";
 import { Recomendaciones } from "./components/Recomendaciones";
 
 export const metadata: Metadata = {
-  title: "Hacer una Pregunta",
-  description: "Página para hacer nuevas preguntas en Tudami",
+  title: {
+    default: "Hacer una Pregunta",
+    template: "%s | Tudami",
+  },
+  description:
+    "Publica tus dudas en Tudami y recibe apoyo de otros aprendices. Comparte tus preguntas y aprende en comunidad.",
 };
 
 export default function QuestionsPage() {

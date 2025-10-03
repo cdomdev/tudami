@@ -7,6 +7,8 @@ import { Spinner } from "@/components/Spiner";
 import { toast } from "sonner";
 import { loginCallback } from "../lib/auth";
 import { useSession } from "@/context/context.sesion";
+
+
 export default function AuthCallback() {
   const router = useRouter();
   const params = useSearchParams();

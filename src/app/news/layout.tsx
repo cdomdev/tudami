@@ -2,8 +2,12 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Noticias",
-  description: "Visualiza y edita tu perfil de usuario en Tudami.",
+  title: {
+    default: "Noticias - Mantente informado",
+    template: "%s | Tudami",
+  },
+  description:
+    "Entérate de las últimas novedades y actualizaciones en Tudami. Noticias sobre aprendizaje, tutorías y comunidad.",
 };
 
 export default function LayoutNews({

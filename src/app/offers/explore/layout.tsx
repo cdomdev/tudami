@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { ExploresOffers } from "./components/TagsOffers";
 
 export const metadata: Metadata = {
-  title: "Explorar ofertas",
+  title: { default: "Explorar ofertas", template: "%s | Tudami" },
   description:
-    "Explora preguntas de la comunidad, encuentra respuestas y comparte conocimiento.",
+    "Explora ofertas publicadas por la comunidad de Tudami y encuentra oportunidades para aprender, enseñar y conectar con otros aprendices.",
 };
 
 export default function ExploreQuestionsLayout({

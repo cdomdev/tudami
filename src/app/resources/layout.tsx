@@ -3,43 +3,16 @@ import Link from "next/link";
 import { SectionNavNewResource } from "./components/SectionNavNewResource";
 import Image from "next/image";
 
+
 export const metadata: Metadata = {
   title: {
     default: "Recursos - Potencia tus habilidades",
     template: "%s | Tudami",
   },
   description:
-    "Descube recursos que potencia tus habilidades. Aprende con otros. Comparte con todos.",
-  metadataBase: new URL("https://tudami.com"),
-  openGraph: {
-    title: "Tudami",
-    description: "Aprende con otros. Comparte con todos.",
-    url: "https://tudami.com",
-    siteName: "Tudami",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Tudami App",
-      },
-    ],
-    locale: "es_CO",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Tudami",
-    description: "Aprende con otros. Comparte con todos.",
-    creator: "@tudami",
-    images: ["/og-image.png"],
-  },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
+    "Explora recursos prácticos para mejorar tus habilidades. Aprende de la comunidad, comparte y crece con Tudami.",
 };
+
 
 export default function LayoutRecourses({
   children,
