@@ -1,8 +1,10 @@
 import z from "zod";
 
 export const FormSchemaNews = z.object({
+  id: z.number().optional(),
   title: z.string(),
   sub_title: z.string(),
+  slug: z.string().optional(),
   description: z.string(),
   image: z
   .any()
@@ -19,6 +21,7 @@ export const FormSchemaNews = z.object({
   .optional(),
   source: z.string(),
   url_source: z.string(),
+  created_at: z.string().optional(),
 });
 
 export type SchemaNews = z.infer<typeof FormSchemaNews>;

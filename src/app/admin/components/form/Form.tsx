@@ -50,7 +50,7 @@ export function FormNewResounce({
       image: "",
       category: "",
       detail_title: "",
-      detail_desciption: "",
+      detail_description: "",
       url: "",
       type: "",
     },
@@ -74,7 +74,7 @@ export function FormNewResounce({
         url: data.url,
         type: data.type,
         detail_title: data.detail_title,
-        detail_desciption: data.detail_desciption,
+        detail_description: data.detail_description,
       };
 
       const res = await saveResource(formattedData, isAdmin);
@@ -86,7 +86,7 @@ export function FormNewResounce({
         image: "",
         category: "",
         detail_title: "",
-        detail_desciption: "",
+        detail_description: "",
         url: "",
         type: "",
       });
@@ -237,7 +237,7 @@ export function FormNewResounce({
         />
         <FormField
           control={form.control}
-          name="detail_desciption"
+          name="detail_description"
           render={({ field }) => (
             <FormItem>
               <FormLabel>

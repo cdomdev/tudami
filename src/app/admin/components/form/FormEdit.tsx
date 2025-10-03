@@ -56,7 +56,7 @@ export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
       image: "",
       category: "",
       detail_title: "",
-      detail_desciption: "",
+      detail_description: "",
       url: "",
       type: "",
     },
@@ -70,7 +70,7 @@ export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
         image: dataResource.url_image,
         category: dataResource.category,
         detail_title: dataResource.details_resources[0]?.title || "",
-        detail_desciption: dataResource.details_resources[0]?.description || "",
+        detail_description: dataResource.details_resources[0]?.description || "",
         url: dataResource.details_resources[0]?.url_resource || "",
         type: dataResource.type || "",
       });
@@ -97,8 +97,8 @@ export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
         type: data.type ?? dataResource?.type ?? "",
         detail_title:
           data.detail_title ?? dataResource?.details_resources[0]?.title ?? "",
-        detail_desciption:
-          data.detail_desciption ??
+        detail_description:
+          data.detail_description ??
           dataResource?.details_resources[0]?.description ??
           "",
       };
@@ -257,7 +257,7 @@ export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
         />
         <FormField
           control={form.control}
-          name="detail_desciption"
+          name="detail_description"
           render={({ field }) => (
             <FormItem>
               <FormLabel>

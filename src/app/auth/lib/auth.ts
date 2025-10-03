@@ -4,9 +4,10 @@ import { query } from "@/lib/query";
 type Providers = "google" | "github";
 const getURL = () => {
   let url =
-    process?.env?.NEXT_PUBLIC_SITE_URL ??
-    process?.env?.NEXT_PUBLIC_VERCEL_URL ??
-    "https://3000-firebase-tudami-1749997888484.cluster-ux5mmlia3zhhask7riihruxydo.cloudworkstations.dev";
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    process.env.NEXT_PUBLIC_VERCEL_URL ??
+    "http://localhost:3000";
+
   url = url.startsWith("http") ? url : `https://${url}`;
   url = url.endsWith("/") ? url : `${url}/`;
   return url;

@@ -1,12 +1,12 @@
 import z from "zod";
 
 export const FormSchemaResources = z.object({
-  title: z.string(),
-  description: z.string(),
- image: z
-  .any()
-  .refine(
-    (file) =>
+  title: z.string().min(3, "Mínimo 3 caracteres").max(100),
+  description: z.string().min(10, "Mínimo 10 caracteres").max(1000),
+  image: z
+    .any()
+    .refine(
+      (file) =>
       file instanceof File ||
       typeof file === "string" ||
       file === undefined ||
@@ -16,12 +16,11 @@ export const FormSchemaResources = z.object({
     }
   )
   .optional(),
-
   category: z.string(),
-  url: z.string().optional(),
-  detail_title: z.string(),
-  detail_desciption: z.string(),
   type: z.string(),
+  url: z.string().optional(),
+  detail_title: z.string().min(3, "Mínimo 3 caracteres").max(100),
+  detail_description: z.string().min(10, "Mínimo 10 caracteres").max(1000),
 });
 
 export type SchemaResources = z.infer<typeof FormSchemaResources>;

@@ -18,7 +18,6 @@ export async function validateSubscribe(email: string) {
   }
 }
 
-
 export async function desSubscribe(email: string) {
   const { data, error } = await supabase
     .from("newsletter_subscribers")
@@ -33,3 +32,13 @@ export async function desSubscribe(email: string) {
   return { success: true, data };
 }
 
+export async function getNews() {
+  const { data, error } = await supabase.from("news").select("*");
+
+  if (error) {
+    console.error("Error al obtener noticias:", error.message);
+    return { success: false, error, data: [] };
+  }
+
+  return { success: true, data };
+}

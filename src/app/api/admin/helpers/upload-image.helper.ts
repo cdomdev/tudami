@@ -10,7 +10,7 @@ export async function uploadImage(
     const buffer = Buffer.from(arrayBuffer);
 
     // Procesar imagen: convertir a webp y comprimir
-    const fileName = `${slug}-${Date.now()}.webp`;
+    const fileName = `${slug.replaceAll(" ", "-").replaceAll(/[^\w\-]+/g, "")}-${Date.now()}.webp`;
 
     const { error: uploadError } = await supabase.storage
         .from(directory)

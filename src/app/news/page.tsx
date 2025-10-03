@@ -1,19 +1,34 @@
 "use client";
 
-// import { useSearchParams } from "next/navigation";
 import { TabsNews } from "./components/TabsNews";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { TargetUser } from "./components/TargetUser";
 import { CardNews } from "./components/CardsNews";
+import { useState, useEffect } from "react";
+import { getNews } from "./lib/new";
+import { SchemaNews } from "@/schemas";
 
 export default function PageNews() {
-//   const param = useSearchParams();
-//   const q = param.get("sort") || "";
+  const [news, setNews] = useState<SchemaNews[]>([]);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      const response = await getNews();
+      if (response.success) {
+        setNews(response.data);
+      }
+    };
+    fetchNews();
+  }, []);
+
   return (
     <>
-      <section className="relative w-full max-w-7xl mx-auto h-64 md:h-[28rem] rounded-2xl overflow-hidden mt-10" id="news">
+      <section
+        className="relative w-full max-w-7xl mx-auto h-64 md:h-[28rem] rounded-2xl overflow-hidden mt-10"
+        id="news"
+      >
         <Image
           src="/panel_news.webp"
           alt="Panel de noticias de desarrollo"
@@ -45,7 +60,13 @@ export default function PageNews() {
         <section className="mt-2 col-span-4 order-2 md:order-1 px-5">
           <TabsNews />
           <section className=" ">
-            <CardNews />
+            {news.length === 0 ? (
+              <p className="text-center text-gray-500 dark:text-gray-400 py-10">
+                Cargando noticias...{" "}
+              </p>
+            ) : (
+              news.map((item) => <CardNews key={item.id} {...item} />)
+            )}
           </section>
         </section>
         <section className="col-span-2 order-1  ">
