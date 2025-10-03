@@ -53,7 +53,7 @@ async function saveDetaislResources(
   idResource: string
 ) {
   const titleDetails = dataResource.detail_title;
-  const descriptionDetails = dataResource.detail_desciption;
+  const descriptionDetails = dataResource.detail_description;
 
   if (!idResource) {
     throw new Error(
@@ -134,11 +134,11 @@ async function updateDetaislResources(
   idResource: number
 ) {
   const titleDetails = dataResource.detail_title;
-  const descriptionDetails = dataResource.detail_desciption;
+  const descriptionDetails = dataResource.detail_description;
 
   if (!idResource) {
     return {
-      message: "Se requiere de un identificador de recurso para los datelles",
+      message: "Se requiere de un identificador de recurso para los detalles",
     };
   }
 
