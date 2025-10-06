@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const FormSchemaNews = z.object({
-  id: z.number().optional(),
+  id: z.number(),
   title: z.string(),
   sub_title: z.string(),
   slug: z.string().optional(),

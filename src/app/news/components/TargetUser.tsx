@@ -70,7 +70,7 @@ export function TargetUser() {
     return (
       <aside className="w-full space-y-4">
         <p className=" text-xs md:text-sm text-gray-600 dark:text-gray-400 text-pretty">
-          Inicia sesion y suscribete al boletin del noticias
+          Inicia sesion y suscribete al boletin de noticias
         </p>
         <Link href="/auth/login"  >
           <Button variant={"default"} className="cursor-pointer"><User /> Iniciar sesion</Button>

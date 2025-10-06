@@ -6,18 +6,21 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { TargetUser } from "./components/TargetUser";
 import { CardNews } from "./components/CardsNews";
+import { SkeletonCardNews } from "./components/SkeletonCard";
 import { useState, useEffect } from "react";
 import { getNews } from "./lib/new";
 import { SchemaNews } from "@/schemas";
 
 export default function PageNews() {
   const [news, setNews] = useState<SchemaNews[]>([]);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     const fetchNews = async () => {
       const response = await getNews();
       if (response.success) {
         setNews(response.data);
+        setLoading(false);
       }
     };
     fetchNews();
@@ -59,11 +62,9 @@ export default function PageNews() {
       <section className="max-w-6xl grid mx-auto pb-10 grid-cols-1 md:grid-cols-6 mt-10">
         <section className="mt-2 col-span-4 order-2 md:order-1 px-5">
           <TabsNews />
-          <section className=" ">
-            {news.length === 0 ? (
-              <p className="text-center text-gray-500 dark:text-gray-400 py-10">
-                Cargando noticias...{" "}
-              </p>
+          <section>
+            {loading || news.length === 0 ? (
+              <SkeletonCardNews />
             ) : (
               news.map((item) => <CardNews key={item.id} {...item} />)
             )}
