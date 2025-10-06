@@ -12,13 +12,25 @@ module.exports = {
       lastmod: new Date().toISOString(),
     },
     {
-      loc: "/questions",
+      loc: "/questions/create",
       changefreq: "daily",
       priority: 1.0,
       lastmod: new Date().toISOString(),
     },
     {
-      loc: "/offers",
+      loc: "/questions/explore",
+      changefreq: "daily",
+      priority: 1.0,
+      lastmod: new Date().toISOString(),
+    },
+    {
+      loc: "/offers/create  ",
+      changefreq: "daily",
+      priority: 1.0,
+      lastmod: new Date().toISOString(),
+    },
+    {
+      loc: "/offers/explore",
       changefreq: "weekly",
       priority: 0.6,
       lastmod: new Date().toISOString(),
