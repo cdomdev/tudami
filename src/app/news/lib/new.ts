@@ -42,3 +42,22 @@ export async function getNews() {
 
   return { success: true, data };
 }
+
+
+  export async function chekLike(new_id: number, user_id: string | undefined) {
+    const { data } = await supabase
+      .from("news_likes")
+      .select("*")
+      .eq("new_id", new_id)
+      .eq("user_id", user_id)
+      .maybeSingle();
+    return !!data;
+  }
+  
+  export async function getLikes(new_id: number) {
+    const { data, count } = await supabase
+      .from("news_likes")
+      .select("*", { count: "exact" })
+      .eq("new_id", new_id);
+    return { data, count };
+  }
