@@ -49,6 +49,7 @@ export function FormAddNews() {
 
       // formatear datos para la tabla
       const formattedData = {
+        id: 0,
         title: data.title,
         sub_title: data.sub_title,
         description: data.description,
