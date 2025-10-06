@@ -3,10 +3,15 @@ import { Button } from "@/components/ui/button";
 import { ThumbsUp } from "lucide-react";
 import { useEffect, useState, useCallback } from "react";
 import { useSession } from "@/context/context.sesion";
-import { checkLike, emitLike, removeLike, getLikesCount } from "../lib/new";
+import {
+  checkLikeResponse,
+  emitLikeResponse,
+  removeLikeResponse,
+  getLikesCountResponse,
+} from "../../lib/likes";
 import { supabase } from "@/utils/supabase/supabaseClient";
 
-export function BtnLikeNews({ new_id }: { new_id: number }) {
+export function BtnLikeResponse({ response_id }: { response_id: number }) {
   const [count, setCount] = useState<number | null>(0);
   const [loading, setLoading] = useState(true);
   const [hasLiked, setHasLiked] = useState(false);
@@ -15,20 +20,20 @@ export function BtnLikeNews({ new_id }: { new_id: number }) {
   const userId = user?.id;
 
   const updateCount = useCallback(async () => {
-    const newCount = await getLikesCount(new_id);
+    const newCount = await getLikesCountResponse(response_id);
     setCount(newCount);
-  }, [new_id]);
+  }, [response_id]);
 
   // Realtime
   useEffect(() => {
     async function initialize() {
       setLoading(true);
 
-      const totalCount = await getLikesCount(new_id);
+      const totalCount = await getLikesCountResponse(response_id);
       setCount(totalCount);
 
       if (userId) {
-        const liked = await checkLike(new_id, userId);
+        const liked = await checkLikeResponse(response_id, userId);
         setHasLiked(liked);
       }
 
@@ -38,14 +43,14 @@ export function BtnLikeNews({ new_id }: { new_id: number }) {
     initialize();
 
     const insertChannel = supabase
-      .channel(`news_likes_insert_${new_id}`)
+      .channel(`question_response_likes_insert_${response_id}`)
       .on(
         "postgres_changes",
         {
           event: "INSERT",
           schema: "public",
-          table: "news_likes",
-          filter: `new_id=eq.${new_id}`,
+          table: "questions_response_likes",
+          filter: `response_id=eq.${response_id}`,
         },
         async (payload) => {
           await updateCount();
@@ -57,14 +62,14 @@ export function BtnLikeNews({ new_id }: { new_id: number }) {
       .subscribe();
 
     const deleteChannel = supabase
-      .channel(`news_likes_delete_${new_id}`)
+      .channel(`question_response_likes_delete_${response_id}`)
       .on(
         "postgres_changes",
         {
           event: "DELETE",
           schema: "public",
-          table: "news_likes",
-          filter: `new_id=eq.${new_id}`,
+          table: "questions_response_likes",
+          filter: `response_id=eq.${response_id}`,
         },
         async (payload) => {
           await updateCount();
@@ -80,7 +85,7 @@ export function BtnLikeNews({ new_id }: { new_id: number }) {
       supabase.removeChannel(insertChannel);
       supabase.removeChannel(deleteChannel);
     };
-  }, [new_id, userId, updateCount]);
+  }, [response_id, userId, updateCount]);
 
   const handleLike = useCallback(async () => {
     if (!userId || isProcessing) return;
@@ -89,8 +94,8 @@ export function BtnLikeNews({ new_id }: { new_id: number }) {
 
     try {
       const result = hasLiked
-        ? await removeLike(new_id, userId)
-        : await emitLike(new_id, userId);
+        ? await removeLikeResponse(response_id, userId)
+        : await emitLikeResponse(response_id, userId);
 
       if (result.success) {
         setHasLiked(!hasLiked);
@@ -100,7 +105,7 @@ export function BtnLikeNews({ new_id }: { new_id: number }) {
     } finally {
       setIsProcessing(false);
     }
-  }, [userId, isProcessing, hasLiked, new_id]);
+  }, [userId, isProcessing, hasLiked, response_id]);
 
   const isDisabled = loading || isProcessing || !userId;
 
@@ -111,7 +116,7 @@ export function BtnLikeNews({ new_id }: { new_id: number }) {
         variant="ghost"
         onClick={handleLike}
         aria-label={hasLiked ? "Quitar like" : "Dar like"}
-        className={`transition-colors duration-200 hover:bg-transparent dark:bg-transparent cursor-pointer px-1 ${
+        className={`transition-colors duration-200 hover:bg-none dark:hover:bg-none hover:bg-transparent dark:hover:bg-transparent cursor-pointer px-1 ${
           hasLiked
             ? "text-blue-600 hover:text-blue-600"
             : "text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-600"

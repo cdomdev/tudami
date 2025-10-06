@@ -3,16 +3,15 @@ import { getCommentBy } from "../lib/comment";
 import Image from "next/image";
 import { formatTimestamp } from "@/utils/formatDate";
 import { SchemaComment } from "@/schemas";
-// import { Button } from "@/components/ui/button"
-// import { Textarea } from "@/components/ui/textarea"
+import { SkeletonComments } from "./SkeletonComments";
+import { BtnLikeResponse } from "./buttons/BtnLike";
 
 export function BodyComments({ question_id }: { question_id: number }) {
   const [comments, setComments] = useState<SchemaComment[]>([]);
-  const [loading, setLoading] = useState(true);
-  // const [open, setOpen] = useState(false);
-  // const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     async function fechDataComment() {
       await getCommentBy(question_id)
         .then((data) => setComments(data.comments))
@@ -21,19 +20,13 @@ export function BodyComments({ question_id }: { question_id: number }) {
     fechDataComment();
   }, [question_id]);
 
-  // function handleSubmit() {
-  //     console.log(content)
-  // }
-
   return (
     <div className="flex flex-col space-y-3 ">
       {loading ? (
-        <p className="text-center text-black dark:text-white">
-          Cargando respuesta
-        </p>
+        <SkeletonComments />
       ) : comments.length === 0 ? (
         <p className="text-center text-sm md:text-base ">
-          Esta pregunta no tiene respuestas aún.
+          Esta pregunta no tiene respuestas.
         </p>
       ) : (
         comments.map((com, i) => (
@@ -52,59 +45,17 @@ export function BodyComments({ question_id }: { question_id: number }) {
                 />
               </div>
               <div className="flex ml-3 flex-col items-start">
-                <span className=" font-semibold text-base">
+                <span className=" font-semibold text-sm md:text-lg">
                   {com.users.full_name}
                 </span>
-                <p className="text-sm md:text-base ">{com.text}</p>
+                <p className="text-sm md:text-sm">{com.text}</p>
+                <span className="text-xs text-gray-500">
+                  Respuesta hace {formatTimestamp(com.created_at.toString())}
+                </span>
               </div>
             </div>
-            <div className="translate-x-16 flex gap-2 items-center">
-              <span className="text-xs text-accent-foreground">
-                Respuesta dada hace {formatTimestamp(com.created_at.toString())}
-              </span>
-              {/* <div className=" ">
-                                    <Button
-                                        variant="ghost"
-                                        onClick={() => setOpen(!open)}
-                                        size={"sm"}
-                                        className="text-sm text-primary hover:bg-transparent flex items-center gap-1 cursor-pointer "
-                                    >
-                                        Responder
-                                    </Button>
-
-                                    {open && (
-                                        <div className="-translate-x-22 w-xs md:min-w-3xl  mt-5 ">
-                                            <Textarea
-                                                placeholder="Escribe tu comentario..."
-                                                value={content}
-                                                onChange={(e) => setContent(e.target.value)}
-                                                rows={3}
-                                                className="w-full resize-none focus:outline-none ring-0 focus:ring-0 dark:focus:ring-0 dark:focus:underline-none "
-                                            />
-                                            <div className="flex gap-2 justify-end mt-2">
-                                                <Button
-                                                    variant="ghost"
-                                                    size="sm"
-                                                    className="cursor-pointer"
-                                                    onClick={() => {
-                                                        setContent("");
-                                                        setOpen(false);
-                                                    }}
-                                                >
-                                                    Cancelar
-                                                </Button>
-                                                <Button
-                                                    className="cursor-pointer"
-                                                    size="sm"
-                                                    onClick={handleSubmit}
-                                                    disabled={loading || !content.trim()}
-                                                >
-                                                    {loading ? "Enviando..." : "Enviar"}
-                                                </Button>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div> */}
+            <div className="translate-x-10 space-x-6 flex gap-2 items-center">
+              <BtnLikeResponse response_id={com.id} />
             </div>
           </div>
         ))

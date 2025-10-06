@@ -102,7 +102,7 @@ export function TargetUser() {
           <Check className="w-4 h-4" /> Suscrito
         </Button>
       ) : (
-        <Button onClick={subcribe}>
+        <Button onClick={subcribe} className="cursor-pointer">
           {loadin ? (
             <Spinner className="w-4 h-4" />
           ) : (

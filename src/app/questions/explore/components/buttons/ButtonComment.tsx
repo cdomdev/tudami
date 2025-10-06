@@ -24,7 +24,6 @@ export function ButtonComment({ question_id }: { question_id: number }) {
       const { commentData, questionData, error } = data;
       const questionOwnerId = questionData?.user_id;
 
-      // 3. Si el autor no es el mismo usuario, crear notificación
       if (questionOwnerId && questionOwnerId !== user.id) {
         const notificationPayload = {
           user_id: questionOwnerId,
@@ -64,7 +63,7 @@ export function ButtonComment({ question_id }: { question_id: number }) {
         variant="ghost"
         onClick={() => setOpen(!open)}
         size="default"
-        className="text-sm text-primary  hover:bg-transparent flex items-center gap-1 cursor-pointer dark:hover:bg-transparent"
+        className="text-sm  hover:bg-none dark:bg-none hover:bg-transparent dark:hover:bg-transparent  flex items-center gap-1 cursor-pointer"
       >
         <MessageCircle className="size-4" />
         Comentar

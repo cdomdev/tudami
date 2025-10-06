@@ -12,7 +12,7 @@ export function BtnCounterLikes({
   return (
     <Button
       variant="ghost"
-      className="hover:bg-none hover:bg-transparent dark:hover:bg-transparent "
+      className="hover:bg-none hover:bg-transparent dark:hover:bg-transparent text-slate-400 hover:text-slate-400 "
     >
       <ThumbsUp /> {count}
     </Button>

@@ -1,13 +1,11 @@
 "use client";
 
-import { supabase } from "@/utils/supabase/supabaseClient";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ThumbsUp } from "lucide-react";
 import { toggleLike, checkIfLiked } from "../../lib/likeQuestions";
 import { useSession } from "@/context/context.sesion";
-import { createNotification } from "@/lib/notifications";
-import nPayload from "@/content/notitications/notications-entity.json";
+import {emitLike} from "../../lib/likes"
 import { useLikeEventsStore, useLikeEvent } from "@/context/likeEventsContext";
 
 export function ButtonLike({ question_id }: { question_id: number }) {
@@ -52,26 +50,12 @@ export function ButtonLike({ question_id }: { question_id: number }) {
     }
 
     if (liked) {
-      const { data: questionData } = await supabase
-        .from("questions")
-        .select("user_id")
-        .eq("id", question_id)
-        .single();
-
-      const questionOwnerId = questionData?.user_id;
-
-      if (questionOwnerId && questionOwnerId !== user.id) {
-        await createNotification({
-          user_id: questionOwnerId,
-          actor_id: user.id,
-          type: nPayload[0].type,
-          entity_id: question_id.toString(),
-          entity_type: nPayload[0].entity_type,
-          content: `${user.full_name || "A alguien"} le gustó tu publicación`,
-          url: `/questions/explore/questions?query=redirect&redirect_id_question=${question_id}&aprovel=${user.approval_token}`,
-          read: false,
-        });
-      }
+      await emitLike({
+        question_id,
+        user_id: user.id,
+        full_name: user.full_name || "Alguien",
+        approval_token: user.approval_token
+      });
     }
   }
 

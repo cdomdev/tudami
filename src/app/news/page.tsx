@@ -54,7 +54,7 @@ export default function PageNews() {
                transition uppercase  hover:bg-none dark:hover:bg-none items-center"
           >
             <ArrowRight className="w-7 h-7 shadow-md  bg-accent rounded-full p-1" />
-            Lee lo ultimo
+            Lo mas popular
           </Link>
         </div>
       </section>

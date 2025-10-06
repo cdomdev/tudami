@@ -8,10 +8,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import { BodyComments } from "../BodyComments";
 import { DialogClose } from "@radix-ui/react-dialog";
-
 
 export function BtnCounterComment({ question_id }: { question_id: number }) {
   const count = useCommentsChannel(question_id);
@@ -19,8 +18,12 @@ export function BtnCounterComment({ question_id }: { question_id: number }) {
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant={"ghost"} className="hover:bg-none hover:bg-transparent cursor-pointer">
-            <MessageCircle className="h-8 w-8 text-gray-500 dark:text-white" />{count}
+          <Button
+            variant={"ghost"}
+            className="hover:bg-none hover:bg-transparent dark:hover:bg-transparent text-slate-400 hover:text-slate-200 cursor-pointer"
+          >
+            <MessageCircle className="h-8 w-8 " />
+            {count}
             <span className="sr-only">open dialog</span>
           </Button>
         </DialogTrigger>
@@ -29,12 +32,12 @@ export function BtnCounterComment({ question_id }: { question_id: number }) {
             <div className="flex items-center justify-between bg-white/50  dark:bg-gray-800 py-2">
               <>
                 <DialogTitle className="sr-only">Respuestas</DialogTitle>
-                <DialogDescription className="text-sm pl-2 font-semibold text-gray-900 dark:text-white">
+                <DialogDescription className="md:text-base pl-2 text-gray-900 dark:text-white">
                   Respuestas
                 </DialogDescription>
               </>
               <>
-                <DialogClose asChild >
+                <DialogClose asChild>
                   <button
                     className="absolute right-4  rounded-md cursor-pointer p-2 text-muted-foreground hover:text-foreground focus:outline-none focus:ring-0 "
                     aria-label="Cerrar"
@@ -45,7 +48,6 @@ export function BtnCounterComment({ question_id }: { question_id: number }) {
                 </DialogClose>
               </>
             </div>
-
           </DialogHeader>
           <BodyComments question_id={question_id} />
         </DialogContent>
@@ -53,5 +55,3 @@ export function BtnCounterComment({ question_id }: { question_id: number }) {
     </>
   );
 }
-
-

@@ -1,4 +1,3 @@
-// context/applyOfferEventsContext.ts
 "use client";
 
 import { create } from "zustand";
