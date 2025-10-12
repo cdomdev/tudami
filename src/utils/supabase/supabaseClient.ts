@@ -19,7 +19,6 @@ export async function supabaseAuth(accessToken: string) {
         Authorization: `Bearer ${accessToken}`,
       },
     },
-  
   });
 }
 

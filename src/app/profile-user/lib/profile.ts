@@ -225,9 +225,13 @@ export async function deleteAccount(userId: string){
       },
     });
     
+    const res = await data.json();
+
     if(!data.ok){
       throw new Error("Error en la solicitud para eliminar la cuenta")
     } 
+
+    return res;
 
   } catch (error) {
     console.error("Error en la solucitud", error)

@@ -11,12 +11,42 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import Link from "next/link";
+import { deleteAccount } from "../../lib/profile";
+import { toast } from "sonner";
+import { useState } from "react";
+import { Spinner } from "@/components";
 
 export function DeleteAccount() {
+  const [loading, setLoading] = useState(false);
+
   const { user } = useSession();
-  
+  const userId = user?.id || "";
+
   async function handle() {
-    console.log("identidicador del usaurio", user?.id);
+    setLoading(true);
+    if (!userId) {
+      toast.error(
+        "No podemos proceder con la solicitud en el momento, intentalo mas tarde"
+      );
+      return;
+    }
+
+    try {
+     const res =  await deleteAccount(userId);
+     console.log("Response from deleteAccount client:", res);
+     toast.success("Tu cuenta ha sido eliminada exitosamente");
+     
+     // recargar la pagina para limpiar el estado
+     setTimeout(() => {
+      window.location.reload();
+     }, 1500);
+
+    } catch (error) {
+      toast.error("No se pudo eliminar la cuenta, intentalo mas tarde");
+      console.error("Error al eliminar la cuenta:", error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -24,7 +54,9 @@ export function DeleteAccount() {
       <Dialog>
         <form>
           <DialogTrigger asChild>
-            <Button variant="destructive">Solicito eliminar mi cuenta</Button>
+            <Button variant="destructive" className="cursor-pointer">
+              Solicito eliminar mi cuenta
+            </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
@@ -54,10 +86,13 @@ export function DeleteAccount() {
             </DialogHeader>
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">Cancelar</Button>
+                <Button variant="outline" className="cursor-pointer">
+                  Cancelar
+                </Button>
               </DialogClose>
-              <Button type="button" onClick={handle}>
-                Eliminar
+              <Button type="button" onClick={handle} className="cursor-pointer">
+                {loading && <Spinner className="ml-2 w-4 h-4 text-gray-500" />}
+                {loading ? "Eliminando" : "Eliminar"}
               </Button>
             </DialogFooter>
           </DialogContent>
