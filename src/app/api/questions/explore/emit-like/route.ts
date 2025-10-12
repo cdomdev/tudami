@@ -46,9 +46,7 @@ async function toggleLike(
         .eq("user_id", user_id);
 
       if (deleteError) {
-        console.error(`[toggleLike] Error eliminando like:`, deleteError);
-      } else {
-        console.log(`[toggleLike] Like eliminado exitosamente`);
+        throw new Error(`Error en el proceso:`, deleteError);
       }
 
       return { liked: false, error: deleteError };
@@ -61,7 +59,7 @@ async function toggleLike(
         });
 
       if (insertError) {
-        console.error(`[toggleLike] Error agregando like:`, insertError);
+        throw new Error(`Error en el proceso:`, insertError);
       }
 
       return { liked: true, error: insertError };
