@@ -93,6 +93,7 @@ export function BtnLikeNews({ new_id }: { new_id: number }) {
         : await emitLike(new_id, userId);
 
       if (result.success) {
+        await updateCount();
         setHasLiked(!hasLiked);
       }
     } catch (error) {

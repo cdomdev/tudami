@@ -8,6 +8,7 @@ import { InfoUser } from "../components/InfoUser";
 import Link from "next/link";
 import { Edit } from "lucide-react";
 import { useSession } from "@/context/context.sesion";
+import { DeleteAccount } from "../components/buttons/ButtonDeleteAccount";
 
 export default function PreferenciasTema() {
   const { user } = useSession();
@@ -81,9 +82,7 @@ export default function PreferenciasTema() {
         </p>
 
         <div className="flex gap-3">
-          <button className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg">
-            Solicito eliminar mi cuenta
-          </button>
+          <DeleteAccount />
         </div>
       </article>
     </section>

@@ -214,3 +214,22 @@ export async function getOffersByUser(userId: string) {
     return [];
   }
 }
+
+export async function deleteAccount(userId: string){
+  try {
+    const url = `/api/user/delete-account?id=${userId}`;
+    const data = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    
+    if(!data.ok){
+      throw new Error("Error en la solicitud para eliminar la cuenta")
+    } 
+
+  } catch (error) {
+    console.error("Error en la solucitud", error)
+  }
+}
