@@ -108,7 +108,7 @@ export default function Editor() {
           variant={"default"}
           onClick={handleSubmit}
           disabled={loading}
-          className="mt-3 px-4 md:min-w-80 uppercase duration-200 rounded-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          className="mt-3 px-4 md:min-w-80 duration-200 rounded-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading && <Spinner className="w-5 h-5" />} {textLoadin}
         </Button>

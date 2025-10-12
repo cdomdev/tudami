@@ -4,7 +4,7 @@ import Image from "next/image";
 import { formatTimestamp } from "@/utils/formatDate";
 import { SchemaComment } from "@/schemas";
 import { SkeletonComments } from "./SkeletonComments";
-import { BtnLikeResponse } from "./buttons/BtnLike";
+import { BtnLikeResponse } from "./buttons/BtnLikeResponse";
 
 export function BodyComments({ question_id }: { question_id: number }) {
   const [comments, setComments] = useState<SchemaComment[]>([]);

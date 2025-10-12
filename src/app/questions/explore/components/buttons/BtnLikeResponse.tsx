@@ -98,6 +98,7 @@ export function BtnLikeResponse({ response_id }: { response_id: number }) {
         : await emitLikeResponse(response_id, userId);
 
       if (result.success) {
+        await updateCount();
         setHasLiked(!hasLiked);
       }
     } catch (error) {
