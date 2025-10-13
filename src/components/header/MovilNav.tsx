@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
-import { useSession } from "@/context/context.sesion"
+import { useSession } from "@/context/context.sesion";
 export function MovilNav({
   openMenu,
   scrolled,
@@ -24,8 +24,9 @@ export function MovilNav({
     { href: "/", label: "Inicio" },
     { href: `/profile-user?id=${user?.approval_token}`, label: "Perfil" },
     { href: "/questions/explore", label: "Ver preguntas" },
-    { href: "/questions/create", label: "Crear una pregunta" },
-    { href: "/offers/explore", label: "Crear una oferta" },
+    { href: "/questions/create", label: "Crear pregunta" },
+    { href: "/news", label: "Ver noticias" },
+    { href: "/resources", label: "Ver recursos " },
   ];
 
   return (
@@ -47,4 +48,3 @@ export function MovilNav({
     </div>
   );
 }
-
