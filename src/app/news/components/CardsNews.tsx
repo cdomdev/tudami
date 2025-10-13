@@ -11,11 +11,11 @@ export function CardNews({
   source,
   image,
   slug,
-  id, 
+  id,
   created_at,
 }: SchemaNews) {
   return (
-    <article className="grid grid-cols-6 gap-2 items-center border-b pb-6 hover:bg-muted/50 rounded-xl transition p-5">
+    <article className="md:grid grid-cols-6 gap-2 items-center border-b pb-6 hover:bg-muted/50 rounded-xl transition p-5">
       <div className="col-span-4 space-y-2">
         <h2 className="font-bold text-xl md:text-2xl leading-snug  transition">
           {title}
@@ -23,7 +23,7 @@ export function CardNews({
         <p className="text-gray-700 dark:text-gray-300 text-sm md:text-base line-clamp-3">
           {sub_title}
         </p>
-        <time className="block text-xs text-gray-500 dark:text-gray-400">
+        <time className="block text-xs text-gray-500 dark:text-gray-400 mb-5 md:mb-0">
           {formatJoinDate(created_at || "")} · {source}
         </time>
       </div>
@@ -37,10 +37,16 @@ export function CardNews({
           className="w-full h-40 object-cover rounded-lg shadow-sm"
         />
       </div>
-      <BtnLikeNews new_id={id} />
-      <Link href={`/news/details/${slug}`} className="group inline-flex items-center gap-2 animate-pulse">
-        Ver noticia <ArrowRight className="w-4 h-4 group-hover:translate-x-1" />
-      </Link>
+      <div className="flex w-full items-center mt-3 gap-x-10 justify-between col-span-5">
+        <BtnLikeNews new_id={id} />
+        <Link
+          href={`/news/details/${slug}`}
+          className="group inline-flex items-center gap-2 animate-pulse w-full"
+        >
+          Ver noticia{" "}
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1" />
+        </Link>
+      </div>
     </article>
   );
 }

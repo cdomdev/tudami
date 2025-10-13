@@ -70,7 +70,7 @@ export default function PageNews() {
             )}
           </section>
         </section>
-        <section className="col-span-2 order-1  ">
+        <section className="col-span-2 order-1  px-5 mb-5">
           <TargetUser />
         </section>
       </section>
