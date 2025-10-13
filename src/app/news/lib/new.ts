@@ -37,10 +37,21 @@ export async function getNews() {
 
   if (error) {
     console.error("Error al obtener noticias:", error.message);
-    return { success: false, error, data: [] };
+    return [];
   }
 
-  return { success: true, data };
+  return  data || [];
+}
+
+export async function getPopularsNews() {
+  const { data, error } = await supabase.from("view_popular_news").select("*");
+
+  if (error) {
+    console.error("Error al obtener noticias:", error.message);
+    return [];
+  }
+
+  return  data || [];
 }
 
 export async function checkLike(new_id: number, user_id: string | undefined) {

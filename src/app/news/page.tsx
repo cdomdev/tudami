@@ -8,23 +8,43 @@ import { TargetUser } from "./components/TargetUser";
 import { CardNews } from "./components/CardsNews";
 import { SkeletonCardNews } from "./components/SkeletonCard";
 import { useState, useEffect } from "react";
-import { getNews } from "./lib/new";
+import { getNews, getPopularsNews } from "./lib/new";
 import { SchemaNews } from "@/schemas";
+import { useSearchParams } from "next/navigation";
+import { EmptyNews } from "./components/EmptyNews";
 
 export default function PageNews() {
+  const searchParams = useSearchParams();
   const [news, setNews] = useState<SchemaNews[]>([]);
   const [loading, setLoading] = useState(false);
+  const param = searchParams.get("sort") || undefined;
+
   useEffect(() => {
     setLoading(true);
-    const fetchNews = async () => {
-      const response = await getNews();
-      if (response.success) {
-        setNews(response.data);
+    async function fetchNews() {
+      let response = [] as SchemaNews[];
+      switch (param) {
+        case "alls":
+          response = await getNews();
+          break;
+        case "populars":
+          response = await getPopularsNews();
+          break;
+        default:
+          response = await getNews();
+          break;
+      }
+
+      if (response.length > 0) {
+        setNews(response);
+        setLoading(false);
+      }else{
+        setNews([]);
         setLoading(false);
       }
-    };
+    }
     fetchNews();
-  }, []);
+  }, [param]);
 
   return (
     <>
@@ -63,8 +83,10 @@ export default function PageNews() {
         <section className="mt-2 col-span-4 order-2 md:order-1 px-5">
           <TabsNews />
           <section>
-            {loading || news.length === 0 ? (
+            {loading ? (
               <SkeletonCardNews />
+            ) : news.length === 0 ? (
+              <EmptyNews/>
             ) : (
               news.map((item) => <CardNews key={item.id} {...item} />)
             )}

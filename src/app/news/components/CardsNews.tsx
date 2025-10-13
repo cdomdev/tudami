@@ -43,7 +43,7 @@ export function CardNews({
           href={`/news/details/${slug}`}
           className="group inline-flex items-center gap-2 animate-pulse w-full"
         >
-          Ver noticia{" "}
+          Leer noticia completa{" "}
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1" />
         </Link>
       </div>
