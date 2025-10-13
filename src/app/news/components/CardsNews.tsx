@@ -15,7 +15,7 @@ export function CardNews({
   created_at,
 }: SchemaNews) {
   return (
-    <article className="md:grid grid-cols-6 gap-2 items-center border-b pb-6 hover:bg-muted/50 rounded-xl transition p-5">
+    <article className="md:grid grid-cols-6 gap-2 items-center border-b pb-6 hover:bg-muted/50 rounded-xl transition p-5 animate-fade-in-right">
       <div className="col-span-4 space-y-2">
         <h2 className="font-bold text-xl md:text-2xl leading-snug  transition">
           {title}

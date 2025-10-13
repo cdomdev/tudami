@@ -9,8 +9,6 @@ import { ButtonShare } from "../../../../../components/ui/ButtonShare";
 import { useSession } from "@/context/context.sesion";
 
 
-
-
 export function CardPost({
   content,
   created_at,
@@ -26,7 +24,7 @@ export function CardPost({
   return (
     <article
       key={id}
-      className="bg-card dark:bg-custom-card border border-border rounded-sm p-5 shadow-sm hover:shadow transition"
+      className="bg-card dark:bg-custom-card border border-border rounded-sm p-5 shadow-sm hover:shadow transition animate-fade-in-down"
     >
       {/* Cabecera del autor */}
       <div className="flex items-start justify-between mb-3">

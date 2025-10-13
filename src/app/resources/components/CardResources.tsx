@@ -34,7 +34,7 @@ export function CardResources({
   const textBabge = type === "free" ? "Gratis" : "Pago";
 
   return (
-    <article className="group relative overflow-hidden rounded-xl border border-line/20 transition hover:contrast-110 before:left-1/2 before:bottom-0 before:-translate-x-1/2 before:w-full before:h-full before:bg-black before:absolute before:translate-y-full hover:before:translate-y-1/12 before:-z-10 before:transition before:duration-200 before:mask-t-from-80% has-focus-visible:outline-none has-focus-visible:ring-2 has-focus-visible:ring-brand-blue/20 has-focus-visible:ring-offset-4 has-focus-visible:ring-offset-white has-focus-visible:contrast-110 has-focus-visible:before:translate-y-1/2  flex aspect-video flex-col h-full p-2">
+    <article className="group relative overflow-hidden rounded-xl border border-line/20 transition hover:contrast-110 before:left-1/2 before:bottom-0 before:-translate-x-1/2 before:w-full before:h-full before:bg-black before:absolute before:translate-y-full hover:before:translate-y-1/12 before:-z-10 before:transition before:duration-200 before:mask-t-from-80% has-focus-visible:outline-none has-focus-visible:ring-2 has-focus-visible:ring-brand-blue/20 has-focus-visible:ring-offset-4 has-focus-visible:ring-offset-white has-focus-visible:contrast-110 has-focus-visible:before:translate-y-1/2  flex aspect-video flex-col h-full p-2 animate-slide-in-top">
       {" "}
       <div className="absolute top-2 right-2 opacity-100 transition inline-flex items-center gap-2 flex-wrap group-hover:opacity-0 group-hover:-translate-y-1 group-has-focus-visible:opacity-0 group-has-focus-visible:-translate-y-1">
         {" "}
