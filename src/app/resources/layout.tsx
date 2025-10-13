@@ -3,7 +3,6 @@ import Link from "next/link";
 import { SectionNavNewResource } from "./components/SectionNavNewResource";
 import Image from "next/image";
 
-
 export const metadata: Metadata = {
   title: {
     default: "Recursos - Potencia tus habilidades",
@@ -12,7 +11,6 @@ export const metadata: Metadata = {
   description:
     "Explora recursos prácticos para mejorar tus habilidades. Aprende de la comunidad, comparte y crece con Tudami.",
 };
-
 
 export default function LayoutRecourses({
   children,
@@ -82,11 +80,12 @@ export default function LayoutRecourses({
           </p>
         </div>
       </section>
-      <section className="py-5">
+      <section className="py-5 ">
         <h2 className="text-xl md:text-3xl font-bold text-center mb-6  bg-gradient-to-t from-sky-700 dark:from-sky-600 to-red-900 dark:to-red-500 text-transparent bg-clip-text">
           Centro de Recursos
         </h2>
-        <div className="mt-3 flex gap-3 justify-start lg:justify-center overflow-x-auto no-scrollbar p-2">
+
+        <div className="mt-3 flex gap-3 justify-start lg:justify-center overflow-x-auto  p-2">
           {itemsHeadNav.map((item) => (
             <Link key={item.title} href={item.href}>
               <span className="px-3 py-1.5 flex gap-x-2 bg-gray-200 rounded-full text-black cursor-pointer hover:bg-gray-300 text-xs md:text-sm font-medium whitespace-nowrap">
