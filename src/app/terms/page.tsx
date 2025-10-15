@@ -22,7 +22,7 @@ export default function TermsPage() {
         servicios.
       </p>
 
-      <h2 className="text-lg md:text-xl font-semibold mt-8 mb-3">
+      <h2 className="text-lg md:text-xl font-semibold mt-8 mb-3" id="uso" >
         1. Aceptación de términos
       </h2>
       <p className="mb-4  text-gray-700 dark:text-gray-300">
@@ -31,7 +31,7 @@ export default function TermsPage() {
         que no uses la plataforma.
       </p>
 
-      <h2 className="text-lg md:text-xl font-semibold mt-8 mb-3">
+      <h2 className="text-lg md:text-xl font-semibold mt-8 mb-3" >
         2. Uso adecuado de la plataforma
       </h2>
       <p className="mb-4 text-gray-700 dark:text-gray-300">
