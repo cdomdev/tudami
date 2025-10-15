@@ -17,3 +17,5 @@ export type {
 } from "./schema.form_resources";
 export {FormSchemaNews} from "./schema.news"
 export type {SchemaNews} from "./schema.news"
+export type {SchemaRaiting} from "./schema.raiting"
+export  {FormRaiting} from "./schema.raiting"

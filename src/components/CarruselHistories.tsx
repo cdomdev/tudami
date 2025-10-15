@@ -4,46 +4,68 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { UserCircle2 } from "lucide-react";
+import { useState } from "react";
+import { DialogOpinion } from "./DialogComment";
+import Image from "next/image";
+import { StarRating } from "./StartRating";
 
-const historias = [
+interface Historie {
+  nombre: string;
+  fecha: string;
+  history: string;
+}
+
+const date = new Date().toLocaleDateString("es-ES", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const historie = [
   {
-    nombre: "María G.",
-    fecha: "10 junio 2025",
-    historia:
-      '"Tuve dificultades con una evidencia del SENA y un compañero me explicó paso a paso cómo completarla."',
-  },
-  {
-    nombre: "Luis R.",
-    fecha: "2 mayo 2025",
-    historia:
-      '"No entendía cómo subir un proyecto y alguien me orientó por WhatsApp. Fue clave para poder entregar a tiempo."',
-  },
-  {
-    nombre: "Ana P.",
-    fecha: "25 abril 2025",
-    historia:
-      '"Gracias a un tutor voluntario aprendí a usar GitHub para mi evidencia final. Ahora puedo seguir usando la herramienta."',
-  },
-  {
-    nombre: "Carlos M.",
-    fecha: "8 abril 2025",
-    historia:
-      '"Me ayudaron a entender un instructivo confuso. La comunidad fue muy rápida en responder."',
-  },
-  {
-    nombre: "Julián T.",
-    fecha: "30 marzo 2025",
-    historia:
-      '"Pude hablar con otro aprendiz que ya había pasado por mi formación. Me dio recomendaciones útiles."',
+    nombre: "Tudami",
+    fecha: date,
+    history:
+      '"En tudami nos interesa tu opinión, por eso hemos creado este espacio para que puedas compartir tu experiencia con nosotros. Tu feedback es fundamental para ayudarnos a mejorar y ofrecerte un mejor servicio. ¡Gracias por ser parte de nuestra comunidad!"',
   },
 ];
 
 export function CarouselHistories() {
+  const [data] = useState<Historie[]>([]);
+
+  if (data.length === 0) {
+    return (
+      <article className="flex justify-center">
+        <div className="rounded-xl flex flex-col space-y-5 border border-accent bg-accent dark:bg-custom-card p-5 h-full shadow-md transition hover:shadow-lg cursor-grab max-w-lg">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="bg-gray-500 rounded-full">
+              <Image
+                src="/avatar_default.png"
+                alt="Tudami logo"
+                width={35}
+                height={40}
+                className="rounded-full object-"
+              />
+            </div>
+            <div className="leading-tight">
+              <p className="text-sm font-semibold">Tudin</p>
+              <p className="text-xs ">{date}</p>
+            </div>
+          </div>
+          <div className="w-full h-px bg-accent-foreground my-4" />
+          <p className="text-sm mb-3 italic">{historie[0].history}</p>
+          <StarRating value={5} readOnly={true} />
+          <DialogOpinion />
+        </div>
+      </article>
+    );
+  }
+
   return (
     <div className="relative">
       <Carousel className="w-full">
         <CarouselContent className="gap-4 px-4 py-6">
-          {historias.map((h, index) => (
+          {data.map((h, index) => (
             <CarouselItem
               key={index}
               className="basis-11/12 sm:basis-1/2 lg:basis-1/3"
@@ -59,7 +81,7 @@ export function CarouselHistories() {
                   </div>
                 </div>
                 <div className="w-full h-px bg-accent-foreground my-4" />
-                <p className="text-sm  italic">{h.historia}</p>
+                <p className="text-sm  italic">{h.history}</p>
               </div>
             </CarouselItem>
           ))}
