@@ -87,7 +87,7 @@ export default async function RootLayout({
           <SessionHydrator user={user as UserSchema | null} />
           <SessionGuard>
             <NavBar />
-            <main className="w-screen min-h-dvh ">{children}</main>
+            <main className="w-screen min-h-dvh mb-10">{children}</main>
             <Toaster position="top-center" theme="system" />
             <Footer />
           </SessionGuard>
