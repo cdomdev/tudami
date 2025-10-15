@@ -15,7 +15,7 @@ export default function offerPage() {
         Crea tu próxima oferta
       </h1>
       <section className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-6 gap-4 px-2">
-        <article className="md:col-span-4 px w-full shadow-sm order-2 lg:order-1 dark:bg-custom-card rounded-sm max-h-[580px]">
+        <article className="md:col-span-4 px w-full shadow-sm order-2 lg:order-1 dark:bg-custom-card rounded-sm max-h-[580px] pb-10">
           <EditorOffers />
         </article>
         <article className="md:col-span-2 p-6 shadow-sm dark:bg-custom-card rounded-sm order-1 lg:order-2">
