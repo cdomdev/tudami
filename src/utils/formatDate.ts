@@ -2,7 +2,10 @@ import { formatDistanceToNowStrict, parseISO, format } from "date-fns";
 import { es } from "date-fns/locale/es";
 
 export function formatTimestamp(date: string) {
-  const distance = formatDistanceToNowStrict(parseISO(date), { locale: es, roundingMethod: 'floor' });
+  const distance = formatDistanceToNowStrict(parseISO(date), {
+    locale: es,
+    roundingMethod: "floor",
+  });
 
   if (distance.includes("0 segundos")) return "justo ahora";
   if (distance.includes("0 minutos")) return "justo ahora";
@@ -10,7 +13,14 @@ export function formatTimestamp(date: string) {
   return distance;
 }
 
-
 export function formatJoinDate(date: string) {
   return format(parseISO(date), "MMMM yyyy", { locale: es });
+}
+
+export function parseDay(day: string) {
+  return new Date(day).toLocaleDateString("es-ES", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 }

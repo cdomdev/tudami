@@ -101,7 +101,7 @@ export function BtnLikeNews({ new_id }: { new_id: number }) {
     } finally {
       setIsProcessing(false);
     }
-  }, [userId, isProcessing, hasLiked, new_id]);
+  }, [userId, isProcessing, hasLiked, new_id, updateCount]);
 
   const isDisabled = loading || isProcessing || !userId;
 

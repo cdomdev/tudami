@@ -1,6 +1,6 @@
 "use client";
 
-import { CarouselHistories } from "@/components/CarruselHistories";
+import { CarouselHistories } from "@/components/CarruselOpinions";
 import { MoveLeft, MoveRight } from "lucide-react";
 
 export function Histories() {

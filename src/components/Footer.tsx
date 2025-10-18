@@ -3,6 +3,7 @@
 import Link from "next/dist/client/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { DialogOpinions } from "./DialogOpinions";
 
 export function Footer() {
   const pathName = usePathname();
@@ -34,7 +35,6 @@ export function Footer() {
                 Comunidad
               </h4>
               <ul className="space-y-2">
-
                 <li>
                   <Link
                     href="#faq"
@@ -56,9 +56,15 @@ export function Footer() {
 
             <div className="flex flex-col items-start  text-left">
               <h4 className="text-base font-semibold mb-3 uppercase text-gray-700 dark:text-gray-300">
-               Participa
+                Participa
               </h4>
               <ul className="space-y-2">
+                <li>
+                  <DialogOpinions
+                    textBtn="Opinar sobre Tudami"
+                    variant="ghost"
+                  /> 
+                </li>
                 <li>
                   <Link
                     href="/questions/create"

@@ -28,7 +28,7 @@ export async function opinion(dataOpinion: DataOpinion) {
         .update({
           opinion: dataOpinion.opinion,
           rating: dataOpinion.rating,
-          updated_at: new Date().toISOString(),
+          created_at: new Date().toISOString(),
         })
         .eq("user_id", dataOpinion.user_id);
     } else {
@@ -41,5 +41,23 @@ export async function opinion(dataOpinion: DataOpinion) {
   } catch (error) {
     console.error("Error en el proceso de opinión:", error);
     return { error };
+  }
+}
+
+export async function getOpinios() {
+  try {
+    const { data, error } = await supabase
+      .from("opinions")
+      .select(`*,user:user_id (id,full_name,avatar_url)`)
+      .order("created_at", { ascending: false })
+      .range(0, 9);
+
+    if (error) {
+      throw error;
+    }
+    return { data };
+  } catch (error) {
+    console.error("ERROR: Error en al lisatr opiniones", error);
+    throw error;
   }
 }
