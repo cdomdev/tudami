@@ -23,11 +23,11 @@ export function SkeletonOpinios() {
           </div>
 
           {/* Etiquetas */}
-          <div className="flex gap-2 mt-2">
-            <Star className="text-gray-100 w-7 h-7" />
-            <Star className="text-gray-100 w-7 h-7" />
-            <Star className="text-gray-100 w-7 h-7" />
-            <Star className="text-gray-100 w-7 h-7" />
+          <div className="flex gap-2 mt-2 animate-pulse">
+            <Star className="text-gray-100 dark:text-gray-600/20 w-7 h-7  " />
+            <Star className="text-gray-100 dark:text-gray-600/20  w-7 h-7" />
+            <Star className="text-gray-100 dark:text-gray-600/20 w-7 h-7  " />
+            <Star className="text-gray-100 dark:text-gray-600/20 w-7 h-7  " />
           </div>
         </div>
       ))}

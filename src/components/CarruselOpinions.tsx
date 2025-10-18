@@ -86,7 +86,7 @@ export function CarouselHistories() {
                 <div className="flex items-center gap-3 mb-2">
                   {h.user ? (
                     <Image
-                      src={h.user?.avatar_url}
+                      src={h?.user?.avatar_url}
                       alt="profile-image"
                       width={40}
                       height={40}
@@ -98,7 +98,9 @@ export function CarouselHistories() {
                     </div>
                   )}
                   <div className="leading-tight">
-                    <p className="text-sm font-semibold">{h.user?.full_name}</p>
+                    <p className="text-sm font-semibold">
+                      {h?.user?.full_name}
+                    </p>
                     <p className="text-xs ">{parseDay(h.created_at)}</p>
                   </div>
                 </div>

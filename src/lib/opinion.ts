@@ -48,7 +48,7 @@ export async function getOpinios() {
   try {
     const { data, error } = await supabase
       .from("opinions")
-      .select(`*,user:user_id (id,full_name,avatar_url)`)
+      .select(`*,user:user_id (full_name,avatar_url)`)
       .order("created_at", { ascending: false })
       .range(0, 9);
 
