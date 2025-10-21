@@ -7,6 +7,7 @@ import { FooterCardPost } from "./FooterCardPost";
 import { ButtonSavePost } from "../buttons/ButtonSavePost";
 import { ButtonShare } from "../../../../../components/ui/ButtonShare";
 import { useSession } from "@/context/context.sesion";
+import { RenderContent } from "../RenderContent";
 
 
 export function CardPost({
@@ -64,10 +65,11 @@ export function CardPost({
       {/* Título y contenido */}
       <div className="mb-4">
         <h2 className="text-lg md:text-xl font-semibold mb-2">{title}</h2>
-        <div
-          className="prose dark:prose-invert max-w-none text-sm md:text-md"
+        <RenderContent content={content}/>
+        {/* <div
+          className="prose relative dark:prose-invert max-w-none text-sm md:text-md"
           dangerouslySetInnerHTML={{ __html: content }}
-        />
+        /> */}
       </div>
 
 

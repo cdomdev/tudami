@@ -5,6 +5,8 @@ import { formatTimestamp } from "@/utils/formatDate";
 import { SchemaComment } from "@/schemas";
 import { SkeletonComments } from "./SkeletonComments";
 import { BtnLikeResponse } from "./buttons/BtnLikeResponse";
+import { RenderContent } from "./RenderContent";
+import {  Timer } from "lucide-react";
 
 export function BodyComments({ question_id }: { question_id: number }) {
   const [comments, setComments] = useState<SchemaComment[]>([]);
@@ -45,13 +47,16 @@ export function BodyComments({ question_id }: { question_id: number }) {
                 />
               </div>
               <div className="flex ml-3 flex-col items-start">
-                <span className=" font-semibold text-sm md:text-lg">
-                  {com.users.full_name}
-                </span>
-                <p className="text-sm md:text-sm">{com.text}</p>
-                <span className="text-xs text-gray-500">
-                  Respuesta hace {formatTimestamp(com.created_at.toString())}
-                </span>
+                <div className="flex gap-3 items-center">
+                  <span className=" font-semibold text-sm md:text-lg">
+                    {com.users.full_name}
+                  </span>
+                  <p className="text-xs text-gray-500 inline-flex items-center gap-1">
+                    <Timer className="w-2 h-2" /> Respuesta hace{" "}
+                    {formatTimestamp(com.created_at.toString())}
+                  </p>
+                </div>
+                <RenderContent content={com.text} />
               </div>
             </div>
             <div className="translate-x-10 space-x-6 flex gap-2 items-center">

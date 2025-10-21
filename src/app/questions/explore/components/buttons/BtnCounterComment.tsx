@@ -20,7 +20,7 @@ export function BtnCounterComment({ question_id }: { question_id: number }) {
         <DialogTrigger asChild>
           <Button
             variant={"ghost"}
-            className="hover:bg-none hover:bg-transparent dark:hover:bg-transparent text-slate-400 hover:text-slate-200 cursor-pointer"
+            className="hover:bg-none hover:bg-transparent dark:hover:bg-transparent text-slate-600 dark:text-slate-300 hover:text-slate-700 cursor-pointer"
           >
             <MessageCircle className="h-8 w-8 " />
             {count}

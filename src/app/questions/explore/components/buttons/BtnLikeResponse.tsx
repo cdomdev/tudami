@@ -11,7 +11,13 @@ import {
 } from "../../lib/likes";
 import { supabase } from "@/utils/supabase/supabaseClient";
 
-export function BtnLikeResponse({ response_id }: { response_id: number }) {
+export function BtnLikeResponse({
+  response_id,
+  // question_id,
+}: {
+  response_id: number;
+  // question_id: number;
+}) {
   const [count, setCount] = useState<number | null>(0);
   const [loading, setLoading] = useState(true);
   const [hasLiked, setHasLiked] = useState(false);
@@ -95,7 +101,11 @@ export function BtnLikeResponse({ response_id }: { response_id: number }) {
     try {
       const result = hasLiked
         ? await removeLikeResponse(response_id, userId)
-        : await emitLikeResponse(response_id, userId);
+        : await emitLikeResponse(
+            response_id,
+            userId,
+            
+          );
 
       if (result.success) {
         await updateCount();
@@ -106,7 +116,7 @@ export function BtnLikeResponse({ response_id }: { response_id: number }) {
     } finally {
       setIsProcessing(false);
     }
-  }, [userId, isProcessing, hasLiked, response_id]);
+  }, [userId, isProcessing, hasLiked, response_id, updateCount]);
 
   const isDisabled = loading || isProcessing || !userId;
 

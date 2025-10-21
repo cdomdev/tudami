@@ -103,6 +103,7 @@ async function insertTags(
       .insert(tagInserts);
 
     if (tagError) {
+      console.log("ERROR:", tagError)
       throw new Error(`Error al insertar tags: ${tagError.message}`);
     }
   }
