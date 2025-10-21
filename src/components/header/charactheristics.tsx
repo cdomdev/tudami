@@ -6,10 +6,7 @@ import {
 import { ComponentPropsWithoutRef } from "react";
 import Link from "next/link";
 import { useSession } from "@/context/context.sesion";
-import { Button } from "../ui/button";
-import { useRouter } from "next/navigation";
 export function Characteristics() {
-  const router = useRouter();
   const { user } = useSession();
 
   const items = [
@@ -17,31 +14,27 @@ export function Characteristics() {
       title: "Explora dudas",
       description:
         "Encuentra respuestas públicas a preguntas frecuentes de otros aprendices.",
-      href: "/questions/explore",
+      href: user ? "/questions/explore" : "/auth/login",
     },
     {
       title: "Ofertas de ayuda",
       description:
         "Solicita acompañamiento personalizado por parte de otros usuarios.",
-      href: "/offers/create",
+      href: user ? "/offers/create" : "/auth/login",
     },
     {
       title: "Respuestas entre aprendices",
       description:
         "Recibe orientación directa de personas que ya pasaron por lo mismo.",
-      href: "/questions/create",
+      href: user ? "/questions/create" : "/auth/login",
     },
     {
       title: "Aprende y gana ayudando",
       description:
         "Explora ofertas donde tu apoyo y habilidades fortalecen la experiencia de otros.",
-      href: "/offers/explore",
+      href: user ? "/offers/explore" : "/auth/login",
     },
   ];
-
-  const handleNavigation = () => {
-    router.push("/auth/login");
-  };
 
   return (
     <>
@@ -49,31 +42,12 @@ export function Characteristics() {
         Características
       </NavigationMenuTrigger>
       <NavigationMenuContent>
-        <ul
-          className={`grid w-[600px] gap-2 p-4 ${
-            user ? "md:grid-cols-2" : "md:grid-cols-1"
-          }`}
-        >
-          {user ? (
-            items.map((item) => (
-              <ListItem key={item.title} href={item.href} title={item.title}>
-                {item.description}
-              </ListItem>
-            ))
-          ) : (
-            <div className="flex items-center flex-col justify-center mx-auto">
-              <p className="text-sm text-muted-foreground">
-                Inicia sesión para acceder a esta característica.
-              </p>
-              <Button
-                variant="secondary"
-                className="mt-2 w-full cursor-pointer bg-blue-500 text-white hover:bg-blue-600"
-                onClick={handleNavigation}
-              >
-                Inicia sesión
-              </Button>
-            </div>
-          )}
+        <ul className={`grid w-[600px] gap-2 p-4  md:grid-cols-2 `}>
+          {items.map((item) => (
+            <ListItem key={item.title} href={item.href} title={item.title}>
+              {item.description}
+            </ListItem>
+          ))}
         </ul>
       </NavigationMenuContent>
     </>
