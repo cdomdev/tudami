@@ -97,7 +97,9 @@ export async function getLikesCountResponse(response_id: number) {
 
 export async function emitLikeResponse(
   response_id: number,
-  user_id: string
+  user_id: string,
+  // full_name: string,
+  // question_id: number
 ) {
   const { count, error } = await supabase
     .from("questions_response_likes")
@@ -105,6 +107,26 @@ export async function emitLikeResponse(
     .select()
     .maybeSingle();
 
+  // const { data: questionResData } = await supabase
+  //   .from("questions")
+  //   .select("user_id")
+  //   .eq("question_id", question_id)
+  //   .single();
+
+  // const questionOwnerId = questionResData?.user_id;
+
+  // if (questionOwnerId && questionOwnerId !== user_id) {
+  //   await createNotification({
+  //     user_id: user_id,
+  //     actor_id: questionOwnerId,
+  //     type: nPayload[0].type,
+  //     entity_id: question_id.toString(),
+  //     entity_type: nPayload[0].entity_type,
+  //     content: `${full_name || "A alguien"} le gustó tu respuesta`,
+  //     url: `/questions/explore/questions?query=redirect&redirect_id_question=${question_id}&aprovel=""`,
+  //     read: false,
+  //   });
+  // }
   if (error) {
     console.error("Error al emitir like:", error.message);
     return { success: false, error };
