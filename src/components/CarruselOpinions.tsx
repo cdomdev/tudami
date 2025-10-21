@@ -3,7 +3,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { UserCircle2 } from "lucide-react";
+import { UserCircle2, MessageSquareText } from "lucide-react";
 import { useState, useCallback, useEffect } from "react";
 import { NoOpinios } from "./NoOpinios";
 import { supabase } from "@/utils/supabase/supabaseClient";
@@ -13,28 +13,18 @@ import { parseDay } from "@/utils/formatDate";
 import { DialogOpinions } from "./DialogOpinions";
 import { getOpinios } from "@/lib/opinion";
 import { SkeletonOpinios } from "./SkeletonOpinios";
-
-interface User {
-  full_name: string;
-  avatar_url: string;
-}
-interface Historie {
-  id: number;
-  nombre: string;
-  opinion: string;
-  rating: number;
-  created_at: string;
-  user: User;
-}
+import Link from "next/link";
+import { Button } from "./ui/button";
+import { Opinios } from "@/components/CardOpinions";
 
 export function CarouselHistories() {
-  const [data, setData] = useState<Historie[]>([]);
+  const [data, setData] = useState<Opinios[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchOpinions = useCallback(async () => {
     try {
       setLoading(true);
-      const { data } = await getOpinios();
+      const { data } = await getOpinios(0, 9);
       setData(data || []);
     } catch (error) {
       console.error("ERROR: No se pudieron cargar las opiniones", error);
@@ -110,8 +100,14 @@ export function CarouselHistories() {
               </div>
             </CarouselItem>
           ))}
-          <div className="my-auto">
+          <div className="my-auto space-y-4">
             <DialogOpinions textBtn="Opinar sobre Tudami" variant={"default"} />
+            <Link href={"/opinions"}>
+              <Button>
+                <MessageSquareText />
+                Ver todas la opiniones
+              </Button>
+            </Link>
           </div>
         </CarouselContent>
       </Carousel>

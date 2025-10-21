@@ -44,18 +44,18 @@ export async function opinion(dataOpinion: DataOpinion) {
   }
 }
 
-export async function getOpinios() {
+export async function getOpinios(from: number, to:number) {
   try {
-    const { data, error } = await supabase
+    const { data, count, error, } = await supabase
       .from("opinions")
-      .select(`*,user:user_id (full_name,avatar_url)`)
+      .select(`*,user:user_id (full_name,avatar_url)`, {count: "exact"})
       .order("created_at", { ascending: false })
-      .range(0, 9);
+      .range(from, to);
 
     if (error) {
       throw error;
     }
-    return { data };
+    return { data, count };
   } catch (error) {
     console.error("ERROR: Error en al lisatr opiniones", error);
     throw error;

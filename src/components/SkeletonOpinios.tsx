@@ -1,9 +1,9 @@
 import { Star } from "lucide-react";
 
 export function SkeletonOpinios() {
-  const mockCards = Array.from({ length: 4 });
+  const mockCards = Array.from({ length: 3 });
   return (
-    <div className="grid grid-cols-4 gap-x-10">
+    <div className="grid grid-cols-3 gap-x-10">
       {mockCards.map((_, index) => (
         <div
           key={index}
