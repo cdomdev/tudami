@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "npx tsx src/lib/setTags.ts",
+    "seed": "npx tsx --env-file .env.local src/lib/setTags.ts",
     "postbuild": "next-sitemap"
   },
   "dependencies": {
