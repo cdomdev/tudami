@@ -6,7 +6,6 @@ import { SchemaComment } from "@/schemas";
 import { SkeletonComments } from "./SkeletonComments";
 import { BtnLikeResponse } from "./buttons/BtnLikeResponse";
 import { RenderContent } from "./RenderContent";
-import {  Timer } from "lucide-react";
 
 export function BodyComments({ question_id }: { question_id: number }) {
   const [comments, setComments] = useState<SchemaComment[]>([]);
@@ -52,7 +51,7 @@ export function BodyComments({ question_id }: { question_id: number }) {
                     {com.users.full_name}
                   </span>
                   <p className="text-xs text-gray-500 inline-flex items-center gap-1">
-                    <Timer className="w-2 h-2" /> Respuesta hace{" "}
+                    Respuesta hace{" "}
                     {formatTimestamp(com.created_at.toString())}
                   </p>
                 </div>
