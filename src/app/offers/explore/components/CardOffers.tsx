@@ -15,6 +15,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { RenderContent } from "@/app/questions/explore/components/RenderContent";
 
 export function CardPostOffers({
   details,
@@ -25,7 +26,7 @@ export function CardPostOffers({
   hidden_btn_apply,
   hidden_btn_counter,
   text_btn_counter,
-  isHref_btn_counter
+  isHref_btn_counter,
 }: SchemaOffers) {
   const { user } = useSession();
   const approvalToken = user?.approval_token || "";
@@ -38,9 +39,7 @@ export function CardPostOffers({
     : "#";
 
   return (
-    <article
-      className="bg-card border border-border rounded-sm p-5 shadow-sm"
-    >
+    <article className="bg-card border border-border rounded-sm p-5 shadow-sm">
       <div className="flex items-start justify-between mb-3">
         <Link href={profileHref} className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center overflow-hidden">
@@ -60,10 +59,10 @@ export function CardPostOffers({
           <div>
             <p className="font-medium">{users?.full_name || "Anónimo"}</p>
             <time className="text-xs text-muted-foreground">
-                {created_at
-                  ? `Publicado hace ${formatTimestamp(created_at)}`
-                  : "Fecha desconocida"}
-              </time>
+              {created_at
+                ? `Publicado hace ${formatTimestamp(created_at)}`
+                : "Fecha desconocida"}
+            </time>
           </div>
           <TooltipProvider>
             <Tooltip delayDuration={150}>
@@ -83,14 +82,16 @@ export function CardPostOffers({
 
       <div className="mb-4">
         <h2 className="text-lg md:text-xl font-semibold mb-2">{title}</h2>
-        <div
-          className="text-black dark:text-foreground text-sm mb-10"
-          dangerouslySetInnerHTML={{ __html: details }}
-        />
+        <RenderContent content={details} />
       </div>
 
       <div className="flex justify-between items-center">
-        <CounterOffers offer_id={id} hidden_btn_counter={hidden_btn_counter} text={text_btn_counter} isHref={isHref_btn_counter}/>
+        <CounterOffers
+          offer_id={id}
+          hidden_btn_counter={hidden_btn_counter}
+          text={text_btn_counter}
+          isHref={isHref_btn_counter}
+        />
         <ButtonApplyOffer
           user_id={users?.id}
           offer_id={id}

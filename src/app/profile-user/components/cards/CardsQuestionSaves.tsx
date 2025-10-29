@@ -6,6 +6,7 @@ import { ButtonShare } from "@/components/ui/ButtonShare";
 import Link from "next/link";
 import { useSession } from "@/context/context.sesion";
 import { SchemaPost } from "@/schemas";
+import { RenderContent } from "@/app/questions/explore/components/RenderContent";
 
 export function CardsQuestionSaves({
   id,
@@ -56,13 +57,8 @@ export function CardsQuestionSaves({
 
       <div className="mb-4">
         <h2 className="text-lg md:text-xl font-semibold mb-2">{title}</h2>
-        <div
-          className="text-black dark:text-foreground text-pretty text-sm md:text-md "
-          dangerouslySetInnerHTML={{ __html: content }}
-        />
+        <RenderContent content={content} />
       </div>
-
-      
     </article>
   );
 }
