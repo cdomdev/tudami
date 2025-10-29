@@ -3,14 +3,7 @@
 import { useSession } from "@/context/context.sesion";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  House,
-  Settings,
-  Bookmark,
-  Edit,
-  FileUser,
-  UserLock,
-} from "lucide-react";
+import { House, Settings, Bookmark, Edit, FileUser } from "lucide-react";
 
 export default function LayoutProfile({
   children,
@@ -40,7 +33,7 @@ export default function LayoutProfile({
           <MapItems
             id={user?.id}
             full_name={user?.full_name}
-            className="rounded-md"
+            className={`rounded-md`}
           />
         </nav>
       </aside>
@@ -61,7 +54,9 @@ export default function LayoutProfile({
             <h1 className="text-xl md:text-2xl font-bold flex flex-col ">
               <span className="text-lg bg-gradient-to-r from-indigo-500 to-sky-400 text-transparent bg-clip-text">
                 Bienvenido/a
-                {user?.role === "admin_tudami" && <span className="ml-1">(Admin)</span>}
+                {user?.role === "admin_tudami" && (
+                  <span className="ml-1">(Admin)</span>
+                )}
               </span>
               {user?.full_name || "Anonimo"}
             </h1>
@@ -103,6 +98,8 @@ function MapItems({
   full_name?: string;
   className: string;
 }) {
+  const { user } = useSession();
+
   const itemsSide = [
     {
       name: "Inicio",
@@ -125,33 +122,30 @@ function MapItems({
       icon: FileUser,
     },
   ];
-  const { user } = useSession();
+
+  if (user?.role === "admin_tudami") {
+    itemsSide.push({
+      name: "ADMIN",
+      href: "/admin",
+      icon: FileUser,
+    });
+  }
+
   return (
     <>
-      <ul className="flex gap-2 my-3 md:my-0 rounded-xs  md:flex-col ">
+      <ul className="flex gap-2 my-3 md:my-0 rounded-xs  md:flex-col  overflow-x-auto ">
         {itemsSide.map((item, i) => (
           <li key={i} aria-label={item.name}>
             <Link
               href={item.href}
-              className={`${className} flex items-center gap-3 px-3 py-2  transition-colors hover:bg-accent-foreground/10 dark:cusbg-custom-card text-accent-foreground`}
+              className={`${className} rounded-md flex items-center gap-3 px-3 py-2  transition-colors hover:bg-accent-foreground/10 dark:cusbg-custom-card text-accent-foreground`}
             >
-              <item.icon className="size-5 text-primary" />
+              <item.icon className={`size-5 text-primary`} />
               <span className="text-sm font-medium">{item.name}</span>
             </Link>
           </li>
         ))}
       </ul>
-      <span className="px-3 mt-4 block ">
-        {user?.role === "admin_tudami" && (
-          <Link
-            href="/admin"
-            className="text-sm flex gap-3 items-center uppercase"
-          >
-            <UserLock className="size-5 text-primary" />
-            Admin
-          </Link>
-        )}
-      </span>
     </>
   );
 }

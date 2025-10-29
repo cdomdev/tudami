@@ -41,12 +41,10 @@ export function HeaderProfile({
               {full_name}
             </h1>
             <div className="flex items-center mb-4 flex-col">
-              <div className="flex items-center space-x-2">
-                <MapPin className="w-4 h-4" />
-                <span className="text-sm text-gray-600 dark:text-gray-300">
+              <span className="text-sm inline-flex items-center justify-center text-gray-600 dark:text-gray-300 text-balance">
+                  <MapPin className="w-4 h-4" />
                   {dataUbation}
                 </span>
-              </div>
             </div>
           </div>
         </div>
