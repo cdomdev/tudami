@@ -22,7 +22,7 @@ export function BodyComments({ question_id }: { question_id: number }) {
   }, [question_id]);
 
   return (
-    <div className="flex flex-col space-y-3 ">
+    <div className="flex flex-col space-y-3 w-full  ">
       {loading ? (
         <SkeletonComments />
       ) : comments.length === 0 ? (

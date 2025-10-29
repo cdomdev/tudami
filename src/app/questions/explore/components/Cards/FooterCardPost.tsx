@@ -1,13 +1,13 @@
 import { ButtonLike } from "../buttons/ButtonLike";
 import { BtnCounterLikes } from "../buttons/BtnCounterLikes";
-import { BtnCounterComment } from "../buttons/BtnCounterComment";
 import { ButtonComment } from "../buttons/ButtonComment";
+import { DrawerComments } from "../DrawerComments";
 
 export function FooterCardPost({ question_id }: { question_id: number }) {
   return (
     <>
       <BtnCounterLikes question_id={question_id} />
-      <BtnCounterComment question_id={question_id} />
+      <DrawerComments question_id={question_id}/>
 
       <div className="border-t pt-2">
         <div className="flex items-center gap-2">

@@ -3,7 +3,6 @@ interface dataNotification {
   user_id: string;
   actor_id: string;
   type: string;
-  entity_id?: string;
   entity_type?: string;
   content: string;
   url?: string;
@@ -13,7 +12,6 @@ interface dataNotification {
 export async function createNotification({
   actor_id,
   content,
-  entity_id,
   entity_type,
   read,
   type,
@@ -25,7 +23,6 @@ export async function createNotification({
   const bodyNotification = {
     actor_id,
     content,
-    entity_id,
     entity_type,
     read,
     type,

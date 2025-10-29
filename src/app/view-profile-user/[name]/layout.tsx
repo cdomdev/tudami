@@ -158,7 +158,7 @@ export default function LayoutClient({
       </section>
       <section className="mt-3 grid grid-cols-1 gap-x-10 md:flex px-6 py-4 gap-6">
         <aside className="min-w-28">
-          <span className="md:hidden mx-auto w-full gap-x-2 items-center inline-flex justify-center mb-3">
+          <span className="md:hidden mx-auto w-full gap-x-2 items-center inline-flex justify-center mb-6">
             <MoveLeft className="size-4 text-slate-800 dark:text-slate-300" />
             <p className="text-center text-sm text-slate-500 dark:text-slate-400"> Arrastra para ver las opciones</p>
             <MoveRight className="size-4 text-slate-800 dark:text-slate-300" />

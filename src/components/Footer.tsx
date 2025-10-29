@@ -128,7 +128,7 @@ export function Footer() {
           <div className="text-center text-sm">
             <p className="mb-2">Síguenos en nuestras redes sociales</p>
             <div className="flex justify-center gap-6 text-gray-500 dark:text-gray-400">
-              <a
+              {/* <a
                 href="#"
                 className="hover:text-[#ED2E7E] dark:hover:text-pink-400"
               >
@@ -139,10 +139,11 @@ export function Footer() {
                 className="hover:text-[#4696FF] dark:hover:text-sky-400"
               >
                 Instagram
-              </a>
-              <a href="#" className="hover:text-blue-600 dark:hover:text-white">
+              </a> */}
+              <Link href="https://x.com/app_tudami" className="hover:text-blue-600 dark:hover:text-white" target="_blank">
                 X
-              </a>
+                <span className="sr-only">x</span>
+              </Link>
             </div>
           </div>
         </div>
