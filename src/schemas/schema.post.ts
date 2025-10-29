@@ -25,6 +25,7 @@ export const SchemaPostSchema = z.object({
   id: z.number(),
   user_id: z.string(),
   title: z.string(),
+  slug: z.string(),
   content: z.string(),
   status: z.string(),
   created_at: z.string(),

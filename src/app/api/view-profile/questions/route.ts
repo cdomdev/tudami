@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
   const { data, error } = await supabase
     .from("questions")
     .select(
-      `created_at, id, title, 
+      `created_at, id, title, slug,
        question_tags (
         tag:tags (
           id,

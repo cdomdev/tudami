@@ -1,4 +1,3 @@
-
 interface TagData {
   id: number;
   name: string;
@@ -10,6 +9,7 @@ interface CardQuestionUserProps {
   id: string | number;
   title: string;
   created_at: string;
+  slug: string;
   question_tags: {
     tag: {
       id: number;
@@ -25,7 +25,6 @@ interface CardQuestionUserProps {
     full_name: string;
   };
 }
-
 
 interface ResponseDataAnswers {
   id: number;

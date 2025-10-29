@@ -1,10 +1,11 @@
-
 import Link from "next/link";
 import { format } from "date-fns";
 import { es } from "date-fns/locale/es";
+
 interface CardQuestionUserProps {
   id: string | number;
   title: string;
+  slug: string;
   created_at: string;
   aprovel?: string;
   question_tags: {
@@ -24,8 +25,7 @@ export function CardQuestionUser({
   created_at,
   question_tags,
   question_comments,
-  id,
-  aprovel,
+  slug,
 }: CardQuestionUserProps) {
   const commentsCount = question_comments?.[0]?.count ?? 0;
 
@@ -39,7 +39,7 @@ export function CardQuestionUser({
             •
           </span>
           <Link
-            href={`/explore-questions/questions?query=redirect&redirect_id_question=${id}&aprovel=${aprovel}`}
+            href={`/questions/explore/q?query=redirect&slug=${slug}`}
             className="text-lg font-semibold text-gray-800 dark:text-white hover:underline"
           >
             <h3 className="text-base leading-4 text-black dark:text-foreground text-pretty">
@@ -53,9 +53,7 @@ export function CardQuestionUser({
         </div>
       </div>
       <div className="md:col-span-3 flex flex-col justify-start items-start">
-        <h4 className="text-sm text-gray-600 dark:text-white">
-          Etiquetas:
-        </h4>
+        <h4 className="text-sm text-gray-600 dark:text-white">Etiquetas:</h4>
         {question_tags?.length > 0 && (
           <div className="flex gap-2 ">
             {question_tags.map(({ tag }) => (
@@ -75,7 +73,7 @@ export function CardQuestionUser({
 
         <div className="flex items-center justify-start gap-x-10 my-3 ">
           <Link
-            href={`/explore-questions/questions?query=redirect&redirect_id_question=${id}&aprovel=${aprovel}`}
+            href={`/questions/explore/q?query=redirect&slug=${slug}`}
             role="link"
             className="inline-flex items-center text-base font-medium text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-700 transition-colors"
           >

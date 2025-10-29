@@ -12,6 +12,7 @@ import {
   ResponseDataAnswers,
   TagData,
 } from "../../interfaces/interfaces";
+
 import {
   CardTags,
   CardAnswers,
@@ -32,36 +33,35 @@ export default function SummaryPage() {
   useEffect(() => {
     async function getDataUserByParamas() {
       if (!userId) return;
+      let response = [];
+      try {
+        switch (query) {
+          case "questions":
+            setLoading(true);
+            response = await getQuestionUserBy(userId, aprovelToken);
+            setQuestions(response.data);
+            break;
+          case "answers":
+            setLoading(true);
+            response = await getAnswerUserBy(userId, aprovelToken);
+            setAnswers(response.data);
+            break;
+          case "tags":
+            setLoading(true);
+            response = await getTagsUserBy(userId, aprovelToken);
+            setResTags(response.data);
+            break;
+          default:
+            response = [];
+            break;
+        }
 
-      let response;
-      switch (query) {
-        case "questions":
-          setLoading(true);
-          response = await getQuestionUserBy(userId, aprovelToken);
-          setQuestions(response.data);
-          setCount(response.data.length);
-          setLoading(false);
-          break;
-        case "answers":
-          setLoading(true);
-          response = await getAnswerUserBy(userId, aprovelToken);
-          setAnswers(response.data);
-          setCount(response.data.length);
-          setLoading(false);
-          break;
-        case "tags":
-          setLoading(true);
-          response = await getTagsUserBy(userId, aprovelToken);
-          setResTags(response.data);
-          setCount(response.data.length);
-          setLoading(false);
-          break;
-        default:
-          response = { success: true, data: [] };
-          break;
+        setCount(response.data.length);
+      } catch (error) {
+        console.error("Erro fetch data", error);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     }
 
     getDataUserByParamas();
@@ -85,6 +85,7 @@ export default function SummaryPage() {
     renderedContent = resQuestions.map((question) => (
       <CardQuestionUser
         id={question.id}
+        slug={question.slug}
         aprovel={aprovelToken}
         key={question.id.toString()}
         created_at={question.created_at}
@@ -101,7 +102,6 @@ export default function SummaryPage() {
     renderedContent = resTags.map((tag) => <CardTags key={tag.id} {...tag} />);
   }
 
-
   return (
     <>
       <h3 className="text-xl font-bold mb-4"> {title}</h3>
@@ -117,8 +117,8 @@ export default function SummaryPage() {
           {query === "questions"
             ? "preguntas"
             : query === "answers"
-            ? "respuestas"
-            : "etiquetas"}{" "}
+              ? "respuestas"
+              : "etiquetas"}{" "}
           disponibles.
         </p>
       )}
