@@ -48,14 +48,16 @@ async function createQuestion(
     throw new Error("Usuario no autenticado");
   }
 
+  const slug = title.toLocaleLowerCase().replaceAll(" ", "-").trim();
   const { data, error } = await supabaseClient
     .from("questions")
     .insert([
       {
         user_id: userId,
         title,
+        slug: slug,
         content,
-        status: "pendiente",
+        status: "pending",
       },
     ])
     .select("id");
@@ -103,7 +105,7 @@ async function insertTags(
       .insert(tagInserts);
 
     if (tagError) {
-      console.log("ERROR:", tagError)
+      console.log("ERROR:", tagError);
       throw new Error(`Error al insertar tags: ${tagError.message}`);
     }
   }
@@ -119,9 +121,9 @@ async function asignBadgeIfNeeded(
   userId: string,
   supabaseClient: SupabaseClient
 ): Promise<AchievementData | null> {
-
-  const { count } = await supabaseClient.from("questions")
-    .select("id", { count: "exact", head: true})
+  const { count } = await supabaseClient
+    .from("questions")
+    .select("id", { count: "exact", head: true })
     .eq("user_id", userId);
   let datainsignia: AchievementData | null = null;
   // 3. Otorgar la insignia si no la tiene aún
@@ -157,28 +159,34 @@ async function assignReputationPoints(
     .from("user_reputation")
     .select(`*`)
     .eq("user_id", userId)
-    .single(); 
+    .single();
   // Si hay un error al obtener el usuario, lo manejamos
   if (userError) {
-    if (userError.code === 'PGRST116') { 
+    if (userError.code === "PGRST116") {
       const { error: insertError } = await supabaseClient
         .from("user_reputation")
         .insert({ user_id: userId, score: 10 });
-      
+
       if (insertError) {
-        console.error("Error al crear registro de reputación:", insertError.message);
+        console.error(
+          "Error al crear registro de reputación:",
+          insertError.message
+        );
       }
       return;
     }
 
-    console.error("Error al obtener usuario para asignar reputación:", userError.message);
+    console.error(
+      "Error al obtener usuario para asignar reputación:",
+      userError.message
+    );
     return;
   }
 
   const currentReputation = user?.score || 0;
 
   // Lógica para asignar puntos de reputación
-  const newReputation = currentReputation + 10; 
+  const newReputation = currentReputation + 10;
 
   const { error: updateError } = await supabaseClient
     .from("user_reputation")

@@ -31,7 +31,7 @@ export function ExploresQuestionsByTagsLayout() {
     if (key === "page") {
       params.set("page", "1");
     }
-    router.push(`/questions/explore/questions?${params.toString()}`, {
+    router.push(`/questions/explore/q?${params.toString()}`, {
       scroll: false,
     });
   };

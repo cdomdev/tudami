@@ -9,7 +9,6 @@ import { ButtonShare } from "../../../../../components/ui/ButtonShare";
 import { useSession } from "@/context/context.sesion";
 import { RenderContent } from "../RenderContent";
 
-
 export function CardPost({
   content,
   created_at,
@@ -62,16 +61,10 @@ export function CardPost({
         </div>
       </div>
 
-      {/* Título y contenido */}
       <div className="mb-4">
         <h2 className="text-lg md:text-xl font-semibold mb-2">{title}</h2>
-        <RenderContent content={content}/>
-        {/* <div
-          className="prose relative dark:prose-invert max-w-none text-sm md:text-md"
-          dangerouslySetInnerHTML={{ __html: content }}
-        /> */}
+        <RenderContent content={content} />
       </div>
-
 
       {/* Etiquetas */}
       {question_tags && question_tags.length > 0 && (
@@ -93,7 +86,6 @@ export function CardPost({
         </div>
       )}
 
-      {/* Acciones botones y contadores de los preguntas */}
       <FooterCardPost question_id={id} />
     </article>
   );

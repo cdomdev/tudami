@@ -1,18 +1,16 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   getPopularQuestionsApi,
   getUnansweredQuestionsApi,
   getMyQuestionsApi,
-  getQuestionsByIdApi,
+  getQuestionsBySlugApi,
 } from "../lib/getQuestions";
 import { SchemaPost } from "@/schemas";
 import { CardPost } from "../components/Cards/CardPost";
 import { Main, SkeletonCard } from "@/components";
 import { NoContent } from "@/components";
-
 
 export default function QuestionPage() {
   const [questions, setQuestions] = useState<SchemaPost[]>([]);
@@ -21,7 +19,7 @@ export default function QuestionPage() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || undefined;
   const search = searchParams.get("search") || undefined;
-  const id = searchParams.get("redirect_id_question") || undefined;
+  const slug = searchParams.get("slug") || undefined;
 
   const pageSize = 10;
   const page = parseInt(searchParams.get("page") || "1", 10);
@@ -41,7 +39,7 @@ export default function QuestionPage() {
           data = await getUnansweredQuestionsApi(page, pageSize, search);
           break;
         case "redirect":
-          data = await getQuestionsByIdApi(page, pageSize, search, id);
+          data = await getQuestionsBySlugApi(page, pageSize, search, slug);
           break;
         case "my":
           data = await getMyQuestionsApi(page, pageSize, search);
@@ -56,7 +54,7 @@ export default function QuestionPage() {
     };
 
     fetchQuestions();
-  }, [page, search, query, id]);
+  }, [page, search, query, slug]);
 
   return (
     <Main

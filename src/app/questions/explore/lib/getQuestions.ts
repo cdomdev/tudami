@@ -104,13 +104,13 @@ export async function getMyQuestionsApi(
   return data ?? [];
 }
 
-export async function getQuestionsByIdApi(
+export async function getQuestionsBySlugApi(
   page = 1,
   pageSize = 10,
   search?: string,
-  id?: string
+  slug?: string
 ) {
-  const url = `/api/questions/explore/question-by-id?id=${id}&page=${page}&pageSize=${pageSize}${
+  const url = `/api/questions/explore/question-by-slug?slug=${slug}&page=${page}&pageSize=${pageSize}${
     search ? `&search=${search}` : ""
   }`;
   const res = await fetch(url, {

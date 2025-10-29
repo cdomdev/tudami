@@ -26,6 +26,7 @@ export default function ExploreQuestionsPage() {
       .finally(() => setLoading(false));
   }, [page, pageSize, search]);
 
+
   return (
     <Main
       basePath="/questions/explore"
