@@ -59,7 +59,7 @@ export function BodyComments({ question_id }: { question_id: number }) {
               </div>
             </div>
             <div className="translate-x-10 space-x-6 flex gap-2 items-center">
-              <BtnLikeResponse response_id={com.id} />
+              <BtnLikeResponse response_id={com.id} question_id={question_id} />
             </div>
           </div>
         ))

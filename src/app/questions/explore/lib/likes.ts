@@ -1,6 +1,8 @@
-import { createNotification } from "@/lib/notifications";
 import { supabase } from "@/utils/supabase/supabaseClient";
-import nPayload from "@/content/notitications/notications-entity.json";
+import {
+  notificationFromLikes,
+  notificationFromResLikes,
+} from "./emitNotifications";
 
 export async function toggleLike(questionId: number, user_id: string) {
   try {
@@ -39,33 +41,12 @@ export async function emitLike({
   question_id,
   user_id,
   full_name,
-  approval_token,
 }: {
   question_id: number;
   user_id: string;
   full_name: string;
-  approval_token?: string;
 }) {
-  const { data: questionData } = await supabase
-    .from("questions")
-    .select("user_id")
-    .eq("id", question_id)
-    .single();
-
-  const questionOwnerId = questionData?.user_id;
-
-  if (questionOwnerId && questionOwnerId !== user_id) {
-    await createNotification({
-      user_id: questionOwnerId,
-      actor_id: user_id,
-      type: nPayload[0].type,
-      entity_id: question_id.toString(),
-      entity_type: nPayload[0].entity_type,
-      content: `${full_name || "A alguien"} le gustó tu publicación`,
-      url: `/questions/explore/questions?query=redirect&redirect_id_question=${question_id}&aprovel=${approval_token}`,
-      read: false,
-    });
-  }
+  await notificationFromLikes(question_id, user_id, full_name);
 }
 
 // response functions
@@ -97,36 +78,17 @@ export async function getLikesCountResponse(response_id: number) {
 
 export async function emitLikeResponse(
   response_id: number,
+  question_id: number,
   user_id: string,
-  // full_name: string,
-  // question_id: number
+  full_name?: string
 ) {
   const { count, error } = await supabase
     .from("questions_response_likes")
     .insert([{ response_id: response_id, user_id }])
     .select()
     .maybeSingle();
+  await notificationFromResLikes(question_id, response_id, user_id, full_name);
 
-  // const { data: questionResData } = await supabase
-  //   .from("questions")
-  //   .select("user_id")
-  //   .eq("question_id", question_id)
-  //   .single();
-
-  // const questionOwnerId = questionResData?.user_id;
-
-  // if (questionOwnerId && questionOwnerId !== user_id) {
-  //   await createNotification({
-  //     user_id: user_id,
-  //     actor_id: questionOwnerId,
-  //     type: nPayload[0].type,
-  //     entity_id: question_id.toString(),
-  //     entity_type: nPayload[0].entity_type,
-  //     content: `${full_name || "A alguien"} le gustó tu respuesta`,
-  //     url: `/questions/explore/questions?query=redirect&redirect_id_question=${question_id}&aprovel=""`,
-  //     read: false,
-  //   });
-  // }
   if (error) {
     console.error("Error al emitir like:", error.message);
     return { success: false, error };

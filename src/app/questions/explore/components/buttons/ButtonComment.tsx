@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button";
 import { useSession } from "@/context/context.sesion";
 import { MessageCircle } from "lucide-react";
 import { toast } from "sonner";
-import { createNotification } from "@/lib/notifications";
-import nPayload from "@/content/notitications/notications-entity.json";
 import { createComment } from "../../lib/comment";
+import { noficationsFromComments } from "../../lib/emitNotifications";
+
+
 export function ButtonComment({ question_id }: { question_id: number }) {
   const { user } = useSession();
   const [open, setOpen] = useState(false);
@@ -21,23 +22,15 @@ export function ButtonComment({ question_id }: { question_id: number }) {
 
     try {
       const data = await createComment(content, question_id, user.id);
-      const { commentData, questionData, error } = data;
+      const { questionData, error } = data;
       const questionOwnerId = questionData?.user_id;
 
-      if (questionOwnerId && questionOwnerId !== user.id) {
-        const notificationPayload = {
-          user_id: questionOwnerId,
-          actor_id: user.id,
-          type: nPayload[1].type,
-          entity_id: commentData.id,
-          entity_type: nPayload[1].entity_type,
-          content: `${user.full_name || "Alguien"} comentó en tu pregunta.`,
-          url: `/questions/explore/questions?query=redirect&redirect_id_question=${question_id}&aprovel=${user.approval_token}`,
-          read: false,
-        };
-
-        await createNotification(notificationPayload);
-      }
+      await noficationsFromComments(
+        question_id,
+        questionOwnerId,
+        user.id,
+        user.full_name
+      );
 
       if (!error || !data) {
         setContent("");

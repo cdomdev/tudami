@@ -13,18 +13,20 @@ import { supabase } from "@/utils/supabase/supabaseClient";
 
 export function BtnLikeResponse({
   response_id,
-  // question_id,
+  question_id,
 }: {
   response_id: number;
-  // question_id: number;
+  question_id: number;
 }) {
   const [count, setCount] = useState<number | null>(0);
   const [loading, setLoading] = useState(true);
   const [hasLiked, setHasLiked] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const { user } = useSession();
-  const userId = user?.id;
 
+  const userId = user?.id;
+  const full_name = user?.full_name
+  
   const updateCount = useCallback(async () => {
     const newCount = await getLikesCountResponse(response_id);
     setCount(newCount);
@@ -103,8 +105,9 @@ export function BtnLikeResponse({
         ? await removeLikeResponse(response_id, userId)
         : await emitLikeResponse(
             response_id,
-            userId,
-            
+            question_id,
+            userId, 
+            full_name,
           );
 
       if (result.success) {
@@ -116,7 +119,7 @@ export function BtnLikeResponse({
     } finally {
       setIsProcessing(false);
     }
-  }, [userId, isProcessing, hasLiked, response_id, updateCount]);
+  }, [userId, isProcessing, hasLiked, response_id, updateCount, full_name, question_id]);
 
   const isDisabled = loading || isProcessing || !userId;
 

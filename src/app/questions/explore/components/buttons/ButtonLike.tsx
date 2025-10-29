@@ -54,7 +54,6 @@ export function ButtonLike({ question_id }: { question_id: number }) {
         question_id,
         user_id: user.id,
         full_name: user.full_name || "Alguien",
-        approval_token: user.approval_token
       });
     }
   }
