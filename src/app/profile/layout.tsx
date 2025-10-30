@@ -103,22 +103,22 @@ function MapItems({
   const itemsSide = [
     {
       name: "Inicio",
-      href: `/profile-user?id=${id}`,
+      href: `/profile?id=${id}`,
       icon: House,
     },
     {
       name: "Cuenta",
-      href: `/profile-user/account-setting?name=${full_name}&id=${id}`,
+      href: `/profile/account-setting?name=${full_name}&id=${id}`,
       icon: Settings,
     },
     {
       name: "Guardados",
-      href: `/profile-user/save?page=questions&user_id=${id}`,
+      href: `/profile/save?page=questions&user_id=${id}`,
       icon: Bookmark,
     },
     {
       name: "Ofertas",
-      href: `/profile-user/offers?user_id=${id}`,
+      href: `/profile/offers?user_id=${id}`,
       icon: FileUser,
     },
   ];
