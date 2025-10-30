@@ -89,10 +89,12 @@ export default function Editor() {
       </div>
 
       <div className="px-6 ">
-        <label htmlFor="etiquetas" className="font-medium text-sm md:text-base">
+        <label htmlFor="etiquetas" id="multi-select-button" className="font-medium text-sm md:text-base">
           Selecciona etiquetas relevantes
         </label>
         <MultiSelect
+          id="etiquetas"
+          aria-labelledby="multi-select-button"
           options={options}
           onValueChange={setSelectedTags}
           defaultValue={selectedTags}
@@ -100,9 +102,9 @@ export default function Editor() {
       </div>
 
       <div className="p-6 ">
-        <span className="font-medium text-sm md:text-base block mb-3">
+        <label id="editor-label" className="font-medium text-sm md:text-base block mb-3">
           Escribe tu pregunta con detalle
-        </span>
+        </label>
         <SimpleEditor onChange={setContent} />
         <Button
           variant={"default"}
