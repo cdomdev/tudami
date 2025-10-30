@@ -73,7 +73,7 @@ export function PasswordUpdated({ email }: { email: string }) {
       <tr>
         <td style={{ padding: "32px" }}>
           <a
-            href="https://tudami.com/profile-user?id=1"
+            href="https://tudami.com/profile?id=1"
             style={{
               width: "40%",
               textAlign: "center",  

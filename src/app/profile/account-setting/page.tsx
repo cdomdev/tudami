@@ -24,7 +24,7 @@ export default function PreferenciasTema() {
             Información de perfil
           </h2>
           <Link
-            href={`/profile-user/account-setting/edit?id=${user?.id}`}
+            href={`/profile/account-setting/edit?id=${user?.id}`}
             className="text-accent-foreground hover:text-accent-foreground/80 "
           >
             <Edit />

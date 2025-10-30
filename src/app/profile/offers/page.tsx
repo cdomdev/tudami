@@ -69,7 +69,7 @@ export default function OffersPage() {
         {
             title: "Mis ofertas",
             value: "offers",
-            href: `/profile-user/offers?page=offers&user_id=${userId}`,
+            href: `/profile/offers?page=offers&user_id=${userId}`,
         }
     ];
 

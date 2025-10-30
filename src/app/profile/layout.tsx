@@ -64,7 +64,7 @@ export default function LayoutProfile({
               {user?.bio ||
                 "¡Cuéntanos sobre ti! Puedes agregar una biografía en la sección de cuanta."}
               <Link
-                href={`/profile-user/account-setting/edit?id=${user?.id}`}
+                href={`/profile/account-setting/edit?id=${user?.id}`}
                 className="text-blue-500 pl-3 hover:underline"
               >
                 <Edit className="inline size-4" />

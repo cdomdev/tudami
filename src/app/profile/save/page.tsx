@@ -77,12 +77,12 @@ export default function SavePage() {
     {
       title: "Preguntas",
       value: "questions",
-      href: `/profile-user/save?page=questions&user_id=${userId}`,
+      href: `/profile/save?page=questions&user_id=${userId}`,
     },
     {
       title: "Ofertas",
       value: "offers",
-      href: `/profile-user/save?page=offers&user_id=${userId}`,
+      href: `/profile/save?page=offers&user_id=${userId}`,
     },
   ];
 

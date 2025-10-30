@@ -24,7 +24,7 @@ export function CounterOffers({
 
   return (
     <Wrapper
-      href={`/profile-user/offers?page=list_aplications&offer_id=${offer_id}&user_id=${user?.id}`}
+      href={`/profile/offers?page=list_aplications&offer_id=${offer_id}&user_id=${user?.id}`}
     >
       <div className={`${hidden_btn_counter ? "hidden" : "flex"}  items-center flex-col`}>
         <span className="flex items-center gap-1 font-semibold text-base">

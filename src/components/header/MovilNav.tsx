@@ -22,7 +22,7 @@ export function MovilNav({
 
   const routes = [
     { href: "/", label: "Inicio" },
-    { href: `/profile-user?id=${user?.approval_token}`, label: "Perfil" },
+    { href: `/profile?id=${user?.approval_token}`, label: "Perfil" },
     { href: "/questions/explore", label: "Ver preguntas" },
     { href: "/questions/create", label: "Crear pregunta" },
     { href: "/news", label: "Ver noticias" },

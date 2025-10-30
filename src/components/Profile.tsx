@@ -60,7 +60,7 @@ export function Profile() {
           <DropdownMenuSeparator />
           <Link
             className="gap-2 flex px-2 hover:bg-accent p-2 rounded-md items-center text-sm dark:text-gray-300 dark:hover:text-gray-100"
-            href={`/profile-user?id=${user?.id}`}
+            href={`/profile?id=${user?.id}`}
           >
             <UserIcon className="w-4 h-4" />
             Mi perfil

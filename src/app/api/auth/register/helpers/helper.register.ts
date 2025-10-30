@@ -105,7 +105,7 @@ export async function generateNotificationWelcome(
     entity_type: nPayload[3].entity_type,
     content: `Hola ${full_name}, bienvenido a Tudami, un espacio para aprender y crecer.
  \n Estamos emocionados de tenerte con nosotros y esperamos que disfrutes de la experiencia. \n Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos.  \n ¡Feliz aprendizaje!. \n Puedes visitar y personalizar tu perfil haciendo clic sobre este mensaje.`,
-    url: `/profile-user?id=${user_id}`,
+    url: `/profile?id=${user_id}`,
     read: false,
   };
 

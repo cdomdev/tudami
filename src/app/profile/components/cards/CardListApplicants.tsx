@@ -14,7 +14,7 @@ export function CardListApplicants({ user, preferences }: OfferApplication) {
     <>
       <Button variant={"secondary"} className="mb-5 flex gap-x-2 items-center">
         <ArrowLeft className="w-5 h-5" />
-        <Link href={`/profile-user/offers?page=offers&user_id=${userSession?.id}`}>Volver a mis ofertas</Link>
+        <Link href={`/profile/offers?page=offers&user_id=${userSession?.id}`}>Volver a mis ofertas</Link>
       </Button>
       <div className="flex gap-20 border-b pb-5  border-gray-200 dark:border-gray-700 relative before:absolute before:left-[-15px] before:block before:h-full before:border-l-2 before:border-black/20 dark:before:border-white/15 before:content-[''] md:gap-1 md:space-x-4">
         <div className="relative pb-5 md:col-span-2">
