@@ -8,7 +8,7 @@ import { MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { createComment } from "../../lib/comment";
 import { noficationsFromComments } from "../../lib/emitNotifications";
-
+import { Spinner } from "@/components";
 
 export function ButtonComment({ question_id }: { question_id: number }) {
   const { user } = useSession();
@@ -50,6 +50,8 @@ export function ButtonComment({ question_id }: { question_id: number }) {
     }
   };
 
+  const textLoading = loading ? "Enviando" : "Enviar";
+
   return (
     <div className="w-full overflow-y-hidden">
       <Button
@@ -89,7 +91,7 @@ export function ButtonComment({ question_id }: { question_id: number }) {
               onClick={handleSubmit}
               disabled={loading || !content.trim()}
             >
-              {loading ? "Enviando..." : "Enviar"}
+              {loading && <Spinner />} {textLoading}
             </Button>
           </div>
         </div>
