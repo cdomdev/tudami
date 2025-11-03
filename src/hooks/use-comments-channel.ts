@@ -33,11 +33,14 @@ export function useCommentsChannel(question_id: number) {
           filter: `question_id=eq.${question_id}`,
         },
         async () => {
-          const { count } = await supabase
-            .from("question_comments")
-            .select("*", { count: "exact", head: true })
-            .eq("question_id", question_id);
-          setCount(count ?? 0);
+          // const { count } = await supabase
+          //   .from("question_comments")
+          //   .select("*", { count: "exact", head: true })
+          //   .eq("question_id", question_id);
+          // setCount(count ?? 0);
+          () => {
+            setCount(prev => prev +1);
+          }
         }
       )
       .subscribe();
