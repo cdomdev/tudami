@@ -25,7 +25,7 @@ export function DrawerComments({ question_id }: { question_id: number }) {
         >
           <MessageCircle className="h-8 w-8 " />
           {count}
-          <span className="sr-only">open dialog</span>
+          <span className="sr-only">open drawer</span>
         </Button>
       </DrawerTrigger>
       <DrawerContent>
