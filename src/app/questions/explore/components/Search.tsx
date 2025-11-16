@@ -29,7 +29,7 @@ export function SearchInput() {
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
       <Input
         aria-label="Buscar preguntas"
-        placeholder="Buscar preguntas..."
+        placeholder="ej. javascript,  arrays"
         className="pl-10 bg-white dark:bg-slate-700 dark:text-slate-100 focus:ring-0 focus:border-blue-300 pr-0"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}

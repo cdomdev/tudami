@@ -1,4 +1,3 @@
-
 interface dataNotification {
   user_id: string;
   actor_id: string;
@@ -18,6 +17,7 @@ export async function createNotification({
   user_id,
   url,
 }: dataNotification) {
+
   const urlRequest = `/api/notifications/new`;
   
   const bodyNotification = {
@@ -38,6 +38,8 @@ export async function createNotification({
     },
     body: JSON.stringify(bodyNotification),
   });
+
+  console.log("Response status:", {res: response, status:  response.status});
 
   if (!response.ok) {
     throw new Error("Error creating notification");

@@ -1,4 +1,3 @@
-
 export async function createQuestionApi(
   title: string,
   content: string,
@@ -13,17 +12,14 @@ export async function createQuestionApi(
     body: JSON.stringify({ title, content, tags }),
   });
 
-
   if (!response.ok) {
     throw new Error("Error al crear la pregunta");
   }
 
+  const { data } = await response.json();
 
-  const { data, datainsignia } = await response.json();
-  
   return {
     success: true,
     data,
-    datainsignia,
   };
 }

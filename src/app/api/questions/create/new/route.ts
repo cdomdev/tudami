@@ -1,6 +1,6 @@
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 import { NextRequest, NextResponse } from "next/server";
-import {createQuestion} from '../helpers/index'
+import {createQuestion} from '../helpers/questions';
 
 export async function POST(request: NextRequest) {
   try {

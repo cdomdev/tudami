@@ -7,7 +7,7 @@ export async function asignBadge(user_id: string, supabaseClient: SupabaseClient
     try {
         const { error: insigniaError, data } = await supabaseClient
         .from("user_achievements")
-        .insert([{ user_id: user_id, achievement_id: achievement_id }]);
+        .insert([{ user_id: user_id, achievement_id: achievement_id.replaceAll(" ", "_") }]);
 
         if(insigniaError) return {
             success: false,

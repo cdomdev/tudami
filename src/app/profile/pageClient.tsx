@@ -14,6 +14,7 @@ export default function Home() {
   const score = user?.user_reputation.score ?? 0;
   const achievements = user?.user_achievements ?? [];
 
+
   const itemsActivity = [
     {
       title: "Preguntas hechas",
@@ -26,6 +27,10 @@ export default function Home() {
       icon: "i-heroicons-chat-bubble-left-right-solid",
     },
   ];
+
+
+  console.log('User achievements:', achievements);
+
 
   const progresoReputacion = obtenerProgresoReputacion(score);
   const achievementsObtained = getAchievementByuser(achievements);
@@ -63,7 +68,7 @@ export default function Home() {
         >
           Tus insignias
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-x-auto  mx-auto overflow-y-hidden p-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 overflow-x-auto  mx-auto overflow-y-hidden p-3">
           {achievementsObtained && achievementsObtained.length === 0 ? (
             <p className="text-gray-500">Aun no tienes insignias obtenidas.</p>
           ) : (

@@ -3,7 +3,7 @@ import {
   asignBadge,
   upOrAddReputationPoints,
 } from "@/app/api/helpers/badgesAchievements";
-import { createNotification } from "@/lib/notifications";
+import { createNotification } from "@/app/api/notifications/helpers/notifications";
 import payloadNotification from "@/content/notitications/notications-entity.json";
 
 export async function createComment({
@@ -124,6 +124,9 @@ async function addBadge(user_id: string, supabase: SupabaseClient) {
     switch (count) {
       case 20:
         await commentsAchievements(user_id, supabase, "colaborador frecuente");
+        break;
+      case 50:
+        await commentsAchievements(user_id, supabase, "colaborador destacado");
         break;
       case 100:
         await commentsAchievements(user_id, supabase, "colaborador estrella");
