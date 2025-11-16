@@ -22,5 +22,17 @@
     "title": "register",
     "type": "new_user",
     "entity_type": "new_user"
+  },
+  {
+    "id": 4,
+    "title": "responses",
+    "type": "collaborator",
+    "entity_type": "new_achivement"
+  },
+  {
+    "id": 4,
+    "title": "questions",
+    "type": "curious_mind",
+    "entity_type": "new_achivement"
   }
 ]
