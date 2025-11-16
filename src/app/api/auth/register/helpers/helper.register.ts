@@ -123,6 +123,7 @@ export async function generateNotificationWelcome(
 
 export async function mailWellcome(to: string, name: string) {
   try {
+    
     const { data, error } = await resend.emails.send({
       from: "Tudami <team@info.tudami.com>",
       to: to,
@@ -132,13 +133,13 @@ export async function mailWellcome(to: string, name: string) {
 
     if (error) {
       console.error("Error enviando correo:", error);
-      return Response.json({ error }, { status: 500 });
+      throw new Error("Error en el envio de mail:", { cause: error });
     }
 
     console.log("Correo enviado:", data);
-    return Response.json({ success: true, data });
+    return { success: true, data };
   } catch (err) {
     console.error("Fallo inesperado al enviar:", err);
-    return Response.json({ error: "Error interno de envío" }, { status: 500 });
+    throw new Error("Error interno de envío:", {cause: err}) 
   }
 }

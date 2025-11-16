@@ -1,5 +1,10 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import {asignBadge, upOrAddReputationPoints} from '@/app/api/helpers/badgesAchievements'
+import {
+  asignBadge,
+  upOrAddReputationPoints,
+} from "@/app/api/helpers/badgesAchievements";
+import payloadNotification from "@/content/notitications/notications-entity.json";
+import { createNotification } from "@/lib/notifications";
 
 type AchievementData = {
   user_id: string;
@@ -8,23 +13,16 @@ type AchievementData = {
   id?: string;
 }[];
 
-type CreateQuestionResult = {
-  success: boolean;
-  data?: QuestionData;
-  datainsignia?: AchievementData | null;
-  error?: string;
-};
-
 export async function createQuestion(
   title: string,
   content: string,
   tags: string[] = [],
   supabaseClient: SupabaseClient
-): Promise<CreateQuestionResult> {
+) {
   const { data: sessionData } = await supabaseClient.auth.getUser();
-  const userId = sessionData?.user?.id;
+  const user_id = sessionData?.user?.id;
 
-  if (!userId) {
+  if (!user_id) {
     throw new Error("Usuario no autenticado");
   }
 
@@ -33,7 +31,7 @@ export async function createQuestion(
     .from("questions")
     .insert([
       {
-        user_id: userId,
+        user_id: user_id,
         title,
         slug: slug,
         content,
@@ -50,10 +48,10 @@ export async function createQuestion(
   await insertTags(data, tags, supabaseClient);
 
   // validar insignia de pregunta del usuario
-  const datainsignia = await asignBadgeQuestion(userId, supabaseClient);
+  const datainsignia = await asignBadgeQuestion(user_id, supabaseClient);
 
   // Asignar puntos de reputación al usuario
-  await upOrAddReputationPoints(userId, 5 , supabaseClient);
+  await upOrAddReputationPoints(user_id, 5, supabaseClient);
 
   return {
     success: true,
@@ -90,35 +88,107 @@ async function insertTags(
 /**
  *
  * Asigna una insignia al usuario si cumple con los criterios
- * @param userId - ID del usuario al que se le asignará la insignia
+ * @param user_id - ID del usuario al que se le asignará la insignia
  * @param supabaseClient - Cliente de Supabase
  * @returns Promise que resuelve a los datos de la insignia o null si no se asignó
  */
 async function asignBadgeQuestion(
-  userId: string,
+  user_id: string,
   supabaseClient: SupabaseClient
-): Promise<AchievementData | null> {
+) {
   const { count } = await supabaseClient
     .from("questions")
     .select("id", { count: "exact", head: true })
-    .eq("user_id", userId);
+    .eq("user_id", user_id);
 
   let datainsignia: AchievementData | null = null;
 
-  if (count === 1) {
-    
-    const {error, errorCode, errorMessage,  data: insigniasData} =  await asignBadge(userId, supabaseClient, "primera_pregunta") 
-  
-      if (error && errorCode !== "23505") {
-      console.error("Error otorgando insignia:", errorMessage);
-      throw errorMessage
-    } else if (!error) {
-      if (insigniasData) {
-        datainsignia = insigniasData as unknown as AchievementData;
-      }
-    }
+  switch (count) {
+    case 1:
+      await questionAchievements(
+        user_id,
+        supabaseClient,
+        "primera pregunta",
+        datainsignia
+      );
+      break;
+    case 10:
+      await questionAchievements(
+        user_id,
+        supabaseClient,
+        "mente curiosa",
+        datainsignia
+      );
+      break;
   }
   return datainsignia;
 }
 
+/**
+ * Notificacion para casos de asignacion de insignias
+ * @param user_id
+ * @param supabase
+ * @param message
+ */
 
+async function notications(
+  user_id: string,
+  supabase: SupabaseClient,
+  message: string
+) {
+  const { data: full_name } = await supabase
+    .from("users")
+    .select("full_name")
+    .eq("id", user_id);
+
+  const notificationPayload = {
+    user_id: user_id,
+    actor_id: user_id,
+    type: payloadNotification[5].type,
+    entity_type: payloadNotification[5].entity_type,
+    content: `🎉 Felicitaciones ${full_name}. \n 
+      ${message}
+      `,
+    url: `/profile?id=${user_id}`,
+    read: false,
+  };
+
+  await createNotification(notificationPayload);
+}
+
+/**
+ * Asigna una insignia al usuario si cumple con los criterios
+ * @param user_id - ID del usuario al que se le asignará la insignia
+ */
+
+// logros relacionados a preguntas
+async function questionAchievements(
+  user_id: string,
+  supabaseClient: SupabaseClient,
+  achievementName: string,
+  datainsignia: AchievementData | null = null
+) {
+  const {
+    error,
+    errorCode,
+    errorMessage,
+    data: insigniasData,
+  } = await asignBadge(
+    user_id,
+    supabaseClient,
+    achievementName.replaceAll(" ", "_")
+  );
+
+  const message = `Acabas de recibir la insigania de ${achievementName}, de parte de tudami te queremos enviar un caluroso saludo por tu compromiso y aportes a la comunidad. \n Para ver tu nueva insignia. puede visitar tu perfil haciendo clic sobre este mensaje.`;
+
+  await notications(user_id, supabaseClient, message);
+
+  if (error && errorCode !== "23505") {
+    console.error("Error otorgando insignia:", errorMessage);
+    throw errorMessage;
+  } else if (!error) {
+    if (insigniasData) {
+      datainsignia = insigniasData as unknown as AchievementData;
+    }
+  }
+}

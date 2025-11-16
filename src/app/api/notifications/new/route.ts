@@ -85,7 +85,9 @@ export async function POST(request: NextRequest) {
 
   if (error) {
     console.error("Error creating notification:", error);
-    return null;
+    throw new Error("Error creating notification", {cause: error})
   }
+
+  console.log("✅ Created notification success")
   return data;
 }

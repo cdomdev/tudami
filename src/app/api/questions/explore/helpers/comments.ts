@@ -1,5 +1,10 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import { asignBadge, upOrAddReputationPoints } from "@/app/api/helpers/badgesAchievements";
+import {
+  asignBadge,
+  upOrAddReputationPoints,
+} from "@/app/api/helpers/badgesAchievements";
+import { createNotification } from "@/lib/notifications";
+import payloadNotification from "@/content/notitications/notications-entity.json";
 
 export async function createComment({
   content,
@@ -12,7 +17,6 @@ export async function createComment({
   user: { id: string };
   supabase: SupabaseClient;
 }) {
-
   const { data: commentData, error } = await supabase
     .from("question_comments")
     .insert({
@@ -27,7 +31,7 @@ export async function createComment({
     console.error("Error creating comment:", error.code);
     return error.code;
   }
-  
+
   /**
    * obtener autor de la pregunta para emitir la notificacion */
 
@@ -39,11 +43,10 @@ export async function createComment({
 
   const count = await getCountComments(question_id, supabase);
 
-  await addBadge(user.id, supabase)
+  await addBadge(user.id, supabase);
 
   return { commentData, questionData, count };
 }
-
 
 async function getCountComments(question_id: number, supabase: SupabaseClient) {
   const { count, error } = await supabase
@@ -77,28 +80,84 @@ async function getQuestionOwnerId(
   return questionData;
 }
 
+async function notificacion(
+  user_id: string,
+  supabase: SupabaseClient,
+  msg: string
+) {
+  const { data: datatUser } = await supabase
+    .from("users")
+    .select("full_name")
+    .eq("id", user_id)
+    .single();
 
-async function addBadge(user_id: string, supabase: SupabaseClient) {
+  const full_name = datatUser?.full_name;
 
-    const {data: badgeData, error} = await supabase.from("user_achievements").select("*").eq("achievement_id", "colaborador_frecuente").eq("user_id", user_id)
+  const notificationPayload = {
+    user_id: user_id,
+    actor_id: user_id,
+    type: payloadNotification[4].type,
+    entity_type: payloadNotification[4].entity_type,
+    content: `🎉 Felicitaciones ${full_name}. \n 
+    ${msg}
+    `,
+    url: `/profile?id=${user_id}`,
+    read: false,
+  };
 
-    console.log(badgeData, error)
-
-    if(badgeData) return 
-
-    const {count} = await supabase.from("question_comments").select("*", { count: "exact", head: true }).eq("user_id", user_id)
-    
-    console.log("count", count)
-
-    if (count && count  > 2) {
-        const {error, errorCode, errorMessage,  data: insigniasData} =  await asignBadge(user_id, supabase, "colaborador_frecuente") 
-          console.log({error, errorCode, errorMessage,  data: insigniasData})
-          if(error) throw error     
-    }
-
-    // up reputation
-    await upOrAddReputationPoints(user_id, 5, supabase)
-
+  await createNotification(notificationPayload);
 }
 
+async function addBadge(user_id: string, supabase: SupabaseClient) {
+  const { data: badgeData } = await supabase
+    .from("user_achievements")
+    .select("*")
+    .eq("achievement_id", "colaborador_frecuente")
+    .eq("user_id", user_id);
 
+  if (!badgeData || badgeData.length === 0) {
+    const { count } = await supabase
+      .from("question_comments")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", user_id);
+
+    switch (count) {
+      case 20:
+        await commentsAchievements(user_id, supabase, "colaborador frecuente");
+        break;
+      case 100:
+        await commentsAchievements(user_id, supabase, "colaborador estrella");
+        break;
+    }
+  }
+
+  // up reputation
+  await upOrAddReputationPoints(user_id, 5, supabase);
+}
+
+async function commentsAchievements(
+  user_id: string,
+  supabase: SupabaseClient,
+  achievementName: string
+) {
+  const { error } = await asignBadge(
+    user_id,
+    supabase,
+    achievementName.replaceAll(" ", "_")
+  );
+
+  if (error) {
+    throw new Error(
+      `Error en el proceso de asignar insignia ${achievementName}`,
+      {
+        cause: error,
+      }
+    );
+  }
+
+  const msg = `Acabas de recibir a insigania de ${achievementName}, de parte de tudami te queremos enviar un caluroso saludo por tu compromiso y aportes a la comunidad. \n
+
+  Para ver tu nueva insignia. puede visitar tu perfil haciendo clic sobre este mensaje.`;
+
+  await notificacion(user_id, supabase, msg);
+}
