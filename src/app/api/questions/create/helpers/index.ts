@@ -101,7 +101,7 @@ async function asignBadgeQuestion(
     .select("id", { count: "exact", head: true })
     .eq("user_id", user_id);
 
-  let datainsignia: AchievementData | null = null;
+  const datainsignia: AchievementData | null = null;
 
   switch (count) {
     case 1:
@@ -109,7 +109,6 @@ async function asignBadgeQuestion(
         user_id,
         supabaseClient,
         "primera pregunta",
-        datainsignia
       );
       break;
     case 10:
@@ -117,7 +116,6 @@ async function asignBadgeQuestion(
         user_id,
         supabaseClient,
         "mente curiosa",
-        datainsignia
       );
       break;
   }
@@ -165,8 +163,7 @@ async function notications(
 async function questionAchievements(
   user_id: string,
   supabaseClient: SupabaseClient,
-  achievementName: string,
-  datainsignia: AchievementData | null = null
+  achievementName: string, 
 ) {
   const {
     error,
@@ -187,8 +184,6 @@ async function questionAchievements(
     console.error("Error otorgando insignia:", errorMessage);
     throw errorMessage;
   } else if (!error) {
-    if (insigniasData) {
-      datainsignia = insigniasData as unknown as AchievementData;
-    }
+    return insigniasData;
   }
 }
