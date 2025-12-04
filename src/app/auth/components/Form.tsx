@@ -24,8 +24,11 @@ import { useSession } from "@/context/context.sesion";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const FormSchema = z.object({
-  email: z.string().email({ message: "Esta campo no puede quedar vacio" }),
-  password: z.string().min(1, { message: "Este camo no puede quedar vacio" }),
+  email: z
+    .string()
+    .min(2, { message: "El correo es obligatorio" })
+    .email({ message: "Debe ser un correo válido" }),
+  password: z.string().min(1, { message: "La contraseña es obligatoria" }),
 });
 
 export function FormLogin() {
@@ -82,7 +85,7 @@ export function FormLogin() {
           render={({ field }) => (
             <FormItem>
               <div className="flex flex-1 items-center justify-between">
-                <FormLabel>Contraseña</FormLabel>
+                <FormLabel htmlFor="contraseña">Contraseña</FormLabel>
                 <FormLabel>
                   <Link href="/auth/forgot-password" className="underline">
                     ¿Olvidaste tu contraseña?
@@ -92,6 +95,7 @@ export function FormLogin() {
               <FormControl>
                 <div className="relative">
                   <Input
+                    id="contraseña"
                     type={showPassword ? "text" : "password"}
                     placeholder="Contraseña"
                     {...field}

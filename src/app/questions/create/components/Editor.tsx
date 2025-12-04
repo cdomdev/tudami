@@ -8,7 +8,7 @@ import { useSession } from "@/context/context.sesion";
 import { createQuestionApi } from "../lib/createQuestions";
 import { useRouter } from "next/navigation";
 import tags from "@/content/tags/data-tags.json";
-import { MultiSelect } from "./multi-select";
+import { MultiSelect } from "@/components/ui/multi-select";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components";
 
@@ -102,10 +102,10 @@ export default function Editor() {
       </div>
 
       <div className="p-6 ">
-        <label id="editor-label" className="font-medium text-sm md:text-base block mb-3">
+        <label id="editor-label" className="font-medium text-sm md:text-base block mb-3" htmlFor="editor">
           Escribe tu pregunta con detalle
         </label>
-        <SimpleEditor onChange={setContent} />
+        <SimpleEditor onChange={setContent}  />
         <Button
           variant={"default"}
           onClick={handleSubmit}

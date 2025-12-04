@@ -30,7 +30,7 @@ import { CodeBlockButton } from "../tiptap-ui/code-block-button";
 
 export function SimpleEditor({
   onChange,
-  isAmd
+  isAmd,
 }: {
   onChange?: (html: string) => void;
   isAmd?: boolean;
@@ -85,23 +85,20 @@ export function SimpleEditor({
 
         <ToolbarSeparator />
 
-        {isAmd &&
+        {isAmd && (
           <ToolbarGroup>
             <LinkPopover />
           </ToolbarGroup>
-        }
+        )}
 
         <ToolbarSeparator />
 
-        {isAmd &&
+        {isAmd && (
           <ToolbarGroup>
-            <ListDropdownMenu types={[
-              "bulletList",
-              "orderedList",
-            ]} />
+            <ListDropdownMenu types={["bulletList", "orderedList"]} />
             <BlockQuoteButton />
           </ToolbarGroup>
-        }
+        )}
 
         <ToolbarGroup>
           <CodeBlockButton />
@@ -116,12 +113,11 @@ export function SimpleEditor({
           <TextAlignButton align="justify" />
         </ToolbarGroup>
 
-        {isAmd &&
+        {isAmd && (
           <ToolbarGroup>
             <HeadingButton />
           </ToolbarGroup>
-        }
-
+        )}
       </Toolbar>
 
       <EditorContent
@@ -132,7 +128,6 @@ export function SimpleEditor({
   );
 }
 
-
 export function HeadingButton() {
   const { editor } = useCurrentEditor();
 
@@ -141,22 +136,40 @@ export function HeadingButton() {
   return (
     <select
       onChange={(e) =>
-        editor.chain().focus().setNode('heading', { level: Number(e.target.value) }).run()
+        editor
+          .chain()
+          .focus()
+          .setNode("heading", { level: Number(e.target.value) })
+          .run()
       }
       value={
-        [1, 2, 3, 4, 5, 6].find(l => editor.isActive("heading", { level: l })) ?? "p"
+        [1, 2, 3, 4, 5, 6].find((l) =>
+          editor.isActive("heading", { level: l })
+        ) ?? "p"
       }
       className="font-semibold"
     >
-      <option value="p" className="font-semibold">Normal</option>
-      <option value="1" className="font-semibold">H1</option>
-      <option value="2" className="font-semibold">H2</option>
-      <option value="3" className="font-semibold">H3</option>
-      <option value="4" className="font-semibold">H4</option>
-      <option value="5" className="font-semibold">H5</option>
-      <option value="6" className="font-semibold">H6</option>
+      <option value="p" className="font-semibold">
+        Normal
+      </option>
+      <option value="1" className="font-semibold">
+        H1
+      </option>
+      <option value="2" className="font-semibold">
+        H2
+      </option>
+      <option value="3" className="font-semibold">
+        H3
+      </option>
+      <option value="4" className="font-semibold">
+        H4
+      </option>
+      <option value="5" className="font-semibold">
+        H5
+      </option>
+      <option value="6" className="font-semibold">
+        H6
+      </option>
     </select>
-
-
   );
 }
