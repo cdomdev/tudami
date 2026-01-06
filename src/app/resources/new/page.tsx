@@ -1,4 +1,4 @@
-import { FormNewResounce } from "@/app/admin/components/form/Form";
+import { FormNewResource } from "@/app/admin/components/form/Form";
 
 export default function PageNewResource() {
   return (
@@ -13,7 +13,7 @@ export default function PageNewResource() {
         publicarlo.
       </p>
       <div className="max-w-2xl mx-auto mb-5 px-2">
-        <FormNewResounce isAdmin={false} urlRedirect="/resources/success" />
+        <FormNewResource isAdmin={false} urlRedirect="/resources/success" />
       </div>
     </>
   );
