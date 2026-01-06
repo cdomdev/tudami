@@ -1,4 +1,3 @@
-// src/app/questions/create/_test/helpers/session.helper.ts
 import { vi } from 'vitest'
 
 export interface MockUser {
