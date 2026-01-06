@@ -42,7 +42,7 @@ export default function LayoutRecourses({
 
   return (
     <>
-      <section className="pt-24 md:px-10 pb-10 w-full bg-gradient-to-r from-pink-200 via-purple-100 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <section className="pt-24 md:px-10 pb-10 w-full bg-linear-to-r from-pink-200 via-purple-100 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <div className="mx-auto flex flex-col mb-3">
           <h1 className="text-xl md:text-3xl font-bold text-center text-slate-800 dark:text-slate-100">
             Recursos que potencian tu aprendizaje
@@ -81,7 +81,7 @@ export default function LayoutRecourses({
         </div>
       </section>
       <section className="py-5 ">
-        <h2 className="text-xl md:text-3xl font-bold text-center mb-6  bg-gradient-to-t from-sky-700 dark:from-sky-600 to-red-900 dark:to-red-500 text-transparent bg-clip-text">
+        <h2 className="text-xl md:text-3xl font-bold text-center mb-6  bg-linear-to-t from-sky-700 dark:from-sky-600 to-red-900 dark:to-red-500 text-transparent bg-clip-text">
           Centro de Recursos
         </h2>
 
@@ -94,6 +94,7 @@ export default function LayoutRecourses({
                   alt="icon"
                   width={20}
                   height={20}
+                  loading="lazy"
                 />{" "}
                 {item.title}
               </span>

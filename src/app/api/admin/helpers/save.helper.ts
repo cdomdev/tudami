@@ -19,7 +19,7 @@ export async function saveResourceHelper(
     slug: dataResource.title.toLowerCase().replaceAll(" ", ""),
     category: dataResource.category,
     url_image: isAdmin === true ? dataResource.image : "",
-    public: isAdmin === true ? true : false,
+    status: isAdmin === true ? "approved" : "pending",
     type: dataResource.type,
   };
 
@@ -105,7 +105,7 @@ export async function updateResourceHelper(
     slug: dataResource.title.toLowerCase().replaceAll(" ", ""),
     category: dataResource.category,
     url_image: dataResource.image,
-    public: true,
+    status: dataResource.status || "pending",
     type: dataResource.type,
   };
 
