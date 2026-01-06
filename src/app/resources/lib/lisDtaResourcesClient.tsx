@@ -14,7 +14,7 @@ export async function listaAllDataResourceClient(
     .select("*, details_resources(*)")
     .eq("category", category)
     .range(from, to)
-    .eq("public", true)
+    .eq("status", "approved")
     .order("created_at", { ascending: false });;
 
   if (type) {

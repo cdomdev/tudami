@@ -21,7 +21,7 @@ export function SectionNavNewResource() {
         className="flex items-center text-sm group gap-2 border rounded-sm px-4 py-2 dark:bg-accent-foreground text-black"
       >
         <Plus className="w-4 h-4 group-hover:rotate-90" />
-        Solictar agregar recurso
+        Solicitar agregar recurso
       </Link>
     </section>
   );
