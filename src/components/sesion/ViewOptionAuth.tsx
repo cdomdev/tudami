@@ -4,29 +4,28 @@ import { Bell, User } from "lucide-react";
 import { useSession } from "@/context/context.sesion";
 import { Button } from "@/components/ui/button";
 
-
 export function ViewOptionAuth() {
-  const { user, isLoading } = useSession()
+  const { user, isLoading } = useSession();
 
   if (isLoading) {
     return (
       <div className="flex items-center gap-3.5">
-        {/* notifications */}
         <Button
-          variant="outline"
+          variant="ghost"
           size="icon"
-          className="relative h-8 w-8 p-0  border-none cursor-pointer"
+          className="relative h-8 w-8 p-0 border-none cursor-pointer hover:bg-transparent dark:hover:bg-transparent"
         >
           <Bell className="h-4 w-4" />
+          <span className="sr-only">handle notification</span>
+          <span className="absolute top-0 right-0 h-2.5 w-2.5 rounded-full bg-red-500" />
         </Button>
-        {/* Avatar */}
         <div className="h-10 w-10 rounded-full bg-gray-300 dark:bg-gray-700 animate-pulse" />
       </div>
-    )
+    );
   }
 
   if (user) {
-    return <Profile />
+    return <Profile />;
   }
 
   return (
@@ -42,6 +41,5 @@ export function ViewOptionAuth() {
         <span className="hidden md:flex font-semibold">Iniciar sesión</span>
       </Button>
     </Link>
-  )
+  );
 }
-
