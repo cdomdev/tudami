@@ -1,4 +1,4 @@
-import { Home, Workflow, Newspaper, Users } from "lucide-react";
+import { Home, Workflow, Newspaper, Users,  PanelsTopLeft, PanelTop } from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -12,11 +12,10 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-// Menu items.
 const items = [
   {
-    title: "Volver a tudami",
-    url: "/",
+    title: "Inicio",
+    url: "/admin",
     icon: Home,
   },
   {
@@ -34,11 +33,19 @@ const items = [
     url: "/admin/users",
     icon: Users,
   },
+  {
+    title: "Volver a tudami",
+    url: "/",
+    icon: PanelsTopLeft, 
+  },
 ];
 
 export function AppSidebar() {
   return (
     <Sidebar>
+      <div className="px-4 pt-6 pb-4 flex items-center">
+        <span>Perfil</span>
+      </div>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Dashboard</SidebarGroupLabel>

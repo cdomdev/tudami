@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal, Check, X } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { SchemaResoucesResponse } from "@/schemas";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -40,16 +40,24 @@ export const columns: ColumnDef<SchemaResoucesResponse>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "public",
+    accessorKey: "status",
     header: "Estado",
     cell: ({ row }) => {
-      const isPublic = row.getValue("public") as boolean;
+      const isPublic = row.getValue("status") as string;
       return (
         <div className="flex items-center justify-center">
-          {isPublic ? (
-            <Check className="w-4 h-4 text-green-500" />
+          {isPublic === "approved" ? (
+            <Button variant={"default"} className="bg-green-500 text-gray-50">
+              {isPublic}
+            </Button>
+          ) : isPublic === "rejected" ? (
+            <Button variant={"destructive"} className="bg-red-500 text-gray-50">
+              {isPublic}
+            </Button>
           ) : (
-            <X className="w-4 h-4 text-red-500" />
+            <Button variant={"default"} className="bg-yellow-500 text-gray-50">
+              {isPublic}
+            </Button>
           )}
         </div>
       );

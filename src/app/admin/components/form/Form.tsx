@@ -31,7 +31,7 @@ import { saveResource, uploadImage } from "../../_lib";
 import { useRouter } from "next/navigation";
 import { categoriesNames, typeResource } from "./formData";
 
-export function FormNewResounce({
+export function FormNewResource({
   isAdmin,
   urlRedirect,
 }: {
@@ -61,7 +61,11 @@ export function FormNewResounce({
     try {
       let imageResource;
       if (data.image && data.image instanceof File) {
-        const res = await uploadImage(data.image, data.category.toLowerCase(), "resources");
+        const res = await uploadImage(
+          data.image,
+          data.category.toLowerCase(),
+          "resources"
+        );
         imageResource = res?.url;
       }
 
@@ -227,7 +231,7 @@ export function FormNewResounce({
           name="detail_title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Titulo para el detalle de el nuevo recuso</FormLabel>
+              <FormLabel>Titulo para el detalle del nuevo recurso</FormLabel>
               <FormControl>
                 <Input placeholder="¿Como funciona el recurso?" {...field} />
               </FormControl>
@@ -254,6 +258,10 @@ export function FormNewResounce({
             </FormItem>
           )}
         />
+
+
+    
+
         <Button
           type="submit"
           className="w-full cursor-pointer"

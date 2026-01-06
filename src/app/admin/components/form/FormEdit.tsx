@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -33,7 +34,7 @@ import {
 } from "@/schemas";
 import { uploadImage } from "../../_lib";
 import { listDataResourceBy, updateResource } from "../../_lib/resources";
-import { categoriesNames, typeResource } from "./formData";
+import { categoriesNames, typeResource, statusResource } from "./formData";
 
 export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
   const [isLoading, setIsloading] = useState<boolean>(false);
@@ -59,6 +60,7 @@ export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
       detail_description: "",
       url: "",
       type: "",
+      status: "",
     },
   });
 
@@ -70,9 +72,11 @@ export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
         image: dataResource.url_image,
         category: dataResource.category,
         detail_title: dataResource.details_resources[0]?.title || "",
-        detail_description: dataResource.details_resources[0]?.description || "",
+        detail_description:
+          dataResource.details_resources[0]?.description || "",
         url: dataResource.details_resources[0]?.url_resource || "",
         type: dataResource.type || "",
+        status: dataResource.status || "pending",
       });
     }
   }, [dataResource, form]);
@@ -82,7 +86,11 @@ export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
     try {
       let imageResource = dataResource?.url_image;
       if (data.image instanceof File) {
-        const res = await uploadImage(data.image, data.category.toLowerCase(), "resources");
+        const res = await uploadImage(
+          data.image,
+          data.category.toLowerCase(),
+          "resources"
+        );
         imageResource = res?.url;
       } else if (typeof data.image === "string" && data.image.trim() !== "") {
         imageResource = data.image;
@@ -101,11 +109,15 @@ export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
           data.detail_description ??
           dataResource?.details_resources[0]?.description ??
           "",
+        status: data.status ?? dataResource?.status ?? "pending",
       };
 
       const res = await updateResource(formattedData, dataResource?.id);
-      console.log(res)
-      if (res.status === 201) toast.success("Recurso actulizado con exito");
+      if (res && res.status === 201) {
+        toast.success("Recurso actulizado con exito");
+      } else {
+        toast.error("No se p´pudo actulizar el recurso, intenta de nuevo");
+      }
     } catch (error) {
       console.error("Error add resourse:", error);
       toast.error(
@@ -236,9 +248,9 @@ export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
           />
         )}
 
-        <FormLabel className="font-semibold">
-          Agrega algo mas de detalle sobre el nuevo recurso
-        </FormLabel>
+        <div className="border w-full bg-gray-200 dark:bg-gray-800" />
+
+        <FormLabel className="font-semibold text-xl">Detalles</FormLabel>
 
         {/* detalles */}
 
@@ -247,7 +259,7 @@ export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
           name="detail_title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Titulo para el detalle de el nuevo recuso</FormLabel>
+              <FormLabel>Revisa el titulo dado al nuevo recurso</FormLabel>
               <FormControl>
                 <Input placeholder="¿Como funciona el recurso?" {...field} />
               </FormControl>
@@ -261,7 +273,7 @@ export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Describe un poco el recurso que se esta agregando
+                Revisa la descripcion del detalle del nuevo recurso
               </FormLabel>
               <FormControl>
                 <Textarea
@@ -274,6 +286,46 @@ export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
             </FormItem>
           )}
         />
+        <div className="border w-full bg-gray-200 dark:bg-gray-800" />
+
+        <div className="border py-2 text-accent-foreground bg-gray-50 dark:bg-gray-900 px-4 rounded-md">
+          <FormLabel className="font-semibold text-xl">Aprobacion</FormLabel>
+          <FormDescription>
+            Este recurso es propuesto por la comunidad, apruebe o rechace el
+            recurso en esta seccion.
+          </FormDescription>
+        </div>
+
+        <FormField
+          control={form.control}
+          name="status"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Apruebe o rechace el recurso</FormLabel>
+              <FormControl>
+                <Select
+                  value={field.value}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                >
+                  <SelectTrigger className="bg-white/70 text-black dark:text-muted-foreground">
+                    <SelectValue placeholder="Selecciona un status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {statusResource.map((sta) => (
+                      <SelectItem key={sta.value} value={sta.value}>
+                        {sta.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <Button
           type="submit"
           className="w-full cursor-pointer"

@@ -27,7 +27,7 @@ export default function PageResourcesAmd() {
 
   return (
     <>
-      <section className="flex justify-between ">
+      <section className="flex justify-between px-20  ">
         <div>
           <h1 className="text-lg md:text-2xl mb-3 font-semibold">Recursos</h1>
         </div>
@@ -39,7 +39,7 @@ export default function PageResourcesAmd() {
           href="/admin/resources/new"
         />
       </section>
-      <section className="mt-10">
+      <section className="mt-10 lg:max-w-7xl mx-auto">
         <p className="text-foreground md:text-base mb-4">
           Recursos disponibles
         </p>
