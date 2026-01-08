@@ -17,7 +17,7 @@ export default function layoutDashboard({
     <SidebarProvider>
       <AppSidebar />
       <SidebarTrigger className="cursor-pointer" />
-      <main className="w-full min-h-dvh py-10 px-5">
+      <main className="w-full min-h-dvh py-10 px-2 md:px-5">
         {children}
       </main>
     </SidebarProvider>

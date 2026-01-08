@@ -34,12 +34,12 @@ export async function listDataResourceBy(slug: string) {
     return await supabase
       .from("resources")
       .select("*, details_resources(*)")
-      .eq("slug", slug).single();
+      .eq("slug", slug)
+      .single();
   } catch (error) {
     console.log("Error al listar los recursos", error);
   }
 }
-
 
 export async function updateResource(data: SchemaResources, id?: number) {
   try {
@@ -51,5 +51,20 @@ export async function updateResource(data: SchemaResources, id?: number) {
     return res;
   } catch (error) {
     console.log("Error en el proceso de subida de los recursos", error);
+  }
+}
+
+export async function deleteResource(id?: number) {
+  try {
+    const url = `/api/admin/resources/delete?id=${id}`;
+    const res = await query(url, "DELETE");
+    console.log("Respuesta de la eliminación en lib --->:", res);
+    if (!res) {
+      throw new Error("Error al eliminar el recurso");
+    }
+    console.log("Recurso eliminado:", res);
+    return res;
+  } catch (error) {
+    console.log("Error al eliminar el recurso", error);
   }
 }

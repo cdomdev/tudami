@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
 import { saveResourceHelper } from "../../helpers/save.helper";
 
@@ -10,8 +10,8 @@ export async function POST(req: NextRequest) {
 
   try {
     const res = await saveResourceHelper(data, supabase, isAdmin);
-    return new Response(JSON.stringify(res), { status: 200 });
+    return NextResponse.json(res, { status: 200 });
   } catch (error) {
-    return new Response(JSON.stringify({ error: error }), { status: 500 });
+    return NextResponse.json({ error: error }, { status: 500 });
   }
 }

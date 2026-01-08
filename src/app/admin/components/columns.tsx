@@ -2,10 +2,11 @@
 
 import * as React from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, Delete, MoreHorizontal } from "lucide-react";
 import { SchemaResoucesResponse } from "@/schemas";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { BtnDeleteResource } from "./DeleteResource";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -100,7 +101,7 @@ export const columns: ColumnDef<SchemaResoucesResponse>[] = [
     header: "Imagen",
     cell: ({ row }) => {
       const url = row.getValue("url_image") as string | null;
-      const fallback = "";
+      const fallback = "/resources/default-courses.webp";
       return (
         <div className="flex items-center justify-center">
           <Image
@@ -108,7 +109,7 @@ export const columns: ColumnDef<SchemaResoucesResponse>[] = [
             alt="Imagen recurso"
             width={40}
             height={40}
-            className="rounded-full object-cover"
+            className="rounded-full object-cover w-10 h-10"
           />
         </div>
       );
@@ -132,18 +133,13 @@ export const columns: ColumnDef<SchemaResoucesResponse>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
 
-            <DropdownMenuItem
-              onClick={() => {
-                console.log("Eliminar recurso con id:", id);
-                navigator.clipboard.writeText(id.toString());
-              }}
-            >
-              Eliminar recurso
+            <DropdownMenuItem asChild className="cursor-pointer">
+              <BtnDeleteResource resource_id={id} />
             </DropdownMenuItem>
 
             {/* Acción editar */}
-            <DropdownMenuItem asChild>
-              <Link href={`/admin/resources/edit?slug=${slug}`}>
+            <DropdownMenuItem asChild className="cursor-pointer">
+              <Link href={`/admin/resources/edit?slug=${slug}`}>                
                 Editar recurso
               </Link>
             </DropdownMenuItem>

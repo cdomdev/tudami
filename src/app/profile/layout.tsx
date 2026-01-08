@@ -52,7 +52,7 @@ export default function LayoutProfile({
           />
           <div className="flex flex-col justify-center">
             <h1 className="text-xl md:text-2xl font-bold flex flex-col ">
-              <span className="text-lg bg-gradient-to-r from-indigo-500 to-sky-400 text-transparent bg-clip-text">
+              <span className="text-lg bg-linear-to-r from-indigo-500 to-sky-400 text-transparent bg-clip-text">
                 Bienvenido/a
                 {user?.role === "admin_tudami" && (
                   <span className="ml-1">(Admin)</span>

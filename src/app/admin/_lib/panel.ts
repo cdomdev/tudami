@@ -1,6 +1,7 @@
 import { supabase } from "@/utils/supabase/supabaseClient";
+import { PanelData } from "./types";
 
-export async function dataPanel() {
+export async function dataPanel(): Promise<PanelData | undefined> {
   try {
     const [totalUsers, totalResources, totalNews, userActivity, recentResources, recentPosts] =
       await Promise.all([users(), resources(), news(), getUserActivity(), getRecentResources(), getRecentPosts()]);

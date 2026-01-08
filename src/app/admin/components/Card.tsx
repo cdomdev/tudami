@@ -24,7 +24,7 @@ export function Card({
     : (colorMap[color] ?? colorMap.indigo);
 
   return (
-    <article className="flex items-center justify-between gap-4 w-full p-4 bg-white/80 dark:bg-slate-800/60 rounded-xl shadow-md border border-gray-100 dark:border-slate-700">
+    <article className="flex items-center justify-between gap-4 w-full p-4 bg-white/80 dark:bg-slate-800/60 rounded-xl shadow-md border border-gray-100 dark:border-slate-700 dark:shadow-white/10 backdrop-blur-sm">
       <div className="flex items-center gap-4">
         <div
           className={`flex items-center justify-center w-12 h-12 rounded-lg text-white shadow-sm bg-linear-to-br ${accent}`}

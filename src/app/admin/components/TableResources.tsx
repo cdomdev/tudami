@@ -13,7 +13,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 import { ChevronDown } from "lucide-react";
-import { columns } from "./table/columns";
+import { columns } from "./columns";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,

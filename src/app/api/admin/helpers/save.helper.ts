@@ -3,10 +3,10 @@ import { SchemaResources } from "@/schemas";
 
 /**
  * Guardar recursos en db
- * @param dataResource 
- * @param supabase 
- * @param isAdmin 
- * @returns 
+ * @param dataResource
+ * @param supabase
+ * @param isAdmin
+ * @returns
  */
 export async function saveResourceHelper(
   dataResource: SchemaResources,
@@ -42,10 +42,10 @@ export async function saveResourceHelper(
 
 /**
  * Guardar detalles de recursos en db
- * @param dataResource 
- * @param supabase 
- * @param idResource 
- * @returns 
+ * @param dataResource
+ * @param supabase
+ * @param idResource
+ * @returns
  */
 async function saveDetaislResources(
   dataResource: SchemaResources,
@@ -85,14 +85,12 @@ async function saveDetaislResources(
   };
 }
 
-
-
 /**
  * Actulizar o modificar recuros en la db
- * @param dataResource 
- * @param supabase 
- * @param id 
- * @returns 
+ * @param dataResource
+ * @param supabase
+ * @param id
+ * @returns
  */
 export async function updateResourceHelper(
   dataResource: SchemaResources,
@@ -123,10 +121,10 @@ export async function updateResourceHelper(
 }
 /**
  * Actulizar o modificar detalles de los recursos en l db
- * @param dataResource 
- * @param supabase 
- * @param idResource 
- * @returns 
+ * @param dataResource
+ * @param supabase
+ * @param idResource
+ * @returns
  */
 async function updateDetaislResources(
   dataResource: SchemaResources,
@@ -166,4 +164,47 @@ async function updateDetaislResources(
     status: 201,
     message: "Contenido actulizado con exito",
   };
+}
+
+/**
+ * Eliminar recurso y sus detalles en db
+ * @param supabase
+ * @param idResource
+ */
+
+export async function deleteDetailsResourceHelper(
+  supabase: SupabaseClient,
+  idResource: number
+) {
+  const { error } = await supabase
+    .from("details_resources")
+    .delete()
+    .eq("resource_id", idResource);
+
+  if (error) {
+    throw error;
+  }
+
+  await deleteResourceHelper(supabase, idResource);
+
+  return {
+    success: true,
+    status: 200,
+    message: "Contenido eliminado con exito",
+  };
+}
+
+async function deleteResourceHelper(
+  supabase: SupabaseClient,
+  idResource: number
+) {
+  const { error } = await supabase
+    .from("resources")
+    .delete()
+    .eq("id", idResource);
+  if (error) {
+    throw new Error("Error al eliminar el recurso", { cause: error });
+  }
+
+ 
 }

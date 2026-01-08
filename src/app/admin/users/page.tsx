@@ -9,7 +9,7 @@ import { listDataResource } from "../_lib/resources";
 import { SchemaResoucesResponse } from "@/schemas";
 import { TableSkeleton } from "../components/skeletons/TableSkeleton";
 
-export default function PageResourcesAmd() {
+export default function PageUsersAmd() {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<SchemaResoucesResponse[]>([]);
   const searchParams = useSearchParams();
@@ -30,21 +30,14 @@ export default function PageResourcesAmd() {
     <main>
       <section className="flex justify-between px-12  ">
         <header>
-          <h1 className="text-lg md:text-2xl mb-3 font-semibold">Recursos</h1>
+          <h1 className="text-lg md:text-2xl mb-3 font-semibold">Usuarios</h1>
         </header>
-        <ButtonCs
-          text="Agregar nuevo recurso"
-          icon={Plus}
-          variant={"default"}
-          className="group"
-          href="/admin/resources/new"
-        />
       </section>
       <section className="mt-10 lg:max-w-7xl mx-auto">
         <h2 className="text-foreground md:text-base mb-4">
           Recursos disponibles
         </h2>
-        {loading ? <TableSkeleton /> : <TableReseources data={response} />}
+        <span>Seccion en proceso....</span>
       </section>
     </main>
   );
