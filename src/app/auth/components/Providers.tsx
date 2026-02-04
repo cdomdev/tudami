@@ -1,6 +1,6 @@
 "use client";
 
-import { Spinner } from "@/components";
+import { Spinner } from "@/components/ui/spinner";
 import { GoogleIcon } from "@/components/icons/Google";
 import { GitHubIcon } from "@/components/icons/GitgubIcon";
 import { useState } from "react";

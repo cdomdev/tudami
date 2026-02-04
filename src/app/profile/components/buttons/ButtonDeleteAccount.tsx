@@ -14,7 +14,7 @@ import Link from "next/link";
 import { deleteAccount } from "../../lib/profile";
 import { toast } from "sonner";
 import { useState } from "react";
-import { Spinner } from "@/components";
+import { Spinner } from "@/components/ui/spinner";
 
 export function DeleteAccount() {
   const [loading, setLoading] = useState(false);

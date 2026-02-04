@@ -13,7 +13,7 @@ export function NewUsers({ users }: NewUsersProps) {
     <article className="border rounded-md p-5 shadow-md dark:shadow-white/10 max-h-120 overflow-y-auto">
       <h3
         id="actividad-usuarios"
-        className="text-base md:text-lg pl-2 font-semibold sticky top-0 bg-gray-100 py-2"
+        className="text-base md:text-lg pl-2 font-semibold sticky top-0 bg-gray-100 dark:bg-gray-700 py-2"
       >
         Actividad de usuarios recien registrados
       </h3>

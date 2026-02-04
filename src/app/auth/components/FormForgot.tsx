@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import Link from "next/link";
 import { sendRequestForgotPassword } from "../lib/auth";
-import { Spinner } from "@/components";
+import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 

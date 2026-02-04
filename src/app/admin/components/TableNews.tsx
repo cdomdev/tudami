@@ -11,10 +11,9 @@ import {
   SortingState,
   useReactTable,
   VisibilityState,
-  RowData,
 } from "@tanstack/react-table";
 import { ChevronDown } from "lucide-react";
-import { columns } from "./columns";
+import { columnsNews } from "./columnsNews";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -29,11 +28,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-
 } from "@/components/ui/table";
-import { SchemaResoucesResponse } from "@/schemas";
+import { SchemaNews } from "@/schemas";
 
-export function TableReseources({data, onDelete}:{data: SchemaResoucesResponse[], onDelete?: (id: number) => void}) {
+export function TableNews({ data, onDelete }: { data: SchemaNews[], onDelete?: (id: number) => void }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -44,10 +42,11 @@ export function TableReseources({data, onDelete}:{data: SchemaResoucesResponse[]
 
   const table = useReactTable({
     data,
-    columns,
+    columns: columnsNews,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
@@ -131,15 +130,39 @@ export function TableReseources({data, onDelete}:{data: SchemaResoucesResponse[]
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={columnsNews.length}
                   className="h-24 text-center"
                 >
-                  No se encontraron resultados.
+                  No hay noticias disponibles.
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
+      </div>
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <div className="text-muted-foreground flex-1 text-sm">
+          {table.getFilteredSelectedRowModel().rows.length} de{" "}
+          {table.getFilteredRowModel().rows.length} fila(s) seleccionada(s).
+        </div>
+        <div className="space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Anterior
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Próxima
+          </Button>
+        </div>
       </div>
     </div>
   );

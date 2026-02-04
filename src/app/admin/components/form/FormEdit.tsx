@@ -25,7 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import { Spinner } from "@/components";
+import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import {
   FormSchemaResources,
@@ -44,9 +44,13 @@ export function FormEditResounce({ isAdmin }: { isAdmin: boolean }) {
   const slug = params.get("slug") || "";
 
   useEffect(() => {
-    listDataResourceBy(slug).then((res) => {
+    async function fetchData() {
+      setIsloading(true);
+      const res = await listDataResourceBy(slug);
       setDataResource(res?.data);
-    });
+      setIsloading(false);
+    }
+    fetchData();
   }, [slug]);
 
   const form = useForm<z.infer<typeof FormSchemaResources>>({

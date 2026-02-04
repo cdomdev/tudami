@@ -16,7 +16,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { useSession } from "@/context/context.sesion";
 import { updateUserPreferences } from "../../lib/profile";
-import { Spinner } from "@/components/Spiner";
+import { Spinner } from "@/components/ui/spinner";
 
 const FormSchema = z.object({
   profile_public: z.boolean().optional(),

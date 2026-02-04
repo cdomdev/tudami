@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
-import { updateResourceHelper } from "../../helpers/save.helper";
+import { updateResourceHelper } from "../../helpers/resources";
 
 export async function PUT(req: NextRequest) {
   const { searchParams } = new URL(req.url);

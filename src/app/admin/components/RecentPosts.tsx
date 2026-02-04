@@ -13,7 +13,7 @@ export function RecentPosts({ posts }: RecentPostsProps) {
     <section className="border rounded-md p-5 shadow-md dark:shadow-white/10 max-h-150 overflow-y-auto">
       <h3
         id="ultimas-publicaciones"
-        className="text-base md:text-lg font-semibold sticky top-0 bg-gray-100 py-2 pl-2"
+        className="text-base md:text-lg font-semibold sticky top-0 bg-gray-100 dark:bg-gray-700 py-2 pl-2"
       >
         Ultimas publicaciones
       </h3>

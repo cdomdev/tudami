@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/utils/supabase/supabaseClient";
-import { Spinner } from "@/components/Spiner";
+import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { loginCallback } from "../lib/auth";
 import { useSession } from "@/context/context.sesion";

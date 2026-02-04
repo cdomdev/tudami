@@ -13,20 +13,37 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { SchemaNews, FormSchemaNews } from "@/schemas";
 import { uploadImage, saveNews } from "../../_lib";
 import { FieldDescription } from "./FieldDescription";
 import { UploadImage } from "./UploadImage";
+import { useSearchParams } from "next/navigation";
+import { listDataNewsBy } from "../../_lib/news";
 import { Textarea } from "@/components/ui/textarea";
-import { useRouter } from "next/navigation";
+import { RenderContent } from "@/app/questions/explore/components/RenderContent";
+import { Edit } from "lucide-react";
 
-export function FormAddNews() {
+export function FormEditNew() {
   const [isLoading, setIsloading] = useState<boolean>(false);
   const [image, setImage] = useState<string | null>(null);
-  const router = useRouter();
+  const [dataNew, setDataNew] = useState<SchemaNews | null>(null);
+  const [viewEditor, setViewEditor] = useState<boolean>(false);
+  const params = useSearchParams();
+  const slug = params.get("slug") || "";
+
+  useEffect(() => {
+    async function fetchData() {
+      setIsloading(true);
+      const res = await listDataNewsBy(slug);
+      setDataNew(res);
+      setIsloading(false);
+    }
+    fetchData();
+  }, [slug]);
+
   const form = useForm<z.infer<typeof FormSchemaNews>>({
     resolver: zodResolver(FormSchemaNews),
     defaultValues: {
@@ -38,6 +55,19 @@ export function FormAddNews() {
       url_source: "",
     },
   });
+
+  useEffect(() => {
+    if (dataNew) {
+      form.reset({
+        title: dataNew.title,
+        sub_title: dataNew.sub_title,
+        description: dataNew.description,
+        image: dataNew.image,
+        source: dataNew.source,
+        url_source: dataNew.url_source,
+      });
+    }
+  }, [dataNew, form]);
 
   async function onSubmit(data: SchemaNews) {
     setIsloading(true);
@@ -64,8 +94,10 @@ export function FormAddNews() {
 
       const res = await saveNews(formattedData);
       setImage(null);
-      if (res) toast.success("Noticia agregada con exito");
-      router.push("/admin/news");
+
+      console.log(res);
+
+      if (res) toast.success("Recurso agregado con exito");
 
       form.reset({
         title: "",
@@ -76,6 +108,7 @@ export function FormAddNews() {
         url_source: "",
       });
     } catch (error) {
+      console.error("Error add resourse:", error);
       toast.error(
         `Error: ${error instanceof Error ? error.message : "Error desconocido"}`
       );
@@ -83,6 +116,7 @@ export function FormAddNews() {
       setIsloading(false);
     }
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
@@ -108,7 +142,7 @@ export function FormAddNews() {
             <FormItem>
               <FormLabel>Subtitulo de noticia</FormLabel>
               <FormControl>
-                <Textarea placeholder="SubtItulo de la noticia" {...field} />
+                <Textarea {...field} rows={4} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -148,11 +182,28 @@ export function FormAddNews() {
           )}
         />
 
-        <UploadImage control={form.control} url_image={image || ""} />
+        <UploadImage control={form.control} url_image={dataNew?.image || ""} />
+
 
         {/* description */}
-        <FieldDescription control={form.control} />
-
+        <Button onClick={() => setViewEditor(!viewEditor)}><Edit />{`${viewEditor ? "Cancelar" : "Editar contenido"} `}</Button>
+        {viewEditor ? (
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Descripción</FormLabel>
+                <FormControl>
+                  <Textarea {...field} rows={20} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        ) : (
+          <RenderContent content={form.watch("description") || ""} />
+        )}
         <Button
           type="submit"
           className="w-full cursor-pointer"

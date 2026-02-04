@@ -1,9 +1,11 @@
 import { FormEditResounce } from "../../components/form/FormEdit";
 import { BtnBackHm } from "../../components/BtnBakcHm";
+
+
 export default function PageEditResource() {
   return (
     <div className="py-3 grid place-content max-w-2xl mx-auto">
-      <BtnBackHm />
+      <BtnBackHm url="/admin/resources" />
       <div className="text-center mb-6">
         <h1 className="mb-3 text-2xl font-semibold text-slate-800 dark:text-white">
           Revisar recurso

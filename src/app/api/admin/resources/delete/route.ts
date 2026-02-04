@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { supabaseServerClient } from "@/utils/supabase/supabaseServerClient";
-import {  deleteDetailsResourceHelper } from "../../helpers/save.helper";
+import {  deleteDetailsResourceHelper } from "../../helpers/resources";
 
 export async function DELETE(req: NextRequest) {
   const { searchParams } = new URL(req.url);

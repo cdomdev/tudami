@@ -7,7 +7,7 @@ import { z } from "zod";
 import { memo, useCallback, useEffect, useState } from "react";
 import locationsData from "@/content/locations/locations.json";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components";
+import { Spinner } from "@/components/ui/spinner";
 import { FormSchema } from "@/schemas";
 import { Form } from "@/components/ui/form";
 import { useSession } from "@/context/context.sesion";

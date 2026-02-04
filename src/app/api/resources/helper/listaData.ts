@@ -8,9 +8,9 @@ export async function listaAllDataResource(
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
-  const { data, error } = await supabase
+  const { data, error, count } = await supabase
     .from("resources")
-    .select("*,details_resources(*)")
+    .select("*,details_resources(*)", { count: 'exact' })
     .range(from, to);
 
   if (!data || error)
@@ -19,5 +19,7 @@ export async function listaAllDataResource(
       message: "Error en el helper del listado de recusos",
     };
 
-  return data;
+  return { data, total: count };
 }
+
+

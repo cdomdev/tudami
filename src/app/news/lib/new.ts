@@ -40,7 +40,7 @@ export async function getNews() {
     return [];
   }
 
-  return  data || [];
+  return data || [];
 }
 
 export async function getPopularsNews() {
@@ -51,7 +51,7 @@ export async function getPopularsNews() {
     return [];
   }
 
-  return  data || [];
+  return data || [];
 }
 
 export async function checkLike(new_id: number, user_id: string | undefined) {
@@ -87,7 +87,6 @@ export async function emitLike(new_id: number, user_id?: string) {
     console.error("Error al emitir like:", error.message);
     return { success: false, error };
   }
-  
 
   return { success: true, count };
 }
@@ -104,7 +103,6 @@ export async function removeLike(new_id: number, user_id?: string) {
     console.error("Error al eliminar like:", error.message);
     return { success: false, error };
   }
-
 
   return { success: true, count };
 }

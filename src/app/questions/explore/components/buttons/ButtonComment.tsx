@@ -8,7 +8,7 @@ import { MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { createComment } from "../../lib/comment";
 import { noficationsFromComments } from "../../lib/emitNotifications";
-import { Spinner } from "@/components";
+import { Spinner } from "@/components/ui/spinner";
 
 export function ButtonComment({ question_id }: { question_id: number }) {
   const { user } = useSession();

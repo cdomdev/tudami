@@ -2,11 +2,11 @@
 
 import * as React from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Delete, MoreHorizontal } from "lucide-react";
-import { SchemaResoucesResponse } from "@/schemas";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { SchemaNews } from "@/schemas";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { BtnDeleteResource } from "./DeleteResource";
+import { BtnDeleteNews } from "./DeleteNews";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +17,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-export const columns: ColumnDef<SchemaResoucesResponse>[] = [
+export const columnsNews: ColumnDef<SchemaNews>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -41,72 +41,57 @@ export const columns: ColumnDef<SchemaResoucesResponse>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: "Estado",
-    cell: ({ row }) => {
-      const isPublic = row.getValue("status") as string;
-      return (
-        <div className="flex items-center justify-center">
-          {isPublic === "approved" ? (
-            <Button variant={"default"} className="bg-green-500 text-gray-50">
-              {isPublic}
-            </Button>
-          ) : isPublic === "rejected" ? (
-            <Button variant={"destructive"} className="bg-red-500 text-gray-50">
-              {isPublic}
-            </Button>
-          ) : (
-            <Button variant={"default"} className="bg-yellow-500 text-gray-50">
-              {isPublic}
-            </Button>
-          )}
-        </div>
-      );
-    },
-  },
-  {
     accessorKey: "title",
     header: ({ column }) => (
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Título del recurso
+        Título de la noticia
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="capitalize font-medium">{row.getValue("title")}</div>
+      <div className="capitalize font-medium max-w-xs truncate">
+        {row.getValue("title")}
+      </div>
     ),
   },
   {
-    accessorKey: "category",
-    header: "Categoría",
+    accessorKey: "source",
+    header: "Fuente",
     cell: ({ row }) => {
-      const category = row.getValue("category") as string;
-      return <div className="capitalize font-medium">{category}</div>;
+      const source = row.getValue("source") as string;
+      return <div className="capitalize font-medium">{source}</div>;
     },
   },
   {
-    accessorKey: "type",
-    header: "Tipo",
+    accessorKey: "created_at",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Fecha de creación
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
     cell: ({ row }) => {
-      const category = row.getValue("type") as string;
-      const isPayment = category === "free" ? "Pago" : "Gratis";
-      return <div className="capitalize font-medium">{isPayment}</div>;
+      const date = new Date(row.getValue("created_at"));
+      return <div className="text-sm">{date.toLocaleDateString()}</div>;
     },
   },
   {
-    accessorKey: "url_image",
+    accessorKey: "image",
     header: "Imagen",
     cell: ({ row }) => {
-      const url = row.getValue("url_image") as string | null;
-      const fallback = "/resources/default-courses.webp";
+      const url = row.getValue("image") as string | null;
+      const fallback = "/news/default-news.webp";
       return (
         <div className="flex items-center justify-center">
           <Image
             src={url || fallback}
-            alt="Imagen recurso"
+            alt="Imagen noticia"
             width={40}
             height={40}
             className="rounded-full object-cover w-10 h-10"
@@ -119,9 +104,11 @@ export const columns: ColumnDef<SchemaResoucesResponse>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row, table }) => {
-      const resource = row.original;
-      const { id, slug } = resource;
-      const onDelete = (table.options.meta as { onDelete?: (id: number) => void })?.onDelete;
+      const news = row.original;
+      const { id, slug } = news;
+      const onDelete = (
+        table.options.meta as { onDelete?: (id: number) => void }
+      )?.onDelete;
 
       return (
         <DropdownMenu>
@@ -135,13 +122,15 @@ export const columns: ColumnDef<SchemaResoucesResponse>[] = [
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
 
             <DropdownMenuItem asChild className="cursor-pointer">
-              <BtnDeleteResource resource_id={id} onDelete={onDelete} />
+              <BtnDeleteNews news_id={id} onDelete={onDelete} />
+            </DropdownMenuItem>
+
+            <DropdownMenuItem asChild className="cursor-pointer" disabled>
+              <Link href={`/admin/news/edit?slug=${slug}`}>Editar noticia</Link>
             </DropdownMenuItem>
 
             <DropdownMenuItem asChild className="cursor-pointer">
-              <Link href={`/admin/resources/edit?slug=${slug}`}>                
-                Editar recurso
-              </Link>
+              <Link href={`/admin/news/details/${slug}`}>Ver noticia</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

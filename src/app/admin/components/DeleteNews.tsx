@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { deleteResource } from "../_lib/resources";
+import { deleteNews } from "../_lib/news";
 import { Spinner } from "@/components/ui/spinner";
 import {
   Dialog,
@@ -15,26 +15,25 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 
-export function BtnDeleteResource({ resource_id, onDelete }: { resource_id?: number; onDelete?: (id: number) => void }) {
+export function BtnDeleteNews({ news_id, onDelete }: { news_id?: number; onDelete?: (id: number) => void }) {
   const [isLoading, setIsLoading] = useState(false);
   async function handleDelete() {
     try {
       setIsLoading(true);
-      const res = await deleteResource(resource_id);
+      const res = await deleteNews(news_id);
       if (res.success) {
-        toast.success("Recurso eliminado con exito");
-        if (onDelete && resource_id) {
-          onDelete(resource_id);
+        toast.success("Noticia eliminada con éxito");
+        if (onDelete && news_id) {
+          onDelete(news_id);
         } else {
           window.location.reload();
         }
       } else {
-        toast.error("Error al eliminar el recurso, intenta nuevamente");
+        toast.error("Error al eliminar la noticia, intenta nuevamente");
       }
     } catch (error) {
-      toast.error("Error al eliminar el recurso, intenta mas tarde");
-    }
-    finally {
+      toast.error("Error al eliminar la noticia, intenta más tarde");
+    } finally {
       setIsLoading(false);
     }
   }
@@ -47,20 +46,20 @@ export function BtnDeleteResource({ resource_id, onDelete }: { resource_id?: num
             variant="ghost"
             className="font-normal w-full hover:bg-red-300 inline-flex items-start justify-start px-2 text-left hover:cursor-pointer"
           >
-            Eliminar recurso
+            Eliminar noticia
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-106.25">
           <DialogHeader>
-            <DialogTitle>Eliminar recurso</DialogTitle>
+            <DialogTitle>Eliminar noticia</DialogTitle>
             <DialogDescription>
-              Esta accion no se puede deshacer. ¿Estás seguro de que deseas
-              eliminar este recurso?
+              Esta acción no se puede deshacer. ¿Estás seguro de que deseas
+              eliminar esta noticia?
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline">Cancelar</Button>
             </DialogClose>
             <Button
               type="submit"
@@ -70,7 +69,7 @@ export function BtnDeleteResource({ resource_id, onDelete }: { resource_id?: num
               className="cursor-pointer"
             >
               {isLoading && <Spinner />}
-              {isLoading ? "Eliminando..." : "Eliminar recurso"}
+              {isLoading ? "Eliminando..." : "Eliminar noticia"}
             </Button>
           </DialogFooter>
         </DialogContent>

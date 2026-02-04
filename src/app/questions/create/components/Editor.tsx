@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import tags from "@/content/tags/data-tags.json";
 import { MultiSelect } from "@/components/ui/multi-select";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function Editor() {
   const [content, setContent] = useState("");

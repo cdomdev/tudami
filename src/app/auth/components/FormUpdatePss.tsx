@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Spinner } from "@/components";
+import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { useSearchParams, useRouter } from "next/navigation";
 import { updatePassword } from "../lib/auth";

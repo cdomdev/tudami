@@ -24,7 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import { Spinner } from "@/components";
+import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { FormSchemaResources, SchemaResources } from "@/schemas";
 import { saveResource, uploadImage } from "../../_lib";

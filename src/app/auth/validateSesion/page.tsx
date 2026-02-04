@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Spinner } from "@/components/Spiner";
+import { Spinner } from "@/components/ui/spinner";
 import { useSession } from "@/context/context.sesion";
 
 export default function ValidateSessionPage() {

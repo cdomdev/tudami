@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Check, Mail, User } from "lucide-react";
 import { alternativeSubcription } from "@/lib/subcription";
 import { toast } from "sonner";
-import { Spinner } from "@/components";
+import { Spinner } from "@/components/ui/spinner";
 import Link from "next/link";
 
 export function TargetUser() {

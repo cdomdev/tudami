@@ -18,7 +18,7 @@ import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import Link from "next/link";
 import { loginWithPassword } from "../lib/auth";
-import { Spinner } from "@/components";
+import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { useSession } from "@/context/context.sesion";
 import { useRouter, useSearchParams } from "next/navigation";

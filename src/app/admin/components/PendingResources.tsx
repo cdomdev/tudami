@@ -14,7 +14,7 @@ export function PendingResources({ resources }: PendingResourcesProps) {
     <article className="border rounded-md p-5 shadow-md dark:shadow-white/10">
       <h3
         id="recursos-pendientes"
-        className="text-base md:text-lg font-semibold sticky top-0 bg-gray-100 py-2 pl-2"
+        className="text-base md:text-lg font-semibold sticky top-0 bg-gray-100 dark:bg-gray-700 py-2 pl-2"
       >
         Recursos pendientes de aprobación
       </h3>
@@ -23,21 +23,25 @@ export function PendingResources({ resources }: PendingResourcesProps) {
         <SkeletonResources />
       ) : resources.length === 0 ? (
         <div className="text-center py-8">
-          <p className="text-gray-500">No hay recursos pendientes de aprobación.</p>
+          <p className="text-gray-500">
+            No hay recursos pendientes de aprobación.
+          </p>
         </div>
       ) : (
         resources.map((resource) => (
           <div
             key={resource.id}
-            className="flex justify-between items-center border border-dashed rounded-md p-2 mb-4"
+            className="grid grid-cols-1 md:grid-cols-8 items-center border border-dashed rounded-md p-2 mb-4"
           >
-            <div className="flex items-center gap-2 p-2">
+            <div className="flex items-center col-span-4 gap-2 p-2  ">
               <div>
                 <p className="font-medium">{resource.title}</p>
-                <p className="text-sm text-gray-500">{resource.description}</p>
+                <p className="text-sm text-gray-500 text-wrap overflow-hidden line-clamp-3">
+                  {resource.description}
+                </p>
               </div>
             </div>
-            <div className="flex gap-1 flex-col py-2">
+            <div className="flex gap-1 flex-col py-2 col-span-2 items-center">
               <span
                 className={` py-1 px-2.5 text-center rounded-full text-sm font-medium ${
                   resource.status === "pending"
@@ -54,7 +58,7 @@ export function PendingResources({ resources }: PendingResourcesProps) {
                 Enviado el {parseDay(resource.created_at)}
               </time>
             </div>
-            <div>
+            <div className="col-span-2">
               <Link
                 href={`/admin/resources/edit?slug=${resource.slug}`}
                 className="flex flex-col items-center group"

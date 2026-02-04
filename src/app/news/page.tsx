@@ -38,7 +38,7 @@ export default function PageNews() {
       if (response.length > 0) {
         setNews(response);
         setLoading(false);
-      }else{
+      } else {
         setNews([]);
         setLoading(false);
       }
@@ -49,7 +49,7 @@ export default function PageNews() {
   return (
     <>
       <section
-        className="relative w-full max-w-7xl mx-auto h-64 md:h-[28rem] rounded-2xl overflow-hidden mt-10"
+        className="relative w-full max-w-7xl mx-auto h-64 md:h-112 rounded-2xl overflow-hidden mt-10"
         id="news"
       >
         <Image
@@ -60,7 +60,7 @@ export default function PageNews() {
           className="object-cover dark:mask-b-to-80%"
         />
 
-        <div className="absolute p-4 md:p-6 rounded-2xl  bg-gradient-to-t from-white via-white to-white/80 dark:from-black/50 dark:via-black/30 dark:to-black/50 bottom-5 md:bottom-10 left-2 md:left-16 dark:text-white max-w-xs md:max-w-lg">
+        <div className="absolute p-4 md:p-6 rounded-2xl  bg-linear-to-t from-white via-white to-white/80 dark:from-black/50 dark:via-black/30 dark:to-black/50 bottom-5 md:bottom-10 left-2 md:left-16 dark:text-white max-w-xs md:max-w-lg">
           <h1 className="text-lg md:text-4xl font-extrabold leading-tight dark:drop-shadow-lg text-balance">
             Entérate de las últimas noticias en programación
           </h1>
@@ -86,7 +86,7 @@ export default function PageNews() {
             {loading ? (
               <SkeletonCardNews />
             ) : news.length === 0 ? (
-              <EmptyNews/>
+              <EmptyNews />
             ) : (
               news.map((item) => <CardNews key={item.id} {...item} />)
             )}

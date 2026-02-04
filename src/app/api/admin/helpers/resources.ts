@@ -11,15 +11,16 @@ import { SchemaResources } from "@/schemas";
 export async function saveResourceHelper(
   dataResource: SchemaResources,
   supabase: SupabaseClient,
-  isAdmin: boolean | string
+  isAdmin: boolean
 ) {
+
   const formatedResource = {
     title: dataResource.title,
     description: dataResource.description,
     slug: dataResource.title.toLowerCase().replaceAll(" ", ""),
     category: dataResource.category,
-    url_image: isAdmin === true ? dataResource.image : "",
-    status: isAdmin === true ? "approved" : "pending",
+    url_image: Boolean(!isAdmin) ? "" : dataResource.image,
+    status: Boolean(isAdmin) === true ? "approved" : "pending",
     type: dataResource.type,
   };
 
@@ -205,6 +206,4 @@ async function deleteResourceHelper(
   if (error) {
     throw new Error("Error al eliminar el recurso", { cause: error });
   }
-
- 
 }

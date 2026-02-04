@@ -12,7 +12,7 @@ import { MessageCircle } from "lucide-react";
 import { FormRaiting } from "@/schemas";
 import { opinion } from "@/lib/opinion";
 
-import { Spinner } from "@/components";
+import { Spinner } from "@/components/ui/spinner";
 import { StarRating } from "./StartRating";
 import { Textarea } from "./ui/textarea";
 import { Button } from "@/components/ui/button";
