@@ -18,10 +18,9 @@ import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { SchemaNews, FormSchemaNews } from "@/schemas";
 import { uploadImage, saveNews } from "../../_lib";
-import { FieldDescription } from "./FieldDescription";
 import { UploadImage } from "./UploadImage";
-import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
+import { FieldDescription } from "./FieldDescription";
 
 export function FormAddNews() {
   const [isLoading, setIsloading] = useState<boolean>(false);
@@ -46,7 +45,7 @@ export function FormAddNews() {
         const res = await uploadImage(
           data.image,
           data.title.toLowerCase(),
-          "files"
+          "files",
         );
         setImage(res?.url || null);
       }
@@ -77,7 +76,7 @@ export function FormAddNews() {
       });
     } catch (error) {
       toast.error(
-        `Error: ${error instanceof Error ? error.message : "Error desconocido"}`
+        `Error: ${error instanceof Error ? error.message : "Error desconocido"}`,
       );
     } finally {
       setIsloading(false);
@@ -86,67 +85,72 @@ export function FormAddNews() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
-        {/* titulo */}
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Titulo de la noticia</FormLabel>
-              <FormControl>
-                <Input placeholder="TItulo de la noticia" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {/* subtitle */}
-        <FormField
-          control={form.control}
-          name="sub_title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Subtitulo de noticia</FormLabel>
-              <FormControl>
-                <Textarea placeholder="SubtItulo de la noticia" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {/* url  */}
-        <FormField
-          control={form.control}
-          name="url_source"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Origen de la noticia</FormLabel>
-              <FormControl>
-                <Input placeholder="https://source.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* titulo */}
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Titulo de la noticia</FormLabel>
+                <FormControl>
+                  <Input placeholder="TItulo de la noticia" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* subtitle */}
+          <FormField
+            control={form.control}
+            name="sub_title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Subtitulo de noticia</FormLabel>
+                <FormControl>
+                  <Input placeholder="SubtItulo de la noticia" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
-        {/* origen */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* url  */}
+          <FormField
+            control={form.control}
+            name="url_source"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Origen de la noticia</FormLabel>
+                <FormControl>
+                  <Input placeholder="https://source.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="source"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Autor u Origen</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Origen de la noticia ej: El Diario As"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          {/* origen */}
+
+          <FormField
+            control={form.control}
+            name="source"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Autor u Origen</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Origen de la noticia ej: El Diario As"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <UploadImage control={form.control} url_image={image || ""} />
 

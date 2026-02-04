@@ -32,6 +32,7 @@ export function BtnDeleteNews({ news_id, onDelete }: { news_id?: number; onDelet
         toast.error("Error al eliminar la noticia, intenta nuevamente");
       }
     } catch (error) {
+      console.error(error);
       toast.error("Error al eliminar la noticia, intenta más tarde");
     } finally {
       setIsLoading(false);

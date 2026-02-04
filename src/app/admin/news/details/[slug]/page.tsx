@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/utils/supabase/supabaseClient";
-import { ArrowLeft, ExternalLink, MoveLeft } from "lucide-react";
+import { ArrowLeft, MoveLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 

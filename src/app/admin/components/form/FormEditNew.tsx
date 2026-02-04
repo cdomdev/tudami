@@ -18,7 +18,6 @@ import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { SchemaNews, FormSchemaNews } from "@/schemas";
 import { uploadImage, saveNews } from "../../_lib";
-import { FieldDescription } from "./FieldDescription";
 import { UploadImage } from "./UploadImage";
 import { useSearchParams } from "next/navigation";
 import { listDataNewsBy } from "../../_lib/news";

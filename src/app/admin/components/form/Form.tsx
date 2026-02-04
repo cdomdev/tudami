@@ -64,7 +64,7 @@ export function FormNewResource({
         const res = await uploadImage(
           data.image,
           data.category.toLowerCase(),
-          "resources"
+          "resources",
         );
         imageResource = res?.url;
       }
@@ -98,7 +98,7 @@ export function FormNewResource({
     } catch (error) {
       console.error("Error add resourse:", error);
       toast.error(
-        `Error: ${error instanceof Error ? error.message : "Error desconocido"}`
+        `Error: ${error instanceof Error ? error.message : "Error desconocido"}`,
       );
     } finally {
       setIsloading(false);
@@ -109,19 +109,35 @@ export function FormNewResource({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
         {/* titulo */}
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Titulo para el nuevo recurso</FormLabel>
-              <FormControl>
-                <Input placeholder="Academia dev" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Titulo para el nuevo recurso</FormLabel>
+                <FormControl>
+                  <Input placeholder="Academia dev" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* url  */}
+          <FormField
+            control={form.control}
+            name="url"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Direccion del recurso</FormLabel>
+                <FormControl>
+                  <Input placeholder="https://recurso.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         {/* descripcion */}
         <FormField
           control={form.control}
@@ -141,82 +157,69 @@ export function FormNewResource({
           )}
         />
 
-        {/* url  */}
-        <FormField
-          control={form.control}
-          name="url"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Direccion del recurso</FormLabel>
-              <FormControl>
-                <Input placeholder="https://recurso.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* categoria */}
 
-        {/* categoria */}
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Seleccionar la categoria del recurso</FormLabel>
+                <FormControl>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                    }}
+                  >
+                    <SelectTrigger className="bg-white/70 text-black dark:text-muted-foreground">
+                      <SelectValue placeholder="Selecciona un categoria" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categoriesNames.map((cat) => (
+                        <SelectItem key={cat.slug} value={cat.slug}>
+                          {cat.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="category"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Seleccionar la categoria del recurso</FormLabel>
-              <FormControl>
-                <Select
-                  value={field.value}
-                  onValueChange={(value) => {
-                    field.onChange(value);
-                  }}
-                >
-                  <SelectTrigger className="bg-white/70 text-black dark:text-muted-foreground">
-                    <SelectValue placeholder="Selecciona un categoria" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categoriesNames.map((cat) => (
-                      <SelectItem key={cat.slug} value={cat.slug}>
-                        {cat.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          {/* tipo - gratis o pago */}
 
-        {/* tipo - gratis o pago */}
-
-        <FormField
-          control={form.control}
-          name="type"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Seleccionar el tipo de recurso</FormLabel>
-              <FormControl>
-                <Select
-                  value={field.value}
-                  onValueChange={(value) => field.onChange(value)}
-                >
-                  <SelectTrigger className="bg-white/70 text-black dark:text-muted-foreground">
-                    <SelectValue placeholder="Selecciona el tipo de recurso" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {typeResource.map((re, i) => (
-                      <SelectItem key={i} value={re.value}>
-                        {re.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="type"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Seleccionar el tipo de recurso</FormLabel>
+                <FormControl>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value)}
+                  >
+                    <SelectTrigger className="bg-white/70 text-black dark:text-muted-foreground">
+                      <SelectValue placeholder="Selecciona el tipo de recurso" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {typeResource.map((re, i) => (
+                        <SelectItem key={i} value={re.value}>
+                          {re.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         {isAdmin && <UploadImage control={form.control} />}
 
@@ -258,9 +261,6 @@ export function FormNewResource({
             </FormItem>
           )}
         />
-
-
-    
 
         <Button
           type="submit"

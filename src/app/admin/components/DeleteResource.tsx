@@ -32,6 +32,7 @@ export function BtnDeleteResource({ resource_id, onDelete }: { resource_id?: num
         toast.error("Error al eliminar el recurso, intenta nuevamente");
       }
     } catch (error) {
+      console.error(error);
       toast.error("Error al eliminar el recurso, intenta mas tarde");
     }
     finally {

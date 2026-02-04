@@ -1,4 +1,4 @@
-import { Home, Workflow, Newspaper, Users,  PanelsTopLeft, PanelTop } from "lucide-react";
+import { Home, Workflow, Newspaper, Users, PanelsTopLeft } from "lucide-react";
 import Link from "next/link";
 
 import {

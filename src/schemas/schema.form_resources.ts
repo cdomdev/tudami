@@ -16,9 +16,9 @@ export const FormSchemaResources = z.object({
     }
   )
   .optional(),
-  category: z.string(),
-  type: z.string(),
-  url: z.string().optional(),
+  category: z.string().min(3, "Debe seleccionar una categoria").max(50),
+  type: z.string().min(3, "Debe seleccionar el tipo de recurso").max(50),
+  url: z.string().min(5, "Mínimo 5 caracteres").max(100, "Máximo 100 caracteres").url("Debe ser una URL válida"),
   detail_title: z.string().min(3, "Mínimo 3 caracteres").max(100),
   detail_description: z.string().min(10, "Mínimo 10 caracteres").max(1000),
   status: z.string().optional(),

@@ -3,76 +3,76 @@
 import * as React from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import { SchemaNews } from "@/schemas";
+import { UserSchema } from "@/schemas";
 import { Button } from "@/components/ui/button";
-import { BtnDeleteNews } from "./DeleteNews";
 import { DropdownMenuItem, DropdownMenuLabel } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { selectColumn, imageColumn, actionsColumn } from "./columns/helpers";
 
-export const columnsNews: ColumnDef<SchemaNews>[] = [
-  selectColumn<SchemaNews>(),
+export const columnsUsers: ColumnDef<UserSchema>[] = [
+  selectColumn<UserSchema>(),
   {
-    accessorKey: "title",
+    accessorKey: "full_name",
     header: ({ column }) => (
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Título de la noticia
+        Nombre
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
+
     cell: ({ row }) => (
       <div className="capitalize font-medium max-w-xs truncate">
-        {row.getValue("title")}
+        {row.getValue("full_name")}
       </div>
     ),
   },
+  imageColumn<UserSchema>("avatar_url", "/news/default-news.webp", "Avatar"),
   {
-    accessorKey: "source",
-    header: "Fuente",
+    accessorKey: "email",
+    header: "Correo electrónico",
     cell: ({ row }) => {
-      const source = row.getValue("source") as string;
-      return <div className="capitalize font-medium">{source}</div>;
+      const email = row.getValue("email") as string;
+      return <div className="capitalize font-medium">{email}</div>;
     },
   },
   {
-    accessorKey: "created_at",
+    accessorKey: "role",
     header: ({ column }) => (
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Fecha de creación
+        Rol
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
     cell: ({ row }) => {
-      const date = new Date(row.getValue("created_at"));
-      return <div className="text-sm">{date.toLocaleDateString()}</div>;
+      const role = row.getValue("role") as string;
+      return <div className="text-sm">{role}</div>;
     },
   },
-  imageColumn<SchemaNews>("image", "/news/default-news.webp", "Imagen noticia"),
-  actionsColumn<SchemaNews>((row, table) => {
-    const news = row.original;
-    const { id, slug } = news;
-    const onDelete = (table.options.meta as { onDelete?: (id: number) => void })?.onDelete;
+
+  actionsColumn<UserSchema>((row) => {
+    const user = row.original;
+    const { id } = user;
 
     return (
       <>
         <DropdownMenuLabel>Acciones</DropdownMenuLabel>
 
         <DropdownMenuItem asChild className="cursor-pointer">
-          <BtnDeleteNews news_id={id} onDelete={onDelete} />
+          {/* <BtnDeleteUser user_id={id} onDelete={(table.options.meta as { onDelete?: (id: number) => void })?.onDelete} /> */}
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild className="cursor-pointer" disabled>
-          <Link href={`/admin/news/edit?slug=${slug}`}>Editar noticia</Link>
+          <Link href={`/admin/users/edit?id=${id}`}>Editar usuario</Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild className="cursor-pointer">
-          <Link href={`/admin/news/details/${slug}`}>Ver noticia</Link>
+          <Link href={`/admin/users/details/${id}`}>Ver usuario</Link>
         </DropdownMenuItem>
       </>
     );
