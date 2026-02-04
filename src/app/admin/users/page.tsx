@@ -24,7 +24,7 @@ export default function PageUsersAmd() {
     setLoading(true);
     async function fetchData() {
       const res = await listUsers(page, pageSize);
-      setResponse(res);
+      setResponse(res.data || []);
       setTotal(res.length > 0 ? res[0].total : 0);
       setLoading(false);
     }
@@ -50,7 +50,7 @@ export default function PageUsersAmd() {
       </section>
       <section className="mt-10 lg:max-w-7xl mx-auto">
         <h2 className="text-foreground md:text-base mb-4">
-          Recursos disponibles ({total} total)
+          Listado de usuarios 
         </h2>
         {loading ? (
           <TableSkeleton />

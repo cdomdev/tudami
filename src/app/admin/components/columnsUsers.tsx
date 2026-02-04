@@ -39,22 +39,38 @@ export const columnsUsers: ColumnDef<UserSchema>[] = [
     },
   },
   {
-    accessorKey: "role",
+    accessorKey: "country",
     header: ({ column }) => (
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Rol
+        País
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
     cell: ({ row }) => {
-      const role = row.getValue("role") as string;
+      const role = row.getValue("country") as string;
       return <div className="text-sm">{role}</div>;
     },
   },
-
+  {
+    accessorKey: "city",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Ciudad
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => {
+      const role = row.getValue("city") as string;
+      return <div className="text-sm">{role}</div>;
+    },
+  },
+  
   actionsColumn<UserSchema>((row) => {
     const user = row.original;
     const { id } = user;

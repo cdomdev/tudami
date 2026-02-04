@@ -40,7 +40,7 @@ export function selectColumn<T>(): ColumnDef<T> {
 export function imageColumn<T>(accessorKey: string, fallback = "", alt = "image") {
   return {
     accessorKey,
-    header: "Imagen",
+    header: "Avatar",
     cell: ({ row }: { row: Row<T> }) => {
       const url = row.getValue(accessorKey) as string | null;
       return (
