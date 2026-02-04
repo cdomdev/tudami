@@ -24,7 +24,7 @@ import { toast } from "sonner";
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Debe ser un correo válido." }),
-  name: z.string().min(2).max(100),
+  name: z.string().min(2, "El nombre debe tener al menos 2 caracteres").max(20, "El nombre no puede exceder los 20 caracteres"),
   password: z.string()
     .min(8, { message: "Debe tener mínimo 8 caracteres" })
     .regex(/[a-z]/, { message: "Debe incluir una letra minúscula" })

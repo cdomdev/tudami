@@ -20,10 +20,7 @@ export default function PageSuccessSendRequest() {
 
       <p className="text-foreground dark:text-gray-300 leading-relaxed text-wrap">
         Hemos validado tu información correctamente. Revisa tu correo
-        electrónico, allí encontrarás un enlace para{" "}
-        <span className="font-medium text-gray-800">
-          restablecer tu contraseña.
-        </span>
+        electrónico, allí encontrarás un enlace para restablecer tu contraseña.
       </p>
 
       <p className="text-sm text-foreground dark:text-gray-200 italic font-medium">

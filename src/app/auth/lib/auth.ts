@@ -1,4 +1,4 @@
-import { supabase } from "@/utils/supabase/supabaseClient";
+import { supabase, supabaseAuth } from "@/utils/supabase/supabaseClient";
 import { query } from "@/lib/query";
 
 type Providers = "google" | "github";
@@ -28,7 +28,6 @@ export async function loginWithProvider(provider: Providers) {
 }
 
 /**
- * callback para manejo de datos después del inicio de sesión con proveedor externo
  * @param accessToken
  * @param refreshToken
  * @returns
@@ -109,7 +108,7 @@ export async function loginWithPassword(email: string, password: string) {
 
   if (error && error?.code === "invalid_credentials")
     throw new Error(
-      "Los datos ingresados no son correctos, intente nuevamente"
+      "Los datos ingresados no son correctos, o no existe una cuenta asociada a esas credenciales.",
     );
 
   const response = await fetch("/api/auth/login-with-password", {
@@ -125,9 +124,7 @@ export async function loginWithPassword(email: string, password: string) {
   });
 
   if (!response.ok) {
-    throw new Error(
-      "Los datos ingresados no son correctos, intente nuevamente"
-    );
+    throw new Error("No pudimos iniciar sesión, intente nuevamente");
   }
 
   const data = await response.json();
@@ -143,7 +140,25 @@ export async function loginWithPassword(email: string, password: string) {
 
 export async function sendRequestForgotPassword(email: string) {
   const url = `${process.env.NEXT_PUBLIC_SITE_URL}/auth/update-password?email=${email}`;
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+
+  // validar email
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    throw new Error("El correo electrónico no tiene un formato válido");
+  }
+
+  const { error: errorMail } = await supabase
+    .from("users")
+    .select("id")
+    .eq("email", email)
+    .single();
+
+  if (errorMail && errorMail?.code === "PGRST116") {
+    throw new Error("No existe una cuenta asociada a ese correo electrónico.");
+  }
+
+  const { error, data } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: url,
   });
 

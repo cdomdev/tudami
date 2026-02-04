@@ -44,7 +44,7 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <div className="px-4 pt-6 pb-4 flex items-center">
-        <span>Perfil</span>
+        <span className="sr-only">Perfil</span>
       </div>
       <SidebarContent>
         <SidebarGroup>

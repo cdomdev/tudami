@@ -24,7 +24,7 @@ export default function ForgotPage() {
         </p>
       </div>
 
-      <div className="flex flex-col gap-3 min-w-[300px] w-full">
+      <div className="flex flex-col gap-3 *:min-w-75 w-full">
         <FormForgot />
       </div>
     </div>

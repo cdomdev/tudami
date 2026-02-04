@@ -43,9 +43,10 @@ export function FormForgot() {
       router.replace("/auth/forgot-password/success");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "Error desconocido";
-      console.error("Error en la solicitud:", message);
-      toast.error("No pudimos procesar tu solicitud. Intenta más tarde.");
+        error instanceof Error
+          ? error.message
+          : "No púdimos procesar tu solicitud.";
+      toast.error(`Error: ${message}`);
     } finally {
       setIsloading(false);
     }
@@ -64,7 +65,11 @@ export function FormForgot() {
             <FormItem>
               <FormLabel>Correo electrónico</FormLabel>
               <FormControl>
-                <Input placeholder="usuario@ejemplo.com" {...field} className="bg-white"/>
+                <Input
+                  placeholder="usuario@ejemplo.com"
+                  {...field}
+                  className="bg-white"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
