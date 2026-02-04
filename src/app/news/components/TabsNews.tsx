@@ -14,7 +14,6 @@ export function TabsNews() {
   };
 
   const handleTabChange = (value: string) => {
-    console.log(value);
     if (value === "alls") {
       router.push("/news");
     } else {

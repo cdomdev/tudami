@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const FormSchemaNews = z.object({
-  id: z.number().optional(),
+  id: z.number(),
   title: z.string().min(5, "El título debe tener al menos 5 caracteres"),
   sub_title: z.string().min(5, "El subtítulo debe tener al menos 5 caracteres"),
   slug: z.string().optional(),

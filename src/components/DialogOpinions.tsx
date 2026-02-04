@@ -122,7 +122,7 @@ export function DialogOpinions({
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-106.25">
         <DialogHeader>
           <DialogTitle>Tu opinión sobre Tudami</DialogTitle>
           <DialogDescription className="text-sm text-muted-foreground">
