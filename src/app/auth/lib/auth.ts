@@ -1,4 +1,4 @@
-import { supabase, supabaseAuth } from "@/utils/supabase/supabaseClient";
+import { supabase } from "@/utils/supabase/supabaseClient";
 import { query } from "@/lib/query";
 
 type Providers = "google" | "github";
@@ -158,7 +158,7 @@ export async function sendRequestForgotPassword(email: string) {
     throw new Error("No existe una cuenta asociada a ese correo electrónico.");
   }
 
-  const { error, data } = await supabase.auth.resetPasswordForEmail(email, {
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: url,
   });
 
