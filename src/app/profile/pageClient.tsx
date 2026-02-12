@@ -67,7 +67,7 @@ export default function Home() {
         >
           Tus insignias
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 overflow-x-auto  mx-auto overflow-y-hidden p-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 overflow-x-auto  mx-auto overflow-y-hidden gap-4 p-3">
           {achievementsObtained && achievementsObtained.length === 0 ? (
             <p className="text-gray-500">Aun no tienes insignias obtenidas.</p>
           ) : (
