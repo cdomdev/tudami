@@ -20,10 +20,10 @@ export function TableSkeleton() {
           </div>
         ))}
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
+      {/* <div className="flex items-center justify-end space-x-2 py-4">
         <Skeleton className="h-8 w-[100px]" />
         <Skeleton className="h-8 w-[100px]" />
-      </div>
+      </div> */}
     </div>
   );
 }

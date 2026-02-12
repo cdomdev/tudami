@@ -46,7 +46,7 @@ export default function PageNews() {
 
   return (
     <main>
-      <section className="flex justify-between px-12">
+      <section className="flex justify-between px-6  md:px-12">
         <header>
           <h1 className="text-lg md:text-2xl mb-3 font-semibold">Noticias</h1>
         </header>

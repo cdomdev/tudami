@@ -16,7 +16,7 @@ export function TableNews({
       data={data}
       columns={columnsNews}
       onDelete={onDelete}
-      showPagination={true}
+      showPagination={false}
       showFooter={true}
     />
   );

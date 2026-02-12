@@ -29,6 +29,20 @@ export default async function PageAdmin() {
       color: "yellow",
       icon: <Newspaper />,
     },
+    {
+      title: "Publicaciones",
+      text: "Total publicaciones",
+      data: data?.countPosts || 0,
+      color: "green",
+      icon: <Newspaper />,
+    },
+    {
+      title: "Ofertas",
+      text: "Total ofertas",
+      data: data?.countOffers || 0,
+      color: "slate",
+      icon: <Newspaper />,
+    },
   ];
   if (!data) {
     return (

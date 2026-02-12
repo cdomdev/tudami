@@ -11,5 +11,5 @@ export function TableReseources({
   data: SchemaResoucesResponse[];
   onDelete?: (id: number) => void;
 }) {
-  return <GenericTable data={data} columns={columns} onDelete={onDelete} />;
+  return <GenericTable data={data} columns={columns} onDelete={onDelete} showFooter={true} />;
 }

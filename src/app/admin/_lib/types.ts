@@ -24,6 +24,8 @@ export interface RecentPost {
   slug: string;
 }
 
+
+
 export interface PanelData {
   totalUsers: number | null;
   totalResources: number | null;
@@ -31,4 +33,6 @@ export interface PanelData {
   userActivity: UserActivity[];
   recentResources: RecentResource[];
   recentPosts: RecentPost[];
+  countPosts: number | null;
+  countOffers: number | null;
 }
