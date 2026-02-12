@@ -10,13 +10,14 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { useSession } from "@/context/context.sesion";
-import { LogOut, User as UserIcon } from "lucide-react";
+import { LogOut, User as UserIcon, Settings } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Notifications } from "./Notifications";
 import { Button } from "./ui/button";
 import { logout } from "@/app/auth/lib/auth";
 import { supabase } from "@/utils/supabase/supabaseClient";
+import { type LucideIcon } from "lucide-react"
 
 export function Profile() {
   const { user, clearUser } = useSession();
@@ -31,6 +32,19 @@ export function Profile() {
       console.error("Error al cerrar sesión", error);
     }
   };
+
+  const itemsNavData = [
+    {
+      url: `/profile?id=${user?.id}`,
+      icon: UserIcon,
+      label: "Mi perfil",
+    },
+    {
+      url: `/profile/account-setting?name=${user?.full_name}&id=${user?.id}`,
+      icon: Settings,
+      label: "Preferencias",
+    }
+  ]
 
   return (
     <div className="flex items-center gap-5">
@@ -58,13 +72,9 @@ export function Profile() {
             <div className="text-xs text-muted-foreground">{user?.email}</div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <Link
-            className="gap-2 flex px-2 hover:bg-accent p-2 rounded-md items-center text-sm dark:text-gray-300 dark:hover:text-gray-100"
-            href={`/profile?id=${user?.id}`}
-          >
-            <UserIcon className="w-4 h-4" />
-            Mi perfil
-          </Link>
+          {itemsNavData.map((item, index) => (
+            <ItemNav key={index} {...item} />
+          ))}
           <DropdownMenuItem
             className="gap-2 text-red-500 px-2  p-2 rounded-md cursor-pointer text-sm hover:bg-red-50 dark:hover:text-red-200"
             onClick={handleLogout}
@@ -76,4 +86,22 @@ export function Profile() {
       </DropdownMenu>
     </div>
   );
+}
+
+interface ItemsNav {
+  url: string,
+  icon?: LucideIcon,
+  label: string,
+}
+
+function ItemNav({ url, label, icon: Icon }: ItemsNav) {
+  return (
+    <Link
+      className="gap-2 flex px-2 hover:bg-accent p-2 rounded-md items-center text-sm dark:text-gray-300 dark:hover:text-gray-100"
+      href={`${url}`}
+    >
+      {Icon && <Icon className="w-4 h-4 " />}
+      {label}
+    </Link>
+  )
 }
