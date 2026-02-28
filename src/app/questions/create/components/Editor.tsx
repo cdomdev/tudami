@@ -2,7 +2,7 @@
 
 import { SimpleEditor } from "@/components/ui/editor/simple/simple-editor";
 import { useState } from "react";
-import {  Question } from "@/schemas";
+import { Question } from "@/schemas";
 import { toast } from "sonner";
 import { useSession } from "@/context/context.sesion";
 import { createQuestionApi } from "../lib/createQuestions";
@@ -11,16 +11,20 @@ import tags from "@/content/tags/data-tags.json";
 import { MultiSelect } from "@/components/ui/multi-select";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-
 export default function Editor() {
   const [content, setContent] = useState("");
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const options = tags.map((tag) => ({
     value: tag.id,
@@ -69,7 +73,7 @@ export default function Editor() {
       toast.error(
         `Error en el formulario: ${result.error.errors
           .map((e) => e.message)
-          .join(", ")}`
+          .join(", ")}`,
       );
       return;
     }
@@ -78,7 +82,7 @@ export default function Editor() {
       const res = await createQuestionApi(
         result.data.title,
         result.data.content,
-        data.tags
+        data.tags,
       );
       if (!res || !res.success) {
         throw new Error("Error al crear la pregunta");
@@ -89,11 +93,10 @@ export default function Editor() {
 
       form.reset();
       setContent("");
-      setSelectedTags([]);
     } catch (error) {
       console.error("Error al enviar la pregunta:", error);
       toast.error(
-        "Error al enviar la pregunta. Por favor, inténtalo de nuevo más tarde."
+        "Error al enviar la pregunta. Por favor, inténtalo de nuevo más tarde.",
       );
     } finally {
       setLoading(false);
@@ -108,7 +111,10 @@ export default function Editor() {
         {/* Sección del Título */}
         <section className="p-6">
           <div className="space-y-3">
-            <label htmlFor="titulo" className="font-semibold text-sm md:text-base text-foreground">
+            <label
+              htmlFor="titulo"
+              className="font-semibold text-sm md:text-base text-foreground"
+            >
               Dale un título claro a tu pregunta
             </label>
             <FormField
