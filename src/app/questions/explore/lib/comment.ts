@@ -31,13 +31,22 @@ export async function createComment(
 }
 
 export async function getCommentBy(question_id: number) {
+  return getCommentByPage(question_id, 1, 5);
+}
+
+export async function getCommentByPage(
+  question_id: number,
+  page = 1,
+  pageSize = 5
+) {
   try {
-    const urlReques = `/api/questions/explore/comment/get?question_id=${question_id}`;
+    const urlReques = `/api/questions/explore/comment/get?question_id=${question_id}&page=${page}&pageSize=${pageSize}`;
     const res = await fetch(urlReques, {
       method: "GET",
     });
     const data = await res.json();
-    return { comments: data ?? [] };
+    // API returns { comments, total }
+    return { comments: data.comments ?? [], total: data.total ?? 0 };
   } catch (error) {
     console.log("Error fetching comments:[LIB GET]", error);
     throw new Error("Failed to fetch comments");
