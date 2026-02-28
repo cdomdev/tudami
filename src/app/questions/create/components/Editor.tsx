@@ -2,7 +2,7 @@
 
 import { SimpleEditor } from "@/components/ui/editor/simple/simple-editor";
 import { useState } from "react";
-import { Question } from "@/schemas";
+import {  Question } from "@/schemas";
 import { toast } from "sonner";
 import { useSession } from "@/context/context.sesion";
 import { createQuestionApi } from "../lib/createQuestions";
@@ -11,10 +11,15 @@ import tags from "@/content/tags/data-tags.json";
 import { MultiSelect } from "@/components/ui/multi-select";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 
 export default function Editor() {
   const [content, setContent] = useState("");
-  const [title, setTitle] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const options = tags.map((tag) => ({
@@ -27,14 +32,37 @@ export default function Editor() {
 
   const router = useRouter();
 
-  async function handleSubmit() {
+  const FormSchema = z.object({
+    title: z
+      .string()
+      .min(10, { message: "El título debe tener al menos 10 caracteres" })
+      .max(100, { message: "El título no puede exceder los 100 caracteres" }),
+    tags: z
+      .array(z.string())
+      .min(1, { message: "Debes seleccionar al menos una etiqueta" }),
+  });
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      title: "",
+      tags: [],
+    },
+  });
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     if (!user) {
       toast.error("Debes iniciar sesión para enviar una pregunta.");
       return;
     }
 
+    if (!content.trim()) {
+      toast.error("Debes escribir el contenido de tu pregunta");
+      return;
+    }
+
     setLoading(true);
-    const result = Question.safeParse({ title, content });
+    const result = Question.safeParse({ title: data.title, content });
 
     if (!result.success) {
       setLoading(false);
@@ -50,7 +78,7 @@ export default function Editor() {
       const res = await createQuestionApi(
         result.data.title,
         result.data.content,
-        selectedTags
+        data.tags
       );
       if (!res || !res.success) {
         throw new Error("Error al crear la pregunta");
@@ -59,8 +87,9 @@ export default function Editor() {
       toast.success("¡Pregunta publicada con éxito!");
       router.push(`/questions/create/status?res=pregunta-creada-con-exito`);
 
-      setTitle("");
+      form.reset();
       setContent("");
+      setSelectedTags([]);
     } catch (error) {
       console.error("Error al enviar la pregunta:", error);
       toast.error(
@@ -71,50 +100,93 @@ export default function Editor() {
     }
   }
 
-  const textLoadin = loading ? "Enviando pregunta" : "Enviar mi pregunta";
+  const submitButtonText = loading ? "Enviando pregunta" : "Enviar mi pregunta";
+
   return (
-    <>
-      <div className="p-6">
-        <label htmlFor="titulo" className="font-medium text-sm md:text-base">
-          Dale un título claro a tu pregunta
-        </label>
-        <input
-          type="text"
-          id="titulo"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Ej: ¿Cómo vincular varias evidencias en Sofiaplus?"
-          className="w-full border py-2 px-3 mt-2 rounded-md focus:outline-none text-xs md:text-sm focus:ring-1 focus:ring-slate-200 bg-white text-black"
-        />
-      </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+        {/* Sección del Título */}
+        <section className="p-6">
+          <div className="space-y-3">
+            <label htmlFor="titulo" className="font-semibold text-sm md:text-base text-foreground">
+              Dale un título claro a tu pregunta
+            </label>
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      id="titulo"
+                      placeholder="Ej: ¿Cómo vincular varias evidencias en Sofiaplus?"
+                      {...field}
+                      disabled={loading}
+                      maxLength={100}
+                      className="w-full text-xs md:text-sm transition-colors mt-3  bg-gray-100 dark:bg-slate-50 text-black"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        </section>
 
-      <div className="px-6 ">
-        <label htmlFor="etiquetas" id="multi-select-button" className="font-medium text-sm md:text-base">
-          Selecciona etiquetas relevantes
-        </label>
-        <MultiSelect
-          id="etiquetas"
-          aria-labelledby="multi-select-button"
-          options={options}
-          onValueChange={setSelectedTags}
-          defaultValue={selectedTags}
-        />
-      </div>
+        {/* Sección de Etiquetas */}
+        <section className="px-6">
+          <div className="space-y-3">
+            <label
+              htmlFor="etiquetas"
+              className="font-semibold text-sm md:text-base text-foreground block"
+            >
+              Selecciona etiquetas relevantes
+            </label>
+            <FormField
+              control={form.control}
+              name="tags"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <MultiSelect
+                      id="etiquetas"
+                      options={options}
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      disabled={loading}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        </section>
 
-      <div className="p-6 ">
-        <label id="editor-label" className="font-medium text-sm md:text-base block mb-3" htmlFor="editor">
-          Escribe tu pregunta con detalle
-        </label>
-        <SimpleEditor onChange={setContent}  />
-        <Button
-          variant={"default"}
-          onClick={handleSubmit}
-          disabled={loading}
-          className="mt-3 px-4 md:min-w-80 duration-200 rounded-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {loading && <Spinner className="w-5 h-5" />} {textLoadin}
-        </Button>
-      </div>
-    </>
+        {/* Sección del Editor */}
+        <section className="p-6">
+          <div className="space-y-3">
+            <label
+              htmlFor="editor"
+              className="font-semibold text-sm md:text-base text-foreground block"
+            >
+              Escribe tu pregunta con detalle
+            </label>
+            <SimpleEditor onChange={setContent} />
+          </div>
+
+          {/* Botón de Envío */}
+          <Button
+            type="submit"
+            variant="default"
+            disabled={loading}
+            className="mt-6 px-4 md:min-w-80 duration-200 rounded-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            {loading && <Spinner className="w-4 h-4" />}
+            {submitButtonText}
+          </Button>
+        </section>
+      </form>
+    </Form>
   );
 }

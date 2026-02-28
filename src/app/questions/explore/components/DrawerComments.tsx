@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { SchemaComment } from "@/schemas";
 import { useEffect, useState } from "react";
-import { getCommentBy } from "../lib/comment";
+import { getCommentByPage } from "../lib/comment";
 import { SkeletonComments } from "./SkeletonComments";
 import { RenderContent } from "./RenderContent";
 import { BtnLikeResponse } from "./buttons/BtnLikeResponse";
@@ -23,17 +23,57 @@ import {
 export function DrawerComments({ question_id }: { question_id: number }) {
   const [comments, setComments] = useState<SchemaComment[]>([]);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [pageSize] = useState(5);
+  const [total, setTotal] = useState(0);
+  const [loadingMore, setLoadingMore] = useState(false);
   const count = useCommentsChannel(question_id);
 
+  
+  // load first page when question or count changes
   useEffect(() => {
     setLoading(true);
+    setPage(1);
+    let mounted = true;
     async function fechDataComment() {
-      await getCommentBy(question_id)
-        .then((data) => setComments(data.comments))
-        .finally(() => setLoading(false));
+      try {
+        const { comments: dataComments, total: newTotal } = await getCommentByPage(
+          question_id,
+          1,
+          pageSize
+        );
+        if (mounted) {
+          setComments(dataComments);
+          setTotal(newTotal);
+        }
+      } finally {
+        if (mounted) setLoading(false);
+      }
     }
     fechDataComment();
-  }, [question_id]);
+    return () => {
+      mounted = false;
+    };
+  }, [question_id, count, pageSize]);
+
+  const loadMore = async () => {
+    if (loadingMore) return;
+    const nextPage = page + 1;
+    setLoadingMore(true);
+    try {
+      const { comments: nextComments } = await getCommentByPage(
+        question_id,
+        nextPage,
+        pageSize
+      );
+      setComments((prev) => [...prev, ...nextComments]);
+      setPage(nextPage);
+    } catch (e) {
+      console.error("Error loading more comments", e);
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   return (
     <Drawer>
@@ -48,15 +88,15 @@ export function DrawerComments({ question_id }: { question_id: number }) {
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <div className="mx-auto w-full max-w-sm md:max-w-2xl">
+        <div className="mx-auto w-full max-w-sm md:max-w-2xl overflow-y-auto">
           <DrawerHeader>
             <DrawerTitle>Comentarios</DrawerTitle>
           </DrawerHeader>
           <div className="p-4 pb-0 w-full">
-            <div className="flex flex-col space-y-3 w-full  ">
+            <div className="flex flex-col space-y-3 w-full">
               {loading ? (
                 <SkeletonComments />
-              ) : comments.length === 0 ? (
+              ) : !comments || comments.length === 0 ? (
                 <p className="text-center text-sm md:text-base ">
                   Esta pregunta no tiene respuestas.
                 </p>
@@ -67,7 +107,7 @@ export function DrawerComments({ question_id }: { question_id: number }) {
                     className="border-b p-2 mb-3 overflow-x-hidden"
                   >
                     <div className="flex mb-2 ">
-                      <div className="flex-shrink-0">
+                      <div className="shrink-0">
                         <Image
                           src={com.users.avatar_url || ""}
                           alt={com.users.full_name}
@@ -97,6 +137,22 @@ export function DrawerComments({ question_id }: { question_id: number }) {
                     </div>
                   </div>
                 ))
+              )}
+            </div>
+
+            {/* Load more */}
+            <div className="pt-3 flex items-center justify-center">
+              {loading ? null : comments.length < total ? (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={loadMore}
+                  disabled={loadingMore}
+                >
+                  {loadingMore ? "Cargando..." : "Cargar más"}
+                </Button>
+              ) : (
+                <p className="text-xs text-muted-foreground">No hay más comentarios</p>
               )}
             </div>
           </div>

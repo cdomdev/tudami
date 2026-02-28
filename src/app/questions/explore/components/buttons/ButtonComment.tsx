@@ -22,23 +22,17 @@ export function ButtonComment({ question_id }: { question_id: number }) {
 
     try {
       const data = await createComment(content, question_id, user.id);
-      const { questionData, error } = data;
-      const questionOwnerId = questionData?.user_id;
+      // El servidor ahora devuelve rápidamente el commentData y crea
+      // notificaciones y badges en background. No esperar a esas operaciones.
+      const { commentData } = data ?? {};
 
-      await noficationsFromComments(
-        question_id,
-        questionOwnerId,
-        user.id,
-        user.full_name
-      );
-
-      if (!error || !data) {
+      if (commentData) {
         setContent("");
         setOpen(false);
-        setLoading(false);
+        toast.success("Comentario enviado");
+      } else {
+        toast.error("No fue posible enviar el comentario");
       }
-
-      toast.success("Comentario enviado");
 
       setLoading(false);
     } catch (error) {
