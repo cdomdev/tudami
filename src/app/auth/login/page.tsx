@@ -26,12 +26,12 @@ export default function AuthPage() {
         </p>
       </div>
 
-      <div className="flex flex-col gap-3 min-w-[300px] w-full">
+      <div className="flex flex-col gap-3 min-w-75 w-full">
         <ProvidersAuth />
         <div className="w-full flex items-center gap-1">
-          <div className="border-1 w-full border-gray-300"></div>
+          <div className="border w-full border-gray-300"></div>
           <span className="font-bold">o</span>
-          <div className="border-1 w-full border-gray-300"></div>
+          <div className="border w-full border-gray-300"></div>
         </div>
         <FormLogin />
         <FooterForm />
