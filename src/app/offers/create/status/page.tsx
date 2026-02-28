@@ -18,7 +18,7 @@ export default function SuccessPage() {
                 <Confetti />
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-green-500 to-sky-500 bg-clip-text text-transparent z-20">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 bg-linear-to-r from-green-500 to-sky-500 bg-clip-text text-transparent z-20">
                 ¡Oferta publicada con éxito!
             </h1>
 
@@ -28,25 +28,25 @@ export default function SuccessPage() {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-md z-20">
-                <Link href="/offers/explore/questions?query=my" className="w-full">
+                <Link href="/offers/explore" className="w-full">
                     <Button
                         variant="default"
                         size="lg"
                         className="w-full group flex items-center gap-2 shadow-md hover:shadow-lg transition-all cursor-pointer"
                     >
                         <Eye className="w-5 h-5 group-hover:animate-pulse" />
-                        <span>Ver mis ofertas publicadas</span>
+                        <span>Ver ofertas</span>
                     </Button>
                 </Link>
 
-                <Link href="/create-questions" className="w-full">
+                <Link href="/offers/create" className="w-full">
                     <Button
                         variant="outline"
                         size="lg"
                         className="w-full group flex items-center gap-2 shadow-sm hover:shadow-md transition-all cursor-pointer dark:bg-accent "
                     >
                         <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform" />
-                        <span>Nueva pregunta</span>
+                        <span>Nueva oferta</span>
                     </Button>
                 </Link>
             </div>

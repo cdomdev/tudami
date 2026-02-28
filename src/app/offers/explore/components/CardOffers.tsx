@@ -57,21 +57,23 @@ export function CardPostOffers({
             )}
           </div>
           <div>
-            <p className="font-medium">{users?.full_name || "Anónimo"}</p>
+            <div className="flex gap-2">
+              <p className="font-medium">{users?.full_name || "Anónimo"}</p>
+              <TooltipProvider>
+                <Tooltip delayDuration={150}>
+                  <TooltipTrigger asChild>
+                    <CircleDollarSign className="w-6 h-6 text-green-300" />
+                  </TooltipTrigger>
+                  <TooltipContent>Oferta remunerada</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
             <time className="text-xs text-muted-foreground">
               {created_at
                 ? `Publicado hace ${formatTimestamp(created_at)}`
                 : "Fecha desconocida"}
             </time>
           </div>
-          <TooltipProvider>
-            <Tooltip delayDuration={150}>
-              <TooltipTrigger asChild>
-                <CircleDollarSign className="w-6 h-6 text-green-300" />
-              </TooltipTrigger>
-              <TooltipContent>Oferta remunerada</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
         </Link>
 
         <div className="flex gap-5 items-center">
