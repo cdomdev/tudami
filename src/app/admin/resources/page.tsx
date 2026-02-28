@@ -45,7 +45,7 @@ export default function PageResourcesAmd() {
 
   return (
     <main>
-      <section className="flex justify-between px-12  ">
+      <section className="flex justify-between items-center px-6 md:px-12  ">
         <header>
           <h1 className="text-lg md:text-2xl mb-3 font-semibold">Recursos</h1>
         </header>

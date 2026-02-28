@@ -43,7 +43,7 @@ export default function PageUsersAmd() {
 
   return (
     <main>
-      <section className="flex justify-between px-12  ">
+      <section className="flex justify-between px-6 items-center md:px-12  ">
         <header>
           <h1 className="text-lg md:text-2xl mb-3 font-semibold">Usuarios</h1>
         </header>

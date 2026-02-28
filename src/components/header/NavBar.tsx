@@ -36,11 +36,9 @@ export function NavBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrolled]);
 
+  const notRenderNav = isLoginPage || isCallbackPage || isRegisterPage || isAdminPage;
   if (
-    isLoginPage ||
-    isCallbackPage ||
-    isRegisterPage ||
-    isAdminPage
+    notRenderNav
   ) {
     return null;
   }
@@ -48,10 +46,9 @@ export function NavBar() {
     <nav
       className={`fixed top-0 w-screen left-0 right-0 z-50 transition-all duration-300 ease-in-out px-3 md:px-0
         ${showNav ? "opacity-100" : "opacity-0"}
-        ${
-          scrolled
-            ? "bg-white/10 backdrop-blur-md shadow-md"
-            : "bg-transparent shadow-none backdrop-blur-0"
+        ${scrolled
+          ? "bg-white/10 backdrop-blur-md shadow-md"
+          : "bg-transparent shadow-none backdrop-blur-0"
         }`}
     >
       <div className="flex items-center justify-between py-3 md:px-4 lg:px-0 max-w-6xl mx-auto">

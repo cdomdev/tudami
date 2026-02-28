@@ -3,9 +3,9 @@ import { PanelData } from "./types";
 
 export async function dataPanel(): Promise<PanelData | undefined> {
   try {
-    const [totalUsers, totalResources, totalNews, userActivity, recentResources, recentPosts] =
-      await Promise.all([users(), resources(), news(), getUserActivity(), getRecentResources(), getRecentPosts()]);
-    return { totalUsers, totalResources, totalNews, userActivity, recentResources, recentPosts };
+    const [totalUsers, totalResources, totalNews, userActivity, recentResources, recentPosts, countPosts, countOffers] =
+      await Promise.all([users(), resources(), news(), getUserActivity(), getRecentResources(), getRecentPosts(), getCountPosts(), getCountOffers()]);
+    return { totalUsers, totalResources, totalNews, userActivity, recentResources, recentPosts, countPosts, countOffers };
   } catch (error) {
     console.error("Error fetching panel data:", error);
   }
@@ -87,6 +87,35 @@ async function getRecentPosts() {
       throw error;
     }
     return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+
+async function getCountPosts() {
+  try {
+    const {  error, count } = await supabase
+      .from("questions").select("*", { count: "exact" });
+    if (error) {
+      throw error;
+    }
+    return count;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+async function getCountOffers() {
+  try {
+    const {  error, count } = await supabase
+      .from("offers").select("*", { count: "exact" });
+    if (error) {
+      throw error;
+    }
+    return count;
   } catch (error) {
     throw error;
   }

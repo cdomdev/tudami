@@ -11,6 +11,6 @@ export function TableUsers({
   onDelete?: (id: number) => void;
 }) {
   return (
-    <GenericTable data={data} columns={columnsUsers} onDelete={onDelete} />
+    <GenericTable data={data} columns={columnsUsers} onDelete={onDelete} showFooter={true} />
   );
 }

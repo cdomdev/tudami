@@ -24,7 +24,7 @@ export function DashboardStats({ itemsDashboard }: DashboardStatsProps) {
         <SkeletonStats />
       ) : (
         <div className="py-10">
-          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-7">
             {itemsDashboard.map((item, index) => (
               <li key={index}>
                 <Card {...item} />

@@ -133,7 +133,7 @@ function MapItems({
 
   return (
     <>
-      <ul className="flex gap-2 my-3 md:my-0 rounded-xs  md:flex-col  overflow-x-auto ">
+      <ul className="flex gap-2 my-3 md:my-0 rounded-xs  md:flex-col  overflow-x-auto py-3  ">
         {itemsSide.map((item, i) => (
           <li key={i} aria-label={item.name}>
             <Link

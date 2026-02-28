@@ -10,9 +10,14 @@ interface ButtonCsProps extends ButtonProps {
     text: string;
     icon?: LucideIcon;
     href?: string;
+    disabled?: boolean;
 }
 
-export function ButtonCs({ text, icon: Icon, href, ...props }: ButtonCsProps) {
+export function ButtonCs({ text, icon: Icon, href, disabled, ...props }: ButtonCsProps) {
+    if (disabled) {
+        return null;
+    }
+
     if (href) {
         return (
             <Button asChild className={cn("gap-2")} {...props}>
