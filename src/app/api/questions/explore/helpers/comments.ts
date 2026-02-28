@@ -17,6 +17,42 @@ export async function createComment({
   user: { id: string };
   supabase: SupabaseClient;
 }) {
+  // Mantener compatibilidad: insertar y ejecutar efectos secundarios
+  const { data: commentData, error } = await insertCommentOnly({
+    content,
+    question_id,
+    user,
+    supabase,
+  });
+
+  if (error) {
+    return error;
+  }
+
+  const { questionData, count } = await runCommentSideEffects({
+    commentData,
+    question_id,
+    user,
+    supabase,
+  });
+
+  return { commentData, questionData, count };
+}
+
+/**
+ * Inserta el comentario y devuelve el resultado (rápido).
+ */
+export async function insertCommentOnly({
+  content,
+  question_id,
+  user,
+  supabase,
+}: {
+  content: string;
+  question_id: number;
+  user: { id: string };
+  supabase: SupabaseClient;
+}) {
   const { data: commentData, error } = await supabase
     .from("question_comments")
     .insert({
@@ -28,24 +64,69 @@ export async function createComment({
     .single();
 
   if (error) {
-    console.error("Error creating comment:", error.code);
-    return error.code;
+    console.error("Error inserting comment:", error);
+    return { data: null, error };
   }
 
-  /**
-   * obtener autor de la pregunta para emitir la notificacion */
+  return { data: commentData, error: null } as any;
+}
 
+/**
+ * Ejecuta los efectos secundarios asociados al nuevo comentario.
+ * Devuelve datos útiles (owner y count) para compatibilidad.
+ */
+export async function runCommentSideEffects({
+  commentData,
+  question_id,
+  user,
+  supabase,
+}: {
+  commentData: any;
+  question_id: number;
+  user: { id: string };
+  supabase: SupabaseClient;
+}) {
+  // obtener autor de la pregunta para emitir la notificacion
   const questionData = await getQuestionOwnerId(question_id, supabase);
 
-  /**
-   * Obtener la cantidad de comentarios
-   */
-
+  // Obtener la cantidad de comentarios
   const count = await getCountComments(question_id, supabase);
 
-  await addBadge(user.id, supabase);
+  // Ejecutar tareas de badge y reputación (pueden ser costosas)
+  try {
+    await addBadge(user.id, supabase);
+  } catch (e) {
+    console.error("Error running badge side-effect", e);
+  }
 
-  return { commentData, questionData, count };
+  // Crear notificación para el dueño de la pregunta (si aplica)
+  try {
+    const questionOwnerId = questionData?.user_id;
+    if (questionOwnerId && questionOwnerId !== user.id) {
+      // obtener nombre del autor del comentario para el mensaje
+      const { data: commentUser } = await supabase
+        .from("users")
+        .select("full_name")
+        .eq("id", user.id)
+        .single();
+
+      const notificationPayload = {
+        user_id: questionOwnerId,
+        actor_id: user.id,
+        type: payloadNotification[1].type,
+        entity_type: payloadNotification[1].entity_type,
+        content: `${commentUser?.full_name || "Alguien"} comentó en tu pregunta.`,
+        url: `/questions/explore/q?query=redirect&slug=${questionData?.slug}`,
+        read: false,
+      };
+
+      await createNotification(notificationPayload as any);
+    }
+  } catch (e) {
+    console.error("Error creating owner notification:", e);
+  }
+
+  return { questionData, count };
 }
 
 async function getCountComments(question_id: number, supabase: SupabaseClient) {
@@ -68,7 +149,7 @@ async function getQuestionOwnerId(
 ) {
   const { data: questionData, error } = await supabase
     .from("questions")
-    .select("user_id")
+    .select("user_id, slug")
     .eq("id", question_id)
     .single();
 
