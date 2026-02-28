@@ -76,7 +76,6 @@ export async function insertCommentOnly({
  * Devuelve datos útiles (owner y count) para compatibilidad.
  */
 export async function runCommentSideEffects({
-  commentData,
   question_id,
   user,
   supabase,
