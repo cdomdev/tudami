@@ -120,7 +120,7 @@ export async function runCommentSideEffects({
         read: false,
       };
 
-      await createNotification(notificationPayload as any);
+      await createNotification(notificationPayload);
     }
   } catch (e) {
     console.error("Error creating owner notification:", e);
