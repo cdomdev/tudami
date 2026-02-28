@@ -5,6 +5,7 @@ import {
 } from "@/app/api/helpers/badgesAchievements";
 import { createNotification } from "@/app/api/notifications/helpers/notifications";
 import payloadNotification from "@/content/notitications/notications-entity.json";
+import type { SchemaComment } from "@/schemas";
 
 export async function createComment({
   content,
@@ -80,7 +81,7 @@ export async function runCommentSideEffects({
   user,
   supabase,
 }: {
-  commentData: any;
+  commentData: SchemaComment;
   question_id: number;
   user: { id: string };
   supabase: SupabaseClient;
