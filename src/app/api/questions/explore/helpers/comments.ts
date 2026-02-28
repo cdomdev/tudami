@@ -69,7 +69,7 @@ export async function insertCommentOnly({
     return { data: null, error };
   }
 
-  return { data: commentData, error: null } as any;
+  return { data: commentData, error: null };
 }
 
 /**
